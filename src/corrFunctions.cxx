@@ -709,7 +709,7 @@ namespace corrAnalysis {
 			hLeadJetPt 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
 			hLeadEtaPhi = new TH2D( "leadjetetaphi", "Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
 			hSubJetPt 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
-			hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, pi, pi );
+			hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
       
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
@@ -796,7 +796,7 @@ namespace corrAnalysis {
 			hLeadJetPt 	= new TH1D( "ppleadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
 			hLeadEtaPhi = new TH2D( "ppleadjetetaphi", "PP Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
 			hSubJetPt 	= new TH1D( "ppsubjetpt", "PP Subleading Jet Pt;p_{T}", 80, 0, 80 );
-			hSubEtaPhi 	= new TH2D( "ppsubjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, pi, pi );
+			hSubEtaPhi 	= new TH2D( "ppsubjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
       
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
