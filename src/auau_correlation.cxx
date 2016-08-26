@@ -33,7 +33,7 @@
 #include "TRandom.h"
 #include "TRandom3.h"
 #include "TCanvas.h"
-#include "TStopWatch.h"
+#include "TStopwatch.h"
 #include "TSystem.h"
 
 // Make use of std::vector,

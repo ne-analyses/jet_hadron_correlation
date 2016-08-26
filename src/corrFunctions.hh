@@ -46,7 +46,7 @@
 #include "TMath.h"
 #include "TRandom.h"
 #include "TCanvas.h"
-#include "TStopWatch.h"
+#include "TStopwatch.h"
 
 // TStarJetPico
 #include "TStarJetPicoReader.h"
