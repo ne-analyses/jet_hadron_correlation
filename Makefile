@@ -2,7 +2,6 @@ os = $(shell uname -s)
 
 #INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(PYTHIA8DIR)/include -I$(STARPICOPATH)
 INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(PYTHIA8DIR)/include -I$(PYTHIA8DIR)/include/Pythia8 -I$(STARPICODIR) -I/opt/local/include
-INCFLAGS      += -I${BASICAJDIR}/src
 
 ifeq ($(os),Linux)
 CXXFLAGS      = 
@@ -33,8 +32,6 @@ ROOTLIBS      = $(shell root-config --libs)
 LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(PYTHIA8DIR)/lib -L$(STARPICODIR)
 LIBS          = -lfastjet -lfastjettools -lpythia8 -lTStarJetPico
 
-LIBPATH       += -L$(BASICAJDIR)/lib
-LIBS	      += -lMyJetlib
 
 # for cleanup
 SDIR          = src
