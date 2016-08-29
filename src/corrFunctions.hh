@@ -182,9 +182,17 @@ namespace corrAnalysis {
   // definition for the area estimation
   fastjet::AreaDefinition  AreaDefinition( fastjet::GhostedAreaSpec ghostAreaSpec );
   
+  // --------------------------
+  // ------ Event Mixing ------
+  // --------------------------
+  
+  
+  
+  
 	
 	// Histogram holder
-	class histograms {
+	// ----------------
+  class histograms {
 		
 	private:
 
@@ -218,6 +226,13 @@ namespace corrAnalysis {
     // holders for the vz/cent binned histograms
     TObjArray** leadingArrays;
     TObjArray** subleadingArrays;
+    
+    // Used internally when filling histograms
+    bool IsPP();
+    bool IsAuAu();
+    bool IsDijet();
+    bool IsJet();
+    bool IsMix();
 		
 	public:
 		histograms( );
@@ -284,7 +299,7 @@ namespace corrAnalysis {
 
 		
 	};
-	
+  
 	
 }
 

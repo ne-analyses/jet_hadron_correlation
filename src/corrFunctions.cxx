@@ -586,10 +586,59 @@ namespace corrAnalysis {
   fastjet::Selector SelectBkgEstimator( double maxTrackRap, double jetRadius ) {
     return fastjet::SelectorAbsRapMax( maxTrackRap - jetRadius ) * (!fastjet::SelectorNHardest(2));
   }
+  
+  // --------------------------
+  // ------ Event Mixing ------
+  // --------------------------
+  
+  
+  
 	
 	// ____________________________________________________________________________________
 	// Class implementation
 	// corrAnalysis::histograms
+  
+  // These are used by fill functions
+  // to check for consistency
+  bool histograms::IsPP() {
+
+    if ( analysisType.find("pp") != std::string::npos )
+      return true;
+
+    return false;
+  }
+  
+  bool histograms::IsAuAu() {
+   
+    if ( analysisType.find("pp") == std::string::npos )
+      return true;
+
+    return false;
+  }
+  
+  bool histograms::IsDijet() {
+    
+    if ( analysisType.find("dijet") != std::string::npos )
+      return true;
+
+    return false;
+  }
+  
+  bool histograms::IsJet() {
+   
+    if ( analysisType.find("dijet") == std::string::npos && analysisType.find("jet") != std::string::npos )
+      return true;
+
+    return false;
+  }
+  
+  bool histograms::IsMix() {
+    
+    if ( analysisType.find("mix") != std::string::npos )
+      return true;
+
+    return false;
+  }
 	
 	histograms::histograms() {
 		analysisType = "none";
@@ -685,14 +734,14 @@ namespace corrAnalysis {
 		if ( type == analysisType )
 			return true;
 		
-		else if ( type == "dijet" || type == "jet" || type == "ppdijet" || type == "ppjet" ) {
+    else if ( type == "dijet" || type == "jet" || type == "ppdijet" || type == "ppjet" || type == "dijetmix" || type == "jetmix" || type == "ppdijetmix" || type == "ppjetmix" ) {
 			initialized = false;
 			Clear();
 			analysisType = type;
 			return true;
 		}
 		
-		std::cerr << "histograms::SetAnalysisType(): Error: Unknown type" << std::endl;
+		__ERR("Unknown type")
 		return false;
 		
 	}
@@ -701,7 +750,7 @@ namespace corrAnalysis {
 		if ( initialized )
 			return 0;
 		
-		if ( analysisType == "dijet" ) {
+		if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
 			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
 			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
@@ -714,9 +763,10 @@ namespace corrAnalysis {
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
-			hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-			hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-			
+      if ( analysisType == "dijet" ) {
+        hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+        hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+      }
 			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
 			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
@@ -734,6 +784,10 @@ namespace corrAnalysis {
           s2 << j;
           TString leadName = "lead_cent_";
           TString subName = "sub_cent_";
+          if ( analysisType == "dijetmix" ) {
+            leadName = "mix_lead_cent_";
+            subName = "mix_sub_cent_";
+          }
           leadName += s1.str() + "_vz_" + s2.str();
           subName += s1.str() + "_vz_" + s2.str();
           
@@ -751,7 +805,7 @@ namespace corrAnalysis {
 			initialized = true;
 			return 0;
 		}
-		else if ( analysisType == "jet" ) {
+		else if ( analysisType == "jet" || analysisType == "jetmix" ) {
 			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
 			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
@@ -775,6 +829,9 @@ namespace corrAnalysis {
           s1 << i;
           s2 << j;
           TString leadName = "jet_cent_";
+          if ( analysisType == "jetmix" ) {
+            leadName = "mix_jet_cent_";
+          }
           leadName += s1.str() + "_vz_" + s2.str();
           
           // make each histogram
@@ -789,7 +846,7 @@ namespace corrAnalysis {
 			initialized = true;
 			return 0;
 		}
-		else if ( analysisType == "ppdijet" ) {
+		else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
 			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
 			
@@ -801,8 +858,10 @@ namespace corrAnalysis {
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
+      if ( analysisType == "ppdijet" ) {
 			hAjHigh 		= new TH1D( "ppajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
 			hAjLow 			= new TH1D( "ppajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+      }
 			
 			h3DimCorrLead		= new TH3D("ppleadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
 			h3DimCorrSub		= new TH3D("ppsubjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
@@ -821,6 +880,10 @@ namespace corrAnalysis {
           s2 << j;
           TString leadName = "pp_lead_cent_";
           TString subName = "pp_sub_cent_";
+          if ( analysisType == "ppdijetmix" ) {
+            leadName = "mix_pp_lead_cent_";
+            subName = "mix_pp_sub_cent_";
+          }
           leadName += s1.str() + "_vz_" + s2.str();
           subName += s1.str() + "_vz_" + s2.str();
           
@@ -839,7 +902,7 @@ namespace corrAnalysis {
 			initialized = true;
 			return 0;
 		}
-		else if ( analysisType == "ppjet" ) {
+		else if ( analysisType == "ppjet" || analysisType == "ppjetmix" ) {
 			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
@@ -862,6 +925,9 @@ namespace corrAnalysis {
           s1 << i;
           s2 << j;
           TString leadName = "pp_jet_cent_";
+          if ( analysisType == "ppjetmix" ) {
+            leadName = "mix_pp_jet_cent_";
+          }
           leadName += s1.str() + "_vz_" + s2.str();
           
           // make each histogram
@@ -939,7 +1005,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "jet" ) {
+		if ( IsAuAu() ) {
 			hCentVz->Fill( centrality, vzbin );
 			return true;
 		}
@@ -954,7 +1020,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "ppdijet" || analysisType == "ppjet" ) {
+		if ( IsPP() ) {
 			hBinVz->Fill(  vzbin );
 			return true;
 		}
@@ -969,7 +1035,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "jet" ) {
+		if ( IsAuAu() ) {
 			hGRefMult->Fill( gRefMult );
 			return true;
 		}
@@ -994,7 +1060,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+		if ( IsDijet() ) {
 			hAjHigh->Fill( aj );
 			return true;
 		}
@@ -1009,7 +1075,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+		if ( IsDijet() && !IsMix() ) {
 			hAjLow->Fill( aj );
 			return true;
 		}
@@ -1024,7 +1090,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "jet" || analysisType == "ppjet" ) {
+		if ( IsJet() ) {
 			hLeadJetPt->Fill( pt );
 			return true;
 		}
@@ -1039,7 +1105,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "jet" || analysisType == "ppjet" ) {
+		if ( IsJet() ) {
 			hLeadEtaPhi->Fill( eta, phi );
 			return true;
 		}
@@ -1058,7 +1124,7 @@ namespace corrAnalysis {
 		if ( dPhi < phiLowEdge )
 			dPhi += 2.0*pi;
 		
-		if ( analysisType == "jet" ) {
+		if ( IsJet() && IsAuAu() ) {
 			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
@@ -1066,7 +1132,7 @@ namespace corrAnalysis {
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
 			return true;
 		}
-    else if ( analysisType == "ppjet" ) {
+    else if ( IsJet() && IsPP() ) {
       h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
@@ -1086,7 +1152,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+		if ( IsDijet() ) {
 			hLeadJetPt->Fill( pt );
 			return true;
 		}
@@ -1101,7 +1167,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+		if ( IsDijet() ) {
 			hSubJetPt->Fill( pt );
 			return true;
 		}
@@ -1116,7 +1182,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+		if ( IsDijet() ) {
 			hLeadEtaPhi->Fill( eta, phi );
 			return true;
 		}
@@ -1131,7 +1197,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+    if ( IsDijet() ) {
 			hSubEtaPhi->Fill( eta, phi );
 			return true;
 		}
@@ -1149,7 +1215,7 @@ namespace corrAnalysis {
 		if ( dPhi < phiLowEdge )
 			dPhi += 2.0*pi;
 		
-		if ( analysisType == "dijet" ) {
+		if ( IsDijet() && IsAuAu() ) {
 			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
@@ -1158,7 +1224,7 @@ namespace corrAnalysis {
       
 			return true;
 		}
-    else if ( analysisType == "ppdijet" )  {
+    else if ( IsDijet() && IsPP() )  {
       h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
@@ -1169,7 +1235,6 @@ namespace corrAnalysis {
 
       
     }
-    
 		
 		__ERR("FillCorrelationLead() not used for jet-hadron")
 		return false;
@@ -1185,7 +1250,7 @@ namespace corrAnalysis {
 		if ( dPhi < phiLowEdge )
 			dPhi += 2.0*pi;
 		
-		if ( analysisType == "dijet" ) {
+		if ( IsDijet() && IsAuAu() ) {
 			h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
@@ -1194,7 +1259,7 @@ namespace corrAnalysis {
       
 			return true;
 		}
-    else if ( analysisType == "ppdijet" ) {
+    else if ( IsDijet() && IsPP() ) {
       h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
