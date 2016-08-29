@@ -1,7 +1,7 @@
 os = $(shell uname -s)
 
-#INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(PYTHIA8DIR)/include -I$(STARPICOPATH)
-INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(PYTHIA8DIR)/include -I$(PYTHIA8DIR)/include/Pythia8 -I$(STARPICODIR) -I/opt/local/include
+#INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICOPATH)
+INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include
 
 ifeq ($(os),Linux)
 CXXFLAGS      = 
@@ -29,8 +29,8 @@ endif
 
 ROOTLIBS      = $(shell root-config --libs)
 
-LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(PYTHIA8DIR)/lib -L$(STARPICODIR)
-LIBS          = -lfastjet -lfastjettools -lpythia8 -lTStarJetPico
+LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
+LIBS          = -lfastjet -lfastjettools -lTStarJetPico
 
 
 # for cleanup
