@@ -108,7 +108,6 @@ set execute = "${command} ${arg}"
 
 # Write to CondorFile
 echo "Executing " $execute
-( $execute > $LogFile ) >& $ErrFile &
 
 echo " " >> CondorFile
 echo "Output    = ${LogFile}" >> CondorFile
