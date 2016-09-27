@@ -22,6 +22,22 @@ namespace corrAnalysis {
 		}
 	}
 
+  // Other string manipulations
+  // Checks if a string begins with a certain substring
+  bool BeginsWith (std::string const &full_string, std::string const &beginning) {
+    if (full_string.length() >= beginning.length()) {
+      return (0 == full_string.compare (0, beginning.length(), beginning) );
+    } else {
+      return false;
+    }
+  }
+  
+  // Used to pull the current directory from its absolute path
+  // Used in mixing to get mixing parameters
+  std::string GetDirFromPath( std::string path ) {
+    return path.substr( path.find_last_of("\\/")+1, path.size() );
+  }
+
 	
 	// Used to find current working directory
 	// Trying to make this relatively machine independent
@@ -591,8 +607,85 @@ namespace corrAnalysis {
   // ------ Event Mixing ------
   // --------------------------
   
+  // This function will check if it can parse the analysis String
+  // if its unrecognized it will use defaults
+  // if it recognizes the string but can't parse, it returns -2, which will exit the mixing
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger ) {
+    
+    // First, pick out the analysis type from the analysis string
+    if ( BeginsWith( analysisString, "dijet" ) )
+      analysisType = "dijetmix";
+    else if ( BeginsWith( analysisString, "ppdijet" ) )
+      analysisType = "ppdijetmix";
+    else if ( BeginsWith( analysisString, "jet" ) )
+      analysisType = "jetmix";
+    else if ( BeginsWith( analysisString, "ppjet" ) )
+      analysisType = "ppjetmix";
+    
+    // everything matches: we now split the string
+    std::stringstream parser(analysisString);
+    std::string tmp;
+    std::vector<std::string> varHolder;
+    while ( std::getline( parser, tmp, '_' ) ) {
+      varHolder.push_back(tmp);
+    }
+    
+    // convert and set the analysis variables
+    for (int i = 0; i < varHolder.size()-1; ++i ) {
+      if ( varHolder[i] == "lead" )
+        leadPt = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "sub" )
+        subPt = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "max" )
+        maxPt = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "rad" )
+        jetRadius = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "trigger" ) {
+        if ( varHolder[i+1] == "true" )
+          reqTrigger = true;
+        else
+          reqTrigger = false;
+      }
+      else if ( varHolder[i] == "eff" ) {
+        if ( varHolder[i+1] == "true" )
+          useEff = true;
+        else
+          useEff = false;
+      }
+    }
+    
+    if ( leadPt == -999 || subPt == -999 || jetRadius == -999 || maxPt == -999 )
+      return -2;
+    
+    return 1;
+  }
   
-  
+  // Used to decide, if using HT events
+  // what the max jet pt can be before the event must be thrown away
+  double GetMixEventJetPtMin( bool useMB, std::string analysisType, double leadJetPtMin ) {
+    // check to make sure the analysis type is 'mix'
+    // if not, return -999
+    if ( !HasEnding( analysisType, "mix" ) ) {
+      __ERR("This function is only used in event mixing")
+      return -999;
+    }
+    
+    
+    // if using MB data, return -1, unneccessary
+    // to jetfind, use all events
+    if ( !useMB )
+      return -1;
+    // if the jet pt < 10 GeV ( getting close to trigger threshhold )
+    // we will not be able to use HT data
+    else if ( leadJetPtMin < 10.0 )
+      return -1;
+    // otherwise return 80% of the leading jet pt min
+    // ( or trigger jet for jet-hadron )
+    else
+      return 0.8*leadJetPtMin;
+    
+  }
+
 	
 	// ____________________________________________________________________________________
 	// Class implementation

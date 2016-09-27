@@ -89,7 +89,7 @@
 
 // -------------------------
 // Command line arguments: ( Defaults
-// Defined for debugging only )
+// Defined for debugging in main )
 // [0]: Choose between dijet-hadron correlations or jet-hadron correlations
 //      choices: dijet || jet
 // [1]:	Choose to use particle efficiency corrections or not: true/false
@@ -104,7 +104,7 @@
 // [10]: input file: can be a single .root or a .txt or .list of root files
 
 // DEF MAIN()
-int main ( int argc, const char** argv) {
+int main ( int argc, const char** argv ) {
   
   // First check to make sure we're located properly
   std::string currentDirectory = corrAnalysis::getPWD( );
@@ -130,8 +130,8 @@ int main ( int argc, const char** argv) {
   // ------------------------------
   // Defaults
   std::string 	executable    = "./bin/auau_correlation"; // placeholder
-  std::string 	analysisType  = "jet";									// choose dijet or jet ( decides value of requireDijets )
-  bool					requireDijets	= false;											// this switches between dijet-hadron and jet-hadron
+  std::string 	analysisType  = "dijet";									// choose dijet or jet ( decides value of requireDijets )
+  bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = false;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
@@ -205,11 +205,11 @@ int main ( int argc, const char** argv) {
   // Announce our settings
   if ( requireDijets ) { corrAnalysis::BeginSummaryDijet ( jetRadius, leadJetPtMin, subJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::trackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
   else { corrAnalysis::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
-  std::cout<<"got here"<<std::endl;
+  
   // We know what analysis we are doing now, so build our output histograms
   corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType );
   histograms->Init();
-  std::cout<<"got here"<<std::endl;
+  
   // Build our input now
   TChain* chain = new TChain( chainName.c_str() );
   

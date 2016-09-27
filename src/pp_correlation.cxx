@@ -89,7 +89,7 @@
 
 // -------------------------
 // Command line arguments: ( Defaults
-// Defined for debugging only )
+// Defined for debugging in main )
 // [0]: Choose between dijet-hadron correlations or jet-hadron correlations
 //      choices: dijet || jet
 // [1]:	Choose to use particle efficiency corrections or not: true/false
@@ -104,7 +104,6 @@
 // [10]: input data: can be a single .root or a .txt or .list of root files
 // [11]: MB AuAu event file for embedding, can be .root, .txt, .list
 
-// DEF MAIN()
 // DEF MAIN()
 int main ( int argc, const char** argv) {
   

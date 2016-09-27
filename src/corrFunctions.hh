@@ -75,7 +75,14 @@ namespace corrAnalysis {
 	// IO/OS MANIP Functions
 	// Helper to build the TChain, used to decide which input format
 	bool HasEnding (std::string const &full_string, std::string const &ending);
-	
+  
+  // Other string manipulations
+  // Used to check if a string begins with a substring
+	bool BeginsWith (std::string const &full_string, std::string const &beginning);
+  
+  // Used to pull the current directory from its absolute path
+  std::string GetDirFromPath( std::string path );
+  
 	// Used to find the path to current working directory
 	// Used to make this all relatively machine independent
 	std::string getPWD();
@@ -186,7 +193,13 @@ namespace corrAnalysis {
   // ------ Event Mixing ------
   // --------------------------
   
+  // pulls analysis variables from the directory name
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger );
   
+  // used to decide what max pt can be for a jet in
+  // HT events to still be used in mixing
+  // Used for both jet-hadron and dijet-hadron
+  double GetMixEventJetPtMin( bool useMB, std::string analysisType, double leadJetPtMin );
   
   
 	
@@ -296,7 +309,8 @@ namespace corrAnalysis {
     // Associated track info
     bool FillAssocPt( double pt );
     bool FillAssocEtaPhi( double eta, double phi );
-
+    
+    
 		
 	};
   
