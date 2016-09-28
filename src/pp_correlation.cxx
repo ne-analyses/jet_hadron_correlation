@@ -333,7 +333,7 @@ int main ( int argc, const char** argv) {
   }
   else {
     correlatedDiJets = new TTree("pp_jets","Correlated PP Jets" );
-    CDJBranchHi = correlatedDiJets->Branch("triggerjets", &leadingJet );
+    CDJBranchHi = correlatedDiJets->Branch("triggerJet", &leadingJet );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
   }
   
