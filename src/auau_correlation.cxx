@@ -296,7 +296,7 @@ int main ( int argc, const char** argv ) {
   }
   else {
     correlatedDiJets = new TTree("jets","Correlated Jets" );
-    CDJBranchHi = correlatedDiJets->Branch("triggerjets", &leadingJet );
+    CDJBranchHi = correlatedDiJets->Branch("triggerJet", &leadingJet );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
   }
