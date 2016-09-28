@@ -312,6 +312,5 @@ int main ( int argc, const char** argv) {
   fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::hardTrackMinPt );
 
   
-  
   return 0;
 }
