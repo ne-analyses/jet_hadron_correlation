@@ -202,8 +202,9 @@ namespace corrAnalysis {
   double GetMixEventJetPtMax( bool useMB, std::string analysisType, double leadJetPtMin );
   
   // Decides whether an event should be used
-  // In mixing or not.
-	
+  // In mixing or not - logic depends on analysis type
+  bool UseEventInMixing( std::string analysisType, bool isMB, std::vector<fastjet::PseudoJet>& highPtConsJets, int refMult, int vzBin );
+  
 	// Histogram holder
 	// ----------------
   class histograms {

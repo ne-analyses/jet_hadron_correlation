@@ -661,32 +661,58 @@ namespace corrAnalysis {
   }
   
   // Used to decide, if using HT events
-  // what the max jet pt can be before the event must be thrown away
+  // What the max jet pt can be before the event must be thrown away
   double GetMixEventJetPtMax( bool useMB, std::string analysisType, double leadJetPtMin ) {
-    // check to make sure the analysis type is 'mix'
-    // if not, return -999
+    // Check to make sure the analysis type is 'mix'
+    // If not, return -999
     if ( !HasEnding( analysisType, "mix" ) ) {
       __ERR("This function is only used in event mixing")
       return -999;
     }
     
     
-    // if using MB data, return 0, unneccessary
-    // to jetfind, use all events
+    // If using MB data, return 0, unneccessary
+    // To jetfind, use all events
     if ( useMB )
       return 0;
-    // if the jet pt < 10 GeV ( getting close to trigger threshhold )
-    // we will not be able to use HT data
+    // If the jet pt < 10 GeV ( getting close to trigger threshhold )
+    // We will not be able to use HT data
     else if ( leadJetPtMin < 10.0 )
       return -1;
-    // otherwise return 80% of the leading jet pt min
-    // ( or trigger jet for jet-hadron )
+    // Otherwise return 80% of the leading jet pt min
+    // ( Or trigger jet for jet-hadron )
     else
       return 0.8*leadJetPtMin;
     
   }
 
-	
+  // Decides whether an event should be used
+  // In mixing or not - logic depends on analysis type
+  // And on Data set being used
+  bool UseEventInMixing( std::string analysisType, bool isMB, std::vector<fastjet::PseudoJet>& highPtConsJets, int refMult, int vzBin ) {
+    
+    // If it is HT data and a jet was found above the threshold, discard the event
+    if ( !isMB && highPtConsJets.size() > 0 )
+      return false;
+   
+    //If it is AuAu data, check reference centrality boundaries
+    if ( analysisType == "dijetmix" || analysisType == "jetmix" ) {
+      int refCentrality = GetReferenceCentrality( refMult );
+      // Check to see if we use those centralities
+      if ( refCentrality < 0 )                      								 	{ return false; }
+      if ( refCentrality < corrAnalysis::y7EfficiencyRefCentLower )   { return false; }
+      if ( refCentrality > corrAnalysis::y7EfficiencyRefCentUpper )   { return false; }
+    }
+    
+    // Make sure Vz bin is accepted
+    if ( vzBin < 0 )
+      return false;
+    
+    // it made the cuts - we'll use the event
+    return true;
+  }
+  
+  
 	// ____________________________________________________________________________________
 	// Class implementation
 	// corrAnalysis::histograms
