@@ -671,10 +671,10 @@ namespace corrAnalysis {
     }
     
     
-    // if using MB data, return -1, unneccessary
+    // if using MB data, return 0, unneccessary
     // to jetfind, use all events
     if ( useMB )
-      return -1;
+      return 0;
     // if the jet pt < 10 GeV ( getting close to trigger threshhold )
     // we will not be able to use HT data
     else if ( leadJetPtMin < 10.0 )
