@@ -662,7 +662,7 @@ namespace corrAnalysis {
   
   // Used to decide, if using HT events
   // what the max jet pt can be before the event must be thrown away
-  double GetMixEventJetPtMin( bool useMB, std::string analysisType, double leadJetPtMin ) {
+  double GetMixEventJetPtMax( bool useMB, std::string analysisType, double leadJetPtMin ) {
     // check to make sure the analysis type is 'mix'
     // if not, return -999
     if ( !HasEnding( analysisType, "mix" ) ) {
@@ -673,7 +673,7 @@ namespace corrAnalysis {
     
     // if using MB data, return -1, unneccessary
     // to jetfind, use all events
-    if ( !useMB )
+    if ( useMB )
       return -1;
     // if the jet pt < 10 GeV ( getting close to trigger threshhold )
     // we will not be able to use HT data

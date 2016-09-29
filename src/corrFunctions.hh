@@ -199,7 +199,7 @@ namespace corrAnalysis {
   // used to decide what max pt can be for a jet in
   // HT events to still be used in mixing
   // Used for both jet-hadron and dijet-hadron
-  double GetMixEventJetPtMin( bool useMB, std::string analysisType, double leadJetPtMin );
+  double GetMixEventJetPtMax( bool useMB, std::string analysisType, double leadJetPtMin );
   
   
 	
