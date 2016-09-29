@@ -109,10 +109,10 @@ namespace corrAnalysis {
   // Converts TStarJetPicoVectors into PseudoJets
   void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector );
   
-  // finds the triggers and saves them, if requireTrigger == True
+  // Finds the triggers and saves them, if requireTrigger == True
   void GetTriggers( bool requireTrigger, TClonesArray* triggerObjs, std::vector<fastjet::PseudoJet> & triggers );
   
-  // for the pp data where the trigger objects dont seem to be working
+  // For the pp data where the trigger objects dont seem to be working
   void GetTriggersPP( bool requireTrigger, std::vector<fastjet::PseudoJet> ppParticles, std::vector<fastjet::PseudoJet>& triggers );
 	
 	// Summary of initial settings for dijet-hadron correlation
@@ -150,9 +150,9 @@ namespace corrAnalysis {
   
   // Finally, correlation function -
   // It correlates leading and subleading jets
-  // with the associated particle given the associated weight
-  // checks to make sure it is charged, has a proper efficiency,
-  // and that the associated track is within our eta range
+  // With the associated particle given the associated weight
+  // Checks to make sure it is charged, has a proper efficiency,
+  // And that the associated track is within our eta range
   
   // First, to check that the track makes all cuts
   bool useTrack( fastjet::PseudoJet& assocTrack, double efficiency );
@@ -172,36 +172,37 @@ namespace corrAnalysis {
   fastjet::JetDefinition	AnalysisJetDefinition( double R );
   fastjet::JetDefinition	BackgroundJetDefinition( double R );
   
-  // constituent selectors for high and low constituent pt clustering
+  // Constituent selectors for high and low constituent pt clustering
   fastjet::Selector	SelectLowPtConstituents( double trackMaxEta, double trackMinPtLow );
   fastjet::Selector SelectHighPtConstituents( double trackMaxEta, double trackMinPtHigh );
   
-  // candidate jet selectors
+  // Candidate jet selectors
   fastjet::Selector SelectJetCandidates( double trackMaxEta, double jetRadius, double jetMinPt, double JetMaxPt );
   
   // Removes 2 hard jets from background estimation
   fastjet::Selector SelectBkgEstimator( double maxTrackRap, double jetRadius );
   
-  // ghosted area spec, used for background
-  // estimation and subtraction
+  // Ghosted area spec, used for background
+  // Estimation and subtraction
   fastjet::GhostedAreaSpec GhostedArea( double trackMaxEta, double jetRadius );
   
-  // definition for the area estimation
+  // Definition for the area estimation
   fastjet::AreaDefinition  AreaDefinition( fastjet::GhostedAreaSpec ghostAreaSpec );
   
   // --------------------------
   // ------ Event Mixing ------
   // --------------------------
   
-  // pulls analysis variables from the directory name
+  // Pulls analysis variables from the directory name
   int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger );
   
-  // used to decide what max pt can be for a jet in
+  // Used to decide what max pt can be for a jet in
   // HT events to still be used in mixing
   // Used for both jet-hadron and dijet-hadron
   double GetMixEventJetPtMax( bool useMB, std::string analysisType, double leadJetPtMin );
   
-  
+  // Decides whether an event should be used
+  // In mixing or not.
 	
 	// Histogram holder
 	// ----------------
@@ -210,7 +211,7 @@ namespace corrAnalysis {
 	private:
 
 		std::string analysisType;			// Used by Init() to create proper histograms
-		bool initialized;							// used for control flow - must be true before filling
+		bool initialized;							// Used for control flow - must be true before filling
 		
 		// Event statistics
 		TH2D* hCentVz;
@@ -236,7 +237,7 @@ namespace corrAnalysis {
 		TH3D* h3DimCorrLead;
 		TH3D* h3DimCorrSub;
     
-    // holders for the vz/cent binned histograms
+    // Holders for the vz/cent binned histograms
     TObjArray** leadingArrays;
     TObjArray** subleadingArrays;
     
@@ -256,7 +257,7 @@ namespace corrAnalysis {
 		void Clear();
 		
 		// Can set analysisType - careful, if it changes after Init() is called
-		// reinitialization will be needed
+		// Reinitialization will be needed
 		bool SetAnalysisType( std::string type );
 		
 		// Must be called before filling
@@ -286,7 +287,7 @@ namespace corrAnalysis {
 		bool CountEvent( int vzbin );										// Used to count PP events
 		
 		bool FillGRefMult( int gRefMult );							// For AuAu events, records gRefMult
-		bool FillVz( double vz );												// records Vz distribution
+		bool FillVz( double vz );												// Records Vz distribution
 		
 		bool FillAjHigh( double aj );										// Records Aj for initial hard jets
 		bool FillAjLow( double aj );										// Records Aj for jets with soft constituents
@@ -302,7 +303,7 @@ namespace corrAnalysis {
 		bool FillSubJetPt( double pt );									// Records sub jet pt
 		bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
 		bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
-		// records trigger-associated correlations with trigger = leading/subleading
+		// Records trigger-associated correlations with trigger = leading/subleading
 		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
     bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
     
