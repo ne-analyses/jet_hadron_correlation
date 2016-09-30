@@ -458,8 +458,8 @@ int main ( int argc, const char** argv) {
   __OUT("Finished inital event binning in Vz-centrality")
   std::string finishEventCheck = "Out of " + std::to_string(total_events) + ", " + std::to_string(useable_events) + " will be used";
   __OUT( finishEventCheck.c_str() )
-  // quick check for the size of these arrays
-  // remove cent/vz bins that have too few events
+  // Quick check for the size of these arrays
+  // Remove cent/vz bins that have too few events
   __OUT("Checking each Vz/centrality bin for the minimum number of entries")
   for ( int i = 0; i < corrAnalysis::binsVz; ++i )
     for ( int j = 6; j < corrAnalysis::binsCentrality; ++j ) {
@@ -473,6 +473,91 @@ int main ( int argc, const char** argv) {
       }
     }
   __OUT("Done removing bins")
+  
+  // Now we can run over all tree entries and perform the mixing
+  
+  for ( int i = 0; i < treeEntries; ++i ) {
+    // Pull the next jet/dijet
+    jetTree->GetEntry(i);
+    
+    // get the proper cent/vz bin
+    std::vector< unsigned > randomizedEventID;
+    if ( corrAnalysis::BeginsWith( analysisType, "pp") )
+      randomizedEventID = mixing_events[vzBranch][0];
+    else
+      randomizedEventID = mixing_events[vzBranch][centBranch];
+    
+    // If the event list was set to zero earlier,
+    // Then we will not be using that bin
+    if ( randomizedEventID.size() == 0 )  { continue;}
+    
+    // then randomize the list
+    std::random_shuffle( randomizedEventID.begin(), randomizedEventID.end() );
+    
+    // now use the first nEventsToMix
+    for ( int i = 0; i < nEventsToMix; ++i ) {
+      
+      // get the event
+      reader.ReadEvent( randomizedEventID[i] );
+      
+      // get the reference centrality definition used by
+      // the track efficiency class
+      int refCentAlt = corrAnalysis::GetReferenceCentralityAlt( centBranch );
+      
+      // get event headers
+      event = reader.GetEvent();
+      header = event->GetHeader();
+      container = reader.GetOutputContainer();
+      
+      // first convert to pseudojets
+      particles.clear();
+      corrAnalysis::ConvertTStarJetVector( container, particles );
+      
+      // now do the correlation
+      if ( requireDijets ) {
+        // make the trigger pseudojets
+        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
+        fastjet::PseudoJet subTrigger = fastjet::PseudoJet( *subBranch );
+        
+        // loop over associated particles
+        for ( int j = 0; i < particles.size(); ++j ) {
+          fastjet::PseudoJet assocParticle = particles[j];
+          
+          // if we're using particle - by - particle efficiencies, get it,
+          // else, set to one
+          int assocEfficiency = 1.0;
+          if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          
+          corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
+          corrAnalysis::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency );
+        }
+        
+      }
+      else {
+        // make the trigger pseudojets
+        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
+        
+        
+        // loop over associated particles
+        for ( int j = 0; i < particles.size(); ++j ) {
+          fastjet::PseudoJet assocParticle = particles[j];
+          
+          // if we're using particle - by - particle efficiencies, get it,
+          // else, set to one
+          int assocEfficiency = 1.0;
+          if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          
+          corrAnalysis::correlateTrigger( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
+
+        }
+      }
+    }
+  }
+  
+  // create an output file
+  TFile out((inputDir+"/"+outputFile).c_str(), "RECREATE");
+  
+  histograms->Write();
 
   return 0;
 }
