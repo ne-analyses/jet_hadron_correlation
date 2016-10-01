@@ -240,6 +240,7 @@ int main ( int argc, const char** argv) {
   
   // initialize histogram container
   corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType );
+  histograms->Init();
   
   // we need to pick a minimum jet pt in case
   // we use HT events
@@ -358,7 +359,8 @@ int main ( int argc, const char** argv) {
     return -1;
   }
   
-  std::cout<<"total of "<< treeEntries << " trigger events" << std::endl;
+  std::string reportEntries = "total of " + std::to_string( treeEntries ) + " trigger events";
+  __OUT( reportEntries.c_str() )
   // Define our branches
   TLorentzVector *leadBranch, *subBranch;
   int centBranch, vzBranch;
@@ -377,7 +379,7 @@ int main ( int argc, const char** argv) {
     if ( analysisType == "jetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
   }
-  std::cout<<"loaded branches"<<std::endl;
+  __OUT("loaded branches")
   
   // Now loop over events and store their IDs in the proper
   // Vz-Centrality bin
@@ -475,7 +477,7 @@ int main ( int argc, const char** argv) {
   __OUT("Done removing bins")
   
   // Now we can run over all tree entries and perform the mixing
-  
+  __OUT("Starting to perform event mixing")
   for ( int i = 0; i < treeEntries; ++i ) {
     // Pull the next jet/dijet
     jetTree->GetEntry(i);
@@ -496,7 +498,6 @@ int main ( int argc, const char** argv) {
     
     // now use the first nEventsToMix
     for ( int i = 0; i < nEventsToMix; ++i ) {
-      
       // get the event
       reader.ReadEvent( randomizedEventID[i] );
       
@@ -520,7 +521,7 @@ int main ( int argc, const char** argv) {
         fastjet::PseudoJet subTrigger = fastjet::PseudoJet( *subBranch );
         
         // loop over associated particles
-        for ( int j = 0; i < particles.size(); ++j ) {
+        for ( int j = 0; j < particles.size(); ++j ) {
           fastjet::PseudoJet assocParticle = particles[j];
           
           // if we're using particle - by - particle efficiencies, get it,
@@ -539,7 +540,7 @@ int main ( int argc, const char** argv) {
         
         
         // loop over associated particles
-        for ( int j = 0; i < particles.size(); ++j ) {
+        for ( int j = 0; j < particles.size(); ++j ) {
           fastjet::PseudoJet assocParticle = particles[j];
           
           // if we're using particle - by - particle efficiencies, get it,
@@ -559,5 +560,7 @@ int main ( int argc, const char** argv) {
   
   histograms->Write();
 
+  out.Close();
+  
   return 0;
 }
