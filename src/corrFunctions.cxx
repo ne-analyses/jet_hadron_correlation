@@ -471,7 +471,7 @@ namespace corrAnalysis {
   // First, to check that the track makes all cuts
   bool useTrack( fastjet::PseudoJet& assocTrack, double efficiency ) {
     // Check to make sure the its a charged track within our eta acceptance
-    if ( assocTrack.eta() > maxTrackRap )			{ return false; }
+    if ( fabs( assocTrack.eta() ) > maxTrackRap )			{ return false; }
     if ( assocTrack.user_index() == 0 )  			{ return false; }
     
     // Check to make sure the efficiency is not crazy
