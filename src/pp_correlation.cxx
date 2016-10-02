@@ -111,7 +111,7 @@ int main ( int argc, const char** argv) {
   std::string currentDirectory = corrAnalysis::getPWD( );
   
   // If we arent in the analysis directory, exit
-  if ( !corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || !corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" ) ) {
+  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
     std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
     return -1;
   }
