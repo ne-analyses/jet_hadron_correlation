@@ -62,7 +62,7 @@ set ErrFile     = log/${inputDir}/mix_${OutBase}.err
 
 # get relative tree location
 set treeFile = `basename $input`
-set relativeTreeFile = 'tree/'+${treeFile}
+set relativeTreeFile = tree/${treeFile}
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
