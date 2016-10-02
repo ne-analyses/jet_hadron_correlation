@@ -25,7 +25,7 @@ set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/pp_correlation'
 set base = pp_list/grid/pp
-set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/pico
+set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/picoMB_0_20.root
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
 echo 'Error: illegal number of parameters'
