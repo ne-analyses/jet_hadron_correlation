@@ -482,6 +482,11 @@ int main ( int argc, const char** argv) {
     // Pull the next jet/dijet
     jetTree->GetEntry(i);
     
+    if ( i % 20 == 0) {
+      std::string eventOut = "Mixing tree entry: " + std::to_string(i);
+      __OUT( eventOut.c_str() )
+    }
+    
     // get the proper cent/vz bin
     std::vector< unsigned > randomizedEventID;
     if ( corrAnalysis::BeginsWith( analysisType, "pp") )
@@ -500,6 +505,12 @@ int main ( int argc, const char** argv) {
     for ( int i = 0; i < nEventsToMix; ++i ) {
       // get the event
       reader.ReadEvent( randomizedEventID[i] );
+      
+      // count event
+      if ( corrAnalysis::BeginsWith( analysisType, "pp") )
+        histograms->CountEvent( vzBranch );
+      else
+        histograms->CountEvent( centBranch, vzBranch );
       
       // get the reference centrality definition used by
       // the track efficiency class
@@ -520,6 +531,9 @@ int main ( int argc, const char** argv) {
         fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
         fastjet::PseudoJet subTrigger = fastjet::PseudoJet( *subBranch );
         
+        histograms->FillLeadEtaPhi( leadTrigger.eta(), leadTrigger.phi_std() );
+        histograms->FillSubEtaPhi( subTrigger.eta(), subTrigger.phi_std() );
+        
         // loop over associated particles
         for ( int j = 0; j < particles.size(); ++j ) {
           fastjet::PseudoJet assocParticle = particles[j];
@@ -538,6 +552,7 @@ int main ( int argc, const char** argv) {
         // make the trigger pseudojets
         fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
         
+        histograms->FillJetEtaPhi( leadTrigger.eta(), leadTrigger.phi_std() );
         
         // loop over associated particles
         for ( int j = 0; j < particles.size(); ++j ) {
