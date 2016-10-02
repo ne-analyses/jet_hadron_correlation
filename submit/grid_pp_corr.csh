@@ -21,11 +21,11 @@
 # first make sure program is updated and exists
 make bin/pp_correlation || exit
 
+set ExecPath = `pwd`
 set analysis = $1
-set command = './bin/pp_correlation'
+set execute = './bin/pp_correlation'
 set base = pp_list/pp
-set mbData = /Data/AuAuMB_0_20/picoMB_0_20.root
-set outDir = out/pp/
+set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/pico
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
 echo 'Error: illegal number of parameters'
@@ -37,12 +37,6 @@ if ( $analysis != 'ppdijet' && $analysis != 'ppjet' ) then
 echo 'Error: unknown analysis type'
 exit
 endif
-
-# Start the Condor File
-echo "" > CondorFile
-echo "Universe    = vanilla" >> CondorFile
-echo "Executable  = ${command}" >> CondorFile
-echo "getenv = true" >> CondorFile
 
 # Arguments
 set useEfficiency = $2
@@ -104,17 +98,8 @@ echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
 set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $outLocation $outName $outNameTree $Files $mbData"
-set execute = "${command} ${arg}"
 
-# Write to CondorFile
-echo "Executing " $execute
-
-echo " " >> CondorFile
-echo "Output    = ${LogFile}" >> CondorFile
-echo "Error     = ${ErrFile}" >> CondorFile
-echo "Arguments = ${arg}" >> CondorFile
-echo "Queue" >> CondorFile
-
+qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N ppCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
 

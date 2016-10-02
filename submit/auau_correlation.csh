@@ -24,7 +24,6 @@
 set analysis = $1
 set command = './bin/auau_correlation'
 set base = /Users/nickelsey/physics/data/CleanAuAuY7/Clean
-set outDir = out/auau/
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters'

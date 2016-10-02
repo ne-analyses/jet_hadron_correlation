@@ -21,10 +21,10 @@
 # first make sure program is updated and exists
  make bin/auau_correlation || exit
 
+set ExecPath = `pwd`
 set analysis = $1
-set command = './bin/auau_correlation'
-set base = /Users/nickelsey/physics/data/CleanAuAuY7/Clean
-set outDir = out/auau/
+set execute = './bin/auau_correlation'
+set base = /nfs/rhi/STAR/Data/CleanAuAuY7/Clean
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters'
@@ -36,12 +36,6 @@ if ( $analysis != 'dijet' && $analysis != 'jet' ) then
 	echo 'Error: unknown analysis type'
 	exit
 endif
-
-# Start the Condor File
-echo "" > CondorFile
-echo "Universe    = vanilla" >> CondorFile
-echo "Executable  = ${command}" >> CondorFile
-echo "getenv = true" >> CondorFile
 
 # Arguments
 set useEfficiency = $2
@@ -104,17 +98,8 @@ echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
 set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $outLocation $outName $outNameTree $Files"
-set execute = "${command} ${arg}"
 
-# Write to CondorFile
-echo "Executing " $execute
-
-echo " " >> CondorFile
-echo "Output    = ${LogFile}" >> CondorFile
-echo "Error     = ${ErrFile}" >> CondorFile
-echo "Arguments = ${arg}" >> CondorFile
-echo "Queue" >> CondorFile
-
+qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
 

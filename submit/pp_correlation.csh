@@ -25,7 +25,6 @@ set analysis = $1
 set command = './bin/pp_correlation'
 set base = pp_list/pp
 set mbData = /Data/AuAuMB_0_20/picoMB_0_20.root
-set outDir = out/pp/
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
 echo 'Error: illegal number of parameters'
