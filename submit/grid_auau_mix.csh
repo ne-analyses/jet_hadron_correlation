@@ -1,5 +1,85 @@
 #!/bin/csh
 
+# Script for event mixing auau trees on the grid
+# Command line arguments:
+# [1]: input directory ( it should have a long string of analysis settings generated from grid_auau_corr.csh )
+# [2]: event mixing data ( either .root file or list )
+# [3]: Is the data MB or HT?
+# [4]: total number of events to look through
+# [5]: number of events to mix with each trigger
+#
+# Can set default settings by only giving
+# [1]: input directory
+# [2]: 'default'
+
+
+# first make sure program is updated and exists
+make bin/event_mixing || exit
+
+set ExecPath = `pwd`
+set inputDir = $1
+set execute = './bin/event_mixing'
+set base = ${inputDir}/tree/tree
+
+if ( $# != "5" && !( $2 == 'default' ) ) then
+echo 'Error: illegal number of parameters'
+exit
+endif
+
+
+# define arguments
+set mixEvents = $2
+set dataType = $3
+set nEvents = $4
+set eventsPerTrigger = $5
+
+#made the log directory
+if ( ! -d log/${inputDir} ) then
+mkdir -p log/${inputDir}
+endif
+
+if ( $2 == 'default' ) then
+set mixEvents = 'auau_list/grid_AuAuy7HT.list'
+set dataType = 'HT'
+set nEvents = '-1'
+set eventsPerTrigger = '25'
+
+# Now Submit jobs for each data file
+foreach input ( ${base}*.root )
+
+# Create the output file base name
+set OutBase = `basename $input | sed 's/.root//g'`
+
+# Make the output names and path
+set outName = mixing/mix_${OutBase}.root
+
+# Input files
+set Files = ${input}
+
+# Logfiles. Thanks cshell for this "elegant" syntax to split err and out
+set LogFile     = log/${inputDir}/mix_${OutBase}.out
+set ErrFile     = log/${inputDir}/mix_${OutBase}.err
+
+# get relative tree location
+set treeFile = `basename $input`
+set relativeTreeFile = 'tree/'+${treeFile}
+
+echo "Logging output to " $LogFile
+echo "Logging errors to " $ErrFile
+
+set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTrigger $mixEvents"
+
+#qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+
+end
+
+
+
+
+
+
+
+
 #  A Slightly ugly way to make it as simple as possible to run different analyses,
 #  And to make it easier to change variables and keep the book keeping simple
 #  Command Line Arugments:
@@ -31,7 +111,6 @@ if ( $# != "7" && !( $2 == 'default' ) ) then
 	exit
 endif
 
-echo $analysis
 if ( $analysis != 'dijet' && $analysis != 'jet' ) then
 	echo 'Error: unknown analysis type'
 	exit
