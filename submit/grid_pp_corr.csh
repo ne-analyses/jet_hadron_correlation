@@ -24,7 +24,7 @@ make bin/pp_correlation || exit
 set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/pp_correlation'
-set base = pp_list/pp
+set base = pp_list/grid/pp
 set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/pico
 
 if ( $# != "7" && !( $2 == 'default' ) ) then
