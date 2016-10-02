@@ -167,7 +167,7 @@ int main ( int argc, const char** argv) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 9: { // Custom case
+    case 8: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       // Set non-default values
