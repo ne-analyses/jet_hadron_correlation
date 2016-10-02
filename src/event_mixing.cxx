@@ -83,6 +83,18 @@
 #include "fastjet/tools/Filter.hh"
 #include "fastjet/FunctionOfPseudoJet.hh"
 
+// Because the grid is ridiculous and doesnt
+// Have std::to_string
+namespace patch
+{
+  template < typename T > std::string to_string( const T& n )
+  {
+    std::ostringstream stm ;
+    stm << n ;
+    return stm.str() ;
+  }
+}
+
 // Used for year 7 tracking efficiency corrections,
 // if they are being used
 #include "ktTrackEff.hh"
@@ -359,7 +371,7 @@ int main ( int argc, const char** argv) {
     return -1;
   }
   
-  std::string reportEntries = "total of " + std::to_string( treeEntries ) + " trigger events";
+  std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
   __OUT( reportEntries.c_str() )
   // Define our branches
   TLorentzVector *leadBranch, *subBranch;
@@ -458,7 +470,7 @@ int main ( int argc, const char** argv) {
     return -1;
   }
   __OUT("Finished inital event binning in Vz-centrality")
-  std::string finishEventCheck = "Out of " + std::to_string(total_events) + ", " + std::to_string(useable_events) + " will be used";
+  std::string finishEventCheck = "Out of " + patch::to_string(total_events) + ", " + patch::to_string(useable_events) + " will be used";
   __OUT( finishEventCheck.c_str() )
   // Quick check for the size of these arrays
   // Remove cent/vz bins that have too few events
@@ -468,9 +480,9 @@ int main ( int argc, const char** argv) {
       if ( mixing_events[i][j].size() < nEventsToMix*1.5 ) {
         mixing_events[i][j].clear();
         std::string outMessage = "Removing bin ";
-        outMessage += std::to_string(i);
+        outMessage += patch::to_string(i);
         outMessage += " ";
-        outMessage += std::to_string(j);
+        outMessage += patch::to_string(j);
         __OUT( outMessage.c_str() )
       }
     }
