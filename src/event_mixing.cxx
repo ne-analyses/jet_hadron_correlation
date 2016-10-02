@@ -337,62 +337,6 @@ int main ( int argc, const char** argv) {
   // used in the correlation analysis
   ktTrackEff efficiencyCorrection( corrAnalysis::y7EfficiencyFile );
   
-  // Now we need to load the dijet trees
-  // -----------------------------------
-  // The root file
-  TFile treeFile( (inputDir+"/"+inputTreeFile).c_str(), "READ");
-  
-  // pull the tree
-  TTree* jetTree;
-  if (analysisType == "dijetmix" )
-    jetTree = (TTree*) treeFile.Get( "dijets" );
-  else if ( analysisType == "jetmix" )
-    jetTree = (TTree*) treeFile.Get( "jets" );
-  else if ( analysisType == "ppdijetmix" )
-    jetTree = (TTree*) treeFile.Get( "pp_dijets" );
-  else if ( analysisType == "ppjetmix" )
-    jetTree = (TTree*) treeFile.Get( "pp_jets" );
-  else {
-    __ERR("analysis type unrecognized")
-    return -1;
-  }
-  
-  // Check to make sure the tree exists
-  if ( !jetTree ) {
-    __ERR("error retrieving tree from input file")
-    return -1;
-  }
-    
-  // Get the number of entries
-  unsigned treeEntries = jetTree->GetEntries();
-  
-  if ( treeEntries == 0 ) {
-    __ERR("no entries in jet tree - aborting")
-    return -1;
-  }
-  
-  std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
-  __OUT( reportEntries.c_str() )
-  // Define our branches
-  TLorentzVector *leadBranch, *subBranch;
-  int centBranch, vzBranch;
-  
-  // set the branch addresses for the tree
-  if ( requireDijets ) {
-    jetTree->SetBranchAddress( "leadJet", &leadBranch );
-    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
-    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
-    if ( analysisType == "dijetmix" )
-      jetTree->SetBranchAddress( "centralityBin", &centBranch );
-  }
-  else {
-    jetTree->SetBranchAddress( "triggerJet", &leadBranch );
-    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
-    if ( analysisType == "jetmix" )
-      jetTree->SetBranchAddress( "centralityBin", &centBranch );
-  }
-  __OUT("loaded branches")
-  
   // Now loop over events and store their IDs in the proper
   // Vz-Centrality bin
   // And we'll count the total number of events
@@ -488,9 +432,67 @@ int main ( int argc, const char** argv) {
     }
   __OUT("Done removing bins")
   
+  // Now we need to load the dijet trees
+  // -----------------------------------
+  // The root file
+  TFile treeFile( (inputDir+"/"+inputTreeFile).c_str(), "READ");
+  
+  // pull the tree
+  TTree* jetTree;
+  if (analysisType == "dijetmix" )
+    jetTree = (TTree*) treeFile.Get( "dijets" );
+  else if ( analysisType == "jetmix" )
+    jetTree = (TTree*) treeFile.Get( "jets" );
+  else if ( analysisType == "ppdijetmix" )
+    jetTree = (TTree*) treeFile.Get( "pp_dijets" );
+  else if ( analysisType == "ppjetmix" )
+    jetTree = (TTree*) treeFile.Get( "pp_jets" );
+  else {
+    __ERR("analysis type unrecognized")
+    return -1;
+  }
+  
+  // Check to make sure the tree exists
+  if ( !jetTree ) {
+    __ERR("error retrieving tree from input file")
+    return -1;
+  }
+  
+  // Get the number of entries
+  unsigned treeEntries = jetTree->GetEntries();
+  
+  if ( treeEntries == 0 ) {
+    __ERR("no entries in jet tree - aborting")
+    return -1;
+  }
+  
+  std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
+  __OUT( reportEntries.c_str() )
+  // Define our branches
+  TLorentzVector *leadBranch, *subBranch;
+  int centBranch, vzBranch;
+  
+  // set the branch addresses for the tree
+  if ( requireDijets ) {
+    jetTree->SetBranchAddress( "leadJet", &leadBranch );
+    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
+    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
+    if ( analysisType == "dijetmix" )
+      jetTree->SetBranchAddress( "centralityBin", &centBranch );
+  }
+  else {
+    jetTree->SetBranchAddress( "triggerJet", &leadBranch );
+    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
+    if ( analysisType == "jetmix" )
+      jetTree->SetBranchAddress( "centralityBin", &centBranch );
+  }
+  __OUT("loaded branches")
+
+  
   // Now we can run over all tree entries and perform the mixing
   __OUT("Starting to perform event mixing")
   for ( int i = 0; i < treeEntries; ++i ) {
+
     // Pull the next jet/dijet
     jetTree->GetEntry(i);
     
