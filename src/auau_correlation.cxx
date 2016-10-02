@@ -212,7 +212,7 @@ int main ( int argc, const char** argv ) {
   
   // Build our input now
   TChain* chain = new TChain( chainName.c_str() );
-  
+  std::cout<<"INPUT FILE: "<<inputFile<<std::endl;
   // Check to see if the input is a .root file or a .txt
   bool inputIsRoot = corrAnalysis::HasEnding( inputFile.c_str(), ".root" );
   bool inputIsTxt  = corrAnalysis::HasEnding( inputFile.c_str(), ".txt"  );
