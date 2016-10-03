@@ -409,7 +409,7 @@ namespace corrAnalysis {
         // check to make sure the matched jets are within the
         // accepted eta range
         for ( int i = 0; i < matchedToDijet.size(); ++i )
-          if ( fabs( matchedToDijet[0].eta() ) > corrAnalysis::maxTrackRap - jetRadius )
+          if ( fabs( matchedToDijet[i].eta() ) > corrAnalysis::maxTrackRap - jetRadius )
             return std::vector<fastjet::PseudoJet>();
         
         // now return in proper order
