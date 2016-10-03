@@ -39,10 +39,10 @@ mkdir -p log/${inputDir}
 endif
 
 if ( $2 == 'default' ) then
-set mixEvents = 'auau_list/grid_AuAuy7HTTest.list'
+set mixEvents = 'auau_list/grid_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
-set eventsPerTrigger = '25'
+set eventsPerTrigger = '30'
 
 # Now Submit jobs for each data file
 foreach input ( ${base}*.root )
