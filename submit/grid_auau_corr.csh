@@ -54,8 +54,8 @@ if ( $2 == 'default' ) then
 		set jetPtMax = 100.0
 	else if ( $analysis == 'jet' ) then
 		set subLeadPtMin = 0.0
-		set leadPtMin = 15.0
-		set jetPtMax = 20.0
+		set leadPtMin = 10.0
+		set jetPtMax = 15.0
 	endif
   endif
 	set jetRadius = 0.4
