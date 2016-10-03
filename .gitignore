@@ -1,0 +1,54 @@
+# ignore lists for git
+
+# that weird crap emacs generates
+*~
+
+
+# object files
+*.o
+*.obj
+
+# ROOT files and dictionary
+*.root
+src/dict.*
+
+# log information
+*.err
+*.log
+*.out
+log
+
+# the apple DS_Store stuff
+.DS_Store*
+._*
+
+# other possible output
+*png
+*pdf
+
+# the stuff that should be created
+# after cloning
+out
+test
+tmp
+bin
+src/obj
+
+# dylibraries
+*.so
+*.dylib
+
+# static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+# condor file
+CondorFile
