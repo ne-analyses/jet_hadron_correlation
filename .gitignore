@@ -29,10 +29,15 @@ log
 # the stuff that should be created
 # after cloning
 out
+out/*
 test
+test/*
 tmp
+tmp/*
 bin
+bin/*
 src/obj
+src/obj/*
 
 # dylibraries
 *.so
