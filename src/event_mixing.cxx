@@ -392,6 +392,11 @@ int main ( int argc, const char** argv) {
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
   }
   __OUT("loaded branches")
+  
+  std::cout<<"Jet Tree Entries: "<< jetTree->GetEntries() << std::endl;
+  std::cout<<" getting entry 1 "<< std::endl;
+  jetTree->GetEntry(0);
+  std::cout<<"loaded entry 1 successfully"<<std::endl;
 
   
   // Now loop over events and store their IDs in the proper
