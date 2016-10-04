@@ -6,7 +6,7 @@ INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I
 ifeq ($(os),Linux)
 CXXFLAGS      = 
 else
-CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init
+CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init -std=c++11
 ## for debugging:
 # CXXFLAGS      = -g -O0 -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init
 endif
@@ -61,7 +61,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing
+all : $(BDIR)/test $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -72,9 +72,10 @@ $(ODIR)/corrFunctions.o					: $(SDIR)/corrFunctions.cxx $(SDIR)/corrFunctions.hh
 
 #$(ODIR)/qa_v1.o 		: $(SDIR)/qa_v1.cxx
 $(ODIR)/test.o			: $(SDIR)/test.cxx
-$(ODIR)/auau_correlation	: $(SDIR)/auau_correlation.cxx
-$(ODIR)/pp_correlation		: $(SDIR)/pp_correlation.cxx
-$(ODIR)/event_mixing       : $(SDIR)/event_mixing.cxx
+$(ODIR)/auau_correlation.o	: $(SDIR)/auau_correlation.cxx
+$(ODIR)/pp_correlation.o		: $(SDIR)/pp_correlation.cxx
+$(ODIR)/event_mixing.o       : $(SDIR)/event_mixing.cxx
+$(ODIR)/generate_output.o   : $(SDIR)/generate_output.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
@@ -82,6 +83,7 @@ $(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o  $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
+$(BDIR)/generate_output     : $(ODIR)/generate_output.o
 
 ###############################################################################
 ##################################### MISC ####################################
