@@ -953,9 +953,9 @@ namespace corrAnalysis {
           std::stringstream s1, s2;
           s1 << i;
           s2 << j;
-          TString leadName = "jet_cent_";
+          TString leadName = "lead_cent_";
           if ( analysisType == "jetmix" ) {
-            leadName = "mix_jet_cent_";
+            leadName = "mix_lead_cent_";
           }
           leadName += s1.str() + "_vz_" + s2.str();
           
@@ -1003,11 +1003,11 @@ namespace corrAnalysis {
           std::stringstream s1, s2;
           s1 << i;
           s2 << j;
-          TString leadName = "pp_lead_cent_";
-          TString subName = "pp_sub_cent_";
+          TString leadName = "lead_cent_";
+          TString subName = "sub_cent_";
           if ( analysisType == "ppdijetmix" ) {
-            leadName = "mix_pp_lead_cent_";
-            subName = "mix_pp_sub_cent_";
+            leadName = "mix_lead_cent_";
+            subName = "mix_sub_cent_";
           }
           leadName += s1.str() + "_vz_" + s2.str();
           subName += s1.str() + "_vz_" + s2.str();
@@ -1049,9 +1049,9 @@ namespace corrAnalysis {
           std::stringstream s1, s2;
           s1 << i;
           s2 << j;
-          TString leadName = "pp_jet_cent_";
+          TString leadName = "pp_lead_cent_";
           if ( analysisType == "ppjetmix" ) {
-            leadName = "mix_pp_jet_cent_";
+            leadName = "mix_lead_cent_";
           }
           leadName += s1.str() + "_vz_" + s2.str();
           
