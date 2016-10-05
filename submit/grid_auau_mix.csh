@@ -72,9 +72,3 @@ set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTri
 qsub -V -q erhiq -l mem=3GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
-
-
-
-
-
-
