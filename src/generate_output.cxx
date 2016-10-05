@@ -107,8 +107,8 @@ int main( int argc, const char** argv) {
       mixFiles = new TFile*[nCorrFiles];
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
-        corrFiles[i] = new TFile( arguments[i], "READ" );
-        mixFiles[i] = new TFile( arguments[i+1], "READ" );
+        corrFiles[i] = new TFile( arguments[i].c_str(), "READ" );
+        mixFiles[i] = new TFile( arguments[i+1].c_str(), "READ" );
       }
       
 
