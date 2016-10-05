@@ -7,6 +7,11 @@
 // Are located in corrParameters.hh
 #include "corrParameters.hh"
 
+// The majority of the jetfinding
+// And correlation code is located in
+// corrFunctions.hh
+#include "corrFunctions.hh"
+
 // ROOT is used for histograms and
 // As a base for the TStarJetPico library
 // ROOT Headers
