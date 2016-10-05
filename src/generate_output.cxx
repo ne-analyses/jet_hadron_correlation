@@ -68,7 +68,12 @@ int main( int argc, const char** argv) {
   TString ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
   
   // analysis names
-  std::vector<std::string> defaultCorrNames = { "Dijet", "10 < Jet < 15", "15 < Jet < 20", "Jet > 20"};
+  std::vector<std::string> defaultCorrNames[4];
+  defaultCorrNames[0] = "Dijet";
+  defaultCorrNames[1] = "10 < Jet < 15";
+  defaultCorrNames[2] = "15 < Jet < 20";
+  defaultCorrNames[3] = "Jet > 20";
+  
   
   // First check to make sure we're located properly
   std::string currentDirectory = corrAnalysis::getPWD( );
@@ -122,7 +127,7 @@ int main( int argc, const char** argv) {
       for ( int i = 0; i < nCorrFiles; ++i ) {
         corrFiles[i] = new TFile( arguments[ 3*i ].c_str(), "READ" );
         mixFiles[i] = new TFile( arguments[ (3*i)+1 ].c_str(), "READ" );
-        analysisNames[i] = arguments[ (3*i)+2 ], "READ" );
+        analysisNames[i] = arguments[ (3*i)+2 ];
       }
       
 
