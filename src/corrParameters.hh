@@ -148,8 +148,6 @@ namespace corrAnalysis {
 	const int y7EfficiencyRefCentLower = 6;
 	const int y7EfficiencyRefCentUpper = 8;
 	
-	
-	
 }
 
 #endif
