@@ -173,9 +173,9 @@ int main( int argc, const char** argv) {
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
-    nEvents[i] = (TH3D*) corrFiles[i]->Get( "nevents" );
+    nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
-    hVz[i] = (TH3D*) corrFiles[i]->Get( "vzdist" );
+    hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
     hVz[i]->SetName( hvzBaseName.c_str() );
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
     corrHist[i]->SetName( corrhistBaseName );
