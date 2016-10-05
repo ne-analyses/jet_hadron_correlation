@@ -277,7 +277,7 @@ int main( int argc, const char** argv) {
     testhist->Add( reducedHist[0][i] );
   testhist->Draw("colz");
   c1.SaveAs("test.pdf");
-  reducedHist[0][1]->ProjectionY()->Draw();
+  testhist->ProjectionY()->Draw();
   c1.SaveAs("test1.pdf");
   
   return 0;
