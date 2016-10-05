@@ -312,14 +312,7 @@ namespace corrAnalysis {
     bool FillAssocPt( double pt );
     bool FillAssocEtaPhi( double eta, double phi );
     
-    
-		
 	};
-  
-	
 }
 
 #endif
-
-
-
