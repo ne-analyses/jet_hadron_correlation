@@ -136,7 +136,7 @@ int main( int argc, const char** argv) {
   
   int nFiles = analysisNames.size();
   
-  // Load in ALL the histograms
+  // Load in the histograms
   TH2D* nEvents[ nFiles ];
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
@@ -153,6 +153,14 @@ int main( int argc, const char** argv) {
       corrCentVz[i][j].resize( corrAnalysis::binsVz );
       mixCentVz[i][j].resize( corrAnalysis::binsVz );
     }
+  }
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    
+    nEvents[i] = corrFiles[i]->Get( "nevents" );
+    hVz[i] = corrFiles[i]->Get( "vzdist" );
+    corrHist[i] = corrFiles[i]->Get( "leadjetcorr" );
+    mixHist[i] = mixFiles[i]->Get( "leadjetcorr" );
   }
   
   return 0;
