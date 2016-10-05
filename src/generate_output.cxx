@@ -289,9 +289,9 @@ int main( int argc, const char** argv) {
   TCanvas c1;
   for (int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++ j ) {
-      std::string corrName = "tmp/corrtest_";  corrName += patch::to_string(i); corrName += patch::to_string(j);
-      std::string mixName = "tmp/mixtest_"; mixName += patch::to_string(i); mixName += patch::to_string(j);
-      std::string corrNameProj = "tmp/corrtestproj_"; corrNameProj += patch::to_string(i); corrNameProj += patch::to_string(j);
+      std::string corrName = "tmp/corrtest_";  corrName += patch::to_string(i); corrName += patch::to_string(j); corrName += ".pdf";
+      std::string mixName = "tmp/mixtest_"; mixName += patch::to_string(i); mixName += patch::to_string(j); mixName += ".pdf";
+      std::string corrNameProj = "tmp/corrtestproj_"; corrNameProj += patch::to_string(i); corrNameProj += patch::to_string(j); corrNameProj += ".pdf";
       
       reducedHist[i][j]->Draw("surf1");
       c1.SaveAs( corrName.c_str() );
