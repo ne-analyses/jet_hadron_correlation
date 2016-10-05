@@ -178,10 +178,8 @@ int main( int argc, const char** argv) {
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
     hVz[i]->SetName( hvzBaseName.c_str() );
-    std::cout<<"got here"<<std::endl;
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
     corrHist[i]->SetName( corrhistBaseName.c_str() );
-    std::cout<<"not here"<<std::endl;
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
     
