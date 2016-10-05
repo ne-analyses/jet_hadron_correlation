@@ -294,11 +294,11 @@ int main( int argc, const char** argv) {
       std::string corrNameProj = "tmp/corrtestproj_" corrName += patch::to_string(i); corrNameProj += patch::to_string(j);
       
       reducedHist[i][j]->Draw("surf1");
-      c1.SaveAs( corrName );
+      c1.SaveAs( corrName.c_str() );
       reducedMix[i][j]->Draw("surf1");
-      c1.SaveAs( mixName );
+      c1.SaveAs( mixName.c_str() );
       reducedMix[i][j]->ProjectionY()->Draw();
-      c1.SaveAs( corrNameProj );
+      c1.SaveAs( corrNameProj.c_str() );
       
     }
   }
