@@ -188,6 +188,7 @@ int main( int argc, const char** argv) {
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        std::cout<<"inner loop"<<std::endl;
         // make the initial name
         std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
         std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
@@ -214,6 +215,7 @@ int main( int argc, const char** argv) {
       }
   }
   
+  std::cout<<"got here too"<<std::endl;
   std::cout<<mixCentVz[1][1][1]<<std::endl;
   std::cout<<mixCentVz[2][1][1]<<std::endl;
   
