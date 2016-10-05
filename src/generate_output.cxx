@@ -213,11 +213,6 @@ int main( int argc, const char** argv) {
       }
   }
   
-  std::cout<<"got here"<<std::endl;
-  std::cout<<"printing histograms?"<<std::endl;
-  std::cout<<corrCentVz[0][1][1]<<std::endl;
-  std::cout<<mixCentVz[0][1][1]<<std::endl;
-  
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixCentVzPt;
@@ -275,7 +270,9 @@ int main( int argc, const char** argv) {
     }
   }
   
-  
+  TCanvas c1;
+  reducedHist[0][0]->Draw("colz");
+  c1.SaveAs("test.pdf");
   
   return 0;
 }
