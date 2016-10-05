@@ -168,6 +168,7 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < nFiles; ++i ) {
+    std::cout<<"i = "<< i << std::endl;
     
     std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
