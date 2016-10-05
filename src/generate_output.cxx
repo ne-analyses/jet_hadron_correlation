@@ -215,8 +215,8 @@ int main( int argc, const char** argv) {
   
   std::cout<<"got here"<<std::endl;
   std::cout<<"printing histograms?"<<std::endl;
-  std::cout<<corrCentVz[1][1][1]<<std::endl;
-  std::cout<<mixCentVz[1][1][1]<<std::endl;
+  std::cout<<corrCentVz[0][1][1]<<std::endl;
+  std::cout<<mixCentVz[0][1][1]<<std::endl;
   
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
