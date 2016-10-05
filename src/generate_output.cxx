@@ -271,7 +271,11 @@ int main( int argc, const char** argv) {
   }
   
   TCanvas c1;
-  reducedHist[0][1]->Draw("colz");
+  
+  TH2D* testhist = (TH2D*) reducedHist[0][1]->Clone("testhist");
+  for ( int i = 1; i < nPtBins; ++i )
+    testhist->Add( reducedHist[0][i] );
+  testhist->Draw("colz");
   c1.SaveAs("test.pdf");
   reducedHist[0][1]->ProjectionY()->Draw();
   c1.SaveAs("test1.pdf");
