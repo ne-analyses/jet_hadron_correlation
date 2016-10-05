@@ -180,8 +180,8 @@ int main( int argc, const char** argv) {
     hVz[i]->SetName( hvzBaseName.c_str() );
     std::cout<<"got here"<<std::endl;
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
-    std::cout<<"not here"<<std::endl;
     corrHist[i]->SetName( corrhistBaseName.c_str() );
+    std::cout<<"not here"<<std::endl;
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
     
