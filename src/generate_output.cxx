@@ -292,7 +292,7 @@ int main( int argc, const char** argv) {
       std::string corrName = "tmp/corrtest_";  corrName += patch::to_string(i); corrName += patch::to_string(j); corrName += ".pdf";
       std::string mixName = "tmp/mixtest_"; mixName += patch::to_string(i); mixName += patch::to_string(j); mixName += ".pdf";
       std::string corrNameProj = "tmp/corrtestproj_"; corrNameProj += patch::to_string(i); corrNameProj += patch::to_string(j); corrNameProj += ".pdf";
-      std::string corrNameProj2 = "tmp/corrtestproj_"; corrNameProj2 += patch::to_string(i); corrNameProj2 += patch::to_string(j); corrNameProj2 += ".pdf";
+      std::string corrNameProj2 = "tmp/corrtestproj2_"; corrNameProj2 += patch::to_string(i); corrNameProj2 += patch::to_string(j); corrNameProj2 += ".pdf";
       
       reducedHist[i][j]->Draw("surf1");
       c1.SaveAs( corrName.c_str() );
