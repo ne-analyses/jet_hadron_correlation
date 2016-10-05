@@ -278,12 +278,28 @@ int main( int argc, const char** argv) {
     }
   }
   
-  
-  TFile out("test.root", "RECREATE" );
-  for ( int i = 0; i < nFiles; ++i ) {
+  // scale by the # of events
+  for (int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
-      reducedHist[i][j]->Write();
-      reducedMix[i][j]->Write();
+      reducedHist[i][j]->Scale( nEvents[i]->GetEntries() );
+    }
+  }
+  
+  // write out
+  TCanvas c1;
+  for (int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < nPtBins; ++ j ) {
+      std::string corrName = "tmp/corrtest_";  corrName += patch::to_string(i); corrName += patch::to_string(j);
+      std::string mixName = "tmp/mixtest_"; mixName += patch::to_string(i); mixName += patch::to_string(j);
+      std::string corrNameProj = "tmp/corrtestproj_" corrName += patch::to_string(i); corrNameProj += patch::to_string(j);
+      
+      reducedHist[i][j]->Draw("surf1");
+      c1.SaveAs( corrName );
+      reducedMix[i][j]->Draw("surf1");
+      c1.SaveAs( mixName );
+      reducedMix[i][j]->ProjectionY()->Draw();
+      c1.SaveAs( corrNameProj );
+      
     }
   }
   
