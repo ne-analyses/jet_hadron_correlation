@@ -55,8 +55,9 @@
 // list all input files as arguments -
 // 0 = corr1
 // 1 = mix1
-// 2 = corr2
-// 3 = mix2
+// 2 = analysis1 identifying string
+// 3 = corr2
+// 4 = mix2
 // .......
 
 int main( int argc, const char** argv) {
@@ -112,7 +113,7 @@ int main( int argc, const char** argv) {
     }
     default: {
       if ( (argc-1)%3 != 0 ) {
-        __ERR("Need correlation and mixing file for each entry")
+        __ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
@@ -130,14 +131,30 @@ int main( int argc, const char** argv) {
         mixFiles[i] = new TFile( arguments[ (3*i)+1 ].c_str(), "READ" );
         analysisNames[i] = arguments[ (3*i)+2 ];
       }
-      
-
     }
   }
   
+  int nFiles = analysisNames.size();
   
-  for ( int i = 0; i < analysisNames.size(); ++i )
-    std::cout<<analysisNames[i]<<std::endl;
+  // Load in ALL the histograms
+  TH2D* nEvents[ nFiles ];
+  TH1D* hVz[ nFiles ];
+  TH3D* corrHist[ nFiles ];
+  TH3D* mixHist[ nFiles ];
+  std::vector<std::vector<std::vector<TH3D*> > > corrCentVz;
+  std::vector<std::vector<std::vector<TH3D*> > > mixCentVz;
+  corrCentVz.resize( nFiles );
+  mixCentVz.resize( nFiles );
+  for ( int i = 0; i < nFiles; ++i ) {
+    corrCentVz[i].resize( corrAnalysis::binsCentrality );
+    mixCentVz[i].resize( corrAnalysis::binsCentrality );
+    
+    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+      corrCentVz[i][j].resize( corrAnalysis::binsVz );
+      mixCentVz[i][j].resize( corrAnalysis::binsVz );
+    }
+  }
+  
   return 0;
 }
 
