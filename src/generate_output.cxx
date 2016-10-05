@@ -129,6 +129,9 @@ int main( int argc, const char** argv) {
     }
   }
   
+  
+  for ( int i = 0; i < analysisNames.size(); ++i )
+    std::cout<<analysisNames[i]<<std::endl;
   return 0;
 }
 
