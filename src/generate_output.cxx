@@ -256,11 +256,11 @@ int main( int argc, const char** argv) {
           mixCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) mixCentVz[i][j][k]->Project3D( "YX" ))->Clone();
           
           // scale event mixing
-          if ( mixCentVz[i][j][k][l]->GetEntries() != 0 )
+          if ( mixCentVzPt[i][j][k][l]->GetEntries() != 0 )
             mixCentVzPt[i][j][k][l]->Scale( mixCentVzPt[i][j][k][l]->GetMaximum() );
           
           // divide the correlation histogram by scaled event mixing
-          if ( mixCentVz[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 )
+          if ( mixCentVzPt[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 )
             corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][l] );
           
           // add to the final histogram
