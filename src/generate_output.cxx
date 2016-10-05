@@ -271,8 +271,10 @@ int main( int argc, const char** argv) {
   }
   
   TCanvas c1;
-  reducedHist[0][0]->Draw("colz");
+  reducedHist[0][1]->Draw("colz");
   c1.SaveAs("test.pdf");
+  reducedHist[0][1]->ProjectionX()->Draw();
+  c1.SaveAs("test1.pdf");
   
   return 0;
 }
