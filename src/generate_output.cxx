@@ -211,6 +211,9 @@ int main( int argc, const char** argv) {
       }
   }
   
+  std::cout<<mixCentVz[1][1][1]<<std::endl;
+  std::cout<<mixCentVz[2][1][1]<<std::endl;
+  
   return 0;
 }
 
