@@ -168,7 +168,6 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < nFiles; ++i ) {
-    std::cout<<"file: "<<corrFiles[i]<<std::endl;
     
     std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
@@ -176,14 +175,12 @@ int main( int argc, const char** argv) {
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
 
     nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
-    std::cout<<"got nevents"<<std::endl;
     nEvents[i]->SetName( neventsBaseName.c_str() );
-    std::cout<<"renamed"<<std::endl;
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
-    std::cout<<"got vzdist"<<std::endl;
     hVz[i]->SetName( hvzBaseName.c_str() );
-    std::cout<<"renamed"<<std::endl;
+    std::cout<<"got here"<<std::endl;
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
+    std::cout<<"not here"<<std::endl;
     corrHist[i]->SetName( corrhistBaseName.c_str() );
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
