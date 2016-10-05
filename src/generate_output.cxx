@@ -68,7 +68,7 @@ int main( int argc, const char** argv) {
   TString ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
   
   // analysis names
-  TString defaultCorrNames[4] = { "Dijet", "10 < Jet < 15", "15 < Jet < 20", "Jet > 20"};
+  std::vector<std::string> defaultCorrNames = { "Dijet", "10 < Jet < 15", "15 < Jet < 20", "Jet > 20"};
   
   // First check to make sure we're located properly
   std::string currentDirectory = corrAnalysis::getPWD( );
