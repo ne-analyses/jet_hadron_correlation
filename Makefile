@@ -83,7 +83,7 @@ $(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o  $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
-$(BDIR)/generate_output     : $(ODIR)/generate_output.o
+$(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o
 
 ###############################################################################
 ##################################### MISC ####################################
