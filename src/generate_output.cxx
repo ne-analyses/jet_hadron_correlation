@@ -174,6 +174,7 @@ int main( int argc, const char** argv) {
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
+    std::cout<<"aaaaand here"<<std::endl;
     nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
