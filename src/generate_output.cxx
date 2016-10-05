@@ -178,9 +178,9 @@ int main( int argc, const char** argv) {
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
     hVz[i]->SetName( hvzBaseName.c_str() );
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
-    corrHist[i]->SetName( corrhistBaseName );
+    corrHist[i]->SetName( corrhistBaseName.c_str() );
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
-    mixHist[i]->SetName( mixhistBaseName );
+    mixHist[i]->SetName( mixhistBaseName.c_str() );
     
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
@@ -205,9 +205,9 @@ int main( int argc, const char** argv) {
         
         // get the histograms
         corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName );
-        corrCentVz[i][j][k]->SetName( corrDifBaseName );
+        corrCentVz[i][j][k]->SetName( corrDifBaseName.c_str() );
         mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName );
-        mixCentVz[i][j][k]->SetName( mixDifBaseName );
+        mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
       }
   }
   
