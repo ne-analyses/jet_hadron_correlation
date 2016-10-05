@@ -61,6 +61,15 @@
 
 int main( int argc, const char** argv) {
   
+  // Pt bins
+  const int nPtBins = 5;
+  double ptBinLo[nPtBins] = { 3, 5, 9, 13, 17 };
+  double ptBinHi[nPtBins] = { 4, 8, 12, 16, 24 };
+  TString ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
+  
+  // analysis names
+  TString defaultCorrNames[4] = { "Dijet", "10 < Jet < 15", "15 < Jet < 20", "Jet > 20"};
+  
   // First check to make sure we're located properly
   std::string currentDirectory = corrAnalysis::getPWD( );
   
@@ -71,9 +80,10 @@ int main( int argc, const char** argv) {
   }
   
   
-  // file
+  // files and naming
   TFile** corrFiles;
   TFile** mixFiles;
+  std::vector<std::string> analysisNames;
   
   switch ( argc ) {
     case 1: { // Default case
@@ -90,25 +100,29 @@ int main( int argc, const char** argv) {
       mixFiles[1] = new TFile( "out/tmp/jet10_mix.root", "READ" );
       mixFiles[2] = new TFile( "out/tmp/jet15_mix.root", "READ" );
       mixFiles[3] = new TFile( "out/tmp/jet20_mix.root", "READ" );
+      analysisNames = defaultCorrNames;
       
       break;
     }
     default: {
-      if ( (argc-1)%2 != 0 ) {
+      if ( (argc-1)%3 != 0 ) {
         __ERR("Need correlation and mixing file for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = (argc-1)/2;
+      int nCorrFiles = ( argc - 1 )/3;
       
-      corrFiles = new TFile*[nCorrFiles];
-      mixFiles = new TFile*[nCorrFiles];
+      analysisNames.resize( nCorrFiles );
+      
+      corrFiles = new TFile*[ nCorrFiles ];
+      mixFiles = new TFile*[ nCorrFiles ];
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
-        corrFiles[i] = new TFile( arguments[i].c_str(), "READ" );
-        mixFiles[i] = new TFile( arguments[i+1].c_str(), "READ" );
+        corrFiles[i] = new TFile( arguments[ 3*i ].c_str(), "READ" );
+        mixFiles[i] = new TFile( arguments[ (3*i)+1 ].c_str(), "READ" );
+        analysisNames[i] = arguments[ (3*i)+2 ], "READ" );
       }
       
 
