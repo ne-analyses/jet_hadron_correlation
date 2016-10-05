@@ -168,29 +168,30 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < nFiles; ++i ) {
-    std::cout<<"i = "<< i << std::endl;
+    std::cout<<"file: "<<corrFiles[i]<<std::endl;
     
     std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
-    std::cout<<"aaaaand here"<<std::endl;
+
     nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
+    std::cout<<"got nevents"<<std::endl;
     nEvents[i]->SetName( neventsBaseName.c_str() );
+    std::cout<<"renamed"<<std::endl;
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
+    std::cout<<"got vzdist"<<std::endl;
     hVz[i]->SetName( hvzBaseName.c_str() );
+    std::cout<<"renamed"<<std::endl;
     corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
     corrHist[i]->SetName( corrhistBaseName.c_str() );
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
     
-    std::cout<<"i: "<<i << std::endl;
-    std::cout<<"got here"<<std::endl;
-    std::cout<<mixHist[i]<<std::endl;
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-        std::cout<<"inner loop"<<std::endl;
+
         // make the initial name
         std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
         std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
@@ -217,7 +218,6 @@ int main( int argc, const char** argv) {
       }
   }
   
-  std::cout<<"got here too"<<std::endl;
   std::cout<<mixCentVz[1][1][1]<<std::endl;
   std::cout<<mixCentVz[2][1][1]<<std::endl;
   
