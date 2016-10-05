@@ -68,7 +68,8 @@ int main( int argc, const char** argv) {
   TString ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
   
   // analysis names
-  std::vector<std::string> defaultCorrNames[4];
+  std::vector<std::string> defaultCorrNames;
+  defaultCorrNames.resize(4);
   defaultCorrNames[0] = "Dijet";
   defaultCorrNames[1] = "10 < Jet < 15";
   defaultCorrNames[2] = "15 < Jet < 20";
