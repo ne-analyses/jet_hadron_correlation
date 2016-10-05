@@ -52,6 +52,18 @@
 #include <limits.h>
 #include <unistd.h>
 
+// Because the grid is ridiculous and doesnt
+// Have std::to_string
+namespace patch
+{
+  template < typename T > std::string to_string( const T& n )
+  {
+    std::ostringstream stm ;
+    stm << n ;
+    return stm.str() ;
+  }
+}
+
 // list all input files as arguments -
 // 0 = corr1
 // 1 = mix1
@@ -157,10 +169,46 @@ int main( int argc, const char** argv) {
   
   for ( int i = 0; i < nFiles; ++i ) {
     
-    nEvents[i] = corrFiles[i]->Get( "nevents" );
-    hVz[i] = corrFiles[i]->Get( "vzdist" );
-    corrHist[i] = corrFiles[i]->Get( "leadjetcorr" );
-    mixHist[i] = mixFiles[i]->Get( "leadjetcorr" );
+    std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
+    std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
+    std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
+    std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
+    nEvents[i] = (TH3D*) corrFiles[i]->Get( "nevents" );
+    nEvents[i]->SetName( neventsBaseName.c_str() );
+    hVz[i] = (TH3D*) corrFiles[i]->Get( "vzdist" );
+    hVz[i]->SetName( hvzBaseName.c_str() );
+    corrHist[i] = (TH3D*) corrFiles[i]->Get( "leadjetcorr" );
+    corrHist[i]->SetName( corrhistBaseName );
+    mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
+    mixHist[i]->SetName( mixhistBaseName );
+    
+    // pull in the cent/vz diffentiated histograms
+    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
+      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        // make the initial name
+        std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
+        std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
+        
+        corrDifInitName += "_vz_"; corrDifInitName += patch::to_string(k);
+        mixDifInitName += "_vz_"; mixDifInitName += patch::to_string(k);
+        
+        
+        // make the new histogram name
+        std::string corrDifBaseName = "corr_file_"; corrDifBaseName += patch::to_string(i);
+        std::string mixDifBaseName = "mix_file_"; mixDifBaseName += patch::to_string(i);
+        
+        corrDifBaseName += "_cent_"; corrDifBaseName += patch::to_string(j);
+        corrDifBaseName += "_vz_"; corrDifBaseName += patch::to_string(k);
+        
+        mixDifBaseName += "_cent_"; mixDifBaseName += patch::to_string(j);
+        mixDifBaseName += "_vz_"; mixDifBaseName += patch::to_string(k);
+        
+        // get the histograms
+        corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName );
+        corrCentVz[i][j][k]->SetName( corrDifBaseName );
+        mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName );
+        mixCentVz[i][j][k]->SetName( mixDifBaseName );
+      }
   }
   
   return 0;
