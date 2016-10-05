@@ -237,7 +237,13 @@ int main( int argc, const char** argv) {
   }
   
   // perform the projections and divide the 2d histograms
-  // by scaled event mixing histograms
+  // by scaled event mixing histograms,
+  // then add to the final histograms
+  std::vector<std::vector<TH2D*> > reducedHist;
+  reducedHist.resize( nFiles );
+  for ( int i = 0; i < nFiles; ++i )
+    reducedHist[i].resize( nPtBins );
+  
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
       for ( int k = 0; k < corrAnalysis::binsVz; ++ k ) {
@@ -250,11 +256,18 @@ int main( int argc, const char** argv) {
           mixCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) mixCentVz[i][j][k]->Project3D( "YX" ))->Clone();
           
           // scale event mixing
-          mixCentVzPt[i][j][k][l]->Scale( mixCentVzPt[i][j][k][l]->GetMaximum() );
+          if ( mixCentVz[i][j][k][l]->GetEntries() != 0 )
+            mixCentVzPt[i][j][k][l]->Scale( mixCentVzPt[i][j][k][l]->GetMaximum() );
           
           // divide the correlation histogram by scaled event mixing
-          corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][l] );
+          if ( mixCentVz[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 )
+            corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][l] );
           
+          // add to the final histogram
+          if ( j == 0 && k == 0 )
+            reducedHist[i][l] = (TH2D*) corrCentVzPt[i][j][k][l]->Clone();
+          else
+            reducedHist[i][l]->Add( corrCentVzPt[i][j][k][l] );
         }
       }
     }
