@@ -47,11 +47,68 @@
 #include <limits.h>
 #include <unistd.h>
 
+// list all input files as arguments -
+// 0 = corr1
+// 1 = mix1
+// 2 = corr2
+// 3 = mix2
+// .......
 
-int main() {
+int main( int argc, const char** argv) {
+  
+  // First check to make sure we're located properly
+  std::string currentDirectory = corrAnalysis::getPWD( );
+  
+  // If we arent in the analysis directory, exit
+  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
+    std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
+    return -1;
+  }
   
   
+  // file
+  TFile** corrFiles;
+  TFile** mixFiles;
   
+  switch ( argc ) {
+    case 1: { // Default case
+      __OUT( "Using Default Settings" )
+      corrFiles = new TFile*[4];
+      mixFiles = new TFile*[4];
+      
+      // default files
+      corrFiles[0] = new TFile( "out/tmp/dijet_corr.root", "READ" );
+      corrFiles[1] = new TFile( "out/tmp/jet10_corr.root", "READ" );
+      corrFiles[2] = new TFile( "out/tmp/jet15_corr.root", "READ" );
+      corrFiles[3] = new TFile( "out/tmp/jet20_corr.root", "READ" );
+      mixFiles[0] = new TFile( "out/tmp/dijet_mix.root", "READ" );
+      mixFiles[1] = new TFile( "out/tmp/jet10_mix.root", "READ" );
+      mixFiles[2] = new TFile( "out/tmp/jet15_mix.root", "READ" );
+      mixFiles[3] = new TFile( "out/tmp/jet20_mix.root", "READ" );
+      
+      break;
+    }
+    default: {
+      if ( (argc-1)%2 != 0 ) {
+        __ERR("Need correlation and mixing file for each entry")
+        return -1;
+      }
+      std::vector<std::string> arguments( argv+1, argv+argc );
+      
+      // number of correlations
+      int nCorrFiles = (argc-1)/2;
+      
+      corrFiles = new TFile*[nCorrFiles];
+      mixFiles = new TFile*[nCorrFiles];
+      
+      for ( int i = 0; i < nCorrFiles; ++i ) {
+        corrFiles[i] = new TFile( arguments[i], "READ" );
+        mixFiles[i] = new TFile( arguments[i+1], "READ" );
+      }
+      
+
+    }
+  }
   
   return 0;
 }
