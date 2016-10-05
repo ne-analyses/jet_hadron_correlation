@@ -279,7 +279,7 @@ int main( int argc, const char** argv) {
   }
   
   
-  TFile out("test.root", "READ" );
+  TFile out("test.root", "RECREATE" );
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
       reducedHist[i][j]->Write();
