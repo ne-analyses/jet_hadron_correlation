@@ -216,6 +216,51 @@ int main( int argc, const char** argv) {
   std::cout<<mixCentVz[1][1][1]<<std::endl;
   std::cout<<mixCentVz[2][1][1]<<std::endl;
   
+  // setup for 2d projections along pt axis
+  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
+  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixCentVzPt;
+  corrCentVzPt.resize( nFiles );
+  mixCentVzPt.resize( nFiles );
+  for ( int i = 0; i < nFiles; ++i ) {
+    corrCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    mixCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    
+    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+      corrCentVzPt[i][j].resize( corrAnalysis::binsVz );
+      mixCentVzPt[i][j].resize( corrAnalysis::binsVz );
+      
+      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        corrCentVzPt[i][j][k].resize( nPtBins );
+        mixCentVzPt[i][j][k].resize( nPtBins );
+      }
+    }
+  }
+  
+  // perform the projections and divide the 2d histograms
+  // by scaled event mixing histograms
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+      for ( int k = 0; k < corrAnalysis::binsVz; ++ k ) {
+        for ( int l = 0; l < nPtBins; ++l ) {
+          
+          corrCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
+          mixCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
+          
+          corrCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) corrCentVz[i][j][k]->Project3D( "YX" ))->Clone();
+          mixCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) mixCentVz[i][j][k]->Project3D( "YX" ))->Clone();
+          
+          // scale event mixing
+          mixCentVzPt[i][j][k][l]->Scale( mixCentVzPt[i][j][k][l]->GetMaximum() );
+          
+          // divide the correlation histogram by scaled event mixing
+          corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][l] );
+          
+        }
+      }
+    }
+  }
+  
+  
   return 0;
 }
 
