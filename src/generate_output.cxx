@@ -237,9 +237,13 @@ int main( int argc, const char** argv) {
   // by scaled event mixing histograms,
   // then add to the final histograms
   std::vector<std::vector<TH2D*> > reducedHist;
+  std::vector<std::vector<TH2D*> > reducedMix;
   reducedHist.resize( nFiles );
-  for ( int i = 0; i < nFiles; ++i )
+  reducedMix.resize( nFiles );
+  for ( int i = 0; i < nFiles; ++i ) {
     reducedHist[i].resize( nPtBins );
+    reducedMix[i].resize( nPtBins );
+  }
   
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
@@ -261,24 +265,27 @@ int main( int argc, const char** argv) {
             corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][l] );
           
           // add to the final histogram
-          if ( j == 0 && k == 0 )
+          if ( j == 0 && k == 0 ) {
             reducedHist[i][l] = (TH2D*) corrCentVzPt[i][j][k][l]->Clone();
-          else
+            reducedMix[i][l] = (TH2D*) mixCentVzPt[i][j][k][l]->Clone();
+          }
+          else {
             reducedHist[i][l]->Add( corrCentVzPt[i][j][k][l] );
+            reducedMix[i][l]->Add( mixCentVzPt[i][j][k][l] );
+          }
         }
       }
     }
   }
   
-  TCanvas c1;
   
-  TH2D* testhist = (TH2D*) reducedHist[0][1]->Clone("testhist");
-  for ( int i = 1; i < nPtBins; ++i )
-    testhist->Add( reducedHist[0][i] );
-  testhist->Draw("colz");
-  c1.SaveAs("test.pdf");
-  testhist->ProjectionY()->Draw();
-  c1.SaveAs("test1.pdf");
+  TFile out("test.root", "READ" );
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < nPtBins; ++j ) {
+      reducedHist[i][j]->Write();
+      reducedMix[i][j]->Write();
+    }
+  }
   
   return 0;
 }
