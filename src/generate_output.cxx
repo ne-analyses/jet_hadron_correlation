@@ -204,9 +204,9 @@ int main( int argc, const char** argv) {
         mixDifBaseName += "_vz_"; mixDifBaseName += patch::to_string(k);
         
         // get the histograms
-        corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName );
+        corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
         corrCentVz[i][j][k]->SetName( corrDifBaseName.c_str() );
-        mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName );
+        mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName.c_str() );
         mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
       }
   }
