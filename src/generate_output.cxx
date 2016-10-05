@@ -183,6 +183,7 @@ int main( int argc, const char** argv) {
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
     
+    std::cout<<"got here"<<std::endl;
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
@@ -212,6 +213,8 @@ int main( int argc, const char** argv) {
         mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
       }
   }
+  
+  std::cout<<"got here"<<std::endl;
   
   std::cout<<mixCentVz[1][1][1]<<std::endl;
   std::cout<<mixCentVz[2][1][1]<<std::endl;
@@ -272,6 +275,7 @@ int main( int argc, const char** argv) {
       }
     }
   }
+  
   
   
   return 0;
