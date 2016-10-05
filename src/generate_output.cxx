@@ -297,7 +297,7 @@ int main( int argc, const char** argv) {
       c1.SaveAs( corrName.c_str() );
       reducedMix[i][j]->Draw("surf1");
       c1.SaveAs( mixName.c_str() );
-      reducedMix[i][j]->ProjectionY()->Draw();
+      reducedHist[i][j]->ProjectionY()->Draw();
       c1.SaveAs( corrNameProj.c_str() );
       
     }
