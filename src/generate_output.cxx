@@ -78,7 +78,7 @@ int main( int argc, const char** argv) {
   const int nPtBins = 5;
   double ptBinLo[nPtBins] = { 3, 5, 9, 13, 17 };
   double ptBinHi[nPtBins] = { 4, 8, 12, 16, 24 };
-  TString ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
+  std::string ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
   
   // analysis names
   std::vector<std::string> defaultCorrNames;
