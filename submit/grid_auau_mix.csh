@@ -37,7 +37,6 @@ set eventsPerTrigger = $5
 set logBase = `basename $inputDir`
 
 #made the log directory
-echo ${logBase}
 if ( ! -d log/mix/${logBase} ) then
 mkdir -p log/mix/${logBase}
 endif
