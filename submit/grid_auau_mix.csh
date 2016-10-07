@@ -35,21 +35,21 @@ set eventsPerTrigger = $5
 
 # make a base directory for logging
 set logBase = 'basename $inputDir'
-echo 'here'
+
 #made the log directory
+echo ${logBase}
 if ( ! -d log/mix/${logBase} ) then
 mkdir -p log/mix/${logBase}
 endif
-echo 'here'
+
 if ( $2 == 'default' ) then
-echo 'here'
+
 set mixEvents = 'auau_list/grid_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
 set eventsPerTrigger = '60'
 endif
 
-echo 'here'
 # Now Submit jobs for each data file
 foreach input ( ${base}*.root )
 
