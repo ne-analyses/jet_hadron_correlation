@@ -33,9 +33,12 @@ set dataType = $3
 set nEvents = $4
 set eventsPerTrigger = $5
 
+# make a base directory for logging
+set logBase = 'basename $inputDir'
+
 #made the log directory
-if ( ! -d log/${inputDir} ) then
-mkdir -p log/${inputDir}
+if ( ! -d log/mix/${logBase} ) then
+mkdir -p log/mix/${logBase}
 endif
 
 if ( $2 == 'default' ) then
@@ -57,8 +60,8 @@ set outName = mixing/mix_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/${inputDir}/mix_${OutBase}.out
-set ErrFile     = log/${inputDir}/mix_${OutBase}.err
+set LogFile     = log/mix/${logBase}/mix_${OutBase}.log
+set ErrFile     = log/mix/${logBase}/mix_${OutBase}.err
 
 # get relative tree location
 set treeFile = `basename $input`
