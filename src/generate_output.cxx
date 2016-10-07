@@ -296,12 +296,36 @@ int main( int argc, const char** argv) {
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
-      std::string corrName = analysisNames[i] + " " + ptBinString[i];
+      std::string corrName = analysisNames[i] + " " + ptBinString[l];
       
       recombinedCorr[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
+      if ( l <= 2 ) {
+      
+        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+            if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][l] );
+            
+              recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
+            }
+          }
+        }
+      }
+      
+      else {
+        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+            if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][2] );
+              
+              recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
+            }
+          }
+        }
+      }
+      
     }
-    
   }
   
   return 0;
