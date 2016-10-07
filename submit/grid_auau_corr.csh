@@ -91,7 +91,7 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.out
+set LogFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.log
 set ErrFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
