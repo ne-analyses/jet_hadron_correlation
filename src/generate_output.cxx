@@ -260,7 +260,7 @@ int main( int argc, const char** argv) {
   weightedMix.resize( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
-    TH1D* vzBins = hVz[i]->ProjectionY();
+    TH1D* vzBins = nEvents[i]->ProjectionY();
     
     weightedMix[i].resize( nPtBins );
     
