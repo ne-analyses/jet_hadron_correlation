@@ -42,7 +42,7 @@ if ( $2 == 'default' ) then
 set mixEvents = 'auau_list/grid_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
-set eventsPerTrigger = '50'
+set eventsPerTrigger = '60'
 
 # Now Submit jobs for each data file
 foreach input ( ${base}*.root )
