@@ -42,6 +42,7 @@ mkdir -p log/mix/${logBase}
 endif
 echo 'here'
 if ( $2 == 'default' ) then
+echo 'here'
 set mixEvents = 'auau_list/grid_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
