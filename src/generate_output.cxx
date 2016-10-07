@@ -281,7 +281,7 @@ int main( int argc, const char** argv) {
       }
       // scale each mixing histogram
       if ( l <= 2 )
-        weightedMix[i][j]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
+        weightedMix[i][l]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
       
     }
   }
