@@ -47,6 +47,7 @@ set mixEvents = 'auau_list/grid_AuAuy14MBHigh.list'
 set dataType = 'MB'
 set nEvents = '-1'
 set eventsPerTrigger = '100'
+endif
 
 # make the new output location
 if ( ! -d ${inputDir}/mixing_y14 ) then
