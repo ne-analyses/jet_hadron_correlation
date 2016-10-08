@@ -34,7 +34,7 @@ set nEvents = $4
 set eventsPerTrigger = $5
 
 # make a base directory for logging
-set logBase = 'basename $inputDir'
+set logBase = `basename $inputDir`
 
 #made the log directory
 if ( ! -d log/mix/y14/${logBase} ) then
