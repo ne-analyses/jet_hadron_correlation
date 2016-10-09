@@ -324,9 +324,32 @@ int main( int argc, const char** argv) {
           }
         }
       }
-      
     }
   }
+  
+  // test output
+  TCanvas c1;
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::string corrNameOut = "tmp/" + analysisNames[i]; corrNameOut += ptBinString[j]; corrNameOut += ".pdf";
+      std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
+      std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
+      std::string projXNameOut = "tmp/" + analysisNames[i]; projYXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
+      
+      recombinedCorr[i][j]->Draw("surf1");
+      c1.SaveAs(corrNameOut);
+      recombinedCorr[i][j]->ProjectionY()->Draw();
+      c1.SaveAs( projYNameOut );
+      recombinedCorr[i][j]->ProjectionX()->Draw();
+      c1.SaveAs( projXNameOut );
+      
+      if ( j <= 2 ) {
+        weightedMix[i][j]->Draw("surf1");
+        c1.SaveAs( mixNameOut );
+      }
+    }
+  }
+  
   
   return 0;
 }
