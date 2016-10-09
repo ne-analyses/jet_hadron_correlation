@@ -67,8 +67,8 @@ set outName = mixing_y14/mixY14_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/mix/${logBase}/y14/mix_${OutBase}.log
-set ErrFile     = log/mix/${logBase}/y14/mix_${OutBase}.err
+set LogFile     = log/mix/y14/${logBase}/mix_${OutBase}.log
+set ErrFile     = log/mix/y14/${logBase}/mix_${OutBase}.err
 
 # get relative tree location
 set treeFile = `basename $input`
