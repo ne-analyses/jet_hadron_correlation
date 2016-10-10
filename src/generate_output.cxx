@@ -250,19 +250,20 @@ int main( int argc, const char** argv) {
     }
   }
   
+  // scale the mixing histograms
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int l = 0; l < nPtBins; ++l ) {
+          mixCentVzPt[i][j][k][l]->Scale( 1.0/mixCentVzPt[i][j][k][l]->GetMaximum() );
+        }
+      }
+    }
+  }
+  
   // TESTING PAST HERE
   // going back to using each bin independently not averaging over vz and cent
   // ( that is found in generate_output_avg.cxx )
-  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixCentVzPtReduce;
-  
-  
-  
-  // scale the weighted mixing histograms
-  for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j <= 2; ++j ) {
-      weightedMix[i][j]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
-    }
-  }
   
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorr;
@@ -292,7 +293,7 @@ int main( int argc, const char** argv) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
               
-              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][l] );
+              corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][2] );
             
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
             }
@@ -307,7 +308,7 @@ int main( int argc, const char** argv) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
               
-              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][2] );
+              corrCentVzPt[i][j][k][l]->Divide( mixCentVzPt[i][j][k][2] );
               
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
             }
