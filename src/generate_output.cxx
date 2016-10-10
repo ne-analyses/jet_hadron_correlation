@@ -268,7 +268,7 @@ int main( int argc, const char** argv) {
       std::string weightedMixName = "ave_mix_file_"; weightedMixName += patch::to_string( i );
       weightedMixName += "_ptBin_"; weightedMixName += patch::to_string( l );
       // create new histogram, add all appropriate vz/cent bins
-      weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), 27, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, 27, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
         for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
