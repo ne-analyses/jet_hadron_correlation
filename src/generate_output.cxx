@@ -376,15 +376,11 @@ int main( int argc, const char** argv) {
       int etaLowBin = ( -1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
       int etaHighBin = ( 1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
       
-      std::cout<<"eta low bin: "<< etaLowBin<<std::endl;
-      std::cout<<"eta high bin: "<<etaHighBin<<std::endl;
-      
       std::string postProjYNameOut = "tmp/pre_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
       std::string postProjXNameOut = "tmp/pre_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
       
-      recombinedCorr[i][j]->GetXaxis()->SetRange( etaLowBin, etaHighBin );
       
-      recombinedCorr[i][j]->ProjectionY()->Draw();
+      recombinedCorr[i][j]->ProjectionY( "test1", etaLowBin, etaHighBin )->Draw();
       c1.SaveAs( postProjYNameOut.c_str() );
       recombinedCorr[i][j]->ProjectionX()->Draw();
       c1.SaveAs( postProjXNameOut.c_str() );
