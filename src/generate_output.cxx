@@ -279,10 +279,13 @@ int main( int argc, const char** argv) {
             weightedMix[i][2]->Add( mixCentVzPt[i][j][k][l] );
         }
       }
-      // scale each mixing histogram
-      if ( l <= 2 )
-        weightedMix[i][l]->Scale( 1.0/weightedMix[i][l]->GetMaximum() );
-      
+    }
+  }
+  
+  // scale the weighted mixing histograms
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j <= 2; ++j ) {
+      weightedMix[i][j]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
     }
   }
   
