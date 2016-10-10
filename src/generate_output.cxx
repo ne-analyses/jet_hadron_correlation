@@ -348,10 +348,17 @@ int main( int argc, const char** argv) {
       std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
       std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
       std::string projXNameOut = "tmp/" + analysisNames[i]; projXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
-      
+      std::string preProjYNameOut = "tmp/pre_" + analysisNames[i]; preProjYNameOut += ptBinString[j]; preProjYNameOut += "projectY.pdf";
+      std::string preProjXNameOut = "tmp/pre_" + analysisNames[i]; preProjXNameOut += ptBinString[j]; preProjXNameOut += "projectX.pdf";
       
       recombinedPre[i][j]->Draw( "surf1" );
       c1.SaveAs( preCorrNameOut.c_str() );
+      recombinedPre[i][j]->ProjectionY()->Draw();
+      c1.SaveAs( preProjYNameOut.c_str() );
+      recombinedPre[i][j]->ProjectionX()->Draw();
+      c1.SaveAs( preProjXNameOut.c_str() );
+      
+      
       recombinedCorr[i][j]->Draw( "surf1" );
       c1.SaveAs(corrNameOut.c_str() );
       recombinedCorr[i][j]->ProjectionY()->Draw();
