@@ -371,19 +371,19 @@ int main( int argc, const char** argv) {
         c1.SaveAs( mixNameOut.c_str() );
       }
       
-      // reduced accepted eta range projections
-      double etaBinWidth = recombinedCorr[i][j]->GetXaxis()->GetBinWidth(1);
-      int etaLowBin = ( -1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
-      int etaHighBin = ( 1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
-      
-      std::string postProjYNameOut = "tmp/pre_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
-      std::string postProjXNameOut = "tmp/pre_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
-      
-      
-      recombinedCorr[i][j]->ProjectionY()->Draw();
-      c1.SaveAs( postProjYNameOut.c_str() );
-      recombinedCorr[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( postProjXNameOut.c_str() );
+//      // reduced accepted eta range projections
+//      double etaBinWidth = recombinedCorr[i][j]->GetXaxis()->GetBinWidth(1);
+//      int etaLowBin = ( -1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
+//      int etaHighBin = ( 1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
+//      
+//      std::string postProjYNameOut = "tmp/pre_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
+//      std::string postProjXNameOut = "tmp/pre_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
+//      
+//      
+//      recombinedCorr[i][j]->ProjectionY()->Draw();
+//      c1.SaveAs( postProjYNameOut.c_str() );
+//      recombinedCorr[i][j]->ProjectionX()->Draw();
+//      c1.SaveAs( postProjXNameOut.c_str() );
       
     }
   }
