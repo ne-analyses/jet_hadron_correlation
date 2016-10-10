@@ -295,6 +295,7 @@ int main( int argc, const char** argv) {
   for (int i = 0; i < nFiles; ++ i ) {
     
     recombinedCorr[i].resize( nPtBins );
+    recombinedPre[i].resize( nPtBins );
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
