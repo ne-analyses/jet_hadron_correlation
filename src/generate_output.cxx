@@ -380,7 +380,7 @@ int main( int argc, const char** argv) {
       std::string postProjXNameOut = "tmp/pre_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
       
       
-      recombinedCorr[i][j]->ProjectionY( "test1", etaLowBin, etaHighBin )->Draw();
+      recombinedCorr[i][j]->ProjectionY()->Draw();
       c1.SaveAs( postProjYNameOut.c_str() );
       recombinedCorr[i][j]->ProjectionX()->Draw();
       c1.SaveAs( postProjXNameOut.c_str() );
