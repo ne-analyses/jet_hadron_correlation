@@ -288,8 +288,10 @@ int main( int argc, const char** argv) {
   
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorr;
+  std::vector<std::vector<TH2D*> > recombinedPre;
   recombinedCorr.resize( nFiles );
-
+  recombinedPre.resize( nFiles );
+  
   for (int i = 0; i < nFiles; ++ i ) {
     
     recombinedCorr[i].resize( nPtBins );
@@ -297,14 +299,20 @@ int main( int argc, const char** argv) {
     for ( int l = 0; l < nPtBins; ++l ) {
       
       std::string corrName = analysisNames[i] + " " + ptBinString[l];
+      std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
       
       recombinedCorr[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      
+      recombinedPre[i][l] = new TH2D( preName.c_str(), preName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       if ( l <= 2 ) {
       
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
             if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              
               corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][l] );
             
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -317,6 +325,9 @@ int main( int argc, const char** argv) {
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
             if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              
               corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][2] );
               
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -331,12 +342,16 @@ int main( int argc, const char** argv) {
   TCanvas c1;
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
+       std::string preCorrNameOut = "tmp/pre_" + analysisNames[i]; preCorrNameOut += ptBinString[j]; preCorrNameOut += ".pdf";
       std::string corrNameOut = "tmp/" + analysisNames[i]; corrNameOut += ptBinString[j]; corrNameOut += ".pdf";
       std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
       std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
       std::string projXNameOut = "tmp/" + analysisNames[i]; projXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
       
-      recombinedCorr[i][j]->Draw("surf1");
+      
+      recombinedPre[i][j]->Draw( "surf1" );
+      c1.SaveAs( preCorrNameOut.c_str() );
+      recombinedCorr[i][j]->Draw( "surf1" );
       c1.SaveAs(corrNameOut.c_str() );
       recombinedCorr[i][j]->ProjectionY()->Draw();
       c1.SaveAs( projYNameOut.c_str() );
@@ -344,7 +359,7 @@ int main( int argc, const char** argv) {
       c1.SaveAs( projXNameOut.c_str() );
       
       if ( j <= 2 ) {
-        weightedMix[i][j]->Draw("surf1");
+        weightedMix[i][j]->Draw( "surf1" );
         c1.SaveAs( mixNameOut.c_str() );
       }
     }
