@@ -376,8 +376,8 @@ int main( int argc, const char** argv) {
       int etaLowBin = ( -1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
       int etaHighBin = ( 1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
       
-      std::string postProjYNameOut = "tmp/pre_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
-      std::string postProjXNameOut = "tmp/pre_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
+      std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
+      std::string postProjXNameOut = "tmp/post_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
       
       recombinedCorr[i][j]->GetXaxis()->SetRange( etaLowBin, etaHighBin );
       
