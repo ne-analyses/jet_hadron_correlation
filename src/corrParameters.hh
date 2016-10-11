@@ -116,7 +116,7 @@ namespace corrAnalysis {
 	// Constituent parameters used in jet selection
 	const double maxTrackRap 	= 1.0;				// accept tracks with rapidity [ -1, 1 ]
 	const double trackMinPt  	= 0.2;				// only accept tracks with Pt > 0.2
-	const double hardTrackMinPt = 2.0;			// hard jets clustered with pt > 2.0
+	const double hardTrackMinPt = 0.2;			// hard jets clustered with pt > 2.0
   
   // dijet analysis requires jets to be back to back
   const double jetDPhiCut 	= 0.4;				// require jets to be pi - 0.4 away in phi
