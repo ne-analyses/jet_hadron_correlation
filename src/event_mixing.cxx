@@ -85,11 +85,13 @@
 
 // the grid does not have std::to_string() for some ungodly reason
 // replacing it here. Simply ostringstream
-template < typename T > std::string to_string( const T& n )
-{
-  std::ostringstream stm ;
-  stm << n ;
-  return stm.str() ;
+namespace patch {
+  template < typename T > std::string to_string( const T& n )
+  {
+    std::ostringstream stm ;
+    stm << n ;
+    return stm.str() ;
+  }
 }
 
 
