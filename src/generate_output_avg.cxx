@@ -356,7 +356,7 @@ int main( int argc, const char** argv) {
   int etaMinBin, etaMaxBin, phiMinCloseBin, phiMinFarBin, phiMaxCloseBin, phiMaxFarBin;
   
   for ( int i = 1; i <= recombinedCorr[0][0]->GetXaxis()->GetNbins(); ++i ) {
-    if ( recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i) >= etaMin )
+    if ( recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i) >= etaMin && recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i-1) < etaMin )
       etaMinBin = i;
     if ( recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i) > etaMax && recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i-1) <= etaMax  )
       etaMaxBin = i;
