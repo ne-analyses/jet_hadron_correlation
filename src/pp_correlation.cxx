@@ -141,8 +141,8 @@ int main ( int argc, const char** argv) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "ppcorr.root";						// histograms will be saved here
   std::string		treeOutFile		= "ppjet.root";							// jets will be saved in a TTree here
-  std::string	 	inputFile			= "test/smallPP.root";			// input file: can be .root, .txt, .list
-  std::string		mbInputFile		= "test/mbAuAu.root";				// min bias background event - .root, .txt, .list
+  std::string	 	inputFile			= "pp_list/grid/pp1.list";			// input file: can be .root, .txt, .list
+  std::string		mbInputFile		= "auau_list/grid_AuAuy7MB.list";				// min bias background event - .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
@@ -311,6 +311,14 @@ int main ( int argc, const char** argv) {
   // selector used to reject hard jets in background estimation
   fastjet::Selector	selectorBkgEstimator	= corrAnalysis::SelectBkgEstimator( corrAnalysis::maxTrackRap, jetRadius );
   
+  // TESTING: selector definitions
+  std::cout<<"TESTING"<<std::endl;
+  std::cout<<"Low Pt constituent selector"<<std::endl;
+  std::cout<<selectorLowPtCons.description()<<std::endl;
+  std::cout<<"High Pt constituent selector"<<std::endl;
+  std::cout<<selectorHighPtCons.description()<<std::endl;
+  std::cout<<"Jet selector"<<std::endl;
+  std::cout<<selectorJetCandidate.description()<<std::endl;
   
   // When we do event mixing we need the jets, so save them
   // in trees
