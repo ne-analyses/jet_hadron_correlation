@@ -348,7 +348,7 @@ int main( int argc, const char** argv) {
   double phiMinClose = -corrAnalysis::pi/2.0;
   double phiMaxClose = corrAnalysis::pi/2.0;
   double phiMinFar = -corrAnalysis::pi/2.0;
-  double phiMaxFar = 3.0*corrAnalysis::pi/2.0
+  double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   
   // find the bins by looping over the axes
   
