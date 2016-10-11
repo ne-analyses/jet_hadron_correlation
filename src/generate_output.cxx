@@ -394,11 +394,11 @@ int main( int argc, const char** argv) {
       std::string postProjXNameOutNear = "tmp/post_" + analysisNames[i]; postProjXNameOutNear += ptBinString[j]; postProjXNameOutNear += "projectXNear.pdf";
       std::string postProjXNameOutFar = "tmp/post_" + analysisNames[i]; postProjXNameOutFar += ptBinString[j]; postProjXNameOutFar += "projectXFar.pdf";
       
-      recombinedCorr->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
+      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
       recombinedCorr[i][j]->ProjectionX()->Draw();
       c1.SaveAs( postProjXNameOutNear.c_str() );
       
-      recombinedCorr->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
+      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
       recombinedCorr[i][j]->ProjectionX()->Draw();
       c1.SaveAs( postProjXNameOutFar.c_str() );
     }
