@@ -342,6 +342,39 @@ int main( int argc, const char** argv) {
     }
   }
   
+  // get the reduced eta and phi ranges for projections
+  double etaMax = 1.3;
+  double etaMin = -1.3;
+  double phiMinClose = -corrAnalysis::pi/2.0;
+  double phiMaxClose = corrAnalysis::pi/2.0;
+  double phiMinFar = -corrAnalysis::pi/2.0;
+  double phiMaxFar = 3.0*corrAnalysis::pi/2.0
+  
+  // find the bins by looping over the axes
+  
+  // first look for eta
+  int etaMinBin, etaMaxBin, phiMinCloseBin, phiMinFarBin, phiMaxCloseBin, phiMaxFarBin;
+  
+  for ( int i = 1; i <= recombinedCorr[0][0]->GetXaxis()->GetNbins(); ++i ) {
+    if ( recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i) >= etaMin )
+      etaMinBin = i;
+    if ( recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i) > etaMax && recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i-1) <= etaMax  )
+      etaMaxBin = i;
+  }
+  
+  // we can manually set the low and high for phi
+  phiMinCloseBin = 1;
+  phiMaxFarBin = recombinedCorr[0][0]->GetXaxis()->GetNbins();
+  
+  for ( int i = 1; i <= recombinedCorr[0][0]->GetYaxis()->GetNbins(); ++i ) {
+    if ( recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i) >= phiMaxClose && recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i-1) < phiMaxClose  ) {
+      phiMinFarBin = i;
+      phiMaxCloseBin = i-1;
+      
+    }
+    
+  }
+  
   // test output
   TCanvas c1;
   for ( int i = 0; i < nFiles; ++i ) {
@@ -375,19 +408,24 @@ int main( int argc, const char** argv) {
       }
       
       // reduced accepted eta range projections
-      double etaBinWidth = recombinedCorr[i][j]->GetXaxis()->GetBinWidth(1);
-      int etaLowBin = ( -1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
-      int etaHighBin = ( 1.4 - corrAnalysis::dEtaLowEdge )/etaBinWidth;
       
       std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
-      std::string postProjXNameOut = "tmp/post_" + analysisNames[i]; postProjXNameOut += ptBinString[j]; postProjXNameOut += "projectX.pdf";
       
-      recombinedCorr[i][j]->GetXaxis()->SetRange( etaLowBin, etaHighBin );
-      
+      recombinedCorr[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin );
       recombinedCorr[i][j]->ProjectionY()->Draw();
       c1.SaveAs( postProjYNameOut.c_str() );
+      
+      std::string postProjXNameOutNear = "tmp/post_" + analysisNames[i]; postProjXNameOutNear += ptBinString[j]; postProjXNameOutNear += "projectXNear.pdf";
+      std::string postProjXNameOutFar = "tmp/post_" + analysisNames[i]; postProjXNameOutFar += ptBinString[j]; postProjXNameOutFar += "projectXFar.pdf";
+      
+      recombinedCorr->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
       recombinedCorr[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( postProjXNameOut.c_str() );
+      c1.SaveAs( postProjXNameOutNear.c_str() );
+      
+      recombinedCorr->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
+      recombinedCorr[i][j]->ProjectionX()->Draw();
+      c1.SaveAs( postProjXNameOutFar.c_str() );
+
       
     }
   }
