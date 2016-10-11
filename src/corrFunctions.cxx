@@ -6,6 +6,20 @@
 #include "corrFunctions.hh"
 #include "corrParameters.hh"
 
+
+// Because the grid is ridiculous and doesnt
+// Have std::to_string
+namespace patch
+{
+  template < typename T > std::string to_string( const T& n )
+  {
+    std::ostringstream stm ;
+    stm << n ;
+    return stm.str() ;
+  }
+}
+
+
 namespace corrAnalysis {
 	
 	// -------------------------

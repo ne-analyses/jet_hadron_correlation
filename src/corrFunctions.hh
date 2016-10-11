@@ -65,6 +65,12 @@
 #ifndef CORRFUNCTIONS_HH
 #define CORRFUNCTIONS_HH
 
+// first, a fix for the grid not having std::to_string()
+namespace patch
+{
+  template < typename T > std::string to_string( const T& n );
+}
+
 
 namespace corrAnalysis {
   

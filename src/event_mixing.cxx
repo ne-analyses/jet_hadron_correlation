@@ -83,18 +83,6 @@
 #include "fastjet/tools/Filter.hh"
 #include "fastjet/FunctionOfPseudoJet.hh"
 
-// Because the grid is ridiculous and doesnt
-// Have std::to_string
-namespace patch
-{
-  template < typename T > std::string to_string( const T& n )
-  {
-    std::ostringstream stm ;
-    stm << n ;
-    return stm.str() ;
-  }
-}
-
 // Used for year 7 tracking efficiency corrections,
 // if they are being used
 #include "ktTrackEff.hh"
