@@ -289,7 +289,7 @@ int main( int argc, const char** argv) {
       
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-            if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+            if ( mixCentVzPt[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
               
@@ -304,7 +304,7 @@ int main( int argc, const char** argv) {
       else {
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-            if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+            if ( mixCentVzPt[i][j][k][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
               
