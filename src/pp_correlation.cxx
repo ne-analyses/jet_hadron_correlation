@@ -311,15 +311,6 @@ int main ( int argc, const char** argv) {
   // selector used to reject hard jets in background estimation
   fastjet::Selector	selectorBkgEstimator	= corrAnalysis::SelectBkgEstimator( corrAnalysis::maxTrackRap, jetRadius );
   
-  // TESTING: selector definitions
-  std::cout<<"TESTING"<<std::endl;
-  std::cout<<"Low Pt constituent selector"<<std::endl;
-  std::cout<<selectorLowPtCons.description()<<std::endl;
-  std::cout<<"High Pt constituent selector"<<std::endl;
-  std::cout<<selectorHighPtCons.description()<<std::endl;
-  std::cout<<"Jet selector"<<std::endl;
-  std::cout<<selectorJetCandidate.description()<<std::endl;
-  
   // When we do event mixing we need the jets, so save them
   // in trees
   // Tree to hold the di-jets
