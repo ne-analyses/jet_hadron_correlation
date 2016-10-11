@@ -13,9 +13,12 @@ int main() {
   TRandom3 rand;
   for ( int i = 0; i < 10000; ++i ) {
     double triggereta = rand.Rndm()*1.6;
+    if ( rand.Rndm() > 0.5 )
+      triggereta = -triggereta;
     for ( int j = 0; j < 10000; ++j ) {
       double assoceta = rand.Rndm()*2.4;
-      std::cout<<"trigger: "<<triggereta<< " assoc: "<<assoceta<<std::endl;
+      if ( rand.Rndm() > 0.5 )
+        assoceta = -assoceta;
       h->Fill( triggereta - assoceta );
     }
   }
