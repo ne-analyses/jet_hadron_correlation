@@ -9,12 +9,12 @@
 #include "TRandom3.h"
 
 int main() {
-  TH1D* h = new TH1D("test", "geometric correction only;#eta", 100,-1, 1);
+  TH1D* h = new TH1D("test", "geometric correction only;#eta", 100,-4, 4);
   TRandom3 rand;
   for ( int i = 0; i < 10000; ++i ) {
-    double triggereta = rand.Rndm()*0.6;
+    double triggereta = rand.Rndm()*1.6;
     for ( int j = 0; j < 10000; ++j ) {
-      double assoceta = rand.Rndm();
+      double assoceta = rand.Rndm()*2.4;
       h->Fill( triggereta - assoceta );
     }
   }
