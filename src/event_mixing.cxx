@@ -394,6 +394,9 @@ int main ( int argc, const char** argv) {
   __OUT("loaded branches")
 
   
+  // Look at the Vz bin distribution
+  TH1D* hVzBin = new TH1D( "vzbindist", "Vz Bins", corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
+  
   // Now loop over events and store their IDs in the proper
   // Vz-Centrality bin
   // And we'll count the total number of events
@@ -417,7 +420,6 @@ int main ( int argc, const char** argv) {
       // Vz position and corresponding bin
       double vertexZ = header->GetPrimaryVertexZ();
       int vzBin = corrAnalysis::GetVzBin( vertexZ );
-      
       
       // Get the centrality information
       // Find the reference centrality
@@ -464,6 +466,7 @@ int main ( int argc, const char** argv) {
       useable_events++;
       unsigned tmp_event_id = reader.GetNOfCurrentEvent();
       mixing_events[vzBin][refCentrality].push_back( tmp_event_id );
+      hVzBin->Fill( vzBin );
       
     }
   }catch ( std::exception& e) {
@@ -589,6 +592,7 @@ int main ( int argc, const char** argv) {
   TFile out((inputDir+"/"+outputFile).c_str(), "RECREATE");
   
   histograms->Write();
+  hVzBin->Write();
 
   out.Close();
   
