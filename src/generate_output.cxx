@@ -351,6 +351,10 @@ int main( int argc, const char** argv) {
   
   }
   
+  std::cout<<"etamin: "<<etaMinBin<<std::endl;
+  std::cout<<"etamax: "<<etaMaxBin<<std::endl;
+  std::cout<<"phiMin: "<<phiMinCloseBin<<std::endl;
+  std::cout<<"phiMax: "<<phiMaxCloseBin<<std::endl;
   
   // test output
   TCanvas c1;
