@@ -15,6 +15,7 @@ int main() {
     double triggereta = rand.Rndm()*1.6;
     for ( int j = 0; j < 10000; ++j ) {
       double assoceta = rand.Rndm()*2.4;
+      std::cout<<"trigger: "<<triggereta<< " assoc: "<<assoceta<<std::endl;
       h->Fill( triggereta - assoceta );
     }
   }
