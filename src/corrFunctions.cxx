@@ -11,14 +11,6 @@ namespace corrAnalysis {
 	// -------------------------
 	// IO/OS Manip functionality
 	// -------------------------
-  // the grid does not have std::to_string() for some ungodly reason
-  // replacing it here. Simply ostringstream
-  template < typename T > std::string to_string( const T& n )
-  {
-    std::ostringstream stm ;
-    stm << n ;
-    return stm.str() ;
-  }
 
   
 	// Used to understand which format of input file is being used

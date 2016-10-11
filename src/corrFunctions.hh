@@ -73,8 +73,6 @@ namespace corrAnalysis {
   class histograms;
   
 	// IO/OS MANIP Functions
-  // first, a fix for the grid not having std::to_string()
-  template < typename T > std::string to_string( const T& n );
   
 	// Helper to build the TChain, used to decide which input format
 	bool HasEnding (std::string const &full_string, std::string const &ending);
