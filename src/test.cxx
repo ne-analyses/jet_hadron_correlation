@@ -10,6 +10,7 @@
 
 int main() {
   TH1D* h = new TH1D("test", "geometric correction only;#eta", 100,-4, 4);
+  TH1D* h2 = new TH1D("test2", "geometric correction only;#eta", 100, -4, 4);
   TRandom3 rand;
   for ( int i = 0; i < 10000; ++i ) {
     double triggereta = rand.Rndm()*1.6;
@@ -22,10 +23,24 @@ int main() {
       h->Fill( triggereta - assoceta );
     }
   }
+  for ( int i = 0; i < 10000; ++i ) {
+    double triggereta = rand.Rndm()*0.6;
+    if ( rand.Rndm() > 0.5 )
+      triggereta = -triggereta;
+    for ( int j = 0; j < 10000; ++j ) {
+      double assoceta = rand.Rndm()*1.0;
+      if ( rand.Rndm() > 0.5 )
+        assoceta = -assoceta;
+      h2->Fill( triggereta - assoceta );
+    }
+  }
+
   
   TCanvas c1;
   h->Scale(1/h->GetMaximum() );
+  h2->Scale(1/h2->GetMaximum() );
   h->Draw();
+  h2->Draw("SAME");
   c1.SaveAs("testgeom.pdf");
 	
 	return 0;
