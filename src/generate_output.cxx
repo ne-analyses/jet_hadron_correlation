@@ -345,10 +345,6 @@ int main( int argc, const char** argv) {
       recombinedCorr[i][j]->ProjectionX()->Draw();
       c1.SaveAs( projXNameOut.c_str() );
       
-      if ( j <= 2 ) {
-        weightedMix[i][j]->Draw( "surf1" );
-        c1.SaveAs( mixNameOut.c_str() );
-      }
       
       // reduced accepted eta range projections
       double etaBinWidth = recombinedCorr[i][j]->GetXaxis()->GetBinWidth(1);
