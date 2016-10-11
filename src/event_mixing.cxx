@@ -359,7 +359,7 @@ int main ( int argc, const char** argv) {
     return -1;
   }
   
-  std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
+  std::string reportEntries = "total of " + corrAnalysis::to_string( treeEntries ) + " trigger events";
   __OUT( reportEntries.c_str() )
   // Define our branches
   TLorentzVector *leadBranch, *subBranch;
@@ -459,7 +459,7 @@ int main ( int argc, const char** argv) {
     return -1;
   }
   __OUT("Finished inital event binning in Vz-centrality")
-  std::string finishEventCheck = "Out of " + patch::to_string(total_events) + ", " + patch::to_string(useable_events) + " will be used";
+  std::string finishEventCheck = "Out of " + corrAnalysis::to_string(total_events) + ", " + corrAnalysis::to_string(useable_events) + " will be used";
   __OUT( finishEventCheck.c_str() )
   // Quick check for the size of these arrays
   // Remove cent/vz bins that have too few events
@@ -469,9 +469,9 @@ int main ( int argc, const char** argv) {
       if ( mixing_events[i][j].size() < nEventsToMix*1.5 ) {
         mixing_events[i][j].clear();
         std::string outMessage = "Removing bin ";
-        outMessage += patch::to_string(i);
+        outMessage += corrAnalysis::to_string(i);
         outMessage += " ";
-        outMessage += patch::to_string(j);
+        outMessage += corrAnalysis::to_string(j);
         __OUT( outMessage.c_str() )
       }
     }
@@ -486,7 +486,7 @@ int main ( int argc, const char** argv) {
     jetTree->GetEntry(i);
     
     if ( i % 20 == 0) {
-      std::string eventOut = "Mixing tree entry: " + patch::to_string(i);
+      std::string eventOut = "Mixing tree entry: " + corrAnalysis::to_string(i);
       __OUT( eventOut.c_str() )
     }
     

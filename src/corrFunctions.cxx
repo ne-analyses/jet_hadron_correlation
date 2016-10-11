@@ -6,25 +6,21 @@
 #include "corrFunctions.hh"
 #include "corrParameters.hh"
 
-
-// Because the grid is ridiculous and doesnt
-// Have std::to_string
-namespace patch
-{
+namespace corrAnalysis {
+	
+	// -------------------------
+	// IO/OS Manip functionality
+	// -------------------------
+  // the grid does not have std::to_string() for some ungodly reason
+  // replacing it here. Simply ostringstream
   template < typename T > std::string to_string( const T& n )
   {
     std::ostringstream stm ;
     stm << n ;
     return stm.str() ;
   }
-}
 
-
-namespace corrAnalysis {
-	
-	// -------------------------
-	// IO/OS Manip functionality
-	// -------------------------
+  
 	// Used to understand which format of input file is being used
 	// ( .root file, .txt, .list, etc )
 	// ---------------------------------------------------------------------
