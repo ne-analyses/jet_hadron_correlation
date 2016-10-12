@@ -75,7 +75,7 @@ namespace corrAnalysis {
 	// ---------------------------
 	// Vz binning
 	const double 	vzRange = 60.0; 					// total accepted vz range (symmetric about vz = 0 )
-	const int		 	binsVz = 60;							// range is split into vzBins number of bins
+	const int		 	binsVz = 120;							// range is split into vzBins number of bins
 	const double 	dVz = vzRange/binsVz;			// each bin has a range of dVz
 	const double 	vzLowEdge = -vzRange/2.0;	// lower edge for accepted Vz range
 	const double 	vzHighEdge = vzRange/2.0;	// upper edge for accepted Vz range
