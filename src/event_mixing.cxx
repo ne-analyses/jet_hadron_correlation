@@ -392,10 +392,10 @@ int main ( int argc, const char** argv) {
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
   }
   __OUT("loaded branches")
-
   
-  // Look at the Vz bin distribution
-  TH1D* hVzBin = new TH1D( "vzbindist", "Vz Bins", corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
+  // collect info on how many events there are to mix with
+  TH2D* hCentVz = new TH2D( "cent_vz", "Mixing Event Count;centrality;vz", corrAnalysis::binsCentrality, -0.5, corrAnalysis::binsCentrality-0.5, corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
+
   
   // Now loop over events and store their IDs in the proper
   // Vz-Centrality bin
@@ -466,7 +466,7 @@ int main ( int argc, const char** argv) {
       useable_events++;
       unsigned tmp_event_id = reader.GetNOfCurrentEvent();
       mixing_events[vzBin][refCentrality].push_back( tmp_event_id );
-      hVzBin->Fill( vzBin );
+      hCentVz->Fill( refCentrality, vzBin );
       
     }
   }catch ( std::exception& e) {
@@ -592,8 +592,9 @@ int main ( int argc, const char** argv) {
   TFile out((inputDir+"/"+outputFile).c_str(), "RECREATE");
   
   histograms->Write();
-  hVzBin->Write();
 
+  hCentVz->Write();
+  
   out.Close();
   
   return 0;
