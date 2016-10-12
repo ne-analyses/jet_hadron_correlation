@@ -46,7 +46,7 @@ if ( $2 == 'default' ) then
 set mixEvents = 'auau_list/grid_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
-set eventsPerTrigger = '500'
+set eventsPerTrigger = '700'
 endif
 
 # Now Submit jobs for each data file
@@ -74,6 +74,6 @@ echo "Logging errors to " $ErrFile
 
 set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTrigger $mixEvents"
 
-qsub -V -q erhiq -l mem=3GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
