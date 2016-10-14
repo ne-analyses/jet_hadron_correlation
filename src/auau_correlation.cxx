@@ -132,7 +132,7 @@ int main ( int argc, const char** argv ) {
   std::string 	executable    = "./bin/auau_correlation"; // placeholder
   std::string 	analysisType  = "dijet";									// choose dijet or jet ( decides value of requireDijets )
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
-  bool					useEfficiency = false;										// choose to use particle-by-particle efficiency
+  bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
