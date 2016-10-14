@@ -558,7 +558,7 @@ int main ( int argc, const char** argv) {
           
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
-          int assocEfficiency = 1.0;
+          double assocEfficiency = 1.0;
           if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
           
           corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
@@ -578,7 +578,7 @@ int main ( int argc, const char** argv) {
           
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
-          int assocEfficiency = 1.0;
+          double assocEfficiency = 1.0;
           if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
           
           corrAnalysis::correlateTrigger( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
