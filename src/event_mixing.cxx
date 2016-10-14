@@ -237,6 +237,8 @@ int main ( int argc, const char** argv) {
   
   if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" )
     requireDijets = true;
+  std::cout<<"Use Trigger: "<< matchTrigger<<std::endl;
+  std::cout<<"Use Efficiency: "<< useEfficiency<<std::endl;
   
   // check to make sure the analysis type is valid
   // if it is, go ahead and make histogram class
@@ -560,9 +562,6 @@ int main ( int argc, const char** argv) {
           // else, set to one
           double assocEfficiency = 1.0;
           if ( useEfficiency ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
-          }
-          if ( assocEfficiency == 1.0 ) {
-            __ERR("UH OH")
           }
           
           corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
