@@ -215,12 +215,14 @@ int main ( int argc, const char** argv ) {
   // Check to see if the input is a .root file or a .txt
   bool inputIsRoot = corrAnalysis::HasEnding( inputFile.c_str(), ".root" );
   bool inputIsTxt  = corrAnalysis::HasEnding( inputFile.c_str(), ".txt"  );
+  bool inputIsList = corrAnalysis::HasEnding( inputFile.c_str(), ".list" );
   
   // If its a recognized file type, build the chain
   // If its not recognized, exit
   if ( inputIsRoot )		 	{ chain->Add( inputFile.c_str() ); }
   else if ( inputIsTxt )  { chain = TStarJetPicoUtils::BuildChainFromFileList( inputFile.c_str() ); }
-  else 										{ __ERR("data file is not recognized type: .root or .txt only.") return -1; }
+  else if ( inputIsList )  { chain = TStarJetPicoUtils::BuildChainFromFileList( inputFile.c_str() ); }
+  else 										{ __ERR("data file is not recognized type: .root, .list or .txt only.") return -1; }
   
   // Intialize the reader and set the chain
   // All analysis parameters are located in
