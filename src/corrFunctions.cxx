@@ -484,7 +484,7 @@ namespace corrAnalysis {
     
     // Check to make sure the efficiency is not crazy
     // ( the parameterization isnt perfect, about 3.5% of tracks return nonsense efficiencies )
-    if ( efficiency <= 0.0 )        { return false;  }
+    if ( efficiency <= 0.01 )        { return false;  }
     if ( efficiency > 1.0 ) 				{ return false;  }
     
     return true;
