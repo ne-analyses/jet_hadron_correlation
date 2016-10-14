@@ -456,7 +456,6 @@ int main ( int argc, const char** argv ) {
         // else, set to one
         double assocEfficiency = 1.0;
         if ( useEfficiency ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
-          std::cout<<"WE GOT HERE: "<<assocEfficiency<<std::endl;
         }
         
         // now correlate it with leading and subleading jets
