@@ -497,7 +497,7 @@ int main ( int argc, const char** argv) {
         
         // if we're using particle - by - particle efficiencies, get it,
         // else, set to one
-        int assocEfficiency = 1.0;
+        double assocEfficiency = 1.0;
         if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
         
         // now correlate it with jets
