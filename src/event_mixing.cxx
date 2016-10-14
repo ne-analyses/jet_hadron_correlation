@@ -560,7 +560,9 @@ int main ( int argc, const char** argv) {
           // else, set to one
           double assocEfficiency = 1.0;
           if ( useEfficiency ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
-            std::cout<<"got here"<<assocEfficiency<<std::endl;
+          }
+          if ( assocEfficiency == 1.0 ) {
+            __ERR("UH OH")
           }
           
           corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
