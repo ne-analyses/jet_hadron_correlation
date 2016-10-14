@@ -143,7 +143,7 @@ int main ( int argc, const char** argv) {
   // placeholder (first cmd line argument)
   std::string    executable    = "./bin/auau_mixing";
   // home directory for that analysis
-  std::string    inputDir      = "out/dijet/dijet_trigger_true_eff_false_lead_20.0_sub_10.0_max_100.0_rad_0.4";
+  std::string    inputDir      = "out/dijet/dijet_trigger_true_eff_true_lead_20.0_sub_10.0_max_100.0_rad_0.4";
   // file holding the jet tree
   std::string    inputTreeFile = "tree/tree_Clean809.root";
   // output file name
@@ -559,7 +559,9 @@ int main ( int argc, const char** argv) {
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
           double assocEfficiency = 1.0;
-          if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          if ( useEfficiency ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+            std::cout<<"got here"<<assocEfficiency<<std::endl;
+          }
           
           corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
           corrAnalysis::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency );
