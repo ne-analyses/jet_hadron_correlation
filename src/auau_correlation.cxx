@@ -456,7 +456,9 @@ int main ( int argc, const char** argv ) {
         // else, set to one
         int assocEfficiency = 1.0;
         if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
-        std::cout<<"assocEff: "<<assocEfficiency<<std::endl;
+        std::cout<<"assoc eta: "<< assocParticle.eta()<<std::endl;
+        std::cout<<"assoc pt: "<<assocParticle.pt()<<std::endl;
+        std::cout<<"assocEff: "<<efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt )<<std::endl;
         // now correlate it with leading and subleading jets
         if ( requireDijets ) {
           corrAnalysis::correlateLeading( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
