@@ -141,7 +141,7 @@ int main ( int argc, const char** argv ) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
-  std::string	 	inputFile			= "test/smallAuAu.root";		// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "auau_list/grid_AuAuy7HT.list";		// input file: can be .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
@@ -454,7 +454,7 @@ int main ( int argc, const char** argv ) {
         // else, set to one
         int assocEfficiency = 1.0;
         if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
-        
+        std::cout<<"assocEff: "<<assocEfficiency<<std::endl;
         // now correlate it with leading and subleading jets
         if ( requireDijets ) {
           corrAnalysis::correlateLeading( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
