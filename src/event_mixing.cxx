@@ -158,7 +158,7 @@ int main ( int argc, const char** argv) {
   // number of events to mix with each trigger
   unsigned       nEventsToMix  = 20;
   // the file/list of events to use in event mixing
-  std::string    mixEventsFile = "test/mbAuAu.root";
+  std::string    mixEventsFile = "auau_list/grid_AuAuy7MB.list";
   // Tree name in input file
   std::string 	 chainName     = "JetTree";
   
