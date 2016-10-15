@@ -380,21 +380,21 @@ int main ( int argc, const char** argv) {
   int centBranch, vzBranch;
   
   // set the branch addresses for the tree
-//  if ( requireDijets ) {
-//    jetTree->SetBranchAddress( "leadJet", &leadBranch );
-//    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
-//    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
-//    if ( analysisType == "dijetmix" )
-//      jetTree->SetBranchAddress( "centralityBin", &centBranch );
-//  }
-//  else {
-//    jetTree->SetBranchAddress( "triggerJet", &leadBranch );
-//    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
-//    if ( analysisType == "jetmix" )
-//      jetTree->SetBranchAddress( "centralityBin", &centBranch );
-//  }
-//  __OUT("loaded branches")
-//  
+  if ( requireDijets ) {
+    jetTree->SetBranchAddress( "leadJet", &leadBranch );
+    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
+    //jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
+    //if ( analysisType == "dijetmix" )
+      //jetTree->SetBranchAddress( "centralityBin", &centBranch );
+  }
+  else {
+    jetTree->SetBranchAddress( "triggerJet", &leadBranch );
+    jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
+    if ( analysisType == "jetmix" )
+      jetTree->SetBranchAddress( "centralityBin", &centBranch );
+  }
+  __OUT("loaded branches")
+  
   
   // test for tree
   jetTree->GetEntry(1);
