@@ -395,6 +395,10 @@ int main ( int argc, const char** argv) {
   }
   __OUT("loaded branches")
   
+  
+  // test for tree
+  jetTree->GetEntry(1);
+  
   // collect info on how many events there are to mix with
   TH2D* hCentVz = new TH2D( "cent_vz", "Mixing Event Count;centrality;vz", corrAnalysis::binsCentrality, -0.5, corrAnalysis::binsCentrality-0.5, corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
 
