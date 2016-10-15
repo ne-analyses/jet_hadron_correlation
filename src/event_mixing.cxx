@@ -384,8 +384,8 @@ int main ( int argc, const char** argv) {
     //jetTree->SetBranchAddress( "leadJet", &leadBranch );
     //jetTree->SetBranchAddress( "subLeadJet", &subBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
-    //if ( analysisType == "dijetmix" )
-      //jetTree->SetBranchAddress( "centralityBin", &centBranch );
+    if ( analysisType == "dijetmix" )
+      jetTree->SetBranchAddress( "centralityBin", &centBranch );
   }
   else {
     jetTree->SetBranchAddress( "triggerJet", &leadBranch );
