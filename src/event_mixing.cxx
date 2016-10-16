@@ -382,7 +382,7 @@ int main ( int argc, const char** argv) {
   // set the branch addresses for the tree
   if ( requireDijets ) {
     //jetTree->SetBranchAddress( "leadJet", &leadBranch );
-    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
+    //jetTree->SetBranchAddress( "subLeadJet", &subBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "dijetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
