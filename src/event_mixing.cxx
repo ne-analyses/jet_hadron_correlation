@@ -376,7 +376,7 @@ int main ( int argc, const char** argv) {
   std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
   __OUT( reportEntries.c_str() )
   // Define our branches
-  TLorentzVector leadBranch, subBranch;
+  TLorentzVector *leadBranch, *subBranch;
   int centBranch, vzBranch;
   
   // set the branch addresses for the tree
@@ -552,8 +552,8 @@ int main ( int argc, const char** argv) {
       // now do the correlation
       if ( requireDijets ) {
         // make the trigger pseudojets
-        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( leadBranch );
-        fastjet::PseudoJet subTrigger = fastjet::PseudoJet( subBranch );
+        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
+        fastjet::PseudoJet subTrigger = fastjet::PseudoJet( *subBranch );
         
         histograms->FillLeadEtaPhi( leadTrigger.eta(), leadTrigger.phi_std() );
         histograms->FillSubEtaPhi( subTrigger.eta(), subTrigger.phi_std() );
@@ -575,7 +575,7 @@ int main ( int argc, const char** argv) {
       }
       else {
         // make the trigger pseudojets
-        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( leadBranch );
+        fastjet::PseudoJet leadTrigger = fastjet::PseudoJet( *leadBranch );
         
         histograms->FillJetEtaPhi( leadTrigger.eta(), leadTrigger.phi_std() );
         
