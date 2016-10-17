@@ -1,7 +1,7 @@
 // testing nick's new correlation implementations
 
 #include "corrParameters.hh"
-#include "corrAnalysis.hh"
+#include "corrFunctions.hh"
 
 #include <cmath>
 #include <iostream>
