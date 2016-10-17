@@ -387,8 +387,8 @@ int main ( int argc, const char** argv) {
   
   // set the branch addresses for the tree
   if ( requireDijets ) {
-    jetTree->SetBranchAddress( "leadJet", &leadBranch );
-    jetTree->SetBranchAddress( "subLeadJet", &subBranch );
+    //jetTree->SetBranchAddress( "leadJet", &leadBranch );
+    //jetTree->SetBranchAddress( "subLeadJet", &subBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "dijetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
@@ -404,7 +404,7 @@ int main ( int argc, const char** argv) {
     jetTree->SetBranchAddress( "subJetE", &subE );
   }
   else {
-    jetTree->SetBranchAddress( "triggerJet", &leadBranch );
+    //jetTree->SetBranchAddress( "triggerJet", &leadBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "jetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
@@ -418,6 +418,11 @@ int main ( int argc, const char** argv) {
   }
   __OUT("loaded branches")
   
+  // temporary
+  if ( !leadBranch )
+    leadBranch = new TLorentzVector();
+  if ( !subBranch )
+    subBranch = new TLorentzVector();
   
   // test for tree
   jetTree->GetEntry(1);
@@ -528,6 +533,11 @@ int main ( int argc, const char** argv) {
 
     // Pull the next jet/dijet
     jetTree->GetEntry(i);
+    
+    // temporary
+    leadBranch->SetPtEtaPhiE( leadPt, leadEta, leadPhi, leadE );
+    if ( requireDijets )
+      subBranch->SetPtEtaPhiE( subPt, subEta, subPhi, subE );
     
     if ( i % 20 == 0) {
       std::string eventOut = "Mixing tree entry: " + patch::to_string(i);
