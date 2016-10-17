@@ -35,7 +35,7 @@ int main() {
   TH2D* events = new TH2D("globalvprime", "Global vs Prime", 6000, -0.5, 5999.5, 1500, -0.5, 1499.5 );
   
   TChain* chain = new TChain("JetTree");
-  chain = TStarJetPicoUtils::BuildChainFromFileList( "auau_list/" );
+  chain = TStarJetPicoUtils::BuildChainFromFileList( "auau_list/grid_AuAuy7HT.list" );
   
   TStarJetPicoReader reader;
   corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, corrAnalysis::allEvents );
