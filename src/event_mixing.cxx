@@ -449,7 +449,8 @@ int main ( int argc, const char** argv) {
       // Vz position and corresponding bin
       double vertexZ = header->GetPrimaryVertexZ();
       int vzBin = corrAnalysis::GetVzBin( vertexZ );
-      
+      std::cout<<"got here"<<std::endl;
+      std::cout<<"analysis: "<< analysisType<<std::endl;
       // Get the centrality information
       // Find the reference centrality
       // (for pp, set to zero by default )
