@@ -379,6 +379,11 @@ int main ( int argc, const char** argv) {
   TLorentzVector *leadBranch, *subBranch;
   int centBranch, vzBranch;
   
+  // Hopefully temporary for the grid not
+  // reading trees
+  double leadPt, leadEta, leadPhi, leadE;
+  double subPt, subEta, subPhi, subE;
+  
   // set the branch addresses for the tree
   if ( requireDijets ) {
     jetTree->SetBranchAddress( "leadJet", &leadBranch );
@@ -386,12 +391,29 @@ int main ( int argc, const char** argv) {
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "dijetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
+    
+    // hopefully temporary
+    jetTree->SetBranchAddress( "leadJetPt", &leadPt );
+    jetTree->SetBranchAddress( "leadJetEta", &leadEta );
+    jetTree->SetBranchAddress( "leadJetPhi", &leadPhi );
+    jetTree->SetBranchAddress( "leadJetE", &leadE );
+    jetTree->SetBranchAddress( "subJetPt", &subPt );
+    jetTree->SetBranchAddress( "subJetEta", &subEta );
+    jetTree->SetBranchAddress( "subJetPhi", &subPhi );
+    jetTree->SetBranchAddress( "subJetE", &subE );
   }
   else {
     jetTree->SetBranchAddress( "triggerJet", &leadBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "jetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
+    
+    // hopefully temporary
+    jetTree->SetBranchAddress( "leadJetPt", &leadPt );
+    jetTree->SetBranchAddress( "leadJetEta", &leadEta );
+    jetTree->SetBranchAddress( "leadJetPhi", &leadPhi );
+    jetTree->SetBranchAddress( "leadJetE", &leadE );
+
   }
   __OUT("loaded branches")
   
