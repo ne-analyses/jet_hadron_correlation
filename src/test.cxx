@@ -47,7 +47,7 @@ int main() {
       
       header = reader.GetEvent()->GetHeader();
       
-      events->Fill( header->GetNGlobalTracks(), GetNOfPrimaryTracks() );
+      events->Fill( header->GetNGlobalTracks(), header->GetNOfPrimaryTracks() );
       
       
     }
