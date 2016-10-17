@@ -1,47 +1,64 @@
 // testing nick's new correlation implementations
 
+#include "corrParameters.hh"
+#include "corrAnalysis.hh"
+
 #include <cmath>
 #include <iostream>
 
-#include "TH1D.h"
+#include "TH1.h"
+#include "TH2.h"
 #include "TCanvas.h"
 #include "TFile.h"
 #include "TRandom3.h"
 
-int main() {
-  TH1D* h = new TH1D("test", "geometric correction only;#eta", 100,-4, 4);
-  TH1D* h2 = new TH1D("test2", "geometric correction only;#eta", 100, -4, 4);
-  TRandom3 rand;
-  for ( int i = 0; i < 10000; ++i ) {
-    double triggereta = rand.Rndm()*1.6;
-    if ( rand.Rndm() > 0.5 )
-      triggereta = -triggereta;
-    for ( int j = 0; j < 10000; ++j ) {
-      double assoceta = rand.Rndm()*2.4;
-      if ( rand.Rndm() > 0.5 )
-        assoceta = -assoceta;
-      h->Fill( triggereta - assoceta );
-    }
-  }
-  for ( int i = 0; i < 10000; ++i ) {
-    double triggereta = rand.Rndm()*0.6;
-    if ( rand.Rndm() > 0.5 )
-      triggereta = -triggereta;
-    for ( int j = 0; j < 10000; ++j ) {
-      double assoceta = rand.Rndm()*1.0;
-      if ( rand.Rndm() > 0.5 )
-        assoceta = -assoceta;
-      h2->Fill( triggereta - assoceta );
-    }
-  }
+// Data is read in by TStarJetPico
+// Library, we convert to FastJet::PseudoJet
+// TStarJetPico headers
+#include "TStarJetPicoReader.h"
+#include "TStarJetPicoEvent.h"
+#include "TStarJetPicoEventHeader.h"
+#include "TStarJetPicoEventCuts.h"
+#include "TStarJetPicoPrimaryTrack.h"
+#include "TStarJetPicoTower.h"
+#include "TStarJetPicoTrackCuts.h"
+#include "TStarJetPicoTowerCuts.h"
+#include "TStarJetVectorContainer.h"
+#include "TStarJetVector.h"
+#include "TStarJetPicoTriggerInfo.h"
+#include "TStarJetPicoUtils.h"
 
+
+int main() {
+  
+  
+  TH2D* events = new TH2D("globalvprime", "Global vs Prime", 6000, -0.5, 5999.5, 1500, -0.5, 1499.5 );
+  
+  TChain* chain = new TChain("JetTree");
+  chain = TStarJetPicoUtils::BuildChainFromFileList( "auau_list/" );
+  
+  TStarJetPicoReader reader;
+  corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, corrAnalysis::allEvents );
+  
+  TStarJetPicoEventHeader* header;
+  
+  try{
+    while ( reader.NextEvent() ) {
+      
+      header = reader.GetEvent()->GetHeader();
+      
+      events->Fill( header->GetNGlobalTracks(), GetNOfPrimaryTracks() );
+      
+      
+    }
+  } catch ( std::exception& e) {
+    std::cerr << "Caught " << e.what() << std::endl;
+    return -1;
+  }
   
   TCanvas c1;
-  h->Scale(1/h->GetMaximum() );
-  h2->Scale(1/h2->GetMaximum() );
-  h->Draw();
-  h2->Draw("SAME");
-  c1.SaveAs("testgeom.pdf");
-	
+  events->Draw("colz");
+  c1.SaveAs("test.pdf");
+  
 	return 0;
 }
