@@ -376,7 +376,8 @@ int main ( int argc, const char** argv) {
   std::string reportEntries = "total of " + patch::to_string( treeEntries ) + " trigger events";
   __OUT( reportEntries.c_str() )
   // Define our branches
-  TLorentzVector *leadBranch, *subBranch;
+  TLorentzVector *leadBranch;
+  TLorentzVector *subBranch;
   int centBranch, vzBranch;
   
   // Hopefully temporary for the grid not
