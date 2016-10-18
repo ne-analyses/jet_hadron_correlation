@@ -4,7 +4,7 @@ os = $(shell uname -s)
 INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include
 
 ifeq ($(os),Linux)
-CXXFLAGS      = 
+CXXFLAGS      = -std=c++11
 else
 CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init -std=c++11
 ## for debugging:
