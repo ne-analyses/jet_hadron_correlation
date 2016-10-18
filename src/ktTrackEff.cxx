@@ -86,14 +86,14 @@ ktTrackEff::~ktTrackEff()
 
 void ktTrackEff::PrintInfo()
 {
-  cout<<"STAR Track Eff. Info:"<<endl;
-  cout<<"---------------------"<<endl;
-  cout<<" Run 4 --> Run 7 eff correction file = "<<fName<<endl;
+  std::cout<<"STAR Track Eff. Info:"<<std::endl;
+  std::cout<<"---------------------"<<std::endl;
+  std::cout<<" Run 4 --> Run 7 eff correction file = "<<fName<<std::endl;
   if (sysUn!=0)
     {
-      cout<<" Sys Uncertainty = "<<sysUn<<endl;
-      cout<<" Diff. eff. uncertainty AuAu = 4%"<<endl;
-      cout<<" Diff. eff. uncertainty AuAu and pp (applied twice) = 3%"<<endl; 
+      std::cout<<" Sys Uncertainty = "<<sysUn<<std::endl;
+      std::cout<<" Diff. eff. uncertainty AuAu = 4%"<<std::endl;
+      std::cout<<" Diff. eff. uncertainty AuAu and pp (applied twice) = 3%"<<std::endl;
     }
 }
 
@@ -133,7 +133,7 @@ TF2* ktTrackEff::GetEffY04(Int_t cb)
     ((TF2*)func)->SetParameters(parset4);
 
   if(cb < 0 || cb > 2)
-    cout << "Error: Nonsensical Centrality Class!" << endl;
+    std::cout << "Error: Nonsensical Centrality Class!" << std::endl;
 
   return func;
 }
@@ -205,7 +205,7 @@ Double_t ktTrackEff::EffRatio_20(Double_t eta, Double_t mPt)
     }
   else
     {
-      cout<<" Error !!!"<<endl;
+      std::cout<<" Error !!!"<<std::endl;
     }
 
   return effRatio;
