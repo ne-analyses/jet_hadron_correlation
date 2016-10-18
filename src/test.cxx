@@ -45,11 +45,11 @@
 
 int main() {
   
-  TLorentzVector* a;
-  TVector3* b;
+  TLorentzVector* a = new TLorentzVector();
+  TVector3* b = new TVector3();
   
   b->SetXYZ(1,2,3);
-  //a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
+  a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
   
 	return 0;
 }
