@@ -288,45 +288,18 @@ int main ( int argc, const char** argv ) {
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
   
-//  // TEMPORARY HOPEFULLY
-//  // Used because the grid seems to have a hard time loading
-//  // The TLorentzVectors
-//  Double_t leadPt, leadEta, leadPhi, leadE;
-//  Double_t subPt, subEta, subPhi, subE;
-//  
-//  TBranch* CDJBranchLeadPt, *CDJBranchLeadEta, *CDJBranchLeadPhi, *CDJBranchLeadE;
-//  TBranch* CDJBranchSubPt, *CDJBranchSubEta, *CDJBranchSubPhi, *CDJBranchSubE;
-//  
-  
   if ( requireDijets ) {
     correlatedDiJets = new TTree("dijets","Correlated Dijets" );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
     CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
     CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
-    
-//    // TEMPORARY HOPEFULLY
-//    CDJBranchLeadPt = correlatedDiJets->Branch("leadJetPt", &leadPt);
-//    CDJBranchLeadEta = correlatedDiJets->Branch("leadJetEta", &leadEta);
-//    CDJBranchLeadPhi = correlatedDiJets->Branch("leadJetPhi", &leadPhi);
-//    CDJBranchLeadE = correlatedDiJets->Branch("leadJetE", &leadE);
-//    CDJBranchSubPt = correlatedDiJets->Branch("subJetPt", &subPt);
-//    CDJBranchSubEta = correlatedDiJets->Branch("subJetEta", &subEta);
-//    CDJBranchSubPhi = correlatedDiJets->Branch("subJetPhi", &subPhi);
-//    CDJBranchSubE = correlatedDiJets->Branch("subJetE", &subE);
   }
   else {
     correlatedDiJets = new TTree("jets","Correlated Jets" );
     CDJBranchHi = correlatedDiJets->Branch("triggerJet", &leadingJet );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
-    
-//    // TEMPORARY HOPEFULLY
-//    CDJBranchLeadPt = correlatedDiJets->Branch("leadJetPt", &leadPt);
-//    CDJBranchLeadEta = correlatedDiJets->Branch("leadJetEta", &leadEta);
-//    CDJBranchLeadPhi = correlatedDiJets->Branch("leadJetPhi", &leadPhi);
-//    CDJBranchLeadE = correlatedDiJets->Branch("leadJetE", &leadE);
-    
   }
   
   // Finally, make ktEfficiency obj for pt-eta
@@ -449,26 +422,9 @@ int main ( int argc, const char** argv ) {
         // leading jet
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
         subleadingJet.SetPtEtaPhiE( analysisJets.at(1).pt(), analysisJets.at(1).eta(), analysisJets.at(1).phi_std(), analysisJets.at(1).E() );
-        
-//        // TEMPORARY HOPEFULLY
-//        leadPt = analysisJets.at(0).pt();
-//        leadEta = analysisJets.at(0).eta();
-//        leadPhi = analysisJets.at(0).phi_std();
-//        leadE = analysisJets.at(0).E();
-//        subPt = analysisJets.at(1).pt();
-//        subEta = analysisJets.at(1).eta();
-//        subPhi = analysisJets.at(1).phi_std();
-//        subE = analysisJets.at(1).E();
-        
       }
       else {
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
-        
-//        // TEMPORARY HOPEFULLY
-//        leadPt = analysisJets.at(0).pt();
-//        leadEta = analysisJets.at(0).eta();
-//        leadPhi = analysisJets.at(0).phi_std();
-//        leadE = analysisJets.at(0).E();
       }
       
       // now write

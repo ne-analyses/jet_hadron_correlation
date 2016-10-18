@@ -380,11 +380,6 @@ int main ( int argc, const char** argv) {
   TLorentzVector *subBranch = new TLorentzVector();
   int centBranch, vzBranch;
   
-//  // Hopefully temporary for the grid not
-//  // reading trees
-//  double leadPt, leadEta, leadPhi, leadE;
-//  double subPt, subEta, subPhi, subE;
-  
   // set the branch addresses for the tree
   if ( requireDijets ) {
     jetTree->SetBranchAddress( "leadJet", &leadBranch );
@@ -393,39 +388,16 @@ int main ( int argc, const char** argv) {
     if ( analysisType == "dijetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
     
-//    // hopefully temporary
-//    jetTree->SetBranchAddress( "leadJetPt", &leadPt );
-//    jetTree->SetBranchAddress( "leadJetEta", &leadEta );
-//    jetTree->SetBranchAddress( "leadJetPhi", &leadPhi );
-//    jetTree->SetBranchAddress( "leadJetE", &leadE );
-//    jetTree->SetBranchAddress( "subJetPt", &subPt );
-//    jetTree->SetBranchAddress( "subJetEta", &subEta );
-//    jetTree->SetBranchAddress( "subJetPhi", &subPhi );
-//    jetTree->SetBranchAddress( "subJetE", &subE );
   }
   else {
     jetTree->SetBranchAddress( "triggerJet", &leadBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
     if ( analysisType == "jetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
-    
-//    // hopefully temporary
-//    jetTree->SetBranchAddress( "leadJetPt", &leadPt );
-//    jetTree->SetBranchAddress( "leadJetEta", &leadEta );
-//    jetTree->SetBranchAddress( "leadJetPhi", &leadPhi );
-//    jetTree->SetBranchAddress( "leadJetE", &leadE );
 
   }
   __OUT("loaded branches")
   
-//  // temporary
-//  if ( !leadBranch )
-//    leadBranch = new TLorentzVector();
-//  if ( !subBranch )
-//    subBranch = new TLorentzVector();
-  
-  // test for tree
-  jetTree->GetEntry(1);
   
   // collect info on how many events there are to mix with
   TH2D* hCentVz = new TH2D( "cent_vz", "Mixing Event Count;centrality;vz", corrAnalysis::binsCentrality, -0.5, corrAnalysis::binsCentrality-0.5, corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
@@ -534,15 +506,10 @@ int main ( int argc, const char** argv) {
     // Pull the next jet/dijet
     jetTree->GetEntry(i);
     
-//     temporary
-//    leadBranch->SetPtEtaPhiE( leadPt, leadEta, leadPhi, leadE );
-//    if ( requireDijets )
-//      subBranch->SetPtEtaPhiE( subPt, subEta, subPhi, subE );
-//    
-//    if ( i % 20 == 0) {
-//      std::string eventOut = "Mixing tree entry: " + patch::to_string(i);
-//      __OUT( eventOut.c_str() )
-//    }
+    if ( i % 20 == 0) {
+      std::string eventOut = "Mixing tree entry: " + patch::to_string(i);
+      __OUT( eventOut.c_str() )
+    }
     
     // get the proper cent/vz bin
     std::vector< unsigned > randomizedEventID;
