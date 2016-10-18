@@ -43,7 +43,7 @@ endif
 
 if ( $2 == 'default' ) then
 
-set mixEvents = 'auau_list/AuAuy7HT.list'
+set mixEvents = 'auau_list/rhic121_AuAuy7HT.list'
 set dataType = 'HT'
 set nEvents = '-1'
 set eventsPerTrigger = '1000'
