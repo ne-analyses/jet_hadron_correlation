@@ -46,8 +46,10 @@
 int main() {
   
   TLorentzVector* a;
+  TVector3* b;
   
-  a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
-    
+  b->SetXYZ(1,2,3);
+  //a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
+  
 	return 0;
 }
