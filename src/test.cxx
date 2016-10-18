@@ -6,11 +6,25 @@
 #include <cmath>
 #include <iostream>
 
+// ROOT
 #include "TH1.h"
 #include "TH2.h"
-#include "TCanvas.h"
+#include "TH3.h"
+#include "TF1.h"
+#include "TF2.h"
+#include "TProfile.h"
+#include "TProfile2D.h"
+#include "TObjArray.h"
+#include "TString.h"
 #include "TFile.h"
-#include "TRandom3.h"
+#include "TLorentzVector.h"
+#include "TClonesArray.h"
+#include "TChain.h"
+#include "TBranch.h"
+#include "TMath.h"
+#include "TRandom.h"
+#include "TCanvas.h"
+#include "TStopwatch.h"
 
 // Data is read in by TStarJetPico
 // Library, we convert to FastJet::PseudoJet
@@ -31,34 +45,9 @@
 
 int main() {
   
+  TLorentzVector* a;
   
-  TH2D* events = new TH2D("globalvprime", "Global vs Prime", 6000, -0.5, 5999.5, 1500, -0.5, 1499.5 );
-  
-  TChain* chain = new TChain("JetTree");
-  chain = TStarJetPicoUtils::BuildChainFromFileList( "auau_list/grid_AuAuy7HT.list" );
-  
-  TStarJetPicoReader reader;
-  corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, corrAnalysis::allEvents );
-  
-  TStarJetPicoEventHeader* header;
-  
-  try{
-    while ( reader.NextEvent() ) {
-      
-      header = reader.GetEvent()->GetHeader();
-      
-      events->Fill( header->GetNGlobalTracks(), header->GetNOfPrimaryTracks() );
-      
-      
-    }
-  } catch ( std::exception& e) {
-    std::cerr << "Caught " << e.what() << std::endl;
-    return -1;
-  }
-  
-  TCanvas c1;
-  events->Draw("colz");
-  c1.SaveAs("test.pdf");
-  
+  a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
+    
 	return 0;
 }
