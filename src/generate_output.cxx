@@ -381,7 +381,7 @@ int main( int argc, const char** argv) {
       
       std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
       
-      recombinedCorr[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin );
+      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
       
       recombinedCorr[i][j]->ProjectionY()->Draw();
       c1.SaveAs( postProjYNameOut.c_str() );
