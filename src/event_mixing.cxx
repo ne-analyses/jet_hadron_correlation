@@ -529,7 +529,7 @@ int main ( int argc, const char** argv) {
     if ( randomizedEventID.size() == 0 )  { continue;}
     
     // then randomize the list
-    std::random_shuffle( randomizedEventID.begin(), randomizedEventID.end(), g );
+    std::shuffle( randomizedEventID.begin(), randomizedEventID.end(), g );
     
     // now use the first nEventsToMix
     for ( int i = 0; i < nEventsToMix; ++i ) {
