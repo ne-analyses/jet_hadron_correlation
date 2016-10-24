@@ -39,8 +39,6 @@
 // Make use of std::vector,
 // std::string, IO and algorithm
 // STL Headers
-#include <stdio.h>
-#include <stdlib.h>
 #include <sstream>
 #include <iostream>
 #include <fstream>
@@ -49,8 +47,12 @@
 #include <cstring>
 #include <vector>
 #include <string>
+#include <random>
+#include <time.h>
 #include <limits.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Data is read in by TStarJetPico
 // Library, we convert to FastJet::PseudoJet
@@ -498,6 +500,10 @@ int main ( int argc, const char** argv) {
     }
   __OUT("Done removing bins")
   
+  // create a RNG for shuffling events
+  std::random_device rd;
+  std::mt19937 g(rd());
+  g.seed( clock() );
   
   // Now we can run over all tree entries and perform the mixing
   __OUT("Starting to perform event mixing")
@@ -523,7 +529,7 @@ int main ( int argc, const char** argv) {
     if ( randomizedEventID.size() == 0 )  { continue;}
     
     // then randomize the list
-    std::random_shuffle( randomizedEventID.begin(), randomizedEventID.end() );
+    std::random_shuffle( randomizedEventID.begin(), randomizedEventID.end(), g );
     
     // now use the first nEventsToMix
     for ( int i = 0; i < nEventsToMix; ++i ) {
