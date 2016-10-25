@@ -22,6 +22,7 @@
 #include "TF2.h"
 #include "TProfile.h"
 #include "TProfile2D.h"
+#include "TGraph.h"
 #include "TObjArray.h"
 #include "TString.h"
 #include "TFile.h"
@@ -760,7 +761,7 @@ int main( int argc, const char** argv) {
     leadPhiDifYield[i].resize( nPtBins );
     leadEtaYield[i].resize( nPtBins );
     
-    for ( j = 0; j < nPtBins; ++j ) {
+    for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
