@@ -473,8 +473,8 @@ int main( int argc, const char** argv) {
   // Now to do some fitting and subtract the background
   // define the fits
   // ---------------
-  TString phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
-  TString etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";å
+  std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+  std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";å
   
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
