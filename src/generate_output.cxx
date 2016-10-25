@@ -812,7 +812,55 @@ int main( int argc, const char** argv) {
     
   }
 
-  
+  TCanvas c1;
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      leadPhiGraph[i]->Draw();
+    else
+      leadPhiGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/leadphiyield.pdf");
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiDifGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      leadPhiDifGraph[i]->Draw();
+    else
+      leadPhiGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/leadphidifyield.pdf");
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadEtaGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      leadPhiGraph[i]->Draw();
+    else
+      leadPhiGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/leadetayield.pdf");
+  for ( int i = 0; i < nFiles; ++i ) {
+    subPhiGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      subPhiGraph[i]->Draw();
+    else
+      subPhiGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/subphiyield.pdf");
+  for ( int i = 0; i < nFiles; ++i ) {
+    subPhiDifGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      subPhiDifGraph[i]->Draw();
+    else
+      subPhiDifGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/subphidifyield.pdf");
+  for ( int i = 0; i < nFiles; ++i ) {
+    subEtaGraph[i]->SetLineColor(i+1);
+    if ( i == 0)
+      subEtaGraph[i]->Draw();
+    else
+      subEtaGraph[i]->Draw("SAME");
+  }
+  c1.SaveAs("tmp/subetayield.pdf");
   
   return 0;
 }
