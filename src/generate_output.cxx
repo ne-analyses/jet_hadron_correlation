@@ -526,20 +526,21 @@ int main( int argc, const char** argv) {
       dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "R" );
       
       // Now to subtract the constants
-      TF1* subConst = new TF1( "subConst", "[0]");
+      TF1* subConst = new TF1( "subConst", "[0]", phiMin, phiMax);
+      TF1* subConstEta = new TF1("subConstEta", "[0]", etaMin, etaMax);
       subConst->SetParameter( 0, leadPhiInitFit->GetParameter(0) );
       dPhiLead[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, leadPhiDifInitFit->GetParameter(0));
-      dPhiLeadNear[i][j]->Add( subConst, -1 );
-      subConst->SetParameter( 0, leadEtaInitFit->GetParameter(0));
-      dEtaLead[i][j]->Add( subConst, -1 );
+      dPhiLeadNear[i][j]->Add( subConst, -1, , phiMin, phiMax );
+      subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0));
+      dEtaLead[i][j]->Add( subConstEta, -1 );
       
       subConst->SetParameter( 0, subPhiInitFit->GetParameter(0) );
       dPhiSub[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, subPhiDifInitFit->GetParameter(0));
       dPhiSubNear[i][j]->Add( subConst, -1 );
-      subConst->SetParameter( 0, subEtaInitFit->GetParameter(0));
-      dEtaSub[i][j]->Add( subConst, -1 );
+      subConstEta->SetParameter( 0, subEtaInitFit->GetParameter(0));
+      dEtaSub[i][j]->Add( subConstEta, -1 );
       
       // Now reset the constants to zero...
       leadPhiInitFit->SetParameter( 0, 0 );
