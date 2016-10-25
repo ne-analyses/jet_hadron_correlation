@@ -828,6 +828,7 @@ int main( int argc, const char** argv) {
       leadPhiGraph[i]->Draw("SAME");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
+  c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     leadEtaGraph[i]->SetLineColor(i+1);
     if ( i == 0)
