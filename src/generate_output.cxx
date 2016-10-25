@@ -576,12 +576,12 @@ int main( int argc, const char** argv) {
   subEtaFit.resize( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiFit[i].resize( nFiles );
-    leadPhiDifFit[i].resize( nFiles );
-    leadEtaFit[i].resize( nFiles );
-    subPhiFit[i].resize( nFiles );
-    subPhiDifFit[i].resize( nFiles );
-    subEtaFit[i].resize( nFiles );
+    leadPhiFit[i].resize( nPtBins );
+    leadPhiDifFit[i].resize( nPtBins );
+    leadEtaFit[i].resize( nPtBins );
+    subPhiFit[i].resize( nPtBins );
+    subPhiDifFit[i].resize( nPtBins );
+    subEtaFit[i].resize( nPtBins );
     
     for ( int j = 0; j < nPtBins; ++j ) {
       std::string dPhiLeadName = "fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
