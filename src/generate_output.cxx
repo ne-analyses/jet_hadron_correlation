@@ -557,10 +557,7 @@ int main( int argc, const char** argv) {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  std::cout<<std::endl;
-  std::cout<<std::endl;
-  std::cout<<std::endl;
-  std::cout<<"ABOUT TO DO FINAL FITS"<<std::endl;
+  
   // final fitting
   std::vector<std::vector<TF1*> > leadPhiFit;
   leadPhiFit.resize( nFiles );
@@ -647,24 +644,20 @@ int main( int argc, const char** argv) {
   }
   
   
-  std::cout<<std::endl;
-  std::cout<<std::endl;
-  std::cout<<std::endl;
-  std::cout<<"ABOUT TO DO OUTPUT"<<std::endl;
   // Now start making output
   std::string outBase = "tmp/";
-  std::string leadPhiOut = outBase + "leadphi_pt";
-  std::string leadPhiDifOut = outBase + "leadphidif_pt";
-  std::string leadEtaOut = outBase + "leadeta_pt";
-  std::string subPhiOut = outBase + "subphi_pt";
-  std::string subPhiDifOut = outBase + "subphidif_pt";
-  std::string subEtaOut = outBase + "subeta_pt";
+  std::string leadPhiOutBase = outBase + "leadphi_pt";
+  std::string leadPhiDifOutBase = outBase + "leadphidif_pt";
+  std::string leadEtaOutBase = outBase + "leadeta_pt";
+  std::string subPhiOutBase = outBase + "subphi_pt";
+  std::string subPhiDifOutBase = outBase + "subphidif_pt";
+  std::string subEtaOutBase = outBase + "subeta_pt";
   std::string outExt = ".pdf";
   
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    leadPhiOut += patch::to_string(i) + outExt;
+    std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiLead[j][i]->Draw();
@@ -679,7 +672,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    leadPhiDifOut += patch::to_string(i) + outExt;
+    std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiLeadNear[j][i]->Draw();
@@ -694,7 +687,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    leadEtaOut += patch::to_string(i) + outExt;
+    std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dEtaLead[j][i]->Draw();
@@ -709,7 +702,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    subPhiOut += patch::to_string(i) + outExt;
+    std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiSub[j][i]->Draw();
@@ -724,7 +717,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    subPhiDifOut += patch::to_string(i) + outExt;
+    std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiSubNear[j][i]->Draw();
@@ -739,7 +732,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
-    subEtaOut += patch::to_string(i) + outExt;
+    std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dEtaSub[j][i]->Draw();
@@ -753,77 +746,3 @@ int main( int argc, const char** argv) {
 
   return 0;
 }
-
-  // find the bins by looping over the axes
-  
-  //  // first look for eta
-  //  int etaMinBin, etaMaxBin, phiMinCloseBin, phiMinFarBin, phiMaxCloseBin, phiMaxFarBin;
-  //
-  //  for ( int i = 1; i <= recombinedCorr[0][0]->GetXaxis()->GetNbins(); ++i ) {
-  //    if ( recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i) >= etaMin && recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i-1) < etaMin  )
-  //      etaMinBin = i;
-  //    if ( recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i) > etaMax && recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i-1) <= etaMax  )
-  //      etaMaxBin = i;
-  //  }
-  //
-  //  // we can manually set the low and high for phi
-  //  phiMinCloseBin = 1;
-  //  phiMaxFarBin = recombinedCorr[0][0]->GetXaxis()->GetNbins();
-  //
-  //  for ( int i = 1; i <= recombinedCorr[0][0]->GetYaxis()->GetNbins(); ++i ) {
-  //    if ( recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i) >= phiMaxClose && recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i-1) < phiMaxClose  ) {
-  //      phiMinFarBin = i;
-  //      phiMaxCloseBin = i-1;
-  //
-  //    }
-  //
-  //  }
-  
-  //  // test output
-  //  TCanvas c1;
-  //  for ( int i = 0; i < nFiles; ++i ) {
-  //    for ( int j = 0; j < nPtBins; ++j ) {
-  //       std::string preCorrNameOut = "tmp/pre_" + analysisNames[i]; preCorrNameOut += ptBinString[j]; preCorrNameOut += ".pdf";
-  //      std::string corrNameOut = "tmp/" + analysisNames[i]; corrNameOut += ptBinString[j]; corrNameOut += ".pdf";
-  //      std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
-  //      std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
-  //      std::string projXNameOut = "tmp/" + analysisNames[i]; projXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
-  //      std::string preProjYNameOut = "tmp/pre_" + analysisNames[i]; preProjYNameOut += ptBinString[j]; preProjYNameOut += "projectY.pdf";
-  //      std::string preProjXNameOut = "tmp/pre_" + analysisNames[i]; preProjXNameOut += ptBinString[j]; preProjXNameOut += "projectX.pdf";
-  //
-  //      recombinedPre[i][j]->Draw( "surf1" );
-  //      c1.SaveAs( preCorrNameOut.c_str() );
-  //      recombinedPre[i][j]->ProjectionY()->Draw();
-  //      c1.SaveAs( preProjYNameOut.c_str() );
-  //      recombinedPre[i][j]->ProjectionX()->Draw();
-  //      c1.SaveAs( preProjXNameOut.c_str() );
-  //
-  //
-  //      recombinedCorr[i][j]->Draw( "surf1" );
-  //      c1.SaveAs(corrNameOut.c_str() );
-  //      recombinedCorr[i][j]->ProjectionY()->Draw();
-  //      c1.SaveAs( projYNameOut.c_str() );
-  //      recombinedCorr[i][j]->ProjectionX()->Draw();
-  //      c1.SaveAs( projXNameOut.c_str() );
-  //
-  //
-  //      std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
-  //
-  //      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
-  //
-  //      recombinedCorr[i][j]->ProjectionY()->Draw();
-  //      c1.SaveAs( postProjYNameOut.c_str() );
-  //
-  //      std::string postProjXNameOutNear = "tmp/post_" + analysisNames[i]; postProjXNameOutNear += ptBinString[j]; postProjXNameOutNear += "projectXNear.pdf";
-  //      std::string postProjXNameOutFar = "tmp/post_" + analysisNames[i]; postProjXNameOutFar += ptBinString[j]; postProjXNameOutFar += "projectXFar.pdf";
-  //
-  //      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
-  //      recombinedCorr[i][j]->ProjectionX()->Draw();
-  //      c1.SaveAs( postProjXNameOutNear.c_str() );
-  //
-  //      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
-  //      recombinedCorr[i][j]->ProjectionX()->Draw();
-  //      c1.SaveAs( postProjXNameOutFar.c_str() );
-  //    }
-  //  }
-  //  
