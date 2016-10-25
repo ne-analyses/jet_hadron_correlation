@@ -759,7 +759,7 @@ int main( int argc, const char** argv) {
     leadEtaYield[i].resize( nPtBins );
     subPhiYield[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
-    leadEtaYield[i].resize( nPtBins );
+    subEtaYield[i].resize( nPtBins );
     std::cout<<"finished resizing"<<std::endl;
     for ( int j = 0; j < nPtBins; ++j ) {
       std::cout<<"looping..."<<std::endl;
