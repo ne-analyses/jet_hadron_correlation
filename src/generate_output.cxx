@@ -392,16 +392,92 @@ int main( int argc, const char** argv) {
   double etaMin = -1.4;
   double etaNearMin = -0.7;
   double etaNearMax = 0.7;
-  double phiMinClose = -corrAnalysis::pi/2.0;
+  double phiMin = -corrAnalysis::pi/2.0;
   double phiMaxClose = corrAnalysis::pi/2.0;
-  double phiMinFar = -corrAnalysis::pi/2.0;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   
   
   // going to get the 1D projections
+  std::vector<std::vector<TH1D*> > dPhiLead;
+  std::vector<std::vector<TH1D*> > dPhiLeadNear;
+  std::vector<std::vector<TH1D*> > dPhiLeadFar;
+  std::vector<std::vector<TH1D*> > dEtaLead;
+  std::vector<std::vector<TH1D*> > dPhiSub;
+  std::vector<std::vector<TH1D*> > dPhiSubNear;
+  std::vector<std::vector<TH1D*> > dPhiSubFar;
+  std::vector<std::vector<TH1D*> > dEtaSub;
+  
+  dPhiLead.resize( nFiles );
+  dPhiLeadNear.resize( nFiles );
+  dPhiLeadFar.resize( nFiles );
+  dEtaLead.resize( nFiles );
+  dPhiSub.resize( nFiles );
+  dPhiSubNear.resize( nFiles );
+  dPhiSubFar.resize( nFiles );
+  dEtaSub.resize( nFiles );
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    dPhiLead[i].resize( nPtBins );
+    dPhiLeadNear[i].resize( nPtBins );
+    dPhiLeadFar[i].resize( nPtBins );
+    dEtaLead[i].resize( nPtBins );
+    dPhiSub[i].resize( nPtBins );
+    dPhiSubNear[i].resize( nPtBins );
+    dPhiSubFar[i].resize( nPtBins );
+    dEtaSub[i].resize( nPtBins );
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      // first restrict the eta range
+      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax  );
+      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
+      
+      dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
+      dPhiSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
+      
+      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
+      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
+      
+      dEtaLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionX())->Clone();
+      dEtaSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionX())->Clone();
+      
+      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
+      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
+      
+      // now get dphi in "near" and "far" eta ranges
+      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaNearMin, etaNearMax  );
+      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaNearMin, etaNearMax );
+      
+      dPhiLeadNear[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
+      dPhiSubNear[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
+      
+      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaNearMax, etaMax  );
+      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaNearMax, etaMax );
+      
+      dPhiLeadFar[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
+      dPhiSubFar[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
+      
+      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaNearMin  );
+      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaNearMin );
+      
+      dPhiLeadFar[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
+      dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
+      
+    }
+  }
+  
+  // Now to do some fitting and subtract the background
+  // define the fits
+  // ---------------
+  TString phi_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+  TString eta_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+  double eta_min = etaMin;
+  double eta_max = etaMax
+  double phi_min = corrAnalysis::phiLowEdge;
+  double phi_max = corrAnalysis::phiHighEdge;
   
   
-   
+  
+  
   return 0;
 }
 
