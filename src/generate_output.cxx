@@ -745,6 +745,73 @@ int main( int argc, const char** argv) {
   }
   
   // now to get yields
+  std::vector<std::vector<double> > leadPhiYield( nFiles );
+  std::vector<std::vector<double> > leadPhiDifYield( nFiles );
+  std::vector<std::vector<double> > leadEtaYield( nFiles );
+  std::vector<std::vector<double> > subPhiYield( nFiles );
+  std::vector<std::vector<double> > subPhiDifYield( nFiles );
+  std::vector<std::vector<double> > subEtaYield( nFiles );
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiYield[i].resize( nPtBins );
+    leadPhiDifYield[i].resize( nPtBins );
+    leadEtaYield[i].resize( nPtBins );
+    subPhiYield[i].resize( nPtBins );
+    leadPhiDifYield[i].resize( nPtBins );
+    leadEtaYield[i].resize( nPtBins );
+    
+    for ( j = 0; j < nPtBins; ++j ) {
+      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
+      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
+      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
+      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
+      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
+    }
+  }
+  
+  double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
+  
+  std::vector<TGraph*> leadPhiGraph( nFiles );
+  std::vector<TGraph*> leadPhiDifGraph( nFiles );
+  std::vector<TGraph*> leadEtaGraph( nFiles );
+  std::vector<TGraph*> subPhiGraph( nFiles );
+  std::vector<TGraph*> subPhiDifGraph( nFiles );
+  std::vector<TGraph*> subEtaGraph( nFiles );
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    double leadPhiTmp[nPtBins];
+    double leadPhiDifTmp[nPtBins];
+    double leadEtaTmp[nPtBins];
+    double subPhiTmp[nPtBins];
+    double subPhiDifTmp[nPtBins];
+    double subEtaTmp[nPtBins];
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      
+      leadPhiTmp[j] = leadPhiYield[i][j];
+      leadPhiDifTmp[j] = leadPhiDifYield[i][j];
+      leadEtaTmp[j] = leadEtaYield[i][j];
+      subPhiTmp[j] = subPhiYield[i][j];
+      subPhiDifTmp[j] = subPhiDifYield[i][j];
+      subEtaTmp[j] = subEtaYield[i][j];
+    }
+    //std::string leadName = "leadphigraph_"+patch::to_string(i);
+    leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp);
+    //std::string leadDifName = "leadphidifgraph_"+patch::to_string(i);
+    leadPhiDifGraph[i] = new TGraph(nPtBins, ptBins, leadPhiDifTmp);
+    //std::string leadEtaName = "leadetagraph_"+patch::to_string(i);
+    leadEtaGraph[i] = new TGraph(nPtBins, ptBins, leadEtaTmp);
+    //std::string subName = "subphigraph_"+patch::to_string(i);
+    subPhiGraph[i] = new TGraph(nPtBins, ptBins, subPhiTmp);
+    //std::string subDifName = "subphidifgraph_"+patch::to_name(i);
+    subPhiDifGraph[i] = new TGraph(nPtBins, ptBins, subPhiDifTmp);
+    //std::string subEtaName = "subetagraph_"+patch::to_name(i);
+    subEtaGraph[i] = new TGraph(nPtBins, ptBins, subEtaTmp);
+    
+  }
 
+  
+  
   return 0;
 }
