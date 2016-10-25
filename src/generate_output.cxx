@@ -858,10 +858,13 @@ int main( int argc, const char** argv) {
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     subEtaGraph[i]->SetLineColor(i+1);
-    if ( i == 0)
+    if ( i == 0) {
+      subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 13 );
       subEtaGraph[i]->Draw();
-    else
+    }
+    else {
       subEtaGraph[i]->Draw("SAME");
+    }
   }
   c1->SaveAs("tmp/subetayield.pdf");
   
