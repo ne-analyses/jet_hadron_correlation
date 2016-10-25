@@ -489,7 +489,7 @@ int main ( int argc, const char** argv) {
   __OUT("Checking each Vz/centrality bin for the minimum number of entries")
   for ( int i = 0; i < corrAnalysis::binsVz; ++i )
     for ( int j = 6; j < corrAnalysis::binsCentrality; ++j ) {
-      if ( mixing_events[i][j].size() < nEventsToMix*1.5 ) {
+      if ( mixing_events[i][j].size() < nEventsToMix*1.2 ) {
         mixing_events[i][j].clear();
         std::string outMessage = "Removing bin ";
         outMessage += patch::to_string(i);
