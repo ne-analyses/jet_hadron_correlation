@@ -752,7 +752,7 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<double> > subPhiYield( nFiles );
   std::vector<std::vector<double> > subPhiDifYield( nFiles );
   std::vector<std::vector<double> > subEtaYield( nFiles );
-  
+  std::cout<<"got here"<<std::endl;
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiYield[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
@@ -760,7 +760,7 @@ int main( int argc, const char** argv) {
     subPhiYield[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
     leadEtaYield[i].resize( nPtBins );
-    
+    std::cout<<"finished resizing"<<std::endl;
     for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
@@ -769,6 +769,7 @@ int main( int argc, const char** argv) {
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
     }
+    std::cout<<"and finished getting paramets"<<std::endl;
   }
   
   std::cout<<"got here"<<std::endl;
