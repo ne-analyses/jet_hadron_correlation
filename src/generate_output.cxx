@@ -810,7 +810,7 @@ int main( int argc, const char** argv) {
     
   }
 
-  TCanvas c1;
+  TCanvas* c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiGraph[i]->SetLineColor(i+1);
     if ( i == 0)
@@ -818,7 +818,8 @@ int main( int argc, const char** argv) {
     else
       leadPhiGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/leadphiyield.pdf");
+  c1->SaveAs("tmp/leadphiyield.pdf");
+  c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiDifGraph[i]->SetLineColor(i+1);
     if ( i == 0)
@@ -826,7 +827,7 @@ int main( int argc, const char** argv) {
     else
       leadPhiGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/leadphidifyield.pdf");
+  c1->SaveAs("tmp/leadphidifyield.pdf");
   for ( int i = 0; i < nFiles; ++i ) {
     leadEtaGraph[i]->SetLineColor(i+1);
     if ( i == 0)
@@ -834,7 +835,8 @@ int main( int argc, const char** argv) {
     else
       leadPhiGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/leadetayield.pdf");
+  c1->SaveAs("tmp/leadetayield.pdf");
+  c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiGraph[i]->SetLineColor(i+1);
     if ( i == 0)
@@ -842,7 +844,8 @@ int main( int argc, const char** argv) {
     else
       subPhiGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/subphiyield.pdf");
+  c1->SaveAs("tmp/subphiyield.pdf");
+  c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiDifGraph[i]->SetLineColor(i+1);
     if ( i == 0)
@@ -850,7 +853,8 @@ int main( int argc, const char** argv) {
     else
       subPhiDifGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/subphidifyield.pdf");
+  c1->SaveAs("tmp/subphidifyield.pdf");
+  c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     subEtaGraph[i]->SetLineColor(i+1);
     if ( i == 0)
