@@ -557,7 +557,10 @@ int main( int argc, const char** argv) {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  
+  std::cout<<std::endl;
+  std::cout<<std::endl;
+  std::cout<<std::endl;
+  std::cout<<"ABOUT TO DO FINAL FITS"<<std::endl;
   // final fitting
   std::vector<std::vector<TF1*> > leadPhiFit;
   leadPhiFit.resize( nFiles );
@@ -643,6 +646,11 @@ int main( int argc, const char** argv) {
     }
   }
   
+  
+  std::cout<<std::endl;
+  std::cout<<std::endl;
+  std::cout<<std::endl;
+  std::cout<<"ABOUT TO DO OUTPUT"<<std::endl;
   // Now start making output
   std::string outBase = "tmp/";
   std::string leadPhiOut = outBase + "leadphi_pt";
