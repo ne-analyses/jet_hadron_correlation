@@ -474,7 +474,7 @@ int main( int argc, const char** argv) {
   // define the fits
   // ---------------
   std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
-  std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";å
+  std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
   
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
