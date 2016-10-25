@@ -626,17 +626,123 @@ int main( int argc, const char** argv) {
       subEtaFit[i][j]->SetParameter( 3, 0.2 );
       subEtaFit[i][j]->SetLineColor( i + 1 );
 
-      // Now fit
+      // Now set same colors and fit
+      dPhiLead[i][j]->SetLineColor( i + 1 );
       dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "R" );
+      dPhiSub[i][j]->SetLineColor( i + 1 );
       dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "R" );
+      dPhiLeadNear[i][j]->SetLineColor( i + 1 );
       dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "R" );
+      dPhiSubNear[i][j]->SetLineColor( i + 1 );
       dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "R" );
+      dEtaLead[i][j]->SetLineColor( i + 1 );
       dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "R" );
+      dEtaSub[i][j]->SetLineColor( i + 1 );
       dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "R" );
       
     }
   }
   
+  // Now start making output
+  std::string outBase = "tmp/";
+  std::string leadPhiOut = outBase + "leadphi_pt";
+  std::string leadPhiDifOut = outBase + "leadphidif_pt";
+  std::string leadEtaOut = outBase + "leadeta_pt";
+  std::string subPhiOut = outBase + "subphi_pt";
+  std::string subPhiDifOut = outBase + "subphidif_pt";
+  std::string subEtaOut = outBase + "subeta_pt";
+  std::string outExt = ".pdf";
+  
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    leadPhiOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dPhiLead[j][i]->Draw();
+      }
+      else {
+        dPhiLead[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( leadPhiOut.c_str() );
+  }
+  
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    leadPhiDifOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dPhiLeadNear[j][i]->Draw();
+      }
+      else {
+        dPhiLeadNear[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( leadPhiDifOut.c_str() );
+  }
+  
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    leadEtaOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dEtaLead[j][i]->Draw();
+      }
+      else {
+        dEtaLead[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( leadEtaOut.c_str() );
+  }
+  
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    subPhiOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dPhiSub[j][i]->Draw();
+      }
+      else {
+        dPhiSub[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( subPhiOut.c_str() );
+  }
+
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    subPhiDifOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dPhiSubNear[j][i]->Draw();
+      }
+      else {
+        dPhiSubNear[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( subPhiDifOut.c_str() );
+  }
+
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    subEtaOut += patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( j == 0 ) {
+        dEtaSub[j][i]->Draw();
+      }
+      else {
+        dEtaSub[j][i]->Draw("same");
+      }
+    }
+    c1.SaveAs( subEtaOut.c_str() );
+  }
+
   return 0;
 }
 
