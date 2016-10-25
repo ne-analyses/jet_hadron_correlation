@@ -766,9 +766,13 @@ int main( int argc, const char** argv) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       std::cout<<"got one"<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
+      std::cout<<"got two"<<std::endl;
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
+      std::cout<<"got three"<<std::endl;
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
+      std::cout<<"got four"<<std::endl;
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
+      std::cout<<"got five"<<std::endl;
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
       std::cout<<"end of loop"<<std::endl;
     }
