@@ -762,12 +762,14 @@ int main( int argc, const char** argv) {
     leadEtaYield[i].resize( nPtBins );
     std::cout<<"finished resizing"<<std::endl;
     for ( int j = 0; j < nPtBins; ++j ) {
+      std::cout<<"looping..."<<std::endl;
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
+      std::cout<<"end of loop"<<std::endll
     }
     std::cout<<"and finished getting paramets"<<std::endl;
   }
