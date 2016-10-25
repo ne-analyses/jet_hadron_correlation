@@ -764,6 +764,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nPtBins; ++j ) {
       std::cout<<"looping..."<<std::endl;
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
+      std::cout<<"got one"<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
