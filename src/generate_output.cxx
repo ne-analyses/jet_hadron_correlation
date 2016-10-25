@@ -525,6 +525,21 @@ int main( int argc, const char** argv) {
       dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "R" );
       dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "R" );
       
+      // Now to subtract the constants
+      TF1* subConst = new TF1( "subConst", "[0]");
+      subConst->SetParameter( 0, leadPhiInitFit->GetParameter(0) );
+      dPhiLead[i][j]->Add( subConst, -1 );
+      subConst->SetParameter( 0, leadPhiDifInitFit->GetParameter(0));
+      dPhiLeadNear[i][j]->Add( subConst, -1 );
+      subConst->SetParameter( 0, leadEtaInitFit->GetParameter(0));
+      dEtaLead[i][j]->Add( subConst, -1 );
+      
+      subConst->SetParameter( 0, subPhiInitFit->GetParameter(0) );
+      dPhiSub[i][j]->Add( subConst, -1 );
+      subConst->SetParameter( 0, subPhiDifInitFit->GetParameter(0));
+      dPhiSubNear[i][j]->Add( subConst, -1 );
+      subConst->SetParameter( 0, subEtaInitFit->GetParameter(0));
+      dEtaSub[i][j]->Add( subConst, -1 );
     }
   }
   
