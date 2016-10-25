@@ -46,7 +46,7 @@ if ( $2 == 'default' ) then
 set mixEvents = 'pp_list/grid/ppEV.list'
 set dataType = 'HT'
 set nEvents = '-1'
-set eventsPerTrigger = '3000'
+set eventsPerTrigger = '5000'
 endif
 
 # Now Submit jobs for each data file
