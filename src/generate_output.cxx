@@ -773,7 +773,7 @@ int main( int argc, const char** argv) {
       std::cout<<"got four"<<std::endl;
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
       std::cout<<"got five"<<std::endl;
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
+      subEtaYield[i][j] = 4;//subEtaFit[i][j]->GetParameter(1);
       std::cout<<"end of loop"<<std::endl;
     }
     std::cout<<"and finished getting paramets"<<std::endl;
