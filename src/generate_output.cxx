@@ -486,44 +486,44 @@ int main( int argc, const char** argv) {
       std::string dEtaLeadName = "fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
       std::string dEtaSubName = "fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
       
-      TF1* leadPhiInitFit = new TF1( dPhiLeadName, phiForm, phiMin, phiMax );
+      TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiInitFit->FixParameter( 2, 0 );
       leadPhiInitFit->SetParameter( 5, corrAnalysis::pi );
       leadPhiInitFit->SetParameter( 3, 0.1 );
       leadPhiInitFit->SetParameter( 6, 0.1 );
       
-      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif, phiForm, phiMin, phiMax );
+      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiDifInitFit->FixParameter( 2, 0 );
       leadPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
       leadPhiDifInitFit->SetParameter( 3, 0.1 );
       leadPhiDifInitFit->SetParameter( 6, 0.1 );
       
-      TF1* subPhiInitFit = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
+      TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
       subPhiInitFit->SetParameter( 5, corrAnalysis::pi );
       subPhiInitFit->SetParameter( 3, 0.1 );
       subPhiInitFit->SetParameter( 6, 0.1 );
       
-      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif, phiForm, phiMin, phiMax );
+      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiDifInitFit->FixParameter( 2, 0 );
       subPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
       subPhiDifInitFit->SetParameter( 3, 0.1 );
       subPhiDifInitFit->SetParameter( 6, 0.1 );
       
-      TF1* leadEtaInitFit = new TF1( dEtaLeadName, etaForm, etaMin, etaMax );
+      TF1* leadEtaInitFit = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
       leadEtaInitFit->FixParameter( 2, 0 );
       leadEtaInitFit->SetParameter( 3, 0.1 );
       
-      TF1* subEtaInitFit = new TF1( dEtaSubName, etaForm, etaMin, etaMax );
+      TF1* subEtaInitFit = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
       subEtaInitFit->FixParameter( 2, 0 );
       subEtaInitFit->SetParameter( 3, 0.1 );
       
-      dPhiLead[i][j]->Fit( dPhiLeadName, "R" );
-      dPhiSub[i][j]->Fit( dPhiSubName, "R" );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "R" );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "R" );
-      dEtaLead[i][j]->Fit( dEtaLeadName, "R" );
-      dEtaSub[i][j]->Fit( dEtaSubName, "R" );
+      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "R" );
+      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "R" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "R" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "R" );
+      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "R" );
+      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "R" );
       
     }
   }
