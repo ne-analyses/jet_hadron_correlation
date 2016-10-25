@@ -752,7 +752,6 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<double> > subPhiYield( nFiles );
   std::vector<std::vector<double> > subPhiDifYield( nFiles );
   std::vector<std::vector<double> > subEtaYield( nFiles );
-  std::cout<<"got here"<<std::endl;
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiYield[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
@@ -760,26 +759,16 @@ int main( int argc, const char** argv) {
     subPhiYield[i].resize( nPtBins );
     subPhiDifYield[i].resize( nPtBins );
     subEtaYield[i].resize( nPtBins );
-    std::cout<<"finished resizing"<<std::endl;
     for ( int j = 0; j < nPtBins; ++j ) {
-      std::cout<<"looping..."<<std::endl;
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
-      std::cout<<"got one"<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
-      std::cout<<"got two"<<std::endl;
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
-      std::cout<<"got three"<<std::endl;
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
-      std::cout<<"got four"<<std::endl;
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
-      std::cout<<"got five"<<std::endl;
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
-      std::cout<<"end of loop"<<std::endl;
     }
-    std::cout<<"and finished getting paramets"<<std::endl;
   }
   
-  std::cout<<"got here"<<std::endl;
   double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
   
   std::vector<TGraph*> leadPhiGraph( nFiles );
@@ -789,7 +778,6 @@ int main( int argc, const char** argv) {
   std::vector<TGraph*> subPhiDifGraph( nFiles );
   std::vector<TGraph*> subEtaGraph( nFiles );
   
-  std::cout<<"and here"<<std::endl;
   for ( int i = 0; i < nFiles; ++i ) {
     double leadPhiTmp[nPtBins];
     double leadPhiDifTmp[nPtBins];
@@ -807,18 +795,17 @@ int main( int argc, const char** argv) {
       subPhiDifTmp[j] = subPhiDifYield[i][j];
       subEtaTmp[j] = subEtaYield[i][j];
     }
-    std::cout<<"finished setting the arrays"<<std::endl;
-    //std::string leadName = "leadphigraph_"+patch::to_string(i);
+    
     leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp);
-    //std::string leadDifName = "leadphidifgraph_"+patch::to_string(i);
+    
     leadPhiDifGraph[i] = new TGraph(nPtBins, ptBins, leadPhiDifTmp);
-    //std::string leadEtaName = "leadetagraph_"+patch::to_string(i);
+    
     leadEtaGraph[i] = new TGraph(nPtBins, ptBins, leadEtaTmp);
-    //std::string subName = "subphigraph_"+patch::to_string(i);
+    
     subPhiGraph[i] = new TGraph(nPtBins, ptBins, subPhiTmp);
-    //std::string subDifName = "subphidifgraph_"+patch::to_name(i);
+    
     subPhiDifGraph[i] = new TGraph(nPtBins, ptBins, subPhiDifTmp);
-    //std::string subEtaName = "subetagraph_"+patch::to_name(i);
+    
     subEtaGraph[i] = new TGraph(nPtBins, ptBins, subEtaTmp);
     
   }
