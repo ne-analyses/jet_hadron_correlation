@@ -977,21 +977,21 @@ namespace corrAnalysis {
 			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
 			
-			hLeadJetPt 	= new TH1D( "ppleadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "ppleadjetetaphi", "PP Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-			hSubJetPt 	= new TH1D( "ppsubjetpt", "PP Subleading Jet Pt;p_{T}", 80, 0, 80 );
-			hSubEtaPhi 	= new TH2D( "ppsubjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
+			hLeadJetPt 	= new TH1D( "leadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
+			hLeadEtaPhi = new TH2D( "leadjetetaphi", "PP Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
+			hSubJetPt 	= new TH1D( "subjetpt", "PP Subleading Jet Pt;p_{T}", 80, 0, 80 );
+			hSubEtaPhi 	= new TH2D( "subjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
       
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
       if ( analysisType == "ppdijet" ) {
-			hAjHigh 		= new TH1D( "ppajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-			hAjLow 			= new TH1D( "ppajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+			hAjHigh 		= new TH1D( "ajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+			hAjLow 			= new TH1D( "ajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
       }
 			
-			h3DimCorrLead		= new TH3D("ppleadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-			h3DimCorrSub		= new TH3D("ppsubjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrSub		= new TH3D("subjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
       // now build the full 3D vz/centrality binned histograms
       TH3D* tmpHistLead, * tmpHistSub;
@@ -1033,8 +1033,8 @@ namespace corrAnalysis {
 			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
-			hLeadJetPt 	= new TH1D( "pptriggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "pptriggerjetetaphi", "PP Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
+			hLeadJetPt 	= new TH1D( "triggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
+			hLeadEtaPhi = new TH2D( "triggerjetetaphi", "PP Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
       
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
