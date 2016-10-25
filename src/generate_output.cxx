@@ -540,8 +540,22 @@ int main( int argc, const char** argv) {
       dPhiSubNear[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, subEtaInitFit->GetParameter(0));
       dEtaSub[i][j]->Add( subConst, -1 );
+      
+      // Now reset the constants to zero...
+      leadPhiInitFit->SetParameter( 0, 0 );
+      leadPhiDifInitFit->SetParameter( 0, 0 );
+      leadEtaInitFit->SetParameter( 0, 0 );
+      subPhiInitFit->SetParameter( 0, 0 );
+      subPhiDifInitFit->SetParameter( 0, 0 );
+      subEtaInitFit->SetParameter( 0, 0 );
+      
+      
     }
   }
+  
+  TCanvas c1;
+  dPhiLead[0][0]->Draw();
+  c1.SaveAs("test.pdf");
   
   
   return 0;
