@@ -758,7 +758,7 @@ int main( int argc, const char** argv) {
     leadPhiDifYield[i].resize( nPtBins );
     leadEtaYield[i].resize( nPtBins );
     subPhiYield[i].resize( nPtBins );
-    leadPhiDifYield[i].resize( nPtBins );
+    subPhiDifYield[i].resize( nPtBins );
     subEtaYield[i].resize( nPtBins );
     std::cout<<"finished resizing"<<std::endl;
     for ( int j = 0; j < nPtBins; ++j ) {
@@ -773,7 +773,7 @@ int main( int argc, const char** argv) {
       std::cout<<"got four"<<std::endl;
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
       std::cout<<"got five"<<std::endl;
-      subEtaYield[i][j] = 4;//subEtaFit[i][j]->GetParameter(1);
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
       std::cout<<"end of loop"<<std::endl;
     }
     std::cout<<"and finished getting paramets"<<std::endl;
