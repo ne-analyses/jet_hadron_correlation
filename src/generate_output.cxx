@@ -531,7 +531,7 @@ int main( int argc, const char** argv) {
       subConst->SetParameter( 0, leadPhiInitFit->GetParameter(0) );
       dPhiLead[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, leadPhiDifInitFit->GetParameter(0));
-      dPhiLeadNear[i][j]->Add( subConst, -1, , phiMin, phiMax );
+      dPhiLeadNear[i][j]->Add( subConst, -1 );
       subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0));
       dEtaLead[i][j]->Add( subConstEta, -1 );
       
