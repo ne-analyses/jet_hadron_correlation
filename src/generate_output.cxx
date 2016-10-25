@@ -471,7 +471,7 @@ int main( int argc, const char** argv) {
   TString phi_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
   TString eta_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
   double eta_min = etaMin;
-  double eta_max = etaMax
+  double eta_max = etaMax;
   double phi_min = corrAnalysis::phiLowEdge;
   double phi_max = corrAnalysis::phiHighEdge;
   
