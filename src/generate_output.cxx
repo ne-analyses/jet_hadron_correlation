@@ -771,6 +771,7 @@ int main( int argc, const char** argv) {
     }
   }
   
+  std::cout<<"got here"<<std::endl;
   double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
   
   std::vector<TGraph*> leadPhiGraph( nFiles );
@@ -780,6 +781,7 @@ int main( int argc, const char** argv) {
   std::vector<TGraph*> subPhiDifGraph( nFiles );
   std::vector<TGraph*> subEtaGraph( nFiles );
   
+  std::cout<<"and here"<<std::endl;
   for ( int i = 0; i < nFiles; ++i ) {
     double leadPhiTmp[nPtBins];
     double leadPhiDifTmp[nPtBins];
@@ -797,6 +799,7 @@ int main( int argc, const char** argv) {
       subPhiDifTmp[j] = subPhiDifYield[i][j];
       subEtaTmp[j] = subEtaYield[i][j];
     }
+    std::cout<<"finished setting the arrays"<<std::endl;
     //std::string leadName = "leadphigraph_"+patch::to_string(i);
     leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp);
     //std::string leadDifName = "leadphidifgraph_"+patch::to_string(i);
