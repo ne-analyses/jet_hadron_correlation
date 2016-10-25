@@ -479,44 +479,44 @@ int main( int argc, const char** argv) {
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
-      std::string dPhiLeadName = "fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubName = "fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiLeadNameDif = "fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubNameDif = "fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaLeadName = "fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaSubName = "fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiLeadName = "tmp_fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubName = "tmp_fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiLeadNameDif = "tmp_fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubNameDif = "tmp_fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaLeadName = "tmp_fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaSubName = "tmp_fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
       
       TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiInitFit->FixParameter( 2, 0 );
       leadPhiInitFit->SetParameter( 5, corrAnalysis::pi );
-      leadPhiInitFit->SetParameter( 3, 0.1 );
-      leadPhiInitFit->SetParameter( 6, 0.1 );
+      leadPhiInitFit->SetParameter( 3, 0.2 );
+      leadPhiInitFit->SetParameter( 6, 0.2 );
       
       TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiDifInitFit->FixParameter( 2, 0 );
       leadPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
-      leadPhiDifInitFit->SetParameter( 3, 0.1 );
-      leadPhiDifInitFit->SetParameter( 6, 0.1 );
+      leadPhiDifInitFit->SetParameter( 3, 0.2 );
+      leadPhiDifInitFit->SetParameter( 6, 0.2 );
       
       TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
       subPhiInitFit->SetParameter( 5, corrAnalysis::pi );
-      subPhiInitFit->SetParameter( 3, 0.1 );
-      subPhiInitFit->SetParameter( 6, 0.1 );
+      subPhiInitFit->SetParameter( 3, 0.2 );
+      subPhiInitFit->SetParameter( 6, 0.2 );
       
       TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiDifInitFit->FixParameter( 2, 0 );
       subPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
-      subPhiDifInitFit->SetParameter( 3, 0.1 );
-      subPhiDifInitFit->SetParameter( 6, 0.1 );
+      subPhiDifInitFit->SetParameter( 3, 0.2 );
+      subPhiDifInitFit->SetParameter( 6, 0.2 );
       
       TF1* leadEtaInitFit = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
       leadEtaInitFit->FixParameter( 2, 0 );
-      leadEtaInitFit->SetParameter( 3, 0.1 );
+      leadEtaInitFit->SetParameter( 3, 0.2 );
       
       TF1* subEtaInitFit = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
       subEtaInitFit->FixParameter( 2, 0 );
-      subEtaInitFit->SetParameter( 3, 0.1 );
+      subEtaInitFit->SetParameter( 3, 0.2 );
       
       dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "R" );
       dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "R" );
@@ -542,22 +542,100 @@ int main( int argc, const char** argv) {
       subConstEta->SetParameter( 0, subEtaInitFit->GetParameter(0));
       dEtaSub[i][j]->Add( subConstEta, -1 );
       
-      // Now reset the constants to zero...
-      leadPhiInitFit->SetParameter( 0, 0 );
-      leadPhiDifInitFit->SetParameter( 0, 0 );
-      leadEtaInitFit->SetParameter( 0, 0 );
-      subPhiInitFit->SetParameter( 0, 0 );
-      subPhiDifInitFit->SetParameter( 0, 0 );
-      subEtaInitFit->SetParameter( 0, 0 );
-      
-      
+      // now scale the histograms
+      dPhiLead[i][j]->Scale( 1.0 / dPhiLead[i][j]->GetXaxis()->GetBinWidth(1) );
+      dPhiLead[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      dPhiLeadNear[i][j]->Scale( 1.0 / dPhiLeadNear[i][j]->GetXaxis()->GetBinWidth(1) );
+      dPhiLeadNear[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      dEtaLead[i][j]->Scale( 1.0 / dEtaLead[i][j]->GetXaxis()->GetBinWidth(1) );
+      dEtaLead[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      dPhiSub[i][j]->Scale( 1.0 / dPhiSub[i][j]->GetXaxis()->GetBinWidth(1) );
+      dPhiSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      dPhiSubNear[i][j]->Scale( 1.0 / dPhiSubNear[i][j]->GetXaxis()->GetBinWidth(1) );
+      dPhiSubNear[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      dEtaSub[i][j]->Scale( 1.0 / dEtaSub[i][j]->GetXaxis()->GetBinWidth(1) );
+      dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
   
-  TCanvas c1;
-  dPhiLead[0][0]->Draw();
-  c1.SaveAs("test.pdf");
+  // final fitting
+  std::vector<std::vector<TF1*> > leadPhiFit;
+  leadPhiFit.resize( nFiles );
+  std::vector<std::vector<TF1*> > leadPhiDifFit;
+  leadPhiDifFit.resize( nFiles );
+  std::vector<std::vector<TF1*> > leadEtaFit;
+  leadEtaFit.resize( nFiles );
+  std::vector<std::vector<TF1*> > subPhiFit;
+  subPhiFit.resize( nFiles );
+  std::vector<std::vector<TF1*> > subPhiDifFit;
+  subPhiDifFit.resize( nFiles );
+  std::vector<std::vector<TF1*> > subEtaFit;
+  subEtaFit.resize( nFiles );
   
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiFit[i].resize( nFiles );
+    leadPhiDifFit[i].resize( nFiles );
+    leadEtaFit[i].resize( nFiles );
+    subPhiFit[i].resize( nFiles );
+    subPhiDifFit[i].resize( nFiles );
+    subEtaFit[i].resize( nFiles );
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::string dPhiLeadName = "fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubName = "fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiLeadNameDif = "fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubNameDif = "fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaLeadName = "fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaSubName = "fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
+    
+      leadPhiFit[i][j] = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiFit[i][j]->FixParameter( 2, 0 );
+      leadPhiFit[i][j]->SetParameter( 5, corrAnalysis::pi );
+      leadPhiFit[i][j]->SetParameter( 3, 0.2 );
+      leadPhiFit[i][j]->SetParameter( 6, 0.2 );
+      leadPhiFit[i][j]->SetLineColor( i + 1 );
+      
+      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiDifFit[i][j]->FixParameter( 2, 0 );
+      leadPhiDifFit[i][j]->SetParameter( 5, corrAnalysis::pi );
+      leadPhiDifFit[i][j]->SetParameter( 3, 0.2 );
+      leadPhiDifFit[i][j]->SetParameter( 6, 0.2 );
+      leadPhiDifFit[i][j]->SetLineColor( i + 1 );
+      
+      subPhiFit[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiFit[i][j]->FixParameter( 2, 0 );
+      subPhiFit[i][j]->SetParameter( 5, corrAnalysis::pi );
+      subPhiFit[i][j]->SetParameter( 3, 0.2 );
+      subPhiFit[i][j]->SetParameter( 6, 0.2 );
+      subPhiFit[i][j]->SetLineColor( i + 1 );
+      
+      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiDifFit[i][j]->FixParameter( 2, 0 );
+      subPhiDifFit[i][j]->SetParameter( 5, corrAnalysis::pi );
+      subPhiDifFit[i][j]->SetParameter( 3, 0.2 );
+      subPhiDifFit[i][j]->SetParameter( 6, 0.2 );
+      subPhiDifFit[i][j]->SetLineColor( i + 1 );
+      
+      leadEtaFit[i][j] = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      leadEtaFit[i][j]->FixParameter( 2, 0 );
+      leadEtaFit[i][j]->SetParameter( 3, 0.2 );
+      leadEtaFit[i][j]->SetLineColor( i + 1 );
+      
+      subEtaFit[i][j] = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      subEtaFit[i][j]->FixParameter( 2, 0 );
+      subEtaFit[i][j]->SetParameter( 3, 0.2 );
+      subEtaFit[i][j]->SetLineColor( i + 1 );
+
+      // Now fit
+      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "R" );
+      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "R" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "R" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "R" );
+      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "R" );
+      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "R" );
+      
+    }
+  }
   
   return 0;
 }
