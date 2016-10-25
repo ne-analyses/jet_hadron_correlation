@@ -395,6 +395,7 @@ int main( int argc, const char** argv) {
   double phiMin = -corrAnalysis::pi/2.0;
   double phiMaxClose = corrAnalysis::pi/2.0;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
+  double phiMax = 3.0*corrAnalysis::pi/2.0;
   
   
   // going to get the 1D projections
@@ -462,20 +463,70 @@ int main( int argc, const char** argv) {
       dPhiLeadFar[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
       dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
       
+      // Now do the subtraction
+      dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
+      dPhiSubNear[i][j]->Add( dPhiSubFar[i][j], -1 );
+      
     }
   }
   
   // Now to do some fitting and subtract the background
   // define the fits
   // ---------------
-  TString phi_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
-  TString eta_form = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
-  double eta_min = etaMin;
-  double eta_max = etaMax;
-  double phi_min = corrAnalysis::phiLowEdge;
-  double phi_max = corrAnalysis::phiHighEdge;
+  TString phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+  TString etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";å
   
-  
+  // do a first, temporary fit to remove background
+  for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::string dPhiLeadName = "fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubName = "fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiLeadNameDif = "fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dPhiSubNameDif = "fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaLeadName = "fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
+      std::string dEtaSubName = "fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
+      
+      TF1* leadPhiInitFit = new TF1( dPhiLeadName, phiForm, phiMin, phiMax );
+      leadPhiInitFit->FixParameter( 2, 0 );
+      leadPhiInitFit->SetParameter( 5, corrAnalysis::pi );
+      leadPhiInitFit->SetParameter( 3, 0.1 );
+      leadPhiInitFit->SetParameter( 6, 0.1 );
+      
+      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif, phiForm, phiMin, phiMax );
+      leadPhiDifInitFit->FixParameter( 2, 0 );
+      leadPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
+      leadPhiDifInitFit->SetParameter( 3, 0.1 );
+      leadPhiDifInitFit->SetParameter( 6, 0.1 );
+      
+      TF1* subPhiInitFit = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
+      subPhiInitFit->FixParameter( 2, 0 );
+      subPhiInitFit->SetParameter( 5, corrAnalysis::pi );
+      subPhiInitFit->SetParameter( 3, 0.1 );
+      subPhiInitFit->SetParameter( 6, 0.1 );
+      
+      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif, phiForm, phiMin, phiMax );
+      subPhiDifInitFit->FixParameter( 2, 0 );
+      subPhiDifInitFit->SetParameter( 5, corrAnalysis::pi );
+      subPhiDifInitFit->SetParameter( 3, 0.1 );
+      subPhiDifInitFit->SetParameter( 6, 0.1 );
+      
+      TF1* leadEtaInitFit = new TF1( dEtaLeadName, etaForm, etaMin, etaMax );
+      leadEtaInitFit->FixParameter( 2, 0 );
+      leadEtaInitFit->SetParameter( 3, 0.1 );
+      
+      TF1* subEtaInitFit = new TF1( dEtaSubName, etaForm, etaMin, etaMax );
+      subEtaInitFit->FixParameter( 2, 0 );
+      subEtaInitFit->SetParameter( 3, 0.1 );
+      
+      dPhiLead[i][j]->Fit( dPhiLeadName, "R" );
+      dPhiSub[i][j]->Fit( dPhiSubName, "R" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "R" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "R" );
+      dEtaLead[i][j]->Fit( dEtaLeadName, "R" );
+      dEtaSub[i][j]->Fit( dEtaSubName, "R" );
+      
+    }
+  }
   
   
   return 0;
