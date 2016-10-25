@@ -274,7 +274,7 @@ int main( int argc, const char** argv) {
         for ( int l = 0; l < nPtBins; ++l ) {
           
           corrCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
-          subCentVz->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
+          subCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
           mixCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
           mixSubCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
           
