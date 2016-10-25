@@ -862,7 +862,7 @@ int main( int argc, const char** argv) {
     else
       subEtaGraph[i]->Draw("SAME");
   }
-  c1.SaveAs("tmp/subetayield.pdf");
+  c1->SaveAs("tmp/subetayield.pdf");
   
   return 0;
 }
