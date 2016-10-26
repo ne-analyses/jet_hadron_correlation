@@ -490,12 +490,14 @@ int main ( int argc, const char** argv) {
   for ( int i = 0; i < corrAnalysis::binsVz; ++i )
     for ( int j = 6; j < corrAnalysis::binsCentrality; ++j ) {
       if ( mixing_events[i][j].size() < nEventsToMix*1.2 ) {
-        mixing_events[i][j].clear();
         std::string outMessage = "Removing bin ";
         outMessage += patch::to_string(i);
         outMessage += " ";
         outMessage += patch::to_string(j);
+        outMessage += ": only "; patch::to_string(mixing_events[i][j].size() );
         __OUT( outMessage.c_str() )
+        mixing_events[i][j].clear();
+                                                  
       }
     }
   __OUT("Done removing bins")
