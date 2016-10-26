@@ -378,7 +378,7 @@ int main( int argc, const char** argv) {
             
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
             }
-            if ( subCentVzPt[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetENtries() != 0 ) {
+            if ( subCentVzPt[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetEntries() != 0 ) {
               
               recombinedSubPre[i][l]->Add( subCentVzPt[i][j][k][l] );
               
