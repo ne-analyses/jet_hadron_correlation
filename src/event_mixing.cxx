@@ -573,7 +573,9 @@ int main ( int argc, const char** argv) {
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
           double assocEfficiency = 1.0;
-          if ( useEfficiency ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          if ( useEfficiency && corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          }
+          else if ( useEfficiency && corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
           }
           
           corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
