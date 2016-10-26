@@ -35,6 +35,7 @@
 #include "TCanvas.h"
 #include "TStopwatch.h"
 #include "TSystem.h"
+#include "TGraph.h"
 
 // Make use of std::vector,
 // std::string, IO and algorithm
