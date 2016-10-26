@@ -43,7 +43,7 @@ endif
 
 if ( $2 == 'default' ) then
 
-set mixEvents = 'pp_list/grid/ppEV.list'
+set mixEvents = 'pp_list/grid/evPP.list'
 set dataType = 'HT'
 set nEvents = '-1'
 set eventsPerTrigger = '5000'
