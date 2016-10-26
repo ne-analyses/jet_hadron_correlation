@@ -155,15 +155,22 @@ int main( int argc, const char** argv) {
   TH3D* mixHist[ nFiles ];
   std::vector<std::vector<std::vector<TH3D*> > > corrCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > mixCentVz;
+  std::vector<std::vector<std::vector<TH3D*> > > subCentVz;
+  std::vector<std::vector<std::vector<TH3D*> > > mixSubCentVz;
   corrCentVz.resize( nFiles );
   mixCentVz.resize( nFiles );
+  subCentVz.resize( nFiles );
+  mixSubCentVz.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
     corrCentVz[i].resize( corrAnalysis::binsCentrality );
     mixCentVz[i].resize( corrAnalysis::binsCentrality );
-    
+    subCentVz[i].resize( corrAnalysis::binsCentrality );
+    mixSubCentVz[i].resize( corrAnalysis::binsCentrality );
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
       corrCentVz[i][j].resize( corrAnalysis::binsVz );
       mixCentVz[i][j].resize( corrAnalysis::binsVz );
+      subCentVz[i][j].resize( corrAnalysis::binsVz );
+      mixSubCentVz[i][j].resize( corrAnalysis::binsVz );
     }
   }
   
@@ -190,14 +197,20 @@ int main( int argc, const char** argv) {
         // make the initial name
         std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
         std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
+        std::string subDifInitName = "sub_cent_"; subDifInitName += patch::to_string(j);
+        std::string mixSubDifInitName = "mix_sub_cent_";
+        mixSubDifInitName += patch::to_string(j);
         
         corrDifInitName += "_vz_"; corrDifInitName += patch::to_string(k);
         mixDifInitName += "_vz_"; mixDifInitName += patch::to_string(k);
-        
+        subDifInitName += "_vz_"; subDifInitName += patch::to_string(k);
+        mixSubDifInitName += "_vz_"; mixSubDifInitName += patch::to_string(k);
         
         // make the new histogram name
         std::string corrDifBaseName = "corr_file_"; corrDifBaseName += patch::to_string(i);
         std::string mixDifBaseName = "mix_file_"; mixDifBaseName += patch::to_string(i);
+        std::string subDifBaseName = "sub_file_"; subDifBaseName += patch::to_string(i);
+        std::string mixSubDifBaseName = "mix_file_"; mixSubDifBaseName += patch::to_string(i);
         
         corrDifBaseName += "_cent_"; corrDifBaseName += patch::to_string(j);
         corrDifBaseName += "_vz_"; corrDifBaseName += patch::to_string(k);
@@ -205,30 +218,49 @@ int main( int argc, const char** argv) {
         mixDifBaseName += "_cent_"; mixDifBaseName += patch::to_string(j);
         mixDifBaseName += "_vz_"; mixDifBaseName += patch::to_string(k);
         
+        subDifBaseName += "_cent_"; subDifBaseName += patch::to_string(j);
+        subDifBaseName += "_vz_"; subDifBaseName += patch::to_string(k);
+        
+        mixSubDifBaseName += "_cent_"; mixSubDifBaseName += patch::to_string(j);
+        mixSubDifBaseName += "_vz_"; mixSubDifBaseName += patch::to_string(k);
+        
         // get the histograms
         corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
         corrCentVz[i][j][k]->SetName( corrDifBaseName.c_str() );
         mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName.c_str() );
         mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
+        subCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( subDifInitName.c_str() );
+        subCentVz[i][j][k]->SetName( subDifBaseName.c_str() );
+        mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName.c_str() );
+        mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
       }
   }
   
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixCentVzPt;
+  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > subCentVzPt;
+  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixSubCentVzPt;
   corrCentVzPt.resize( nFiles );
   mixCentVzPt.resize( nFiles );
+  subCentVzPt.resize( nFiles );
+  mixSubCentVzPt.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
     corrCentVzPt[i].resize( corrAnalysis::binsCentrality );
     mixCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    subCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    mixSubCentVzPt[i].resize( corrAnalysis::binsCentrality );
     
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
       corrCentVzPt[i][j].resize( corrAnalysis::binsVz );
       mixCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      
+      subCentVzPt[i][j].resize( corrAnalysis::binsVz );
+      mixSubCentVzPt[i][j].resize( corrAnalysis::binsVz );
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
         corrCentVzPt[i][j][k].resize( nPtBins );
         mixCentVzPt[i][j][k].resize( nPtBins );
+        subCentVzPt[i][j][k].resize( nPtBins );
+        mixSubCentVzPt[i][j][k].resize( nPtBins );
       }
     }
   }
@@ -241,10 +273,13 @@ int main( int argc, const char** argv) {
           
           corrCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
           mixCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
+          subCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
+          mixSubCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
           
           corrCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) corrCentVz[i][j][k]->Project3D( "YX" ))->Clone();
           mixCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) mixCentVz[i][j][k]->Project3D( "YX" ))->Clone();
-          
+          subCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) subCentVz[i][j][k]->Project3D("YX"))->Clone();
+          mixSubCentVzPt[i][j][k][l] = (TH2D*) ((TH2D*) mixSubCentVz[i][j][k]->Project3D("YX"))->Clone();
         }
       }
     }
@@ -257,26 +292,35 @@ int main( int argc, const char** argv) {
   // now to average over all vz/centrality bins
   // (weighted in vz but not centrality)
   std::vector<std::vector<TH2D*> > weightedMix;
+  std::vector<std::vector<TH2D*> > weightedSub;
   weightedMix.resize( nFiles );
-  
+  weightedSub.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
     TH1D* vzBins = nEvents[i]->ProjectionY();
     
     weightedMix[i].resize( nPtBins );
+    weightedSub[i].resize( nPtBins );
     
     for ( int l = 0; l < nPtBins; ++l ) {
       std::string weightedMixName = "ave_mix_file_"; weightedMixName += patch::to_string( i );
       weightedMixName += "_ptBin_"; weightedMixName += patch::to_string( l );
+      std::string weightedSubName = "sub_mix_file_"; weightedSubName += patch::to_string( i );
+      weightedSubName += "_ptBin_"; weightedSubName += patch::to_string( l );
       // create new histogram, add all appropriate vz/cent bins
       weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      weightedSub[i][l] = new TH2D( weightedSubName.c_str(), weightedSubName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
         for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
           
-          if ( l <= 2 )
+          if ( l <= 2 ) {
             weightedMix[i][l]->Add( mixCentVzPt[i][j][k][l] );
-          else
+            weightedSub[i][l]->Add( mixSubCentVzPt[i][j][k][l] );
+          }
+          else {
             weightedMix[i][2]->Add( mixCentVzPt[i][j][k][l] );
+            weightedSub[i][2]->Add( mixSubCentVzPt[i][j][k][l] );
+          }
         }
       }
     }
@@ -286,28 +330,41 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j <= 2; ++j ) {
       weightedMix[i][j]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
+      weightedSub[i][j]->Scale( 1.0/weightedSub[i][j]->GetMaximum() );
     }
   }
   
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorr;
   std::vector<std::vector<TH2D*> > recombinedPre;
+  std::vector<std::vector<TH2D*> > recombinedSub;
+  std::vector<std::vector<TH2D*> > recombinedSubPre;
   recombinedCorr.resize( nFiles );
   recombinedPre.resize( nFiles );
+  recombinedSub.resize( nFiles );
+  recombinedSubPre.resize( nFiles );
   
   for (int i = 0; i < nFiles; ++ i ) {
     
     recombinedCorr[i].resize( nPtBins );
     recombinedPre[i].resize( nPtBins );
+    recombinedSub[i].resize( nPtBins );
+    recombinedSubPre[i].resize( nPtBins );
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
       std::string corrName = analysisNames[i] + " " + ptBinString[l];
       std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
+      std::string subName = analysisNames[i] + "_sub " + ptBinString[l];
+      std::string subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       
       recombinedCorr[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       recombinedPre[i][l] = new TH2D( preName.c_str(), preName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      
+      recombinedSub[i][l] = new TH2D( subName.c_str(), subName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      
+      recombinedSubPre[i][l] = new TH2D( subPreName.c_str(), subPreName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       if ( l <= 2 ) {
       
@@ -320,6 +377,15 @@ int main( int argc, const char** argv) {
               corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][l] );
             
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
+            }
+            if ( subCentVzPt[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetENtries() != 0 ) {
+              
+              recombinedSubPre[i][l]->Add( subCentVzPt[i][j][k][l] );
+              
+              subCentVzPt[i][j][k][l]->Divide( weightedSub[i][l] );
+              
+              recombinedSub[i][l]->Add( subCentVzPt[i][j][k][l] );
+              
             }
           }
         }
@@ -336,6 +402,15 @@ int main( int argc, const char** argv) {
               
               recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
             }
+            if ( weightedSub[i][2]->GetEntries() != 0 && subCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedSubPre[i][l]->Add( subCentVzPt[i][j][k][l] );
+              
+              subCentVzPt[i][j][k][l]->Divide( weightedSub[i][2] );
+              
+              recombinedSub[i][l]->Add( subCentVzPt[i][j][k][l] );
+            }
+
           }
         }
       }
@@ -343,94 +418,69 @@ int main( int argc, const char** argv) {
   }
   
   // get the reduced eta and phi ranges for projections
-  double etaMax = 1.3;
-  double etaMin = -1.3;
-  double phiMinClose = -corrAnalysis::pi/2.0;
+  double etaMax = 1.4;
+  double etaMin = -1.4;
+  double etaNearMin = -0.7;
+  double etaNearMax = 0.7;
+  double phiMin = -corrAnalysis::pi/2.0;
   double phiMaxClose = corrAnalysis::pi/2.0;
-  double phiMinFar = -corrAnalysis::pi/2.0;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
-  
-  // find the bins by looping over the axes
-  
-  // first look for eta
-  int etaMinBin, etaMaxBin, phiMinCloseBin, phiMinFarBin, phiMaxCloseBin, phiMaxFarBin;
-  
-  for ( int i = 1; i <= recombinedCorr[0][0]->GetXaxis()->GetNbins(); ++i ) {
-    if ( recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i) >= etaMin && recombinedCorr[0][0]->GetXaxis()->GetBinLowEdge(i-1) < etaMin )
-      etaMinBin = i;
-    if ( recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i) > etaMax && recombinedCorr[0][0]->GetXaxis()->GetBinUpEdge(i-1) <= etaMax  )
-      etaMaxBin = i;
-  }
-  
-  // we can manually set the low and high for phi
-  phiMinCloseBin = 1;
-  phiMaxFarBin = recombinedCorr[0][0]->GetXaxis()->GetNbins();
-  
-  for ( int i = 1; i <= recombinedCorr[0][0]->GetYaxis()->GetNbins(); ++i ) {
-    if ( recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i) >= phiMaxClose && recombinedCorr[0][0]->GetYaxis()->GetBinLowEdge(i-1) < phiMaxClose  ) {
-      phiMinFarBin = i;
-      phiMaxCloseBin = i-1;
-      
-    }
-    
-  }
-  
-  // test output
-  TCanvas c1;
-  for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < nPtBins; ++j ) {
-       std::string preCorrNameOut = "tmp/pre_" + analysisNames[i]; preCorrNameOut += ptBinString[j]; preCorrNameOut += ".pdf";
-      std::string corrNameOut = "tmp/" + analysisNames[i]; corrNameOut += ptBinString[j]; corrNameOut += ".pdf";
-      std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
-      std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
-      std::string projXNameOut = "tmp/" + analysisNames[i]; projXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
-      std::string preProjYNameOut = "tmp/pre_" + analysisNames[i]; preProjYNameOut += ptBinString[j]; preProjYNameOut += "projectY.pdf";
-      std::string preProjXNameOut = "tmp/pre_" + analysisNames[i]; preProjXNameOut += ptBinString[j]; preProjXNameOut += "projectX.pdf";
-      
-      recombinedPre[i][j]->Draw( "surf1" );
-      c1.SaveAs( preCorrNameOut.c_str() );
-      recombinedPre[i][j]->ProjectionY()->Draw();
-      c1.SaveAs( preProjYNameOut.c_str() );
-      recombinedPre[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( preProjXNameOut.c_str() );
-      
-      
-      recombinedCorr[i][j]->Draw( "surf1" );
-      c1.SaveAs(corrNameOut.c_str() );
-      recombinedCorr[i][j]->ProjectionY()->Draw();
-      c1.SaveAs( projYNameOut.c_str() );
-      recombinedCorr[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( projXNameOut.c_str() );
-      
-      if ( j <= 2 ) {
-        weightedMix[i][j]->Draw( "surf1" );
-        c1.SaveAs( mixNameOut.c_str() );
-      }
-      
-      // reduced accepted eta range projections
-      
-      std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
-      
-      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
-      recombinedCorr[i][j]->ProjectionY()->Draw();
-      c1.SaveAs( postProjYNameOut.c_str() );
-      
-      std::string postProjXNameOutNear = "tmp/post_" + analysisNames[i]; postProjXNameOutNear += ptBinString[j]; postProjXNameOutNear += "projectXNear.pdf";
-      std::string postProjXNameOutFar = "tmp/post_" + analysisNames[i]; postProjXNameOutFar += ptBinString[j]; postProjXNameOutFar += "projectXFar.pdf";
-      
-      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
-      recombinedCorr[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( postProjXNameOutNear.c_str() );
-      
-      recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
-      recombinedCorr[i][j]->ProjectionX()->Draw();
-      c1.SaveAs( postProjXNameOutFar.c_str() );
-
-      
-    }
-  }
-  
+  double phiMax = 3.0*corrAnalysis::pi/2.0;
   
   return 0;
 }
 
+//// test output
+//TCanvas c1;
+//for ( int i = 0; i < nFiles; ++i ) {
+//  for ( int j = 0; j < nPtBins; ++j ) {
+//    std::string preCorrNameOut = "tmp/pre_" + analysisNames[i]; preCorrNameOut += ptBinString[j]; preCorrNameOut += ".pdf";
+//    std::string corrNameOut = "tmp/" + analysisNames[i]; corrNameOut += ptBinString[j]; corrNameOut += ".pdf";
+//    std::string mixNameOut = "tmp/" + analysisNames[i]; mixNameOut += ptBinString[j]; mixNameOut += " Mix.pdf";
+//    std::string projYNameOut = "tmp/" + analysisNames[i]; projYNameOut += ptBinString[j]; projYNameOut += "projectY.pdf";
+//    std::string projXNameOut = "tmp/" + analysisNames[i]; projXNameOut += ptBinString[j]; projXNameOut += "projectX.pdf";
+//    std::string preProjYNameOut = "tmp/pre_" + analysisNames[i]; preProjYNameOut += ptBinString[j]; preProjYNameOut += "projectY.pdf";
+//    std::string preProjXNameOut = "tmp/pre_" + analysisNames[i]; preProjXNameOut += ptBinString[j]; preProjXNameOut += "projectX.pdf";
+//    
+//    recombinedPre[i][j]->Draw( "surf1" );
+//    c1.SaveAs( preCorrNameOut.c_str() );
+//    recombinedPre[i][j]->ProjectionY()->Draw();
+//    c1.SaveAs( preProjYNameOut.c_str() );
+//    recombinedPre[i][j]->ProjectionX()->Draw();
+//    c1.SaveAs( preProjXNameOut.c_str() );
+//    
+//    
+//    recombinedCorr[i][j]->Draw( "surf1" );
+//    c1.SaveAs(corrNameOut.c_str() );
+//    recombinedCorr[i][j]->ProjectionY()->Draw();
+//    c1.SaveAs( projYNameOut.c_str() );
+//    recombinedCorr[i][j]->ProjectionX()->Draw();
+//    c1.SaveAs( projXNameOut.c_str() );
+//    
+//    if ( j <= 2 ) {
+//      weightedMix[i][j]->Draw( "surf1" );
+//      c1.SaveAs( mixNameOut.c_str() );
+//    }
+//    
+//    // reduced accepted eta range projections
+//    
+//    std::string postProjYNameOut = "tmp/post_" + analysisNames[i]; postProjYNameOut += ptBinString[j]; postProjYNameOut += "projectY.pdf";
+//    
+//    recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
+//    recombinedCorr[i][j]->ProjectionY()->Draw();
+//    c1.SaveAs( postProjYNameOut.c_str() );
+//    
+//    std::string postProjXNameOutNear = "tmp/post_" + analysisNames[i]; postProjXNameOutNear += ptBinString[j]; postProjXNameOutNear += "projectXNear.pdf";
+//    std::string postProjXNameOutFar = "tmp/post_" + analysisNames[i]; postProjXNameOutFar += ptBinString[j]; postProjXNameOutFar += "projectXFar.pdf";
+//    
+//    recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinCloseBin, phiMaxCloseBin );
+//    recombinedCorr[i][j]->ProjectionX()->Draw();
+//    c1.SaveAs( postProjXNameOutNear.c_str() );
+//    
+//    recombinedCorr[i][j]->GetYaxis()->SetRange( phiMinFarBin, phiMaxFarBin );
+//    recombinedCorr[i][j]->ProjectionX()->Draw();
+//    c1.SaveAs( postProjXNameOutFar.c_str() );
+//    
+//    
+//  }
+//}
