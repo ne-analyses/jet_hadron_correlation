@@ -435,8 +435,8 @@ int main( int argc, const char** argv) {
       recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
       
       // save the 2D histograms
-      std::string leadOutName = "lead2d_" + analysisNames[i] +"_pt_" +patch::to_string(j) + ".pdf";
-      std::string subOutName = "sub2d_" + analysisNames[i] +"_pt_"+ patch::to_string(j) + ".pdf";
+      std::string leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_" +patch::to_string(j) + ".pdf";
+      std::string subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_"+ patch::to_string(j) + ".pdf";
       
       TCanvas c1;
       recombinedCorr[i][j]->Draw("surf1");
