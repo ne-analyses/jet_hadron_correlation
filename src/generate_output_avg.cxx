@@ -462,6 +462,16 @@ int main( int argc, const char** argv) {
       recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax  );
       recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
       
+      // save the 2D histograms
+      std::string leadOutName = "lead2d_" + analysisNames[i] +"_pt_" patch::to_string(j) + ".pdf";
+      std::string subOutName = "sub2d_" + analysisNames[i] +"_pt_" patch::to_string(j) + ".pdf";
+      
+      TCanvas c1;
+      recombinedCorr[i][j]->Draw("surf1");
+      c1.SaveAs( leadOutName.c_str() );
+      recombinedSub[i][j]->Draw("surf1");
+      c1.SaveAs( subOutName.c_str() );
+      
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
       
