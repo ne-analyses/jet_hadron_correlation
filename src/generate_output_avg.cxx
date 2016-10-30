@@ -790,25 +790,42 @@ int main( int argc, const char** argv) {
   
   // now to get yields
   std::vector<std::vector<double> > leadPhiYield( nFiles );
+  std::vector<std::vector<double> > leadPhiError( nFiles );
   std::vector<std::vector<double> > leadPhiDifYield( nFiles );
+  std::vector<std::vector<double> > leadPhiDifError( nFiles );
   std::vector<std::vector<double> > leadEtaYield( nFiles );
+  std::vector<std::vector<double> > leadEtaError( nFiles );
   std::vector<std::vector<double> > subPhiYield( nFiles );
+  std::vector<std::vector<double> > subPhiError( nFiles );
   std::vector<std::vector<double> > subPhiDifYield( nFiles );
+  std::vector<std::vector<double> > subPhiDifError( nFiles );
   std::vector<std::vector<double> > subEtaYield( nFiles );
+  std::vector<std::vector<double> > subEtaError( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiYield[i].resize( nPtBins );
+    leadPhiError[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
+    leadPhiDifError[i].resize( nPtBins );
     leadEtaYield[i].resize( nPtBins );
+    leadEtaError[i].resize( nPtBins );
     subPhiYield[i].resize( nPtBins );
+    subPhiError[i].resize( nPtBins );
     subPhiDifYield[i].resize( nPtBins );
+    subPhiDifError[i].resize( nPtBins );
     subEtaYield[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
+      leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
+      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParError(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
+      leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
+      subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
+      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParError(1);
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
+      subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
     }
   }
   
