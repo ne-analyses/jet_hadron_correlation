@@ -813,6 +813,7 @@ int main( int argc, const char** argv) {
     subPhiDifYield[i].resize( nPtBins );
     subPhiDifError[i].resize( nPtBins );
     subEtaYield[i].resize( nPtBins );
+    subEtaError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
