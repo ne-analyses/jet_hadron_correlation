@@ -792,7 +792,6 @@ int main( int argc, const char** argv) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
-      std::cout<<leadPhiDifFit[i][j]->GetParameter(1)<<std::endl;
       std::cout<<leadPhiDifYield[i][j]<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParError(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
@@ -816,6 +815,11 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> subEtaGraph( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::cout<<leadPhiDifYield[i][j]<<std::endl;
+    }
+  }
+  for ( int i = 0; i < nFiles; ++i ) {
     double leadPhiTmp[nPtBins];
     double leadPhiErr[nPtBins];
     double leadPhiDifTmp[nPtBins];
@@ -835,8 +839,6 @@ int main( int argc, const char** argv) {
       leadPhiTmp[j] = leadPhiYield[i][j];
       leadPhiErr[j] = leadPhiError[i][j];
       leadPhiDifTmp[j] = leadPhiDifYield[i][j];
-      std::cout<<leadPhiDifYield[i][j]<<std::endl;
-      std::cout<<leadPhiDifTmp[j]<<std::endl;
       leadPhiDifErr[j] = leadPhiDifError[i][j];
       leadEtaTmp[j] = leadEtaYield[i][j];
       leadEtaErr[j] = leadEtaError[i][j];
