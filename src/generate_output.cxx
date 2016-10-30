@@ -793,6 +793,7 @@ int main( int argc, const char** argv) {
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
       std::cout<<leadPhiDifFit[i][j]->GetParameter(1)<<std::endl;
+      std::cout<<leadPhiDifYield[i][j]<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParError(1);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
