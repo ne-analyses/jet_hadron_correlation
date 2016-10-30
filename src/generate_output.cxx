@@ -394,13 +394,13 @@ int main( int argc, const char** argv) {
   }
   
   // get the reduced eta and phi ranges for projections
-  double etaMax = 1.3;
-  double etaMin = -1.3;
+  double etaMax = 1.2;
+  double etaMin = -1.2;
   double etaNearMin = etaMin/2.0;
   double etaNearMax = etaMax/2.0;
   double phiMin = -corrAnalysis::pi/2.0;
-  double phiMinClose = -0.8;
-  double phiMaxClose = 0.8;
+  double phiMinClose = corrAnalysis::pi/2.0;
+  double phiMaxClose = -corrAnalysis::pi/2.0;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   double phiMax = 3.0*corrAnalysis::pi/2.0;
   
