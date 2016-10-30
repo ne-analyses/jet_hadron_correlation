@@ -835,6 +835,7 @@ int main( int argc, const char** argv) {
       leadPhiTmp[j] = leadPhiYield[i][j];
       leadPhiErr[j] = leadPhiError[i][j];
       leadPhiDifTmp[j] = leadPhiDifYield[i][j];
+      std::cout<<leadPhiDifYield[i][j]<<std::endl;
       std::cout<<leadPhiDifTmp[j]<<std::endl;
       leadPhiDifErr[j] = leadPhiDifError[i][j];
       leadEtaTmp[j] = leadEtaYield[i][j];
