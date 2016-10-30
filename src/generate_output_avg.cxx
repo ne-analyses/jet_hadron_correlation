@@ -36,6 +36,7 @@
 #include "TStopwatch.h"
 #include "TSystem.h"
 #include "TGraph.h"
+#include "TStyle.h"
 
 // Make use of std::vector,
 // std::string, IO and algorithm
