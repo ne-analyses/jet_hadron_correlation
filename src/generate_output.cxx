@@ -786,6 +786,7 @@ int main( int argc, const char** argv) {
     subPhiDifYield[i].resize( nPtBins );
     subPhiDifError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
+      std::cout<<"got here"<<std::endl;
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
