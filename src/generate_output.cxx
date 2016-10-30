@@ -394,8 +394,8 @@ int main( int argc, const char** argv) {
   double etaNearMin = -0.7;
   double etaNearMax = 0.7;
   double phiMin = -corrAnalysis::pi/2.0;
-  double phiMinClose = -1;
-  double phiMaxClose = 1;
+  double phiMinClose = -0.8;
+  double phiMaxClose = 0.8;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   double phiMax = 3.0*corrAnalysis::pi/2.0;
   
