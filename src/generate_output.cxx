@@ -789,16 +789,22 @@ int main( int argc, const char** argv) {
       std::cout<<"got here"<<std::endl;
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
+      std::cout<<"got here"<<std::endl;
     }
   }
   
