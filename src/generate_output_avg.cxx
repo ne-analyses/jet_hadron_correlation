@@ -75,6 +75,9 @@ namespace patch
 
 int main( int argc, const char** argv) {
   
+  gStyle::SetOptStat(false);
+  gStyle::SetOptFit(true);
+  
   // Pt bins
   const int nPtBins = 5;
   double ptBinLo[nPtBins] = { 3, 5, 9, 13, 17 };
@@ -420,8 +423,8 @@ int main( int argc, const char** argv) {
   // get the reduced eta and phi ranges for projections
   double etaMax = 1.3;
   double etaMin = -1.3;
-  double etaNearMin = -0.7;
-  double etaNearMax = 0.7;
+  double etaNearMin = etaMin/2.0;
+  double etaNearMax = etaMax/2.0;
   double phiMin = -corrAnalysis::pi/2.0;
   double phiMinClose = -0.8;
   double phiMaxClose = 0.8;
