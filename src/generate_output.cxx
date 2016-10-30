@@ -437,14 +437,14 @@ int main( int argc, const char** argv) {
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
       
-      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
-      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
+      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
+      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
       
       dEtaLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionX())->Clone();
       dEtaSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionX())->Clone();
       
-      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxFar );
-      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxFar );
+      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
+      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
       
       // now get dphi in "near" and "far" eta ranges
       recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaNearMin, etaNearMax  );
