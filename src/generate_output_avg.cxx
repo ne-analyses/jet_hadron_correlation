@@ -75,8 +75,8 @@ namespace patch
 
 int main( int argc, const char** argv) {
   
-  gStyle::SetOptStat(false);
-  gStyle::SetOptFit(true);
+  gStyle->SetOptStat(false);
+  gStyle->SetOptFit(true);
   
   // Pt bins
   const int nPtBins = 5;
