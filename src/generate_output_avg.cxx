@@ -871,17 +871,17 @@ int main( int argc, const char** argv) {
       subEtaErr[j] = subEtaError[i][j];
     }
     
-    leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp, errX, leadPhiErr );
+    leadPhiGraph[i] = new TGraphErrors(nPtBins, ptBins, leadPhiTmp, errX, leadPhiErr );
     
-    leadPhiDifGraph[i] = new TGraph(nPtBins, ptBins, leadPhiDifTmp, errX, leadPhiDifErr );
+    leadPhiDifGraph[i] = new TGraphErrors(nPtBins, ptBins, leadPhiDifTmp, errX, leadPhiDifErr );
     
-    leadEtaGraph[i] = new TGraph(nPtBins, ptBins, leadEtaTmp, errX, leadEtaErr );
+    leadEtaGraph[i] = new TGraphErrors(nPtBins, ptBins, leadEtaTmp, errX, leadEtaErr );
     
-    subPhiGraph[i] = new TGraph(nPtBins, ptBins, subPhiTmp, errX, subPhiErr );
+    subPhiGraph[i] = new TGraphErrors(nPtBins, ptBins, subPhiTmp, errX, subPhiErr );
     
-    subPhiDifGraph[i] = new TGraph(nPtBins, ptBins, subPhiDifTmp, errX, subPhiDifErr );
+    subPhiDifGraph[i] = new TGraphErrors(nPtBins, ptBins, subPhiDifTmp, errX, subPhiDifErr );
     
-    subEtaGraph[i] = new TGraph(nPtBins, ptBins, subEtaTmp, errX, subEtaErr );
+    subEtaGraph[i] = new TGraphErrors(nPtBins, ptBins, subEtaTmp, errX, subEtaErr );
 
     
   }
