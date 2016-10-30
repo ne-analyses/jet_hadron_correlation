@@ -423,7 +423,8 @@ int main( int argc, const char** argv) {
   double etaNearMin = -0.7;
   double etaNearMax = 0.7;
   double phiMin = -corrAnalysis::pi/2.0;
-  double phiMaxClose = corrAnalysis::pi/2.0;
+  double phiMinClose = -1;
+  double phiMaxClose = 1;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   double phiMax = 3.0*corrAnalysis::pi/2.0;
   
@@ -464,8 +465,8 @@ int main( int argc, const char** argv) {
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
       
-      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
-      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxClose );
+      recombinedCorr[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
+      recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
       
       dEtaLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionX())->Clone();
       dEtaSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionX())->Clone();
