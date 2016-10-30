@@ -23,6 +23,7 @@
 #include "TProfile.h"
 #include "TProfile2D.h"
 #include "TGraph.h"
+#include "TGraphErrors.h"
 #include "TObjArray.h"
 #include "TString.h"
 #include "TFile.h"
@@ -805,42 +806,56 @@ int main( int argc, const char** argv) {
   
   double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
   
-  std::vector<TGraph*> leadPhiGraph( nFiles );
-  std::vector<TGraph*> leadPhiDifGraph( nFiles );
-  std::vector<TGraph*> leadEtaGraph( nFiles );
-  std::vector<TGraph*> subPhiGraph( nFiles );
-  std::vector<TGraph*> subPhiDifGraph( nFiles );
-  std::vector<TGraph*> subEtaGraph( nFiles );
+  std::vector<TGraphErrors*> leadPhiGraph( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
+  std::vector<TGraphErrors*> leadEtaGraph( nFiles );
+  std::vector<TGraphErrors*> subPhiGraph( nFiles );
+  std::vector<TGraphErrors*> subPhiDifGraph( nFiles );
+  std::vector<TGraphErrors*> subEtaGraph( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
     double leadPhiTmp[nPtBins];
+    double leadPhiErr[nPtBins];
     double leadPhiDifTmp[nPtBins];
+    double leadPhiDifErr[nPtBins];
     double leadEtaTmp[nPtBins];
+    double leadEtaErr[nPtBins];
     double subPhiTmp[nPtBins];
+    double subPhiErr[nPtBins];
     double subPhiDifTmp[nPtBins];
+    double subPhiDifErr[nPtBins];
     double subEtaTmp[nPtBins];
+    double subEtaErr[nPtBins];
     
+    double errX[nPtBins];
     for ( int j = 0; j < nPtBins; ++j ) {
-      
+      errX[j]=0;
       leadPhiTmp[j] = leadPhiYield[i][j];
+      leadPhiErr[j] = leadPhiError[i][j];
       leadPhiDifTmp[j] = leadPhiDifYield[i][j];
+      leadPhiDifErr[j] = leadPhiDifError[i][j];
       leadEtaTmp[j] = leadEtaYield[i][j];
+      leadEtaErr[j] = leadEtaError[i][j];
       subPhiTmp[j] = subPhiYield[i][j];
+      subPhiErr[j] = subPhiError[i][j];
       subPhiDifTmp[j] = subPhiDifYield[i][j];
+      subPhiDifErr[j] = subPhiDifError[i][j];
       subEtaTmp[j] = subEtaYield[i][j];
+      subEtaErr[j] = subEtaError[i][j];
     }
     
-    leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp);
     
-    leadPhiDifGraph[i] = new TGraph(nPtBins, ptBins, leadPhiDifTmp);
+    leadPhiGraph[i] = new TGraph(nPtBins, ptBins, leadPhiTmp, errX, leadPhiErr );
     
-    leadEtaGraph[i] = new TGraph(nPtBins, ptBins, leadEtaTmp);
+    leadPhiDifGraph[i] = new TGraph(nPtBins, ptBins, leadPhiDifTmp, errX, leadPhiDifErr );
     
-    subPhiGraph[i] = new TGraph(nPtBins, ptBins, subPhiTmp);
+    leadEtaGraph[i] = new TGraph(nPtBins, ptBins, leadEtaTmp, errX, leadEtaErr );
     
-    subPhiDifGraph[i] = new TGraph(nPtBins, ptBins, subPhiDifTmp);
+    subPhiGraph[i] = new TGraph(nPtBins, ptBins, subPhiTmp, errX, subPhiErr );
     
-    subEtaGraph[i] = new TGraph(nPtBins, ptBins, subEtaTmp);
+    subPhiDifGraph[i] = new TGraph(nPtBins, ptBins, subPhiDifTmp, errX, subPhiDifErr );
+    
+    subEtaGraph[i] = new TGraph(nPtBins, ptBins, subEtaTmp, errX, subEtaErr );
     
   }
 
