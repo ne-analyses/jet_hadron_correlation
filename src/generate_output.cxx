@@ -492,10 +492,14 @@ int main( int argc, const char** argv) {
       std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
       
       TCanvas c1;
+      dPhiLeadNear[i][j]->SetLineColor(kBlack);
       dPhiLeadNear[i][j]->Draw();
+      dPhiLeadFar[i][j]->SetLineColor(kRed);
       dPhiLeadFar[i][j]->Draw("SAME");
       c1.SaveAs( leadPhiName.c_str() );
+      dPhiSubNear[i][j]->SetLineColor(kBlack);
       dPhiSubNear[i][j]->Draw();
+      dPhiSubFar[i][j]->SetLineColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
       c1.SaveAs( subPhiName.c_str() );
       
