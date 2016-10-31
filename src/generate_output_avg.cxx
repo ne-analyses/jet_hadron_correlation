@@ -84,7 +84,7 @@ int main( int argc, const char** argv) {
   const int nPtBins = 5;
   double ptBinLo[nPtBins] = { 3, 5, 9, 13, 17 };
   double ptBinHi[nPtBins] = { 4, 8, 12, 16, 24 };
-  std::string ptBinString[nPtBins] = { "0.5-1.0", "1.0-2.0", "2.0-3.0", "3.0-4.0", "4.0-6.0" };
+  std::string ptBinString[nPtBins] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
   
   // analysis names
   std::vector<std::string> defaultCorrNames;
@@ -531,15 +531,24 @@ int main( int argc, const char** argv) {
       
       TCanvas c1;
       dPhiLeadNear[i][j]->SetLineColor(kBlack);
+      dPhiLeadNear[i][j]->SetMarkerStyle(29);
+      dPhiLeadNear[i][j]->SetMarkerColor(kBlack);
       dPhiLeadNear[i][j]->Draw();
       dPhiLeadFar[i][j]->SetLineColor(kRed);
+      dPhiLeadFar[i][j]->SetMarkerStyle(29);
+      dPhiLeadFar[i][j]->SetMarkerColor(kRed);
       dPhiLeadFar[i][j]->Draw("SAME");
       c1.SaveAs( leadPhiName.c_str() );
       dPhiSubNear[i][j]->SetLineColor(kBlack);
+      dPhiSubNear[i][j]->SetMarkerStyle(29);
+      dPhiSubNear[i][j]->SetMarkerColor(kBlack);
       dPhiSubNear[i][j]->Draw();
       dPhiSubFar[i][j]->SetLineColor(kRed);
+      dPhiSubFar[i][j]->SetMarkerStyle(29);
+      dPhiSubFar[i][j]->SetMarkerColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
       c1.SaveAs( subPhiName.c_str() );
+
       
       // Now do the subtraction
       dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
