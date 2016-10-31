@@ -243,6 +243,18 @@ int main( int argc, const char** argv) {
       }
   }
   
+  // Printing out eta and phi bins
+  std::cout<<"ETA BINS: "<<mixSubCentVz[0][0][0]->GetXaxis()->GetNbins()<<std::endl;
+  for ( int i = 1; i <= mixSubCentVz[0][0][0]->GetXaxis()->GetNbins(); ++i ) {
+    std::cout<<"bin: "<<i<<" low: "<< mixSubCentVz[0][0][0]->GetXaxis()->GetBinLowEdge(i)<<" upper: "<<mixSubCentVz[0][0][0]->GetXaxis()->GetBinUpEdge(i)<<std::endl;
+  }
+  
+  std::cout<<"PHI BINS: "<<mixSubCentVz[0][0][0]->GetYaxis()->GetNbins()<<std::endl;
+  for ( int i = 1; i <= mixSubCentVz[0][0][0]->GetYaxis()->GetNbins(); ++i ) {
+    std::cout<<"bin: "<<i<<" low: "<< mixSubCentVz[0][0][0]->GetYaxis()->GetBinLowEdge(i)<<" upper: "<<mixSubCentVz[0][0][0]->GetYaxis()->GetBinUpEdge(i)<<std::endl;
+  }
+
+  
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > subCentVzPt;
