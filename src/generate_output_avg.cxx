@@ -1012,7 +1012,6 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->GetYaxis()->SetTitle("Yield");
     subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0) {
-      subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 13 );
       subEtaGraph[i]->Draw();
     }
     else {
