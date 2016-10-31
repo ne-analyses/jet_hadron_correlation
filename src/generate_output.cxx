@@ -481,12 +481,29 @@ int main( int argc, const char** argv) {
       dPhiLeadFar[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
       dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
       
+    }
+  }
+  
+  // now  first overlay and output,
+  // then subtract near from far eta regions
+  for ( int i = 0; i < nFiles; ++i )
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::string leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      
+      TCanvas c1;
+      dPhiLeadNear[i][j]->Draw();
+      dPhiLeadFar[i][j]->Draw("SAME");
+      c1.SaveAs( leadPhiName.c_str() );
+      dPhiSubNear[i][j]->Draw();
+      dPhiSubFar[i][j]->Draw("SAME");
+      c1.SaveAs( subPhiName.c_str() );
+      
       // Now do the subtraction
       dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
       dPhiSubNear[i][j]->Add( dPhiSubFar[i][j], -1 );
-      
     }
-  }
+
   
   // Now to do some fitting and subtract the background
   // define the fits
