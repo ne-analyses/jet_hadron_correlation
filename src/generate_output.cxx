@@ -532,7 +532,7 @@ int main( int argc, const char** argv) {
       dPhiSubNear[i][j]->Draw();
       dPhiSubFar[i][j]->SetLineColor(kRed);
       dPhiSubFar[i][j]->SetMarkerStyle(29);
-      dPhiSubFar[i][j]->SetMarkerStyle(3);
+      dPhiSubFar[i][j]->SetMarkerSize(3);
       dPhiSubFar[i][j]->SetMarkerColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
       c1.SaveAs( subPhiName.c_str() );
