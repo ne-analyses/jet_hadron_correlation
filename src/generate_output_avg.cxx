@@ -920,7 +920,7 @@ int main( int argc, const char** argv) {
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*subPhiDifFit[i][j]->GetParameter(3)/ptBinWidth[j];
       subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*subEtaFit[i][j]->GetParameter(3/ptBinWidth[j]);
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*subEtaFit[i][j]->GetParameter(3)/ptBinWidth[j];
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
 
     }
