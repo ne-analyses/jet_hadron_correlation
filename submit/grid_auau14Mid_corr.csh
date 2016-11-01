@@ -46,7 +46,7 @@ set jetRadius = $7
 
 if ( $2 == 'default' ) then
 	set useEfficiency = 'false'
-	set triggerCoincidence = 'true'
+	set triggerCoincidence = 'false'
 	if ( $analysis == 'dijet' ) then
 		set subLeadPtMin = 10.0
 		set leadPtMin = 20.0
