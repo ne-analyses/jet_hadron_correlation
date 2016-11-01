@@ -665,11 +665,9 @@ int main( int argc, const char** argv) {
       leadPhiFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiFit[i][j]->SetLineColor( i + 1 );
       
-      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifFit[i][j]->FixParameter( 2, 0 );
-      leadPhiDifFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       leadPhiDifFit[i][j]->SetParameter( 3, 0.2 );
-      leadPhiDifFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiDifFit[i][j]->SetLineColor( i + 1 );
       
       subPhiFit[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
@@ -679,11 +677,9 @@ int main( int argc, const char** argv) {
       subPhiFit[i][j]->SetParameter( 6, 0.2 );
       subPhiFit[i][j]->SetLineColor( i + 1 );
       
-      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifFit[i][j]->FixParameter( 2, 0 );
-      subPhiDifFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       subPhiDifFit[i][j]->SetParameter( 3, 0.2 );
-      subPhiDifFit[i][j]->SetParameter( 6, 0.2 );
       subPhiDifFit[i][j]->SetLineColor( i + 1 );
       
       leadEtaFit[i][j] = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
@@ -753,6 +749,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiLeadNear[j][i]->SetTitle("Lead Jet #Delta#eta subtracted #Delta#phi");
+        dPhiLeadNear[j][i]->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
         dPhiLeadNear[j][i]->SetLineColor(j+1);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
@@ -801,7 +798,7 @@ int main( int argc, const char** argv) {
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSub[j][i]->SetMarkerStyle(29);
-        dPhiSub[j][i]->SetMarkerColor(3);
+        dPhiSub[j][i]->SetMarkerSize(3);
         dPhiSub[j][i]->SetMarkerColor(j+1);
         dPhiSub[j][i]->Draw();
       }
@@ -819,6 +816,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiSubNear[j][i]->SetTitle("Sub Jet #Delta#eta subtracted #Delta#phi");
+        dPhiSubNear[j][i]->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
         dPhiSubNear[j][i]->SetLineColor(j+1);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");

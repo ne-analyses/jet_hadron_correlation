@@ -693,11 +693,9 @@ int main( int argc, const char** argv) {
       leadPhiFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiFit[i][j]->SetLineColor( i + 1 );
       
-      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifFit[i][j]->FixParameter( 2, 0 );
-      leadPhiDifFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       leadPhiDifFit[i][j]->SetParameter( 3, 0.2 );
-      leadPhiDifFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiDifFit[i][j]->SetLineColor( i + 1 );
       
       subPhiFit[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
@@ -707,11 +705,9 @@ int main( int argc, const char** argv) {
       subPhiFit[i][j]->SetParameter( 6, 0.2 );
       subPhiFit[i][j]->SetLineColor( i + 1 );
       
-      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifFit[i][j]->FixParameter( 2, 0 );
-      subPhiDifFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       subPhiDifFit[i][j]->SetParameter( 3, 0.2 );
-      subPhiDifFit[i][j]->SetParameter( 6, 0.2 );
       subPhiDifFit[i][j]->SetLineColor( i + 1 );
       
       leadEtaFit[i][j] = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
