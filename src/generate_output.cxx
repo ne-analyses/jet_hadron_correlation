@@ -779,7 +779,7 @@ int main( int argc, const char** argv) {
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
         dEtaLead[j][i]->SetMarkerStyle(29);
-        dEtaLead[j][i]->SetMarkerSize(3)
+        dEtaLead[j][i]->SetMarkerSize(3);
         dEtaLead[j][i]->SetMarkerColor(j+1);
         dEtaLead[j][i]->Draw();
       }
