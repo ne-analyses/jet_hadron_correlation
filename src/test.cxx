@@ -45,11 +45,29 @@
 
 int main() {
   
-  TLorentzVector* a = new TLorentzVector();
-  TVector3* b = new TVector3();
+  TH1D* test = new TH1D("test", "Effective Acceptance", 500, -2, 2);
   
-  b->SetXYZ(1,2,3);
-  a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
+  // set up generator
+  std::random_device rd1;
+  std::mt19937 gen1(rd1());
+  std::uniform_real_distribution<> random1( -0.6, 0.6 );
   
+  // set up generator
+  std::random_device rd2;
+  std::mt19937 gen2(rd2());
+  std::uniform_real_distribution<> random2( -1, 1 );
+  
+  
+  for ( int i = 0; i < 10000; ++i ) {
+    double trigger = random1(gen1);
+    for ( int j = 0; j < 10000; ++j ) {
+      double assoc = random2(gen1);
+      test->Fill( trigger - assoc );
+    }
+  }
+  
+  TCanvas c1;
+  test->Draw();
+  c1.SaveAs("test.pdf");
 	return 0;
 }
