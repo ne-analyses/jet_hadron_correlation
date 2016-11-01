@@ -157,7 +157,7 @@ namespace corrAnalysis {
       TIter nextTrigger(triggerObjs);
       TStarJetPicoTriggerInfo* trigger = 0;
       while ( ( trigger = (TStarJetPicoTriggerInfo*) nextTrigger() ) ) {
-        if ( trigger->GetTriggerFlag() == 1 ) {
+        if ( trigger->GetTriggerFlag() == 1 || trigger->GetTriggerFlag() == 118 || trigger->GetTriggerFlag() == 125 ) {
           fastjet::PseudoJet tmpTrig;
           tmpTrig.reset_PtYPhiM(0.1, trigger->GetEta(), trigger->GetPhi(), 0 );
           triggers.push_back( tmpTrig );
