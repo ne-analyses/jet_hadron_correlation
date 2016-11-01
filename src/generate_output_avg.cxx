@@ -438,6 +438,11 @@ int main( int argc, const char** argv) {
   double etaMin = -1.2;
   double etaNearMin = etaMin/2.0;
   double etaNearMax = etaMax/2.0;
+  int etaMinBin = 1;
+  int etaNearMinBin = corrAnalysis::binsEta/4.0+1;
+  int etaNearMaxBin = corrAnalysis::binsEta*3.0/4.0;
+  int etaFarMinBin = etaNearMaxBin + 1;
+  int etaNearMaxBin = corrAnalysis::binsEta;
   double phiMin = -corrAnalysis::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
@@ -894,18 +899,19 @@ int main( int argc, const char** argv) {
     subEtaYield[i].resize( nPtBins );
     subEtaError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
-      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1);
+      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*leadPhiFit[i][j]->GetParameter(3);
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
-      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1);
+      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*leadPhiDifFit[i][j]->GetParameter(3);
       leadPhiDifError[i][j] = leadPhiDifFit[i][j]->GetParError(1);
-      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1);
+      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*leadEtaFit[i][j]->GetParameter(3);
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
-      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1);
+      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*subPhiFit[i][j]->GetParameter(3);
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
-      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1);
+      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*subPhiDifFit[i][j]->GetParameter(3);
       subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1);
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrParameters::pi)*subEtaFit[i][j]->GetParameter(3);
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
+
     }
   }
   
