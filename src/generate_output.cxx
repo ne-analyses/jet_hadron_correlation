@@ -87,7 +87,7 @@ int main( int argc, const char** argv) {
   std::string ptBinString[nPtBins] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
   double ptBinWidth[nPtBins];
   for ( int i = 0; i < nPtBins; ++i ) {
-    ptBinWidth[i] = ( ptBinHi[i] - ptBinLo[i] ) * 0.25;
+    ptBinWidth[i] = ( ptBinHi[i] - ptBinLo[i] + 1 ) * 0.25;
     std::cout<<"bin: "<<i<<": "<<ptBinWidth[i]<<std::endl;
   }
   
