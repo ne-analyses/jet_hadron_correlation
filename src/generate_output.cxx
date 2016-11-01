@@ -520,6 +520,7 @@ int main( int argc, const char** argv) {
       dPhiLeadNear[i][j]->Draw();
       dPhiLeadFar[i][j]->SetLineColor(kRed);
       dPhiLeadFar[i][j]->SetMarkerStyle(29);
+      dPhiLeadFar[i][j]->SetMarkerSize(3);
       dPhiLeadFar[i][j]->SetMarkerColor(kRed);
       dPhiLeadFar[i][j]->Draw("SAME");
       c1.SaveAs( leadPhiName.c_str() );
@@ -530,6 +531,7 @@ int main( int argc, const char** argv) {
       dPhiSubNear[i][j]->Draw();
       dPhiSubFar[i][j]->SetLineColor(kRed);
       dPhiSubFar[i][j]->SetMarkerStyle(29);
+      dPhiSubFar[i][j]->SetMarkerStyle(3);
       dPhiSubFar[i][j]->SetMarkerColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
       c1.SaveAs( subPhiName.c_str() );
