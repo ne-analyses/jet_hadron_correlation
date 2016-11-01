@@ -414,7 +414,7 @@ int main( int argc, const char** argv) {
   int etaNearMinBin = corrAnalysis::binsEta/4.0+1;
   int etaNearMaxBin = corrAnalysis::binsEta*3.0/4.0;
   int etaFarMinBin = etaNearMaxBin + 1;
-  int etaNearMaxBin = corrAnalysis::binsEta;
+  int etaFarMaxBin = corrAnalysis::binsEta;
   double phiMin = -corrAnalysis::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
