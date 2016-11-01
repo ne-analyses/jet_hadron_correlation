@@ -777,6 +777,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiLeadNear[j][i]->SetTitle("Lead Jet #Delta#eta subtracted #Delta#phi");
+        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiLeadNear[j][i]->SetLineColor(j+1);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
@@ -843,6 +844,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         dPhiSubNear[j][i]->SetTitle("Sub Jet #Delta#eta subtracted #Delta#phi");
+        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiSubNear[j][i]->SetLineColor(j+1);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
