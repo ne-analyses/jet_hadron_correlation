@@ -442,12 +442,12 @@ int main( int argc, const char** argv) {
   double etaMin = -1.2;
   double etaNearMin = etaMin/2.0;
   double etaNearMax = etaMax/2.0;
-  int etaMinBin = 1;
-  int etaMaxBin = corrAnalysis::binsEta/4.0;
-  int etaNearMinBin = corrAnalysis::binsEta/4.0+1;
-  int etaNearMaxBin = corrAnalysis::binsEta*3.0/4.0;
+  int etaMinBin = 5;
+  int etaMaxBin = etaMinBin + 3;
+  int etaNearMinBin = etaMaxBin + 1;
+  int etaNearMaxBin = etaNearMinBin + 7;
   int etaFarMinBin = etaNearMaxBin + 1;
-  int etaFarMaxBin = corrAnalysis::binsEta;
+  int etaFarMaxBin = etaFarMinBin + 3;
   double phiMin = -corrAnalysis::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
