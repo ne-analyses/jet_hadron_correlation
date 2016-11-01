@@ -760,6 +760,7 @@ int main( int argc, const char** argv) {
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiLead[j][i]->SetMarkerStyle(29);
+        dPhiLead[j][i]->SetMarkerSize(3);
         dPhiLead[j][i]->SetMarkerColor(j+1);
         dPhiLead[j][i]->Draw();
       }
@@ -781,6 +782,7 @@ int main( int argc, const char** argv) {
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiLeadNear[j][i]->SetMarkerStyle(29);
+        dPhiLeadNear[j][i]->SetMarkerSize(3);
         dPhiLeadNear[j][i]->SetMarkerColor(j+1);
         dPhiLeadNear[j][i]->Draw();
       }
@@ -802,6 +804,7 @@ int main( int argc, const char** argv) {
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
         dEtaLead[j][i]->SetMarkerStyle(29);
+        dEtaLead[j][i]->SetMarkerSize(3);
         dEtaLead[j][i]->SetMarkerColor(j+1);
         dEtaLead[j][i]->Draw();
       }
@@ -823,6 +826,7 @@ int main( int argc, const char** argv) {
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSub[j][i]->SetMarkerStyle(29);
+        dPhiSub[j][i]->SetMarkerSize(3);
         dPhiSub[j][i]->SetMarkerColor(j+1);
         dPhiSub[j][i]->Draw();
       }
@@ -844,6 +848,7 @@ int main( int argc, const char** argv) {
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSubNear[j][i]->SetMarkerStyle(29);
+        dPhiSubNear[j][i]->SetMarkerSize(3);
         dPhiSubNear[j][i]->SetMarkerColor(j+1);
         dPhiSubNear[j][i]->Draw();
       }
@@ -865,6 +870,7 @@ int main( int argc, const char** argv) {
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
         dEtaSub[j][i]->SetMarkerStyle(29);
+        dEtaSub[j][i]->SetMarkerSize(3);
         dEtaSub[j][i]->SetMarkerColor(j+1);
         dEtaSub[j][i]->Draw();
       }
@@ -978,6 +984,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiGraph[i]->SetLineColor(i+1);
     leadPhiGraph[i]->SetMarkerStyle(29);
+    leadPhiGraph[i]->SetMarkerSize(3);
     leadPhiGraph[i]->SetMarkerColor(i+1);
     leadPhiGraph[i]->SetTitle("Leading Jet - #Delta#phi Fit Yield");
     leadPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
@@ -993,6 +1000,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiDifGraph[i]->SetLineColor(i+1);
     leadPhiDifGraph[i]->SetMarkerStyle(29);
+    leadPhiDifGraph[i]->SetMarkerSize(3);
     leadPhiDifGraph[i]->SetMarkerColor(i+1);
     leadPhiDifGraph[i]->SetTitle("Leading Jet - #eta Subtracted #Delta#phi Fit Yield");
     leadPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
@@ -1008,6 +1016,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     leadEtaGraph[i]->SetLineColor(i+1);
     leadEtaGraph[i]->SetMarkerStyle(29);
+    leadEtaGraph[i]->SetMarkerSize(3);
     leadEtaGraph[i]->SetMarkerColor(i+1);
     leadEtaGraph[i]->SetTitle("Leading Jet - #Delta#eta Fit Yield");
     leadEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
@@ -1023,6 +1032,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiGraph[i]->SetLineColor(i+1);
     subPhiGraph[i]->SetMarkerStyle(29);
+    subPhiGraph[i]->SetMarkerSize(3);
     subPhiGraph[i]->SetMarkerColor(i+1);
     subPhiGraph[i]->SetTitle("Subleading Jet - #Delta#phi Fit Yield");
     subPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
@@ -1038,6 +1048,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiDifGraph[i]->SetLineColor(i+1);
     subPhiDifGraph[i]->SetMarkerStyle(29);
+    subPhiDifGraph[i]->SetMarkerSize(3);
     subPhiDifGraph[i]->SetMarkerColor(i+1);
     subPhiDifGraph[i]->SetTitle("Subleading Jet - #eta Subtracted #Delta#phi Fit Yield");
     subPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
@@ -1053,6 +1064,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < nFiles; ++i ) {
     subEtaGraph[i]->SetLineColor(i+1);
     subEtaGraph[i]->SetMarkerStyle(29);
+    subEtaGraph[i]->SetMarkerSize(3);
     subEtaGraph[i]->SetMarkerColor(i+1);
     subEtaGraph[i]->SetTitle("Subleading Jet - #Delta#eta Fit Yield");
     subEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
