@@ -443,6 +443,7 @@ int main( int argc, const char** argv) {
   double etaNearMin = etaMin/2.0;
   double etaNearMax = etaMax/2.0;
   int etaMinBin = 1;
+  int etaMaxBin = corrAnalysis::binsEta/4.0;
   int etaNearMinBin = corrAnalysis::binsEta/4.0+1;
   int etaNearMaxBin = corrAnalysis::binsEta*3.0/4.0;
   int etaFarMinBin = etaNearMaxBin + 1;
@@ -452,6 +453,8 @@ int main( int argc, const char** argv) {
   double phiMaxClose = 0.6;
   double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
   double phiMax = 3.0*corrAnalysis::pi/2.0;
+  double phiDifMax = corrAnalysis::pi/2.0;
+  
   
   // going to get the 1D projections
   std::vector<std::vector<TH1D*> > dPhiLead;
@@ -510,24 +513,23 @@ int main( int argc, const char** argv) {
       recombinedSub[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
       
       // now get dphi in "near" and "far" eta ranges
-      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaNearMin, etaNearMax  );
-      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaNearMin, etaNearMax );
+      recombinedCorr[i][j]->GetXaxis()->SetRange( etaNearMinBin, etaNearMaxBin  );
+      recombinedSub[i][j]->GetXaxis()->SetRange( etaNearMinBin, etaNearMaxBin );
       
       dPhiLeadNear[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSubNear[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
       
-      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaNearMax, etaMax  );
-      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaNearMax, etaMax );
+      recombinedCorr[i][j]->GetXaxis()->SetRange( etaFarMinBin, etaFarMaxBin  );
+      recombinedSub[i][j]->GetXaxis()->SetRange( etaFarMinBin, etaFarMaxBin );
       
       dPhiLeadFar[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSubFar[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
       
-      recombinedCorr[i][j]->GetXaxis()->SetRangeUser( etaMin, etaNearMin  );
-      recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaNearMin );
+      recombinedCorr[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin  );
+      recombinedSub[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin );
       
       dPhiLeadFar[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
-      dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
-      
+      dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );      
     }
   }
   
@@ -574,6 +576,7 @@ int main( int argc, const char** argv) {
   // ---------------
   std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
   std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+  std::string phiDifForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
   
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
@@ -591,11 +594,9 @@ int main( int argc, const char** argv) {
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
-      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifInitFit->FixParameter( 2, 0 );
-      leadPhiDifInitFit->FixParameter( 5, corrAnalysis::pi );
       leadPhiDifInitFit->SetParameter( 3, 0.2 );
-      leadPhiDifInitFit->SetParameter( 6, 0.2 );
       
       TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
@@ -603,11 +604,9 @@ int main( int argc, const char** argv) {
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
-      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiForm.c_str(), phiMin, phiMax );
+      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifInitFit->FixParameter( 2, 0 );
-      subPhiDifInitFit->FixParameter( 5, corrAnalysis::pi );
       subPhiDifInitFit->SetParameter( 3, 0.2 );
-      subPhiDifInitFit->SetParameter( 6, 0.2 );
       
       TF1* leadEtaInitFit = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
       leadEtaInitFit->FixParameter( 2, 0 );
