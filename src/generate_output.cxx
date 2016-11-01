@@ -88,6 +88,7 @@ int main( int argc, const char** argv) {
   double ptBinWidth[nPtBins];
   for ( int i = 0; i < nPtBins; ++i ) {
     ptBinWidth[i] = ( ptBinHi[i] - ptBinLo[i] ) * 0.25;
+    std::cout<<"bin: "<<i<<": "<<ptBinWidth[i]<<std::endl;
   }
   
   // analysis names
