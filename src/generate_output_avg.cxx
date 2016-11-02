@@ -1118,7 +1118,7 @@ int main( int argc, const char** argv) {
     
     std::string graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
     
-    c1.SaveAs( graphOutName.c_str() );
+    c1->SaveAs( graphOutName.c_str() );
     
     c1 = new TCanvas();
     subPhiGraph[i]->SetLineColor(1);
