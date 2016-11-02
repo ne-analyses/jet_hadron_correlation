@@ -727,7 +727,7 @@ int main( int argc, const char** argv) {
     std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Lead Jet #Delta#phi " + ptBinString[i];
+        std::string outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
         dPhiLead[j][i]->SetTitle( outTitle.c_str() );
         dPhiLead[j][i]->SetLineColor(j+1);
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -750,7 +750,7 @@ int main( int argc, const char** argv) {
     std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Lead Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
         dPhiLeadNear[j][i]->SetLineColor(j+1);
@@ -774,7 +774,7 @@ int main( int argc, const char** argv) {
     std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Lead Jet #Delta#eta " + ptBinString[i];
+        std::string outTitle = "Trigger Jet #Delta#eta " + ptBinString[i];
         dEtaLead[j][i]->SetTitle( outTitle.c_str() );
         dEtaLead[j][i]->SetLineColor(j+1);
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
@@ -797,7 +797,7 @@ int main( int argc, const char** argv) {
     std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Sub Jet #Delta#phi " + ptBinString[i];
+        std::string outTitle = "Recoil Jet #Delta#phi " + ptBinString[i];
         dPhiSub[j][i]->SetTitle( outTitle.c_str() );
         dPhiSub[j][i]->SetLineColor(j+1);
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -820,7 +820,7 @@ int main( int argc, const char** argv) {
     std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Sub Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
         dPhiSubNear[j][i]->SetLineColor(j+1);
@@ -844,7 +844,7 @@ int main( int argc, const char** argv) {
     std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Sub Jet #Delta#eta " + ptBinString[i];
+        std::string outTitle = "Recoil Jet #Delta#eta " + ptBinString[i];
         dEtaSub[j][i]->SetTitle( outTitle.c_str() );
         dEtaSub[j][i]->SetLineColor(j+1);
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
@@ -863,111 +863,181 @@ int main( int argc, const char** argv) {
   
   // now to get yields
   std::vector<std::vector<double> > leadPhiYield( nFiles );
+  std::vector<std::vector<double> > leadPhiWidth( nFiles );
   std::vector<std::vector<double> > leadPhiError( nFiles );
+  std::vector<std::vector<double> > leadPhiWidthError( nFiles );
   std::vector<std::vector<double> > leadPhiDifYield( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidth( nFiles );
   std::vector<std::vector<double> > leadPhiDifError( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidthError( nFiles );
   std::vector<std::vector<double> > leadEtaYield( nFiles );
+  std::vector<std::vector<double> > leadEtaWidth( nFiles );
   std::vector<std::vector<double> > leadEtaError( nFiles );
+  std::vector<std::vector<double> > leadEtaWidthError( nFiles );
   std::vector<std::vector<double> > subPhiYield( nFiles );
+  std::vector<std::vector<double> > subPhiWidth( nFiles );
   std::vector<std::vector<double> > subPhiError( nFiles );
+  std::vector<std::vector<double> > subPhiWidthError( nFiles );
   std::vector<std::vector<double> > subPhiDifYield( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidth( nFiles );
   std::vector<std::vector<double> > subPhiDifError( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidthError( nFiles );
   std::vector<std::vector<double> > subEtaYield( nFiles );
+  std::vector<std::vector<double> > subEtaWidth( nFiles );
   std::vector<std::vector<double> > subEtaError( nFiles );
+  std::vector<std::vector<double> > subEtaWidthError( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiYield[i].resize( nPtBins );
+    leadPhiWidth[i].resize( nPtBins );
     leadPhiError[i].resize( nPtBins );
+    leadPhiWidthError[i].resize( nPtBins );
     leadPhiDifYield[i].resize( nPtBins );
+    leadPhiDifWidth[i].resize( nPtBins );
     leadPhiDifError[i].resize( nPtBins );
+    leadPhiDifWidthError[i].resize( nPtBins );
     leadEtaYield[i].resize( nPtBins );
+    leadEtaWidth[i].resize( nPtBins );
     leadEtaError[i].resize( nPtBins );
+    leadEtaWidthError[i].resize( nPtBins );
     subPhiYield[i].resize( nPtBins );
+    subPhiWidth[i].resize( nPtBins );
     subPhiError[i].resize( nPtBins );
+    subPhiWidthError[i].resize( nPtBins );
     subPhiDifYield[i].resize( nPtBins );
+    subPhiDifWidth[i].resize( nPtBins );
     subPhiDifError[i].resize( nPtBins );
+    subPhiDifWidthError[i].resize( nPtBins );
     subEtaYield[i].resize( nPtBins );
+    subEtaWidth[i].resize( nPtBins );
     subEtaError[i].resize( nPtBins );
+    subEtaWidthError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
+      leadPhiWidth[i][j] = fabs(leadPhiFit[i][j]->GetParameter(3));
+      leadPhiWidthError[i][j] = leadPhiFit[i][j]->GetParError(3);
       leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiDifError[i][j] = leadPhiDifFit[i][j]->GetParError(1);
+      leadPhiDifWidth[i][j] = fabs(leadPhiDifFit[i][j]->GetParameter(3));
+      leadPhiDifWidthError[i][j] = leadPhiDifFit[i][j]->GetParError(3);
       leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
+      leadEtaWidth[i][j] = fabs(leadEtaFit[i][j]->GetParameter(3));
+      leadEtaWidthError[i][j] = leadEtaFit[i][j]->GetParError(3);
       subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
+      subPhiWidth[i][j] = fabs(subPhiFit[i][j]->GetParameter(3));
+      subPhiWidthError[i][j] = subPhiFit[i][j]->GetParError(3);
       subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
+      subPhiDifWidth[i][j] = fabs(subPhiDifFit[i][j]->GetParameter(3));
+      subPhiDifWidthError[i][j] = subPhiDifFit[i][j]->GetParError(3);
       subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
+      subEtaWidth[i][j] = fabs(subEtaFit[i][j]->GetParameter(3));
+      subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);
     }
   }
   
   double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
   
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
+  std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifWidthGraph( nFiles );
   std::vector<TGraphErrors*> leadEtaGraph( nFiles );
+  std::vector<TGraphErrors*> leadEtaWidthGraph( nFiles );
   std::vector<TGraphErrors*> subPhiGraph( nFiles );
+  std::vector<TGraphErrors*> subPhiWidthGraph( nFiles );
   std::vector<TGraphErrors*> subPhiDifGraph( nFiles );
+  std::vector<TGraphErrors*> subPhiDifWidthGraph( nFiles );
   std::vector<TGraphErrors*> subEtaGraph( nFiles );
+  std::vector<TGraphErrors*> subEtaWidthGraph( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
-    double leadPhiTmp[nPtBins];
-    double leadPhiErr[nPtBins];
-    double leadPhiDifTmp[nPtBins];
-    double leadPhiDifErr[nPtBins];
-    double leadEtaTmp[nPtBins];
-    double leadEtaErr[nPtBins];
-    double subPhiTmp[nPtBins];
-    double subPhiErr[nPtBins];
-    double subPhiDifTmp[nPtBins];
-    double subPhiDifErr[nPtBins];
-    double subEtaTmp[nPtBins];
-    double subEtaErr[nPtBins];
+    double leadPhiTmp[nPtBins-startPtBin];
+    double leadPhiErr[nPtBins-startPtBin];
+    double leadPhiWidthTmp[nPtBins-startPtBin];
+    double leadPhiWidthErrTmp[nPtBins-startPtBin];
+    double leadPhiDifTmp[nPtBins-startPtBin];
+    double leadPhiDifErr[nPtBins-startPtBin];
+    double leadPhiDifWidthTmp[nPtBins-startPtBin];
+    double leadPhiDifWidthErrTmp[nPtBins-startPtBin];
+    double leadEtaTmp[nPtBins-startPtBin];
+    double leadEtaErr[nPtBins-startPtBin];
+    double leadEtaWidthTmp[nPtBins-startPtBin];
+    double leadEtaWidthErrTmp[nPtBins-startPtBin];
+    double subPhiTmp[nPtBins-startPtBin];
+    double subPhiErr[nPtBins-startPtBin];
+    double subPhiWidthTmp[nPtBins-startPtBin];
+    double subPhiWidthErrTmp[nPtBins-startPtBin];
+    double subPhiDifTmp[nPtBins-startPtBin];
+    double subPhiDifErr[nPtBins-startPtBin];
+    double subPhiDifWidthTmp[nPtBins-startPtBin];
+    double subPhiDifWidthErrTmp[nPtBins-startPtBin];
+    double subEtaTmp[nPtBins-startPtBin];
+    double subEtaErr[nPtBins-startPtBin];
+    double subEtaWidthTmp[nPtBins-startPtBin];
+    double subEtaWidthErrTmp[nPtBins-startPtBin];
     
-    double errX[nPtBins];
-    for ( int j = 0; j < nPtBins; ++j ) {
-      errX[j]=0;
-      leadPhiTmp[j] = leadPhiYield[i][j];
-      leadPhiErr[j] = leadPhiError[i][j];
-      leadPhiDifTmp[j] = leadPhiDifYield[i][j];
-      leadPhiDifErr[j] = leadPhiDifError[i][j];
-      leadEtaTmp[j] = leadEtaYield[i][j];
-      leadEtaErr[j] = leadEtaError[i][j];
-      subPhiTmp[j] = subPhiYield[i][j];
-      subPhiErr[j] = subPhiError[i][j];
-      subPhiDifTmp[j] = subPhiDifYield[i][j];
-      subPhiDifErr[j] = subPhiDifError[i][j];
-      subEtaTmp[j] = subEtaYield[i][j];
-      subEtaErr[j] = subEtaError[i][j];
+    double errX[nPtBins - startPtBin];
+    double tmpPtBin[nPtBins - startPtBin];
+    for ( int j = 0; j < nPtBins-startPtBin; ++j ) {
+      errX[j] = 0;
+      tmpPtBin[j] = nPtBins[j+startPtBin];
+      leadPhiTmp[j] = leadPhiYield[i][j+startPtBin];
+      leadPhiErr[j] = leadPhiError[i][j+startPtBin];
+      leadPhiWidthTmp[j] = leadPhiWidth[i][j+startPtBin];
+      leadPhiWidthErrTmp[j] = leadPhiWidthError[i][j+startPtBin];
+      leadPhiDifTmp[j] = leadPhiDifYield[i][j+startPtBin];
+      leadPhiDifErr[j] = leadPhiDifError[i][j+startPtBin];
+      leadPhiDifWidthTmp[j] = leadPhiDifWidth[i][j+startPtBin];
+      leadPhiDifWidthErrTmp[j] = leadPhiDifWidthError[i][j+startPtBin];
+      leadEtaTmp[j] = leadEtaYield[i][j+startPtBin];
+      leadEtaErr[j] = leadEtaError[i][j+startPtBin];
+      leadEtaWidthTmp[j] = leadEtaWidth[i][j+startPtBin];
+      leadEtaWidthErrTmp[j] = leadEtaWidthError[i][j+startPtBin];
+      subPhiTmp[j] = subPhiYield[i][j+startPtBin];
+      subPhiErr[j] = subPhiError[i][j+startPtBin];
+      subPhiWidthTmp[j] = subPhiWidth[i][j+startPtBin];
+      subPhiWidthErrTmp[j] = subPhiWidthError[i][j+startPtBin];
+      subPhiDifTmp[j] = subPhiDifYield[i][j+startPtBin];
+      subPhiDifErr[j] = subPhiDifError[i][j+startPtBin];
+      subPhiDifWidthTmp[j] = subPhiDifWidth[i][j+startPtBin];
+      subPhiDifWidthErrTmp[j] = subPhiDifWidthError[i][j+startPtBin];
+      subEtaTmp[j] = subEtaYield[i][j+startPtBin];
+      subEtaErr[j] = subEtaError[i][j+startPtBin];
+      subEtaWidthTmp[j] = subEtaWidth[i][j+startPtBin];
+      subEtaWidthErrTmp[j] = subEtaWidthError[i][j+startPtBin];
     }
     
-    
-    leadPhiGraph[i] = new TGraphErrors(nPtBins, ptBins, leadPhiTmp, errX, leadPhiErr );
-    
-    leadPhiDifGraph[i] = new TGraphErrors(nPtBins, ptBins, leadPhiDifTmp, errX, leadPhiDifErr );
-    
-    leadEtaGraph[i] = new TGraphErrors(nPtBins, ptBins, leadEtaTmp, errX, leadEtaErr );
-    
-    subPhiGraph[i] = new TGraphErrors(nPtBins, ptBins, subPhiTmp, errX, subPhiErr );
-    
-    subPhiDifGraph[i] = new TGraphErrors(nPtBins, ptBins, subPhiDifTmp, errX, subPhiDifErr );
-    
-    subEtaGraph[i] = new TGraphErrors(nPtBins, ptBins, subEtaTmp, errX, subEtaErr );
+    leadPhiGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiTmp, errX, leadPhiErr );
+    leadPhiWidthGraph[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiWidthTmp, errX, leadPhiWidthErrTmp );
+    leadPhiDifGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiDifTmp, errX, leadPhiDifErr );
+    leadPhiDifWidthGraph[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiDifWidthTmp, errX, leadPhiDifWidthErrTmp );
+    leadEtaGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaTmp, errX, leadEtaErr );
+    leadEtaWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaWidthTmp, errX, leadEtaWidthErrTmp );
+    subPhiGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiTmp, errX, subPhiErr );
+    subPhiWidthGraph[i] = new TGraphErrors(nPtBins-startPtBin, tmpPtBin, subPhiWidthTmp, errX, subPhiWidthErrTmp );
+    subPhiDifGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifTmp, errX, subPhiDifErr );
+    subPhiDifWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifWidthTmp, errX, subPhiDifWidthErrTmp );
+    subEtaGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaTmp, errX, subEtaErr );
+    subEtaWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaWidthTmp, errX, subEtaWidthErrTmp );
     
   }
 
+  // print out the yields
+  
   TCanvas* c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiGraph[i]->SetLineColor(i+1);
     leadPhiGraph[i]->SetMarkerStyle(29);
     leadPhiGraph[i]->SetMarkerSize(3);
     leadPhiGraph[i]->SetMarkerColor(i+1);
-    leadPhiGraph[i]->SetTitle("Leading Jet - #Delta#phi Fit Yield");
+    leadPhiGraph[i]->SetTitle("Trigger Jet - #Delta#phi Fit Yield");
     leadPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
       leadPhiGraph[i]->Draw();
     else
@@ -980,14 +1050,14 @@ int main( int argc, const char** argv) {
     leadPhiDifGraph[i]->SetMarkerStyle(29);
     leadPhiDifGraph[i]->SetMarkerSize(3);
     leadPhiDifGraph[i]->SetMarkerColor(i+1);
-    leadPhiDifGraph[i]->SetTitle("Leading Jet - #eta Subtracted #Delta#phi Fit Yield");
+    leadPhiDifGraph[i]->SetTitle("Trigger Jet - #eta Subtracted #Delta#phi Fit Yield");
     leadPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
       leadPhiDifGraph[i]->Draw();
     else
-      leadPhiGraph[i]->Draw("SAME");
+      leadPhiDifGraph[i]->Draw("SAME");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas;
@@ -996,10 +1066,10 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->SetMarkerStyle(29);
     leadEtaGraph[i]->SetMarkerSize(3);
     leadEtaGraph[i]->SetMarkerColor(i+1);
-    leadEtaGraph[i]->SetTitle("Leading Jet - #Delta#eta Fit Yield");
+    leadEtaGraph[i]->SetTitle("Trigger Jet - #Delta#eta Fit Yield");
     leadEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
       leadEtaGraph[i]->Draw();
     else
@@ -1012,10 +1082,10 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->SetMarkerStyle(29);
     subPhiGraph[i]->SetMarkerSize(3);
     subPhiGraph[i]->SetMarkerColor(i+1);
-    subPhiGraph[i]->SetTitle("Subleading Jet - #Delta#phi Fit Yield");
+    subPhiGraph[i]->SetTitle("Recoil Jet - #Delta#phi Fit Yield");
     subPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
       subPhiGraph[i]->Draw();
     else
@@ -1028,10 +1098,10 @@ int main( int argc, const char** argv) {
     subPhiDifGraph[i]->SetMarkerStyle(29);
     subPhiDifGraph[i]->SetMarkerSize(3);
     subPhiDifGraph[i]->SetMarkerColor(i+1);
-    subPhiDifGraph[i]->SetTitle("Subleading Jet - #eta Subtracted #Delta#phi Fit Yield");
+    subPhiDifGraph[i]->SetTitle("Recoil Jet - #eta Subtracted #Delta#phi Fit Yield");
     subPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
       subPhiDifGraph[i]->Draw();
     else
@@ -1044,10 +1114,10 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->SetMarkerStyle(29);
     subEtaGraph[i]->SetMarkerSize(3);
     subEtaGraph[i]->SetMarkerColor(i+1);
-    subEtaGraph[i]->SetTitle("Subleading Jet - #Delta#eta Fit Yield");
+    subEtaGraph[i]->SetTitle("Recoil Jet - #Delta#eta Fit Yield");
     subEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
+    subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0) {
       subEtaGraph[i]->Draw();
     }
@@ -1056,6 +1126,105 @@ int main( int argc, const char** argv) {
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
+  
+  // now print out widths
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiWidthGraph[i]->SetLineColor(i+1);
+    leadPhiWidthGraph[i]->SetMarkerStyle(29);
+    leadPhiWidthGraph[i]->SetMarkerSize(3);
+    leadPhiWidthGraph[i]->SetMarkerColor(i+1);
+    leadPhiWidthGraph[i]->SetTitle("Trigger Jet #Delta#phi - Gaussian Widths");
+    leadPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      leadPhiWidthGraph[i]->Draw();
+    else
+      leadPhiWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/leadphiwidth.pdf");
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadPhiDifWidthGraph[i]->SetLineColor(i+1);
+    leadPhiDifWidthGraph[i]->SetMarkerStyle(29);
+    leadPhiDifWidthGraph[i]->SetMarkerSize(3);
+    leadPhiDifWidthGraph[i]->SetMarkerColor(i+1);
+    leadPhiDifWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
+    leadPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      leadPhiDifWidthGraph[i]->Draw();
+    else
+      leadPhiDifWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/leadphidifwidth.pdf");
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    leadEtaWidthGraph[i]->SetLineColor(i+1);
+    leadEtaWidthGraph[i]->SetMarkerStyle(29);
+    leadEtaWidthGraph[i]->SetMarkerSize(3);
+    leadEtaWidthGraph[i]->SetMarkerColor(i+1);
+    leadEtaWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta - Gaussian Widths");
+    leadEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      leadEtaWidthGraph[i]->Draw();
+    else
+      leadEtaWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/leadetawidth.pdf");
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    subPhiWidthGraph[i]->SetLineColor(i+1);
+    subPhiWidthGraph[i]->SetMarkerStyle(29);
+    subPhiWidthGraph[i]->SetMarkerSize(3);
+    subPhiWidthGraph[i]->SetMarkerColor(i+1);
+    subPhiWidthGraph[i]->SetTitle("Recoil Jet #Delta#phi - Gaussian Widths");
+    subPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      subPhiWidthGraph[i]->Draw();
+    else
+      subPhiWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/subphiwidth.pdf");
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    subPhiDifWidthGraph[i]->SetLineColor(i+1);
+    subPhiDifWidthGraph[i]->SetMarkerStyle(29);
+    subPhiDifWidthGraph[i]->SetMarkerSize(3);
+    subPhiDifWidthGraph[i]->SetMarkerColor(i+1);
+    subPhiDifWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
+    subPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      subPhiDifWidthGraph[i]->Draw();
+    else
+      subPhiDifWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/subphidifwidth.pdf");
+  c1 = new TCanvas;
+  for ( int i = 0; i < nFiles; ++i ) {
+    subEtaWidthGraph[i]->SetLineColor(i+1);
+    subEtaWidthGraph[i]->SetMarkerStyle(29);
+    subEtaWidthGraph[i]->SetMarkerSize(3);
+    subEtaWidthGraph[i]->SetMarkerColor(i+1);
+    subEtaWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta - Gaussian Widths");
+    subEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
+    subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
+    subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    if ( i == 0)
+      subEtaWidthGraph[i]->Draw();
+    else
+      subEtaWidthGraph[i]->Draw("SAME");
+  }
+  c1->SaveAs("tmp/subetawidth.pdf");
+
   
   // now put leading and subleading yields on their own plots
   for ( int i = 0; i < nFiles; ++i ) {
