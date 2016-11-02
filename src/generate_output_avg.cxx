@@ -997,7 +997,7 @@ int main( int argc, const char** argv) {
     leadPhiGraph[i]->SetMarkerColor(i+1);
     leadPhiGraph[i]->SetTitle("Leading Jet - #Delta#phi Fit Yield");
     leadPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiGraph[i]->GetYaxis()->SetTitle("Yield");
+    leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0)
       leadPhiGraph[i]->Draw();
@@ -1013,7 +1013,7 @@ int main( int argc, const char** argv) {
     leadPhiDifGraph[i]->SetMarkerColor(i+1);
     leadPhiDifGraph[i]->SetTitle("Leading Jet - #eta Subtracted #Delta#phi Fit Yield");
     leadPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiDifGraph[i]->GetYaxis()->SetTitle("Yield");
+    leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0)
       leadPhiDifGraph[i]->Draw();
@@ -1029,7 +1029,7 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->SetMarkerColor(i+1);
     leadEtaGraph[i]->SetTitle("Leading Jet - #Delta#eta Fit Yield");
     leadEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadEtaGraph[i]->GetYaxis()->SetTitle("Yield");
+    leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0)
       leadEtaGraph[i]->Draw();
@@ -1045,7 +1045,7 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->SetMarkerColor(i+1);
     subPhiGraph[i]->SetTitle("Subleading Jet - #Delta#phi Fit Yield");
     subPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiGraph[i]->GetYaxis()->SetTitle("Yield");
+    subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0)
       subPhiGraph[i]->Draw();
@@ -1061,7 +1061,7 @@ int main( int argc, const char** argv) {
     subPhiDifGraph[i]->SetMarkerColor(i+1);
     subPhiDifGraph[i]->SetTitle("Subleading Jet - #eta Subtracted #Delta#phi Fit Yield");
     subPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiDifGraph[i]->GetYaxis()->SetTitle("Yield");
+    subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0)
       subPhiDifGraph[i]->Draw();
@@ -1077,7 +1077,7 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->SetMarkerColor(i+1);
     subEtaGraph[i]->SetTitle("Subleading Jet - #Delta#eta Fit Yield");
     subEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subEtaGraph[i]->GetYaxis()->SetTitle("Yield");
+    subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 15 );
     if ( i == 0) {
       subEtaGraph[i]->Draw();
