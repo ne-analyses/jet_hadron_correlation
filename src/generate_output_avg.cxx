@@ -1315,6 +1315,27 @@ int main( int argc, const char** argv) {
     graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
     
     c1->SaveAs( graphOutName.c_str() );
+    
+    // joern asked for dphi without subtraction overlayed
+    graphOutName = "tmp/dphi_trig_recoil_yield_"+analysisNames[i]+".pdf";
+    c1 = new TCanvas();
+    leadPhiGraph[i]->SetLineColor(1);
+    leadPhiGraph[i]->SetMarkerColor(1);
+    subPhiGraph[i]->SetLineColor(7);
+    subPhiGraph[i]->SetLineColor(7);
+    subPhiGraph[i]->SetMarkerStyle(20);
+    
+    leadPhiGraph[i]->Draw();
+    subPhiGraph[i]->Draw("SAME");
+    
+    leg = new TLegend(0.65,0.7,0.9,0.9);
+    leg->SetHeader("#Delta#phi Jet Yields");
+    leg->AddEntry(leadPhiGraph[i],"Trigger","lep");
+    leg->AddEntry(subPhiGraph[i],"Recoil","lep");
+    leg->Draw();
+    
+    c1->SaveAs( graphOutName.c_str() );
+
   }
 
   return 0;
