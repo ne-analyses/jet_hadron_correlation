@@ -83,6 +83,7 @@ int main( int argc, const char** argv) {
   
   // Pt bins
   const int nPtBins = 5;
+  const int startPtBin = 1;
   double ptBinLo[nPtBins] = { 3, 5, 9, 13, 17 };
   double ptBinHi[nPtBins] = { 4, 8, 12, 16, 24 };
   std::string ptBinString[nPtBins] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
