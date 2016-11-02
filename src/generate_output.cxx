@@ -849,7 +849,7 @@ int main( int argc, const char** argv) {
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
         dEtaSub[j][i]->SetMarkerStyle(29);
-        dEtaSub[j][i]->SetMarkerColor(3);
+        dEtaSub[j][i]->SetMarkerSize(3);
         dEtaSub[j][i]->SetMarkerColor(j+1);
         dEtaSub[j][i]->Draw();
       }
