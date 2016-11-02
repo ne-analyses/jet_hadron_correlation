@@ -1094,20 +1094,20 @@ int main( int argc, const char** argv) {
     c1 = new TCanvas();
     leadPhiGraph[i]->SetLineColor(1);
     leadPhiGraph[i]->SetMarkerStyle(29);
-    leadPhiGraph[i]->SetMarkerSize(3);
+    leadPhiGraph[i]->SetMarkerSize(2);
     leadPhiGraph[i]->SetMarkerColor(1);
     leadPhiDifGraph[i]->SetLineColor(2);
     leadPhiDifGraph[i]->SetMarkerStyle(20);
-    leadPhiDifGraph[i]->SetMarkerSize(3);
+    leadPhiDifGraph[i]->SetMarkerSize(2);
     leadPhiDifGraph[i]->SetMarkerColor(2);
     leadEtaGraph[i]->SetLineColor(3);
     leadEtaGraph[i]->SetMarkerStyle(21);
-    leadEtaGraph[i]->SetMarkerSize(3);
+    leadEtaGraph[i]->SetMarkerSize(2);
     leadEtaGraph[i]->SetMarkerColor(3);
     
     leadPhiGraph[i]->Draw();
-    leadPhiDifGraph[i]->Draw();
-    leadEtaGraph[i]->Draw();
+    leadPhiDifGraph[i]->Draw("SAME");
+    leadEtaGraph[i]->Draw("SAME");
     
     TLegend* leg = new TLegend(0.1,0.7,0.48,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
@@ -1123,20 +1123,20 @@ int main( int argc, const char** argv) {
     c1 = new TCanvas();
     subPhiGraph[i]->SetLineColor(1);
     subPhiGraph[i]->SetMarkerStyle(29);
-    subPhiGraph[i]->SetMarkerSize(3);
+    subPhiGraph[i]->SetMarkerSize(2);
     subPhiGraph[i]->SetMarkerColor(1);
     subPhiDifGraph[i]->SetLineColor(2);
     subPhiDifGraph[i]->SetMarkerStyle(20);
-    subPhiDifGraph[i]->SetMarkerSize(3);
+    subPhiDifGraph[i]->SetMarkerSize(2);
     subPhiDifGraph[i]->SetMarkerColor(2);
     subEtaGraph[i]->SetLineColor(3);
     subEtaGraph[i]->SetMarkerStyle(21);
-    subEtaGraph[i]->SetMarkerSize(3);
+    subEtaGraph[i]->SetMarkerSize(2);
     subEtaGraph[i]->SetMarkerColor(3);
     
     subPhiGraph[i]->Draw();
-    subPhiDifGraph[i]->Draw();
-    subEtaGraph[i]->Draw();
+    subPhiDifGraph[i]->Draw("SAME");
+    subEtaGraph[i]->Draw("SAME");
     
     leg = new TLegend(0.1,0.7,0.48,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
