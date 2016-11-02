@@ -24,6 +24,7 @@
 #include "TProfile2D.h"
 #include "TGraph.h"
 #include "TGraphErrors.h"
+#include "TLegend.h"
 #include "TObjArray.h"
 #include "TString.h"
 #include "TFile.h"
