@@ -1056,5 +1056,66 @@ int main( int argc, const char** argv) {
   }
   c1->SaveAs("tmp/subetayield.pdf");
   
+  // now put leading and subleading yields on their own plots
+  for ( int i = 0; i < nFiles; ++i ) {
+    c1 = new TCanvas();
+    leadPhiGraph[i]->SetLineColor(1);
+    leadPhiGraph[i]->SetMarkerStyle(29);
+    leadPhiGraph[i]->SetMarkerSize(3);
+    leadPhiGraph[i]->SetMarkerColor(1);
+    leadPhiDifGraph[i]->SetLineColor(2);
+    leadPhiDifGraph[i]->SetMarkerStyle(20);
+    leadPhiDifGraph[i]->SetMarkerSize(3);
+    leadPhiDifGraph[i]->SetMarkerColor(2);
+    leadEtaGraph[i]->SetLineColor(3);
+    leadEtaGraph[i]->SetMarkerStyle(21);
+    leadEtaGraph[i]->SetMarkerSize(3);
+    leadEtaGraph[i]->SetMarkerColor(3);
+    
+    leadPhiGraph[i]->Draw();
+    leadPhiDifGraph[i]->Draw();
+    leadEtaGraph[i]->Draw();
+    
+    TLegend* leg = new TLegend(0.1,0.7,0.48,0.9);
+    leg->SetHeader("Trigger Jet Yields","C"); // option "C" allows to center the header
+    leg->AddEntry(leadPhiGraph[i],"#Delta#phi","lep");
+    leg->AddEntry(leadPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
+    leg->AddEntry(leadEtaGraph[i],"#Delta#eta","lep");
+    leg->Draw();
+    
+    std::string graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
+    
+    c1.SaveAs( graphOutName.c_str() );
+    
+    c1 = new TCanvas();
+    subPhiGraph[i]->SetLineColor(1);
+    subPhiGraph[i]->SetMarkerStyle(29);
+    subPhiGraph[i]->SetMarkerSize(3);
+    subPhiGraph[i]->SetMarkerColor(1);
+    subPhiDifGraph[i]->SetLineColor(2);
+    subPhiDifGraph[i]->SetMarkerStyle(20);
+    subPhiDifGraph[i]->SetMarkerSize(3);
+    subPhiDifGraph[i]->SetMarkerColor(2);
+    subEtaGraph[i]->SetLineColor(3);
+    subEtaGraph[i]->SetMarkerStyle(21);
+    subEtaGraph[i]->SetMarkerSize(3);
+    subEtaGraph[i]->SetMarkerColor(3);
+    
+    subPhiGraph[i]->Draw();
+    subPhiDifGraph[i]->Draw();
+    subEtaGraph[i]->Draw();
+    
+     leg = new TLegend(0.1,0.7,0.48,0.9);
+    leg->SetHeader("Recoil Jet Yields","C"); // option "C" allows to center the header
+    leg->AddEntry(subPhiGraph[i],"#Delta#phi","lep");
+    leg->AddEntry(subPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
+    leg->AddEntry(subEtaGraph[i],"#Delta#eta","lep");
+    leg->Draw();
+
+    graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
+
+    c1->SaveAs( graphOutName.c_str() );
+  }
+  
   return 0;
 }
