@@ -985,7 +985,7 @@ int main( int argc, const char** argv) {
     double tmpPtBin[nPtBins - startPtBin];
     for ( int j = 0; j < nPtBins-startPtBin; ++j ) {
       errX[j] = 0;
-      tmpPtBin[j] = nPtBins[j+startPtBin];
+      tmpPtBin[j] = ptBins[j+startPtBin];
       leadPhiTmp[j] = leadPhiYield[i][j+startPtBin];
       leadPhiErr[j] = leadPhiError[i][j+startPtBin];
       leadPhiWidthTmp[j] = leadPhiWidth[i][j+startPtBin];
