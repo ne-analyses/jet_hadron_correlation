@@ -1077,7 +1077,7 @@ int main( int argc, const char** argv) {
     leadPhiDifGraph[i]->Draw("SAME");
     leadEtaGraph[i]->Draw("SAME");
     
-    TLegend* leg = new TLegend(0.7,0.7,0.9,0.9);
+    TLegend* leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
     leg->AddEntry(leadPhiGraph[i],"#Delta#phi","lep");
     leg->AddEntry(leadPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
@@ -1106,7 +1106,7 @@ int main( int argc, const char** argv) {
     subPhiDifGraph[i]->Draw("SAME");
     subEtaGraph[i]->Draw("SAME");
     
-     leg = new TLegend(0.7,0.7,0.9,0.9);
+     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
     leg->AddEntry(subPhiGraph[i],"#Delta#phi","lep");
     leg->AddEntry(subPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
