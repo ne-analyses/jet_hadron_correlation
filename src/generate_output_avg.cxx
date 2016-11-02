@@ -754,7 +754,8 @@ int main( int argc, const char** argv) {
     std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dPhiLead[j][i]->SetTitle("Lead Jet #Delta#phi");
+        std::string outTitle = "Lead Jet #Delta#phi " + ptBinString[i];
+        dPhiLead[j][i]->SetTitle( outTitle.c_str() );
         dPhiLead[j][i]->SetLineColor(j+1);
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
@@ -776,7 +777,9 @@ int main( int argc, const char** argv) {
     std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dPhiLeadNear[j][i]->SetTitle("Lead Jet #Delta#eta subtracted #Delta#phi");
+        
+        std::string outTitle = "Lead Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiLeadNear[j][i]->SetLineColor(j+1);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -799,7 +802,8 @@ int main( int argc, const char** argv) {
     std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dEtaLead[j][i]->SetTitle("Lead Jet #Delta#eta");
+        std::string outTitle = "Lead Jet #Delta#eta " + ptBinString[i];
+        dEtaLead[j][i]->SetTitle( outTitle.c_str() );
         dEtaLead[j][i]->SetLineColor(j+1);
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
@@ -821,7 +825,8 @@ int main( int argc, const char** argv) {
     std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dPhiSub[j][i]->SetTitle("Sub Jet #Delta#phi");
+        std::string outTitle = "Sub Jet #Delta#phi " + ptBinString[i];
+        dPhiSub[j][i]->SetTitle( outTitle.c_str() );
         dPhiSub[j][i]->SetLineColor(j+1);
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
@@ -843,7 +848,8 @@ int main( int argc, const char** argv) {
     std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dPhiSubNear[j][i]->SetTitle("Sub Jet #Delta#eta subtracted #Delta#phi");
+        std::string outTitle = "Sub Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiSubNear[j][i]->SetLineColor(j+1);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -866,7 +872,8 @@ int main( int argc, const char** argv) {
     std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        dEtaSub[j][i]->SetTitle("Sub Jet #Delta#eta");
+        std::string outTitle = "Sub Jet #Delta#eta " + ptBinString[i];
+        dEtaSub[j][i]->SetTitle( outTitle.c_str() );
         dEtaSub[j][i]->SetLineColor(j+1);
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
