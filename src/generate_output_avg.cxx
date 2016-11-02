@@ -1322,7 +1322,7 @@ int main( int argc, const char** argv) {
     leadPhiGraph[i]->SetLineColor(1);
     leadPhiGraph[i]->SetMarkerColor(1);
     subPhiGraph[i]->SetLineColor(7);
-    subPhiGraph[i]->SetLineColor(7);
+    subPhiGraph[i]->SetMarkerColor(7);
     subPhiGraph[i]->SetMarkerStyle(20);
     
     leadPhiGraph[i]->Draw();
