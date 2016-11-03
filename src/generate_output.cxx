@@ -1326,9 +1326,18 @@ int main( int argc, const char** argv) {
     c1->SaveAs( graphOutName.c_str() );
   }
   
-  recombinedPtLead[0]->Draw();
-  c1->SetLogy(true);
-  c1->SaveAs("tmp/pt.pdf");
+  // testing pt averaging
+  double total;
+  double numberOfEntries;
+  for ( int i = 0; i < nPtBins; ++i ) {
+    
+    for ( int j = ptBinLo[i]; j <= ptBinHi[i]; ++j ) {
+      numberOfEntries += recombinedPtLead[i]->GetBinContent(i);
+      total = recombinedPtLead[i]->GetBinContent(i)*recombinedPtLead[i]->GetBinCenter(i);
+    }
+    
+    std::cout<<"bin: "<<i<<" average: "<< total/numberOfEntries<<std::endl;
+  }
 
   
   return 0;
