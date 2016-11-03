@@ -1340,7 +1340,7 @@ int main( int argc, const char** argv) {
       std::cout<<"content: "<< recombinedPtLead[0]->GetBinContent(i) << std::endl;
       std::cout<<"bin center: "<< recombinedPtLead[0]->GetBinCenter(j) << std::endl;
     }
-    
+    std::cout<<"total: "<< total << std::endl;
     std::cout<<"bin: "<<i<<" average: "<< total/numberOfEntries<<std::endl;
   }
 
