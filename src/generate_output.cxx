@@ -1292,6 +1292,7 @@ int main( int argc, const char** argv) {
     // joern asked for dphi without subtraction overlayed
     graphOutName = "tmp/dphi_trig_recoil_yield_"+analysisNames[i]+".pdf";
     c1 = new TCanvas();
+    leadPhiGraph[i]->SetTitle("");
     leadPhiGraph[i]->SetLineColor(1);
     leadPhiGraph[i]->SetMarkerColor(1);
     subPhiGraph[i]->SetLineColor(7);
