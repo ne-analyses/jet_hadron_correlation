@@ -990,7 +990,22 @@ int main( int argc, const char** argv) {
       subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);
     }
   }
-  double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
+  // finding the weighted center of the pt bins for future graphs
+  std::vector<std::vector<double> > ptBinCenter(nFiles);
+  for ( int i = 0; i < nFiles; ++i ) {
+    ptBinCenter[i].resize(nPtBins);
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      double weightedTotal = 0;
+      double entries = 0;
+      
+      for ( int k = ptBinLo[j]; k <= ptBinHi[j]; ++k ) {
+        entries += recombinedPtLead[i]->GetBinContent(k);
+        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinCenter(k);
+      }
+      ptBinCenter[i][j] = weightedTotal / entries;
+    }
+  }
   
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
@@ -1035,7 +1050,7 @@ int main( int argc, const char** argv) {
     double tmpPtBin[nPtBins - startPtBin];
     for ( int j = 0; j < nPtBins-startPtBin; ++j ) {
       errX[j] = 0;
-      tmpPtBin[j] = ptBins[j+startPtBin];
+      tmpPtBin[j] = ptBinCenter[i][j+startPtBin];
       leadPhiTmp[j] = leadPhiYield[i][j+startPtBin];
       leadPhiErr[j] = leadPhiError[i][j+startPtBin];
       leadPhiWidthTmp[j] = leadPhiWidth[i][j+startPtBin];

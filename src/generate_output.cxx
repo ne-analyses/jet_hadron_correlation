@@ -974,11 +974,6 @@ int main( int argc, const char** argv) {
     }
   }
   
-  for ( int i = 0; i < nFiles; ++i )
-    for ( int j = 0; j < nPtBins; ++j ) {
-      std::cout<<"bin: "<< j << " avg: "<< ptBinCenter[i][j]<<std::endl;
-    }
-  
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
