@@ -1327,6 +1327,7 @@ int main( int argc, const char** argv) {
   }
   
   recombinedPtLead[0]->Draw();
+  c1->SetLogy(true);
   c1->SaveAs("tmp/pt.pdf");
 
   
