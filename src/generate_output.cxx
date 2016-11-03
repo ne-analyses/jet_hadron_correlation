@@ -160,6 +160,9 @@ int main( int argc, const char** argv) {
   
   int nFiles = analysisNames.size();
   
+  std::cout<<"got here"<<std::endl;
+  std::cout<<"nfiles: "<<nFiles<<std::endl;
+  
   // Load in the histograms
   TH2D* nEvents[ nFiles ];
   TH1D* hVz[ nFiles ];
