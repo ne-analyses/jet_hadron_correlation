@@ -1331,6 +1331,8 @@ int main( int argc, const char** argv) {
   double total;
   double numberOfEntries;
   for ( int i = 0; i < nPtBins; ++i ) {
+    total = 0;
+    numberOfEntries = 0;
     for ( int j = ptBinLo[i]; j <= ptBinHi[i]; ++j ) {
       numberOfEntries += recombinedPtLead[0]->GetBinContent(i);
       total = recombinedPtLead[0]->GetBinContent(j)*recombinedPtLead[0]->GetBinCenter(j);
