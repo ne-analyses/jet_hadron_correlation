@@ -1326,7 +1326,8 @@ int main( int argc, const char** argv) {
     c1->SaveAs( graphOutName.c_str() );
   }
   
-  
+  recombinedPtLead[0]->Draw();
+  c1->SaveAs("tmp/pt.pdf");
 
   
   return 0;
