@@ -974,7 +974,7 @@ namespace corrAnalysis {
 			return 0;
 		}
 		else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
-			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
+			hBinVz			= new TH1D( "nevents", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
 			
 			hLeadJetPt 	= new TH1D( "leadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
@@ -1030,7 +1030,7 @@ namespace corrAnalysis {
 			return 0;
 		}
 		else if ( analysisType == "ppjet" || analysisType == "ppjetmix" ) {
-			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
+			hBinVz			= new TH1D( "nevents", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
 			hLeadJetPt 	= new TH1D( "triggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
