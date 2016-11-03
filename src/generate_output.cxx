@@ -968,7 +968,7 @@ int main( int argc, const char** argv) {
       
       for ( int k = ptBinLo[j]; k <= ptBinHi[j]; ++k ) {
         entries += recombinedPtLead[i]->GetBinContent(k);
-        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinContent(k);
+        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinCenter(k);
       }
       ptBinCenter[i][j] = weightedTotal / entries;
     }
