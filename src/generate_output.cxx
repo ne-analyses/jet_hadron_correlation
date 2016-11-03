@@ -957,7 +957,27 @@ int main( int argc, const char** argv) {
     }
   }
   
-  double ptBins[5] = { 0.75, 1.5, 2.5, 3.5, 5 };
+  // finding the weighted center of the pt bins for future graphs
+  std::vector<std::vector<double> > ptBinCenter(nFiles);
+  for ( int i = 0; i < nFiles; ++i ) {
+    ptBinCenter[i].resize(nPtBins);
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      double weightedTotal = 0;
+      double entries = 0;
+      
+      for ( int k = ptBinLo[j]; k <= ptBinHi[j]; ++k ) {
+        entries += recombinedPtLead[i]->GetBinContent(k);
+        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinContent(k);
+      }
+      ptBinCenter[i][j] = weightedTotal / entries;
+    }
+  }
+  
+  for ( int i = 0; i < nFiles; ++i )
+    for ( int j = 0; j < nPtBins; ++j ) {
+      std::cout<<"bin: "<< j << " avg: "<< ptBinCenter[i][j]<<std::endl;
+    }
   
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
@@ -1326,24 +1346,6 @@ int main( int argc, const char** argv) {
     c1->SaveAs( graphOutName.c_str() );
   }
   
-  // testing pt averaging
-  
-  double total;
-  double numberOfEntries;
-  for ( int i = 0; i < nPtBins; ++i ) {
-    total = 0;
-    numberOfEntries = 0;
-    for ( int j = ptBinLo[i]; j <= ptBinHi[i]; ++j ) {
-      numberOfEntries += recombinedPtLead[0]->GetBinContent(j);
-      total += recombinedPtLead[0]->GetBinContent(j)*recombinedPtLead[0]->GetBinCenter(j);
-      std::cout<<"j: "<<j<<std::endl;
-      std::cout<<"content: "<< recombinedPtLead[0]->GetBinContent(i) << std::endl;
-      std::cout<<"bin center: "<< recombinedPtLead[0]->GetBinCenter(j) << std::endl;
-    }
-    std::cout<<"total: "<< total << std::endl;
-    std::cout<<"bin: "<<i<<" average: "<< total/numberOfEntries<<std::endl;
-  }
-
   
   return 0;
 }
