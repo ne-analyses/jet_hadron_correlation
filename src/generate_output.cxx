@@ -160,9 +160,6 @@ int main( int argc, const char** argv) {
   
   int nFiles = analysisNames.size();
   
-  std::cout<<"got here"<<std::endl;
-  std::cout<<"nfiles: "<<nFiles<<std::endl;
-  
   // Load in the histograms
   TH2D* nEvents[ nFiles ];
   TH1D* hVz[ nFiles ];
@@ -190,7 +187,7 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < nFiles; ++i ) {
-    
+    std::cout<<"loading histograms - file: "<< i <<std::endl;
     std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
@@ -251,6 +248,8 @@ int main( int argc, const char** argv) {
         mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
       }
   }
+  
+  std::cout<<"loaded all histograms"<<std::endl;
   
   // Printing out eta and phi bins
   std::cout<<"ETA BINS: "<<mixSubCentVz[0][0][0]->GetXaxis()->GetNbins()<<std::endl;
