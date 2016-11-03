@@ -1327,15 +1327,16 @@ int main( int argc, const char** argv) {
   }
   
   // testing pt averaging
+  
   double total;
   double numberOfEntries;
   for ( int i = 0; i < nPtBins; ++i ) {
     for ( int j = ptBinLo[i]; j <= ptBinHi[i]; ++j ) {
-      numberOfEntries += recombinedPtLead[i]->GetBinContent(i);
-      total = recombinedPtLead[i]->GetBinContent(j)*recombinedPtLead[i]->GetBinCenter(j);
+      numberOfEntries += recombinedPtLead[0]->GetBinContent(i);
+      total = recombinedPtLead[0]->GetBinContent(j)*recombinedPtLead[0]->GetBinCenter(j);
       std::cout<<"j: "<<j<<std::endl;
-      std::cout<<"content: "<< recombinedPtLead[i]->GetBinContent(i) << std::endl;
-      std::cout<<"bin center: "<< recombinedPtLead[i]->GetBinCenter(j) << std::endl;
+      std::cout<<"content: "<< recombinedPtLead[0]->GetBinContent(i) << std::endl;
+      std::cout<<"bin center: "<< recombinedPtLead[0]->GetBinCenter(j) << std::endl;
     }
     
     std::cout<<"bin: "<<i<<" average: "<< total/numberOfEntries<<std::endl;
