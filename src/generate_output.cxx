@@ -186,8 +186,8 @@ int main( int argc, const char** argv) {
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
     std::string ptSubName = analysisNames[i] + "_pt_sub";
     
-    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, 0, 30 );
-    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, 0, 30 );
+    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
+    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
     
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
       corrCentVz[i][j].resize( corrAnalysis::binsVz );
