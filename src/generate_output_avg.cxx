@@ -169,15 +169,29 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<TH3D*> > > mixCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > subCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > mixSubCentVz;
+  std::vector<TH1D*> recombinedPtLead;
+  std::vector<TH1D*> recombinedPtSub;
   corrCentVz.resize( nFiles );
   mixCentVz.resize( nFiles );
   subCentVz.resize( nFiles );
   mixSubCentVz.resize( nFiles );
+  recombinedPtLead.resize( nFiles );
+  recombinedPtSub.resize( nFiles );
+  
+  // while resizing the 3dim arrays we can also set up the pt spectra histograms
   for ( int i = 0; i < nFiles; ++i ) {
     corrCentVz[i].resize( corrAnalysis::binsCentrality );
     mixCentVz[i].resize( corrAnalysis::binsCentrality );
     subCentVz[i].resize( corrAnalysis::binsCentrality );
     mixSubCentVz[i].resize( corrAnalysis::binsCentrality );
+    
+    std::string ptLeadName = analysisNames[i] + "_pt_lead";
+    std::string ptSubName = analysisNames[i] + "_pt_sub";
+    
+    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, 0, 30 );
+    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, 0, 30 );
+
+    
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
       corrCentVz[i][j].resize( corrAnalysis::binsVz );
       mixCentVz[i][j].resize( corrAnalysis::binsVz );
@@ -186,6 +200,7 @@ int main( int argc, const char** argv) {
     }
   }
   
+  // while loading the 3dim vectors we will also get the projections for pt so that the axis resizing in the next step doesnt affect it
   for ( int i = 0; i < nFiles; ++i ) {
     std::cout<<"loading histograms - file: "<< i <<std::endl;
     std::string neventsBaseName = "nevents_"; neventsBaseName += analysisNames[i];
@@ -245,6 +260,10 @@ int main( int argc, const char** argv) {
         subCentVz[i][j][k]->SetName( subDifBaseName.c_str() );
         mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName.c_str() );
         mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
+        
+        // now we can get the pt spectrum as well
+        recombinedPtLead[i]->Add( (TH1D*) corrCentVz[i][j][k]->Project3D("Z") );
+        recombinedPtSub[i]->Add( (TH1D*) subCentVz[i][j][k]->Project3D("Z") );
       }
   }
   
