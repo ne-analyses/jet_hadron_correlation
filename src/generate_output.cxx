@@ -1335,7 +1335,7 @@ int main( int argc, const char** argv) {
     numberOfEntries = 0;
     for ( int j = ptBinLo[i]; j <= ptBinHi[i]; ++j ) {
       numberOfEntries += recombinedPtLead[0]->GetBinContent(i);
-      total = recombinedPtLead[0]->GetBinContent(j)*recombinedPtLead[0]->GetBinCenter(j);
+      total += recombinedPtLead[0]->GetBinContent(j)*recombinedPtLead[0]->GetBinCenter(j);
       std::cout<<"j: "<<j<<std::endl;
       std::cout<<"content: "<< recombinedPtLead[0]->GetBinContent(i) << std::endl;
       std::cout<<"bin center: "<< recombinedPtLead[0]->GetBinCenter(j) << std::endl;
