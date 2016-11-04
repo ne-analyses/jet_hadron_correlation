@@ -456,7 +456,7 @@ int generate_output_root() {
   for ( int i = 0; i < nFiles; ++i )
     for ( int j = 0; j < nPtBins; ++j ) {
       TString leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
-      std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
+      TString subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       
       TCanvas c1;
       dPhiLeadNear[i][j]->SetLineColor(kBlack);
