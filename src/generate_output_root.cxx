@@ -575,67 +575,55 @@ int generate_output_root() {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  return 0;
+  
   // final fitting
-  std::vector<std::vector<TF1*> > leadPhiFit;
-  leadPhiFit.resize( nFiles );
-  std::vector<std::vector<TF1*> > leadPhiDifFit;
-  leadPhiDifFit.resize( nFiles );
-  std::vector<std::vector<TF1*> > leadEtaFit;
-  leadEtaFit.resize( nFiles );
-  std::vector<std::vector<TF1*> > subPhiFit;
-  subPhiFit.resize( nFiles );
-  std::vector<std::vector<TF1*> > subPhiDifFit;
-  subPhiDifFit.resize( nFiles );
-  std::vector<std::vector<TF1*> > subEtaFit;
-  subEtaFit.resize( nFiles );
+  TF1* leadPhiFit[nFiles][nPtBins];
+  TF1* leadPhiDifFit[nFiles][nPtBins];
+  TF1* leadEtaFit[nFiles][nPtBins];
+  TF1* subPhiFit[nFiles][nPtBins];
+  TF1* subPhiDifFit[nFiles][nPtBins];
+  TF1* subEtaFit[nFiles][nPtBins];
   
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiFit[i].resize( nPtBins );
-    leadPhiDifFit[i].resize( nPtBins );
-    leadEtaFit[i].resize( nPtBins );
-    subPhiFit[i].resize( nPtBins );
-    subPhiDifFit[i].resize( nPtBins );
-    subEtaFit[i].resize( nPtBins );
     
     for ( int j = 0; j < nPtBins; ++j ) {
-      std::string dPhiLeadName = "fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubName = "fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiLeadNameDif = "fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubNameDif = "fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaLeadName = "fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaSubName = "fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
+      TString dPhiLeadName = "fit_lead_phi_" + i + j;
+      TString dPhiSubName = "fit_sub_phi_" + i + j;
+      TString dPhiLeadNameDif = "fit_lead_phi_dif_" + i + j;
+      TString dPhiSubNameDif = "fit_sub_phi_dif_" + i + j;
+      TString dEtaLeadName = "fit_lead_eta_" + i + j;
+      TString dEtaSubName = "fit_sub_eta_" + i + j;
     
-      leadPhiFit[i][j] = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiFit[i][j] = new TF1( dPhiLeadName, phiForm, phiMin, phiMax );
       leadPhiFit[i][j]->FixParameter( 2, 0 );
       leadPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       leadPhiFit[i][j]->SetParameter( 3, 0.2 );
       leadPhiFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiFit[i][j]->SetLineColor( i + 1 );
       
-      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
+      leadPhiDifFit[i][j] = new TF1( dPhiLeadNameDif, phiDifForm, phiMin, phiDifMax );
       leadPhiDifFit[i][j]->FixParameter( 2, 0 );
       leadPhiDifFit[i][j]->SetParameter( 3, 0.2 );
       leadPhiDifFit[i][j]->SetLineColor( i + 1 );
       
-      subPhiFit[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiFit[i][j] = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
       subPhiFit[i][j]->FixParameter( 2, 0 );
       subPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
       subPhiFit[i][j]->SetParameter( 3, 0.2 );
       subPhiFit[i][j]->SetParameter( 6, 0.2 );
       subPhiFit[i][j]->SetLineColor( i + 1 );
       
-      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
+      subPhiDifFit[i][j] = new TF1( dPhiSubNameDif, phiDifForm, phiMin, phiDifMax );
       subPhiDifFit[i][j]->FixParameter( 2, 0 );
       subPhiDifFit[i][j]->SetParameter( 3, 0.2 );
       subPhiDifFit[i][j]->SetLineColor( i + 1 );
       
-      leadEtaFit[i][j] = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      leadEtaFit[i][j] = new TF1( dEtaLeadName, etaForm, etaMin, etaMax );
       leadEtaFit[i][j]->FixParameter( 2, 0 );
       leadEtaFit[i][j]->SetParameter( 3, 0.2 );
       leadEtaFit[i][j]->SetLineColor( i + 1 );
       
-      subEtaFit[i][j] = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      subEtaFit[i][j] = new TF1( dEtaSubName, etaForm, etaMin, etaMax );
       subEtaFit[i][j]->FixParameter( 2, 0 );
       subEtaFit[i][j]->SetParameter( 3, 0.2 );
       subEtaFit[i][j]->SetLineColor( i + 1 );
@@ -657,25 +645,23 @@ int generate_output_root() {
     }
   }
   
-  
   // Now start making output
-  std::string outBase = "tmp/";
-  std::string leadPhiOutBase = outBase + "leadphi_pt";
-  std::string leadPhiDifOutBase = outBase + "leadphidif_pt";
-  std::string leadEtaOutBase = outBase + "leadeta_pt";
-  std::string subPhiOutBase = outBase + "subphi_pt";
-  std::string subPhiDifOutBase = outBase + "subphidif_pt";
-  std::string subEtaOutBase = outBase + "subeta_pt";
-  std::string outExt = ".pdf";
+  TString outBase = "tmp/";
+  TString leadPhiOutBase = outBase + "leadphi_pt";
+  TString leadPhiDifOutBase = outBase + "leadphidif_pt";
+  TString leadEtaOutBase = outBase + "leadeta_pt";
+  TString subPhiOutBase = outBase + "subphi_pt";
+  TString subPhiDifOutBase = outBase + "subphidif_pt";
+  TString subEtaOutBase = outBase + "subeta_pt";
+  TString outExt = ".pdf";
   
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
     
-    std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
+    TString leadPhiOut = leadPhiOutBase + i + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
-        std::string outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
-        dPhiLead[j][i]->SetTitle( outTitle.c_str() );
+        TString outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
+        dPhiLead[j][i]->SetTitle( outTitle );
         dPhiLead[j][i]->SetLineColor(j+1);
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
@@ -688,9 +674,10 @@ int generate_output_root() {
         dPhiLead[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( leadPhiOut.c_str() );
+    c1 = new TCanvas();
+    c1.SaveAs( leadPhiOut );
   }
-  
+  return 0;
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
