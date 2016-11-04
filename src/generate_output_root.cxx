@@ -975,7 +975,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiGraph[i]->Draw("P");
     else
-      leadPhiGraph[i]->Draw("Psame");
+      leadPhiGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas();
@@ -991,7 +991,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiDifGraph[i]->Draw("P");
     else
-      leadPhiDifGraph[i]->Draw("Psame");
+      leadPhiDifGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas();
@@ -1007,7 +1007,7 @@ int generate_output_root() {
     if ( i == 0)
       leadEtaGraph[i]->Draw("P");
     else
-      leadEtaGraph[i]->Draw("Psame");
+      leadEtaGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas();
@@ -1023,7 +1023,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiGraph[i]->Draw("P");
     else
-      subPhiGraph[i]->Draw("Psame");
+      subPhiGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas();
@@ -1039,7 +1039,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiDifGraph[i]->Draw("P");
     else
-      subPhiDifGraph[i]->Draw("Psame");
+      subPhiDifGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas();
@@ -1056,7 +1056,7 @@ int generate_output_root() {
       subEtaGraph[i]->Draw("P");
     }
     else {
-      subEtaGraph[i]->Draw("Psame");
+      subEtaGraph[i]->Draw("P");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1075,7 +1075,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiWidthGraph[i]->Draw("P");
     else
-      leadPhiWidthGraph[i]->Draw("Psame");
+      leadPhiWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas();
@@ -1091,7 +1091,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiDifWidthGraph[i]->Draw("P");
     else
-      leadPhiDifWidthGraph[i]->Draw("Psame");
+      leadPhiDifWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1107,7 +1107,7 @@ int generate_output_root() {
     if ( i == 0)
       leadEtaWidthGraph[i]->Draw("P");
     else
-      leadEtaWidthGraph[i]->Draw("Psame");
+      leadEtaWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas();
@@ -1123,7 +1123,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiWidthGraph[i]->Draw("P");
     else
-      subPhiWidthGraph[i]->Draw("Psame");
+      subPhiWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas();
@@ -1139,7 +1139,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiDifWidthGraph[i]->Draw("P");
     else
-      subPhiDifWidthGraph[i]->Draw("Psame");
+      subPhiDifWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1155,7 +1155,7 @@ int generate_output_root() {
     if ( i == 0)
       subEtaWidthGraph[i]->Draw("P");
     else
-      subEtaWidthGraph[i]->Draw("Psame");
+      subEtaWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subetawidth.pdf");
 
@@ -1177,8 +1177,8 @@ int generate_output_root() {
     leadEtaGraph[i]->SetMarkerColor(3);
     
     leadPhiGraph[i]->Draw("P");
-    leadPhiDifGraph[i]->Draw("Psame");
-    leadEtaGraph[i]->Draw("Psame");
+    leadPhiDifGraph[i]->Draw("P");
+    leadEtaGraph[i]->Draw("P");
     
     TLegend* leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
@@ -1206,8 +1206,8 @@ int generate_output_root() {
     subEtaGraph[i]->SetMarkerColor(3);
     
     subPhiGraph[i]->Draw("P");
-    subPhiDifGraph[i]->Draw("Psame");
-    subEtaGraph[i]->Draw("Psame");
+    subPhiDifGraph[i]->Draw("P");
+    subEtaGraph[i]->Draw("P");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
@@ -1231,7 +1231,7 @@ int generate_output_root() {
     subPhiGraph[i]->SetMarkerStyle(20);
     
     leadPhiGraph[i]->Draw("P");
-    subPhiGraph[i]->Draw("Psame");
+    subPhiGraph[i]->Draw("P");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("#Delta#phi Jet Yields");
