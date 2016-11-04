@@ -973,9 +973,9 @@ int generate_output_root() {
     leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiGraph[i]->Draw();
+      leadPhiGraph[i]->Draw("P");
     else
-      leadPhiGraph[i]->Draw("same");
+      leadPhiGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas();
@@ -989,9 +989,9 @@ int generate_output_root() {
     leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiDifGraph[i]->Draw();
+      leadPhiDifGraph[i]->Draw("P");
     else
-      leadPhiDifGraph[i]->Draw("same");
+      leadPhiDifGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas();
@@ -1005,9 +1005,9 @@ int generate_output_root() {
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadEtaGraph[i]->Draw();
+      leadEtaGraph[i]->Draw("P");
     else
-      leadEtaGraph[i]->Draw("same");
+      leadEtaGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas();
@@ -1021,9 +1021,9 @@ int generate_output_root() {
     subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiGraph[i]->Draw();
+      subPhiGraph[i]->Draw("P");
     else
-      subPhiGraph[i]->Draw("same");
+      subPhiGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas();
@@ -1037,9 +1037,9 @@ int generate_output_root() {
     subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiDifGraph[i]->Draw();
+      subPhiDifGraph[i]->Draw("P");
     else
-      subPhiDifGraph[i]->Draw("same");
+      subPhiDifGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas();
@@ -1053,10 +1053,10 @@ int generate_output_root() {
     subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0) {
-      subEtaGraph[i]->Draw();
+      subEtaGraph[i]->Draw("P");
     }
     else {
-      subEtaGraph[i]->Draw("same");
+      subEtaGraph[i]->Draw("Psame");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1073,9 +1073,9 @@ int generate_output_root() {
     leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiWidthGraph[i]->Draw();
+      leadPhiWidthGraph[i]->Draw("P");
     else
-      leadPhiWidthGraph[i]->Draw("same");
+      leadPhiWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas();
@@ -1089,9 +1089,9 @@ int generate_output_root() {
     leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiDifWidthGraph[i]->Draw();
+      leadPhiDifWidthGraph[i]->Draw("P");
     else
-      leadPhiDifWidthGraph[i]->Draw("same");
+      leadPhiDifWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1105,9 +1105,9 @@ int generate_output_root() {
     leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadEtaWidthGraph[i]->Draw();
+      leadEtaWidthGraph[i]->Draw("P");
     else
-      leadEtaWidthGraph[i]->Draw("same");
+      leadEtaWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas();
@@ -1121,9 +1121,9 @@ int generate_output_root() {
     subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiWidthGraph[i]->Draw();
+      subPhiWidthGraph[i]->Draw("P");
     else
-      subPhiWidthGraph[i]->Draw("same");
+      subPhiWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas();
@@ -1137,9 +1137,9 @@ int generate_output_root() {
     subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiDifWidthGraph[i]->Draw();
+      subPhiDifWidthGraph[i]->Draw("P");
     else
-      subPhiDifWidthGraph[i]->Draw("same");
+      subPhiDifWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1153,9 +1153,9 @@ int generate_output_root() {
     subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subEtaWidthGraph[i]->Draw();
+      subEtaWidthGraph[i]->Draw("P");
     else
-      subEtaWidthGraph[i]->Draw("same");
+      subEtaWidthGraph[i]->Draw("Psame");
   }
   c1->SaveAs("tmp/subetawidth.pdf");
 
@@ -1176,9 +1176,9 @@ int generate_output_root() {
     leadEtaGraph[i]->SetMarkerSize(2);
     leadEtaGraph[i]->SetMarkerColor(3);
     
-    leadPhiGraph[i]->Draw();
-    leadPhiDifGraph[i]->Draw("SAME");
-    leadEtaGraph[i]->Draw("SAME");
+    leadPhiGraph[i]->Draw("P");
+    leadPhiDifGraph[i]->Draw("Psame");
+    leadEtaGraph[i]->Draw("Psame");
     
     TLegend* leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
@@ -1205,9 +1205,9 @@ int generate_output_root() {
     subEtaGraph[i]->SetMarkerSize(2);
     subEtaGraph[i]->SetMarkerColor(3);
     
-    subPhiGraph[i]->Draw();
-    subPhiDifGraph[i]->Draw("SAME");
-    subEtaGraph[i]->Draw("SAME");
+    subPhiGraph[i]->Draw("P");
+    subPhiDifGraph[i]->Draw("Psame");
+    subEtaGraph[i]->Draw("Psame");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
@@ -1230,8 +1230,8 @@ int generate_output_root() {
     subPhiGraph[i]->SetMarkerColor(7);
     subPhiGraph[i]->SetMarkerStyle(20);
     
-    leadPhiGraph[i]->Draw();
-    subPhiGraph[i]->Draw("SAME");
+    leadPhiGraph[i]->Draw("P");
+    subPhiGraph[i]->Draw("Psame");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("#Delta#phi Jet Yields");
