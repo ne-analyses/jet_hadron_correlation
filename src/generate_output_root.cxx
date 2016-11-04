@@ -975,7 +975,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiGraph[i]->Draw();
     else
-      leadPhiGraph[i]->Draw();
+      leadPhiGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas();
@@ -991,7 +991,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiDifGraph[i]->Draw();
     else
-      leadPhiDifGraph[i]->Draw();
+      leadPhiDifGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas();
@@ -1007,7 +1007,7 @@ int generate_output_root() {
     if ( i == 0)
       leadEtaGraph[i]->Draw();
     else
-      leadEtaGraph[i]->Draw();
+      leadEtaGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas();
@@ -1023,7 +1023,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiGraph[i]->Draw();
     else
-      subPhiGraph[i]->Draw();
+      subPhiGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas();
@@ -1039,7 +1039,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiDifGraph[i]->Draw();
     else
-      subPhiDifGraph[i]->Draw();
+      subPhiDifGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas();
@@ -1056,7 +1056,7 @@ int generate_output_root() {
       subEtaGraph[i]->Draw();
     }
     else {
-      subEtaGraph[i]->Draw();
+      subEtaGraph[i]->Draw("same");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1075,7 +1075,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiWidthGraph[i]->Draw();
     else
-      leadPhiWidthGraph[i]->Draw();
+      leadPhiWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas();
@@ -1091,7 +1091,7 @@ int generate_output_root() {
     if ( i == 0)
       leadPhiDifWidthGraph[i]->Draw();
     else
-      leadPhiDifWidthGraph[i]->Draw();
+      leadPhiDifWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1107,7 +1107,7 @@ int generate_output_root() {
     if ( i == 0)
       leadEtaWidthGraph[i]->Draw();
     else
-      leadEtaWidthGraph[i]->Draw();
+      leadEtaWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas();
@@ -1123,7 +1123,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiWidthGraph[i]->Draw();
     else
-      subPhiWidthGraph[i]->Draw();
+      subPhiWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas();
@@ -1139,7 +1139,7 @@ int generate_output_root() {
     if ( i == 0)
       subPhiDifWidthGraph[i]->Draw();
     else
-      subPhiDifWidthGraph[i]->Draw();
+      subPhiDifWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas();
@@ -1155,7 +1155,7 @@ int generate_output_root() {
     if ( i == 0)
       subEtaWidthGraph[i]->Draw();
     else
-      subEtaWidthGraph[i]->Draw();
+      subEtaWidthGraph[i]->Draw("same");
   }
   c1->SaveAs("tmp/subetawidth.pdf");
 
