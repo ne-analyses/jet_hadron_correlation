@@ -200,7 +200,6 @@ int generate_output_root() {
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-        std::cout<<"i: "<<i<<" j: "<<j<<" k: "<<k<<std::endl;
         // make the initial name
         TString corrDifInitName = "lead_cent_"; corrDifInitName += j;
         TString subDifInitName = "sub_cent_"; subDifInitName += j;
@@ -252,34 +251,10 @@ int generate_output_root() {
   
   
   // setup for 2d projections along pt axis
-  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
-  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > subCentVzPt;
-  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixCentVzPt;
-  std::vector<std::vector<std::vector<std::vector<TH2D*> > > > mixSubCentVzPt;
-  corrCentVzPt.resize( nFiles );
-  subCentVzPt.resize( nFiles );
-  mixCentVzPt.resize( nFiles );
-  mixSubCentVzPt.resize( nFiles );
-  for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    subCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    mixCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      subCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      mixCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-        corrCentVzPt[i][j][k].resize( nPtBins );
-        subCentVzPt[i][j][k].resize( nPtBins );
-        mixCentVzPt[i][j][k].resize( nPtBins );
-        mixSubCentVzPt[i][j][k].resize( nPtBins );
-      }
-    }
-  }
+  TH2D* corrCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
+  TH2D* subCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
+  TH2D* mixCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
+  TH2D* mixSubCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
   
   // now get the pt projections
   for ( int i = 0; i < nFiles; ++i ) {
@@ -314,6 +289,7 @@ int generate_output_root() {
     }
   }
   
+  return 0;
   // TESTING PAST HERE
   // going back to using each bin independently not averaging over vz and cent
   // ( that is found in generate_output_avg.cxx )
