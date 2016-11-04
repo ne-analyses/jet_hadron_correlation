@@ -450,13 +450,13 @@ int generate_output_root() {
       dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
     }
   }
-  return 0;
+  
   // now  first overlay and output,
   // then subtract near from far eta regions
   for ( int i = 0; i < nFiles; ++i )
     for ( int j = 0; j < nPtBins; ++j ) {
-      std::string leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
-      std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      TString leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
+      std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       
       TCanvas c1;
       dPhiLeadNear[i][j]->SetLineColor(kBlack);
@@ -491,10 +491,10 @@ int generate_output_root() {
   // Now to do some fitting and subtract the background
   // define the fits
   // ---------------
-  std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
-  std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
-  std::string phiDifForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
-  
+  TString phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+  TString etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+  TString phiDifForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+  return 0;
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
