@@ -76,7 +76,7 @@ namespace patch
 // 4 = mix2
 // .......
 
-int generat_output_root( int argc, const char** argv) {
+int generat_output_root() {
   
   gStyle->SetOptStat(false);
   gStyle->SetOptFit(true);
