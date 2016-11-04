@@ -575,7 +575,7 @@ int generate_output_root() {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  
+  std::cout<<"got to final fitting"<<std::endl;
   // final fitting
   TF1* leadPhiFit[nFiles][nPtBins];
   TF1* leadPhiDifFit[nFiles][nPtBins];
@@ -644,7 +644,7 @@ int generate_output_root() {
       
     }
   }
-  
+  std::cout<<"got to making output"<<std::endl;
   // Now start making output
   TString outBase = "tmp/";
   TString leadPhiOutBase = outBase + "leadphi_pt";
