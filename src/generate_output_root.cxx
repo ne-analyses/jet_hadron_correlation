@@ -158,7 +158,7 @@ int generate_output_root() {
     }
   }
   
-  int nFiles = analysisNames.size();
+  const int nFiles = analysisNames.size();
   
   // Load in the histograms and get the pt spectra
   TH2D* nEvents[ nFiles ];
