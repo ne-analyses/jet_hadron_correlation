@@ -94,11 +94,11 @@ int generat_output_root( int argc, const char** argv) {
   
   // analysis names
   std::vector<std::string> defaultCorrNames;
-  defaultCorrNames.resize(4);
-  defaultCorrNames[0] = "Dijet";
-  defaultCorrNames[1] = "10 < Jet < 15";
-  defaultCorrNames[2] = "15 < Jet < 20";
-  defaultCorrNames[3] = "Jet > 20";
+  defaultCorrNames.resize(2);
+  defaultCorrNames[0] = "dijet";
+  defaultCorrNames[1] = "ppdijet";
+  //defaultCorrNames[2] = "15 < Jet < 20";
+  //defaultCorrNames[3] = "Jet > 20";
   
   
   // First check to make sure we're located properly
@@ -116,21 +116,21 @@ int generat_output_root( int argc, const char** argv) {
   TFile** mixFiles;
   std::vector<std::string> analysisNames;
   
-  switch ( argc ) {
+  switch ( 1 ) {
     case 1: { // Default case
       __OUT( "Using Default Settings" )
-      corrFiles = new TFile*[4];
-      mixFiles = new TFile*[4];
+      corrFiles = new TFile*[2];
+      mixFiles = new TFile*[2];
       
       // default files
-      corrFiles[0] = new TFile( "out/tmp/dijet_corr.root", "READ" );
-      corrFiles[1] = new TFile( "out/tmp/jet10_corr.root", "READ" );
-      corrFiles[2] = new TFile( "out/tmp/jet15_corr.root", "READ" );
-      corrFiles[3] = new TFile( "out/tmp/jet20_corr.root", "READ" );
-      mixFiles[0] = new TFile( "out/tmp/dijet_mix.root", "READ" );
-      mixFiles[1] = new TFile( "out/tmp/jet10_mix.root", "READ" );
-      mixFiles[2] = new TFile( "out/tmp/jet15_mix.root", "READ" );
-      mixFiles[3] = new TFile( "out/tmp/jet20_mix.root", "READ" );
+      corrFiles[0] = new TFile( "out/tmp/dijet_corr24.root", "READ" );
+      corrFiles[1] = new TFile( "out/tmp/ppdijet_corr24.root", "READ" );
+      //corrFiles[2] = new TFile( "out/tmp/jet15_corr.root", "READ" );
+      //corrFiles[3] = new TFile( "out/tmp/jet20_corr.root", "READ" );
+      mixFiles[0] = new TFile( "out/tmp/dijet_mix24.root", "READ" );
+      mixFiles[1] = new TFile( "out/tmp/ppdijet_mix24.root", "READ" );
+      //mixFiles[2] = new TFile( "out/tmp/jet15_mix.root", "READ" );
+      //mixFiles[3] = new TFile( "out/tmp/jet20_mix.root", "READ" );
       analysisNames = defaultCorrNames;
       
       break;
