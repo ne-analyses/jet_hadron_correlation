@@ -804,57 +804,33 @@ int generate_output_root() {
     }
     c1->SaveAs( subEtaOut );
   }
-  return 0;
+  
   // now to get yields
-  std::vector<std::vector<double> > leadPhiYield( nFiles );
-  std::vector<std::vector<double> > leadPhiWidth( nFiles );
-  std::vector<std::vector<double> > leadPhiError( nFiles );
-  std::vector<std::vector<double> > leadPhiWidthError( nFiles );
-  std::vector<std::vector<double> > leadPhiDifYield( nFiles );
-  std::vector<std::vector<double> > leadPhiDifWidth( nFiles );
-  std::vector<std::vector<double> > leadPhiDifError( nFiles );
-  std::vector<std::vector<double> > leadPhiDifWidthError( nFiles );
-  std::vector<std::vector<double> > leadEtaYield( nFiles );
-  std::vector<std::vector<double> > leadEtaWidth( nFiles );
-  std::vector<std::vector<double> > leadEtaError( nFiles );
-  std::vector<std::vector<double> > leadEtaWidthError( nFiles );
-  std::vector<std::vector<double> > subPhiYield( nFiles );
-  std::vector<std::vector<double> > subPhiWidth( nFiles );
-  std::vector<std::vector<double> > subPhiError( nFiles );
-  std::vector<std::vector<double> > subPhiWidthError( nFiles );
-  std::vector<std::vector<double> > subPhiDifYield( nFiles );
-  std::vector<std::vector<double> > subPhiDifWidth( nFiles );
-  std::vector<std::vector<double> > subPhiDifError( nFiles );
-  std::vector<std::vector<double> > subPhiDifWidthError( nFiles );
-  std::vector<std::vector<double> > subEtaYield( nFiles );
-  std::vector<std::vector<double> > subEtaWidth( nFiles );
-  std::vector<std::vector<double> > subEtaError( nFiles );
-  std::vector<std::vector<double> > subEtaWidthError( nFiles );
+  double leadPhiYield[nFiles][nPtBins];
+  double leadPhiWidth[nFiles][nPtBins];
+  double leadPhiError[nFiles][nPtBins];
+  double leadPhiWidthError[nFiles][nPtBins];
+  double leadPhiDifYield[nFiles][nPtBins];
+  double leadPhiDifWidth[nFiles][nPtBins];
+  double leadPhiDifError[nFiles][nPtBins];
+  double leadPhiDifWidthError[nFiles][nPtBins];
+  double leadEtaYield[nFiles][nPtBins];
+  double leadEtaWidth[nFiles][nPtBins];
+  double leadEtaError[nFiles][nPtBins];
+  double leadEtaWidthError[nFiles][nPtBins];
+  double subPhiYield[nFiles][nPtBins];
+  double subPhiWidth[nFiles][nPtBins];
+  double subPhiError[nFiles][nPtBins];
+  double subPhiWidthError[nFiles][nPtBins];
+  double subPhiDifYield[nFiles][nPtBins];
+  double subPhiDifWidth[nFiles][nPtBins];
+  double subPhiDifError[nFiles][nPtBins];
+  double subPhiDifWidthError[nFiles][nPtBins];
+  double subEtaYield[nFiles][nPtBins];
+  double subEtaWidth[nFiles][nPtBins];
+  double subEtaError[nFiles][nPtBins];
+  double subEtaWidthError[nFiles][nPtBins];
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiYield[i].resize( nPtBins );
-    leadPhiWidth[i].resize( nPtBins );
-    leadPhiError[i].resize( nPtBins );
-    leadPhiWidthError[i].resize( nPtBins );
-    leadPhiDifYield[i].resize( nPtBins );
-    leadPhiDifWidth[i].resize( nPtBins );
-    leadPhiDifError[i].resize( nPtBins );
-    leadPhiDifWidthError[i].resize( nPtBins );
-    leadEtaYield[i].resize( nPtBins );
-    leadEtaWidth[i].resize( nPtBins );
-    leadEtaError[i].resize( nPtBins );
-    leadEtaWidthError[i].resize( nPtBins );
-    subPhiYield[i].resize( nPtBins );
-    subPhiWidth[i].resize( nPtBins );
-    subPhiError[i].resize( nPtBins );
-    subPhiWidthError[i].resize( nPtBins );
-    subPhiDifYield[i].resize( nPtBins );
-    subPhiDifWidth[i].resize( nPtBins );
-    subPhiDifError[i].resize( nPtBins );
-    subPhiDifWidthError[i].resize( nPtBins );
-    subEtaYield[i].resize( nPtBins );
-    subEtaWidth[i].resize( nPtBins );
-    subEtaError[i].resize( nPtBins );
-    subEtaWidthError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
       leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
@@ -884,9 +860,8 @@ int generate_output_root() {
   }
   
   // finding the weighted center of the pt bins for future graphs
-  std::vector<std::vector<double> > ptBinCenter(nFiles);
+  double ptBinCenter[nFiles][nPtBins];
   for ( int i = 0; i < nFiles; ++i ) {
-    ptBinCenter[i].resize(nPtBins);
     
     for ( int j = 0; j < nPtBins; ++j ) {
       double weightedTotal = 0;
@@ -900,18 +875,18 @@ int generate_output_root() {
     }
   }
   
-  std::vector<TGraphErrors*> leadPhiGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiDifWidthGraph( nFiles );
-  std::vector<TGraphErrors*> leadEtaGraph( nFiles );
-  std::vector<TGraphErrors*> leadEtaWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiDifGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiDifWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subEtaGraph( nFiles );
-  std::vector<TGraphErrors*> subEtaWidthGraph( nFiles );
+  TGraphErrors* leadPhiGraph[nFiles];
+  TGraphErrors* leadPhiWidthGraph[nFiles];
+  TGraphErrors* leadPhiDifGraph[nFiles];
+  TGraphErrors* leadPhiDifWidthGraph[nFiles];
+  TGraphErrors* leadEtaGraph[nFiles];
+  TGraphErrors* leadEtaWidthGraph[nFiles];
+  TGraphErrors* subPhiGraph[nFiles];
+  TGraphErrors* subPhiWidthGraph[nFiles];
+  TGraphErrors* subPhiDifGraph[nFiles];
+  TGraphErrors* subPhiDifWidthGraph[nFiles];
+  TGraphErrors* subEtaGraph[nFiles];
+  TGraphErrors* subEtaWidthGraph[nFiles];
   
   for ( int i = 0; i < nFiles; ++i ) {
     double leadPhiTmp[nPtBins-startPtBin];
@@ -987,7 +962,7 @@ int generate_output_root() {
 
   // print out the yields
   
-  TCanvas* c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiGraph[i]->SetLineColor(i+1);
     leadPhiGraph[i]->SetMarkerStyle(29);
@@ -1003,7 +978,7 @@ int generate_output_root() {
       leadPhiGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiDifGraph[i]->SetLineColor(i+1);
     leadPhiDifGraph[i]->SetMarkerStyle(29);
@@ -1019,7 +994,7 @@ int generate_output_root() {
       leadPhiDifGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadEtaGraph[i]->SetLineColor(i+1);
     leadEtaGraph[i]->SetMarkerStyle(29);
@@ -1035,7 +1010,7 @@ int generate_output_root() {
       leadEtaGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiGraph[i]->SetLineColor(i+1);
     subPhiGraph[i]->SetMarkerStyle(29);
@@ -1051,7 +1026,7 @@ int generate_output_root() {
       subPhiGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiDifGraph[i]->SetLineColor(i+1);
     subPhiDifGraph[i]->SetMarkerStyle(29);
@@ -1067,7 +1042,7 @@ int generate_output_root() {
       subPhiDifGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subEtaGraph[i]->SetLineColor(i+1);
     subEtaGraph[i]->SetMarkerStyle(29);
@@ -1087,7 +1062,7 @@ int generate_output_root() {
   c1->SaveAs("tmp/subetayield.pdf");
   
   // now print out widths
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiWidthGraph[i]->SetLineColor(i+1);
     leadPhiWidthGraph[i]->SetMarkerStyle(29);
@@ -1103,7 +1078,7 @@ int generate_output_root() {
       leadPhiWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadPhiDifWidthGraph[i]->SetLineColor(i+1);
     leadPhiDifWidthGraph[i]->SetMarkerStyle(29);
@@ -1119,7 +1094,7 @@ int generate_output_root() {
       leadPhiDifWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     leadEtaWidthGraph[i]->SetLineColor(i+1);
     leadEtaWidthGraph[i]->SetMarkerStyle(29);
@@ -1135,7 +1110,7 @@ int generate_output_root() {
       leadEtaWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiWidthGraph[i]->SetLineColor(i+1);
     subPhiWidthGraph[i]->SetMarkerStyle(29);
@@ -1151,7 +1126,7 @@ int generate_output_root() {
       subPhiWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subPhiDifWidthGraph[i]->SetLineColor(i+1);
     subPhiDifWidthGraph[i]->SetMarkerStyle(29);
@@ -1167,7 +1142,7 @@ int generate_output_root() {
       subPhiDifWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
-  c1 = new TCanvas;
+  c1 = new TCanvas();
   for ( int i = 0; i < nFiles; ++i ) {
     subEtaWidthGraph[i]->SetLineColor(i+1);
     subEtaWidthGraph[i]->SetMarkerStyle(29);
@@ -1212,9 +1187,9 @@ int generate_output_root() {
     leg->AddEntry(leadEtaGraph[i],"#Delta#eta","lep");
     leg->DrawCopy();
     
-    std::string graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
+    TString graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
     
-    c1->SaveAs( graphOutName.c_str() );
+    c1->SaveAs( graphOutName );
     
     c1 = new TCanvas();
     subPhiGraph[i]->SetLineColor(1);
@@ -1243,7 +1218,7 @@ int generate_output_root() {
 
     graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
 
-    c1->SaveAs( graphOutName.c_str() );
+    c1->SaveAs( graphOutName );
     
     // joern asked for dphi without subtraction overlayed
     graphOutName = "tmp/dphi_trig_recoil_yield_"+analysisNames[i]+".pdf";
@@ -1264,7 +1239,7 @@ int generate_output_root() {
     leg->AddEntry(subPhiGraph[i],"Recoil","lep");
     leg->DrawCopy();
     
-    c1->SaveAs( graphOutName.c_str() );
+    c1->SaveAs( graphOutName );
   }
   
   
