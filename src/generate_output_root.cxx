@@ -658,8 +658,8 @@ int generate_output_root() {
   for ( int i = 0; i < nPtBins; ++i ) {
     
     TString leadPhiOut = leadPhiOutBase;
-    leadPhiOut.Add(i);
-    leadPhiOut.Add(outExt);
+    leadPhiOut += i;
+    leadPhiOut += outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         TString outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
