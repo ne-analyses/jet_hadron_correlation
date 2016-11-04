@@ -308,7 +308,7 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  std::cout<<"got here"<<std::endl;
+
   // now get the pt projections
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
@@ -328,7 +328,7 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  std::cout<<"and here"<<std::endl;
+  
   // TESTING PAST HERE
   // Averaging the event mixing over vz/cent
   // NEEDS TO BE UPDATED FOR UPDATED PT BINS
@@ -340,7 +340,6 @@ int main( int argc, const char** argv) {
   weightedMix.resize( nFiles );
   weightedSub.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
-    TH1D* vzBins = nEvents[i]->ProjectionY();
     
     weightedMix[i].resize( nPtBins );
     weightedSub[i].resize( nPtBins );
