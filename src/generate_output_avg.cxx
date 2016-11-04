@@ -775,15 +775,15 @@ int main( int argc, const char** argv) {
     
     std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiLead[j][i]->SetLineColor(j+1);
+      dPhiLead[j][i]->SetMarkerStyle(29);
+      dPhiLead[j][i]->SetMarkerSize(3);
+      dPhiLead[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
         dPhiLead[j][i]->SetTitle( outTitle.c_str() );
-        dPhiLead[j][i]->SetLineColor(j+1);
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLead[j][i]->SetMarkerStyle(29);
-        dPhiLead[j][i]->SetMarkerSize(3);
-        dPhiLead[j][i]->SetMarkerColor(j+1);
         dPhiLead[j][i]->Draw();
       }
       else {
@@ -798,17 +798,16 @@ int main( int argc, const char** argv) {
     
     std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiLeadNear[j][i]->SetLineColor(j+1);
+      dPhiLeadNear[j][i]->SetMarkerStyle(29);
+      dPhiLeadNear[j][i]->SetMarkerSize(3);
+      dPhiLeadNear[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        
         std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
-        dPhiLeadNear[j][i]->SetLineColor(j+1);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLeadNear[j][i]->SetMarkerStyle(29);
-        dPhiLeadNear[j][i]->SetMarkerSize(3);
-        dPhiLeadNear[j][i]->SetMarkerColor(j+1);
         dPhiLeadNear[j][i]->Draw();
       }
       else {
@@ -823,15 +822,15 @@ int main( int argc, const char** argv) {
     
     std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dEtaLead[j][i]->SetLineColor(j+1);
+      dEtaLead[j][i]->SetMarkerStyle(29);
+      dEtaLead[j][i]->SetMarkerSize(3);
+      dEtaLead[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#eta " + ptBinString[i];
         dEtaLead[j][i]->SetTitle( outTitle.c_str() );
-        dEtaLead[j][i]->SetLineColor(j+1);
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaLead[j][i]->SetMarkerStyle(29);
-        dEtaLead[j][i]->SetMarkerSize(3);
-        dEtaLead[j][i]->SetMarkerColor(j+1);
         dEtaLead[j][i]->Draw();
       }
       else {
@@ -846,15 +845,15 @@ int main( int argc, const char** argv) {
     
     std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiSub[j][i]->SetLineColor(j+1);
+      dPhiSub[j][i]->SetMarkerStyle(29);
+      dPhiSub[j][i]->SetMarkerSize(3);
+      dPhiSub[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#phi " + ptBinString[i];
         dPhiSub[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSub[j][i]->SetLineColor(j+1);
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSub[j][i]->SetMarkerStyle(29);
-        dPhiSub[j][i]->SetMarkerSize(3);
-        dPhiSub[j][i]->SetMarkerColor(j+1);
         dPhiSub[j][i]->Draw();
       }
       else {
@@ -869,16 +868,16 @@ int main( int argc, const char** argv) {
     
     std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiSubNear[j][i]->SetLineColor(j+1);
+      dPhiSubNear[j][i]->SetMarkerStyle(29);
+      dPhiSubNear[j][i]->SetMarkerSize(3);
+      dPhiSubNear[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
-        dPhiSubNear[j][i]->SetLineColor(j+1);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSubNear[j][i]->SetMarkerStyle(29);
-        dPhiSubNear[j][i]->SetMarkerSize(3);
-        dPhiSubNear[j][i]->SetMarkerColor(j+1);
         dPhiSubNear[j][i]->Draw();
       }
       else {
@@ -893,15 +892,15 @@ int main( int argc, const char** argv) {
     
     std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dEtaSub[j][i]->SetLineColor(j+1);
+      dEtaSub[j][i]->SetMarkerStyle(29);
+      dEtaSub[j][i]->SetMarkerSize(3);
+      dEtaSub[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta " + ptBinString[i];
         dEtaSub[j][i]->SetTitle( outTitle.c_str() );
-        dEtaSub[j][i]->SetLineColor(j+1);
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaSub[j][i]->SetMarkerStyle(29);
-        dEtaSub[j][i]->SetMarkerSize(3);
-        dEtaSub[j][i]->SetMarkerColor(j+1);
         dEtaSub[j][i]->Draw();
       }
       else {
@@ -1106,7 +1105,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadPhiGraph[i]->Draw();
     else
-      leadPhiGraph[i]->Draw("SAME");
+      leadPhiGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas;
@@ -1122,7 +1121,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadPhiDifGraph[i]->Draw();
     else
-      leadPhiDifGraph[i]->Draw("SAME");
+      leadPhiDifGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas;
@@ -1138,7 +1137,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadEtaGraph[i]->Draw();
     else
-      leadEtaGraph[i]->Draw("SAME");
+      leadEtaGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas;
@@ -1154,7 +1153,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subPhiGraph[i]->Draw();
     else
-      subPhiGraph[i]->Draw("SAME");
+      subPhiGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas;
@@ -1170,7 +1169,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subPhiDifGraph[i]->Draw();
     else
-      subPhiDifGraph[i]->Draw("SAME");
+      subPhiDifGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas;
@@ -1187,7 +1186,7 @@ int main( int argc, const char** argv) {
       subEtaGraph[i]->Draw();
     }
     else {
-      subEtaGraph[i]->Draw("SAME");
+      subEtaGraph[i]->Draw("P");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1206,7 +1205,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadPhiWidthGraph[i]->Draw();
     else
-      leadPhiWidthGraph[i]->Draw("SAME");
+      leadPhiWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas;
@@ -1222,7 +1221,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadPhiDifWidthGraph[i]->Draw();
     else
-      leadPhiDifWidthGraph[i]->Draw("SAME");
+      leadPhiDifWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas;
@@ -1238,7 +1237,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       leadEtaWidthGraph[i]->Draw();
     else
-      leadEtaWidthGraph[i]->Draw("SAME");
+      leadEtaWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas;
@@ -1254,7 +1253,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subPhiWidthGraph[i]->Draw();
     else
-      subPhiWidthGraph[i]->Draw("SAME");
+      subPhiWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas;
@@ -1270,7 +1269,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subPhiDifWidthGraph[i]->Draw();
     else
-      subPhiDifWidthGraph[i]->Draw("SAME");
+      subPhiDifWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas;
@@ -1286,7 +1285,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subEtaWidthGraph[i]->Draw();
     else
-      subEtaWidthGraph[i]->Draw("SAME");
+      subEtaWidthGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subetawidth.pdf");
   
@@ -1308,8 +1307,8 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->SetMarkerColor(3);
     
     leadPhiGraph[i]->Draw();
-    leadPhiDifGraph[i]->Draw("SAME");
-    leadEtaGraph[i]->Draw("SAME");
+    leadPhiDifGraph[i]->Draw("P");
+    leadEtaGraph[i]->Draw("P");
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
@@ -1337,8 +1336,8 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->SetMarkerColor(3);
     
     subPhiGraph[i]->Draw();
-    subPhiDifGraph[i]->Draw("SAME");
-    subEtaGraph[i]->Draw("SAME");
+    subPhiDifGraph[i]->Draw("P");
+    subEtaGraph[i]->Draw("P");
     
     leg = new TLegend(0.6,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
@@ -1362,7 +1361,7 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->SetMarkerStyle(20);
     
     leadPhiGraph[i]->Draw();
-    subPhiGraph[i]->Draw("SAME");
+    subPhiGraph[i]->Draw("P");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("#Delta#phi Jet Yields");
