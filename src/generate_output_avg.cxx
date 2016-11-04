@@ -555,7 +555,7 @@ int main( int argc, const char** argv) {
       dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );      
     }
   }
-  
+  std::cout<<"about to fit"<<std::endl;
   // now  first overlay and output,
   // then subtract near from far eta regions
   for ( int i = 0; i < nFiles; ++i )
