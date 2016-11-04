@@ -1170,7 +1170,7 @@ int main( int argc, const char** argv) {
     leadPhiWidthGraph[i]->SetTitle("Trigger Jet #Delta#phi - Gaussian Widths");
     leadPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       leadPhiWidthGraph[i]->Draw();
     else
@@ -1186,7 +1186,7 @@ int main( int argc, const char** argv) {
     leadPhiDifWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
     leadPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       leadPhiDifWidthGraph[i]->Draw();
     else
@@ -1202,7 +1202,7 @@ int main( int argc, const char** argv) {
     leadEtaWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta - Gaussian Widths");
     leadEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       leadEtaWidthGraph[i]->Draw();
     else
@@ -1218,7 +1218,7 @@ int main( int argc, const char** argv) {
     subPhiWidthGraph[i]->SetTitle("Recoil Jet #Delta#phi - Gaussian Widths");
     subPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       subPhiWidthGraph[i]->Draw();
     else
@@ -1234,7 +1234,7 @@ int main( int argc, const char** argv) {
     subPhiDifWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
     subPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       subPhiDifWidthGraph[i]->Draw();
     else
@@ -1250,7 +1250,7 @@ int main( int argc, const char** argv) {
     subEtaWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta - Gaussian Widths");
     subEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 4);
+    subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
       subEtaWidthGraph[i]->Draw();
     else
