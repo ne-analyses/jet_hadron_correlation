@@ -400,6 +400,7 @@ int generate_output_root() {
   TH1D* dPhiSubFar[nFiles][nPtBins];
   TH1D* dEtaSub[nFiles][nPtBins];
   
+  TCanvas* c1;
   for ( int i = 0; i < nFiles; ++i ) {
     
     for ( int j = 0; j < nPtBins; ++j ) {
@@ -411,11 +412,12 @@ int generate_output_root() {
       TString leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_" + j + ".pdf";
       TString subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_"+ j + ".pdf";
       
-      TCanvas c1;
-      recombinedCorr[i][j]->Draw("surf1");
-      c1.SaveAs( leadOutName );
-      recombinedSub[i][j]->Draw("surf1");
-      c1.SaveAs( subOutName );
+      c1 = new TCanvas();
+      recombinedCorr[i][j]->DrawCopy("surf1");
+      c1->SaveAs( leadOutName );
+      c1 = new TCanvas();
+      recombinedSub[i][j]->DrawCopy("surf1");
+      c1->SaveAs( subOutName );
       
       
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
@@ -458,29 +460,30 @@ int generate_output_root() {
       TString leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       TString subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       
-      TCanvas c1;
       dPhiLeadNear[i][j]->SetLineColor(kBlack);
       dPhiLeadNear[i][j]->SetMarkerStyle(29);
       dPhiLeadNear[i][j]->SetMarkerSize(3);
       dPhiLeadNear[i][j]->SetMarkerColor(kBlack);
-      dPhiLeadNear[i][j]->Draw();
+      dPhiLeadNear[i][j]->DrawCopy();
       dPhiLeadFar[i][j]->SetLineColor(kRed);
       dPhiLeadFar[i][j]->SetMarkerStyle(29);
       dPhiLeadFar[i][j]->SetMarkerSize(3);
       dPhiLeadFar[i][j]->SetMarkerColor(kRed);
-      dPhiLeadFar[i][j]->Draw("SAME");
-      c1.SaveAs( leadPhiName );
+      dPhiLeadFar[i][j]->DrawCopy("SAME");
+      c1 = new TCanvas();
+      c1->SaveAs( leadPhiName );
       dPhiSubNear[i][j]->SetLineColor(kBlack);
       dPhiSubNear[i][j]->SetMarkerStyle(29);
       dPhiSubNear[i][j]->SetMarkerSize(3);
       dPhiSubNear[i][j]->SetMarkerColor(kBlack);
-      dPhiSubNear[i][j]->Draw();
+      dPhiSubNear[i][j]->DrawCopy();
       dPhiSubFar[i][j]->SetLineColor(kRed);
       dPhiSubFar[i][j]->SetMarkerStyle(29);
       dPhiSubFar[i][j]->SetMarkerSize(3);
       dPhiSubFar[i][j]->SetMarkerColor(kRed);
-      dPhiSubFar[i][j]->Draw("SAME");
-      c1.SaveAs( subPhiName );
+      dPhiSubFar[i][j]->DrawCopy("SAME");
+      c1 = new TCanvas();
+      c1->SaveAs( subPhiName );
       
       // Now do the subtraction
       dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
@@ -679,10 +682,10 @@ int generate_output_root() {
         dPhiLead[j][i]->SetMarkerStyle(29);
         dPhiLead[j][i]->SetMarkerSize(3);
         dPhiLead[j][i]->SetMarkerColor(j+1);
-        dPhiLead[j][i]->Draw();
+        dPhiLead[j][i]->DrawCopy();
       }
       else {
-        dPhiLead[j][i]->Draw("same");
+        dPhiLead[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( leadPhiOut.c_str() );
@@ -703,10 +706,10 @@ int generate_output_root() {
         dPhiLeadNear[j][i]->SetMarkerStyle(29);
         dPhiLeadNear[j][i]->SetMarkerSize(3);
         dPhiLeadNear[j][i]->SetMarkerColor(j+1);
-        dPhiLeadNear[j][i]->Draw();
+        dPhiLeadNear[j][i]->DrawCopy();
       }
       else {
-        dPhiLeadNear[j][i]->Draw("same");
+        dPhiLeadNear[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( leadPhiDifOut.c_str() );
@@ -726,10 +729,10 @@ int generate_output_root() {
         dEtaLead[j][i]->SetMarkerStyle(29);
         dEtaLead[j][i]->SetMarkerSize(3);
         dEtaLead[j][i]->SetMarkerColor(j+1);
-        dEtaLead[j][i]->Draw();
+        dEtaLead[j][i]->DrawCopy();
       }
       else {
-        dEtaLead[j][i]->Draw("same");
+        dEtaLead[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( leadEtaOut.c_str() );
@@ -749,10 +752,10 @@ int generate_output_root() {
         dPhiSub[j][i]->SetMarkerStyle(29);
         dPhiSub[j][i]->SetMarkerSize(3);
         dPhiSub[j][i]->SetMarkerColor(j+1);
-        dPhiSub[j][i]->Draw();
+        dPhiSub[j][i]->DrawCopy();
       }
       else {
-        dPhiSub[j][i]->Draw("same");
+        dPhiSub[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( subPhiOut.c_str() );
@@ -773,10 +776,10 @@ int generate_output_root() {
         dPhiSubNear[j][i]->SetMarkerStyle(29);
         dPhiSubNear[j][i]->SetMarkerSize(3);
         dPhiSubNear[j][i]->SetMarkerColor(j+1);
-        dPhiSubNear[j][i]->Draw();
+        dPhiSubNear[j][i]->DrawCopy();
       }
       else {
-        dPhiSubNear[j][i]->Draw("same");
+        dPhiSubNear[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( subPhiDifOut.c_str() );
@@ -796,10 +799,10 @@ int generate_output_root() {
         dEtaSub[j][i]->SetMarkerStyle(29);
         dEtaSub[j][i]->SetMarkerSize(3);
         dEtaSub[j][i]->SetMarkerColor(j+1);
-        dEtaSub[j][i]->Draw();
+        dEtaSub[j][i]->DrawCopy();
       }
       else {
-        dEtaSub[j][i]->Draw("same");
+        dEtaSub[j][i]->DrawCopy("same");
       }
     }
     c1.SaveAs( subEtaOut.c_str() );
@@ -998,9 +1001,9 @@ int generate_output_root() {
     leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiGraph[i]->Draw();
+      leadPhiGraph[i]->DrawCopy();
     else
-      leadPhiGraph[i]->Draw("SAME");
+      leadPhiGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas;
@@ -1014,9 +1017,9 @@ int generate_output_root() {
     leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiDifGraph[i]->Draw();
+      leadPhiDifGraph[i]->DrawCopy();
     else
-      leadPhiDifGraph[i]->Draw("SAME");
+      leadPhiDifGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas;
@@ -1030,9 +1033,9 @@ int generate_output_root() {
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadEtaGraph[i]->Draw();
+      leadEtaGraph[i]->DrawCopy();
     else
-      leadEtaGraph[i]->Draw("SAME");
+      leadEtaGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas;
@@ -1046,9 +1049,9 @@ int generate_output_root() {
     subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiGraph[i]->Draw();
+      subPhiGraph[i]->DrawCopy();
     else
-      subPhiGraph[i]->Draw("SAME");
+      subPhiGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas;
@@ -1062,9 +1065,9 @@ int generate_output_root() {
     subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiDifGraph[i]->Draw();
+      subPhiDifGraph[i]->DrawCopy();
     else
-      subPhiDifGraph[i]->Draw("SAME");
+      subPhiDifGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas;
@@ -1078,10 +1081,10 @@ int generate_output_root() {
     subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0) {
-      subEtaGraph[i]->Draw();
+      subEtaGraph[i]->DrawCopy();
     }
     else {
-      subEtaGraph[i]->Draw("SAME");
+      subEtaGraph[i]->DrawCopy("SAME");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1098,9 +1101,9 @@ int generate_output_root() {
     leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiWidthGraph[i]->Draw();
+      leadPhiWidthGraph[i]->DrawCopy();
     else
-      leadPhiWidthGraph[i]->Draw("SAME");
+      leadPhiWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas;
@@ -1114,9 +1117,9 @@ int generate_output_root() {
     leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiDifWidthGraph[i]->Draw();
+      leadPhiDifWidthGraph[i]->DrawCopy();
     else
-      leadPhiDifWidthGraph[i]->Draw("SAME");
+      leadPhiDifWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas;
@@ -1130,9 +1133,9 @@ int generate_output_root() {
     leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadEtaWidthGraph[i]->Draw();
+      leadEtaWidthGraph[i]->DrawCopy();
     else
-      leadEtaWidthGraph[i]->Draw("SAME");
+      leadEtaWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas;
@@ -1146,9 +1149,9 @@ int generate_output_root() {
     subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiWidthGraph[i]->Draw();
+      subPhiWidthGraph[i]->DrawCopy();
     else
-      subPhiWidthGraph[i]->Draw("SAME");
+      subPhiWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas;
@@ -1162,9 +1165,9 @@ int generate_output_root() {
     subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiDifWidthGraph[i]->Draw();
+      subPhiDifWidthGraph[i]->DrawCopy();
     else
-      subPhiDifWidthGraph[i]->Draw("SAME");
+      subPhiDifWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas;
@@ -1178,9 +1181,9 @@ int generate_output_root() {
     subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subEtaWidthGraph[i]->Draw();
+      subEtaWidthGraph[i]->DrawCopy();
     else
-      subEtaWidthGraph[i]->Draw("SAME");
+      subEtaWidthGraph[i]->DrawCopy("SAME");
   }
   c1->SaveAs("tmp/subetawidth.pdf");
 
@@ -1201,16 +1204,16 @@ int generate_output_root() {
     leadEtaGraph[i]->SetMarkerSize(2);
     leadEtaGraph[i]->SetMarkerColor(3);
     
-    leadPhiGraph[i]->Draw();
-    leadPhiDifGraph[i]->Draw("SAME");
-    leadEtaGraph[i]->Draw("SAME");
+    leadPhiGraph[i]->DrawCopy();
+    leadPhiDifGraph[i]->DrawCopy("SAME");
+    leadEtaGraph[i]->DrawCopy("SAME");
     
     TLegend* leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
     leg->AddEntry(leadPhiGraph[i],"#Delta#phi","lep");
     leg->AddEntry(leadPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
     leg->AddEntry(leadEtaGraph[i],"#Delta#eta","lep");
-    leg->Draw();
+    leg->DrawCopy();
     
     std::string graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
     
@@ -1230,16 +1233,16 @@ int generate_output_root() {
     subEtaGraph[i]->SetMarkerSize(2);
     subEtaGraph[i]->SetMarkerColor(3);
     
-    subPhiGraph[i]->Draw();
-    subPhiDifGraph[i]->Draw("SAME");
-    subEtaGraph[i]->Draw("SAME");
+    subPhiGraph[i]->DrawCopy();
+    subPhiDifGraph[i]->DrawCopy("SAME");
+    subEtaGraph[i]->DrawCopy("SAME");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
     leg->AddEntry(subPhiGraph[i],"#Delta#phi","lep");
     leg->AddEntry(subPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
     leg->AddEntry(subEtaGraph[i],"#Delta#eta","lep");
-    leg->Draw();
+    leg->DrawCopy();
 
     graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
 
@@ -1255,14 +1258,14 @@ int generate_output_root() {
     subPhiGraph[i]->SetMarkerColor(7);
     subPhiGraph[i]->SetMarkerStyle(20);
     
-    leadPhiGraph[i]->Draw();
-    subPhiGraph[i]->Draw("SAME");
+    leadPhiGraph[i]->DrawCopy();
+    subPhiGraph[i]->DrawCopy("SAME");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("#Delta#phi Jet Yields");
     leg->AddEntry(leadPhiGraph[i],"Trigger","lep");
     leg->AddEntry(subPhiGraph[i],"Recoil","lep");
-    leg->Draw();
+    leg->DrawCopy();
     
     c1->SaveAs( graphOutName.c_str() );
   }
