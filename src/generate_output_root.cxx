@@ -202,45 +202,45 @@ int generate_output_root() {
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
         std::cout<<"i: "<<i<<" j: "<<j<<" k: "<<k<<std::endl;
         // make the initial name
-        std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
-        std::string subDifInitName = "sub_cent_"; subDifInitName += patch::to_string(j);
-        std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
-        std::string mixSubDifInitName = "mix_sub_cent_";
-        mixSubDifInitName += patch::to_string(j);
+        TString corrDifInitName = "lead_cent_"; corrDifInitName += j;
+        TString subDifInitName = "sub_cent_"; subDifInitName += j;
+        TString mixDifInitName = "mix_lead_cent_"; mixDifInitName += j;
+        TString mixSubDifInitName = "mix_sub_cent_";
+        mixSubDifInitName += j;
         
-        corrDifInitName += "_vz_"; corrDifInitName += patch::to_string(k);
-        subDifInitName += "_vz_"; subDifInitName += patch::to_string(k);
-        mixDifInitName += "_vz_"; mixDifInitName += patch::to_string(k);
-        mixSubDifInitName += "_vz_"; mixSubDifInitName += patch::to_string(k);
+        corrDifInitName += "_vz_"; corrDifInitName += k;
+        subDifInitName += "_vz_"; subDifInitName += k;
+        mixDifInitName += "_vz_"; mixDifInitName += k;
+        mixSubDifInitName += "_vz_"; mixSubDifInitName += k;
         
         
         // make the new histogram name
-        std::string corrDifBaseName = "corr_file_"; corrDifBaseName += patch::to_string(i);
-        std::string subDifBaseName = "sub_file_"; subDifBaseName += patch::to_string(i);
-        std::string mixDifBaseName = "mix_file_"; mixDifBaseName += patch::to_string(i);
-        std::string mixSubDifBaseName = "mix_file_"; mixSubDifBaseName += patch::to_string(i);
+        TString corrDifBaseName = "corr_file_"; corrDifBaseName += i;
+        TString subDifBaseName = "sub_file_"; subDifBaseName += i;
+        TString mixDifBaseName = "mix_file_"; mixDifBaseName += i;
+        TString mixSubDifBaseName = "mix_file_"; mixSubDifBaseName += i;
         
-        corrDifBaseName += "_cent_"; corrDifBaseName += patch::to_string(j);
-        corrDifBaseName += "_vz_"; corrDifBaseName += patch::to_string(k);
+        corrDifBaseName += "_cent_"; corrDifBaseName += j;
+        corrDifBaseName += "_vz_"; corrDifBaseName += k;
         
-        subDifBaseName += "_cent_"; subDifBaseName += patch::to_string(j);
-        subDifBaseName += "_vz_"; subDifBaseName += patch::to_string(k);
+        subDifBaseName += "_cent_"; subDifBaseName += j;
+        subDifBaseName += "_vz_"; subDifBaseName += k;
         
-        mixDifBaseName += "_cent_"; mixDifBaseName += patch::to_string(j);
-        mixDifBaseName += "_vz_"; mixDifBaseName += patch::to_string(k);
+        mixDifBaseName += "_cent_"; mixDifBaseName += j;
+        mixDifBaseName += "_vz_"; mixDifBaseName += k;
         
-        mixSubDifBaseName += "_cent_"; mixSubDifBaseName += patch::to_string(j);
-        mixSubDifBaseName += "_vz_"; mixSubDifBaseName += patch::to_string(k);
+        mixSubDifBaseName += "_cent_"; mixSubDifBaseName += j;
+        mixSubDifBaseName += "_vz_"; mixSubDifBaseName += k;
         
         // get the histograms
-        corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
-        corrCentVz[i][j][k]->SetName( corrDifBaseName.c_str() );
-        subCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( subDifInitName.c_str() );
-        subCentVz[i][j][k]->SetName( subDifBaseName.c_str() );
-        mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName.c_str() );
-        mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
-        mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName.c_str() );
-        mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
+        corrCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName );
+        corrCentVz[i][j][k]->SetName( corrDifBaseName );
+        subCentVz[i][j][k] = (TH3D*) corrFiles[i]->Get( subDifInitName );
+        subCentVz[i][j][k]->SetName( subDifBaseName );
+        mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName );
+        mixCentVz[i][j][k]->SetName( mixDifBaseName );
+        mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName );
+        mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName );
         
         // now we can get the pt spectrum as well
         recombinedPtLead[i]->Add( (TH1D*) corrCentVz[i][j][k]->Project3D("Z") );
