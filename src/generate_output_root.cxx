@@ -200,7 +200,7 @@ int generate_output_root() {
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
       for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-        std::cout<<"and here too"<<std:endl;
+        std::cout<<"and here too"<<std::endl;
         // make the initial name
         std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
         std::string subDifInitName = "sub_cent_"; subDifInitName += patch::to_string(j);
