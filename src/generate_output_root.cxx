@@ -289,34 +289,27 @@ int generate_output_root() {
     }
   }
   
-  return 0;
+  
   // TESTING PAST HERE
   // going back to using each bin independently not averaging over vz and cent
   // ( that is found in generate_output_avg.cxx )
   
   // make the container for the recombined histograms
-  std::vector<std::vector<TH2D*> > recombinedCorr;
-  std::vector<std::vector<TH2D*> > recombinedSub;
-  std::vector<std::vector<TH2D*> > recombinedPre;
-  std::vector<std::vector<TH2D*> > recombinedSubPre;
-  recombinedCorr.resize( nFiles );
-  recombinedSub.resize( nFiles );
-  recombinedPre.resize( nFiles );
-  recombinedSubPre.resize( nFiles );
+  TH2D* recombinedCorr[nFiles][nPtBins];
+  TH2D* recombinedSub[nFiles][nPtBins];
+  TH2D* recombinedPre[nFiles][nPtBins];
+  TH2D* recombinedSubPre[nFiles][nPtBins];
   
   for (int i = 0; i < nFiles; ++ i ) {
     
-    recombinedCorr[i].resize( nPtBins );
-    recombinedSub[i].resize( nPtBins );
-    recombinedPre[i].resize( nPtBins );
-    recombinedSubPre[i].resize( nPtBins );
+
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
-      std::string corrName = analysisNames[i] + " " + ptBinString[l];
-      std::string subName = analysisNames[i] + "_sub " + ptBinString[l];
-      std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
-      std::string subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
+      TString corrName = analysisNames[i] + " " + ptBinString[l];
+      TString subName = analysisNames[i] + "_sub " + ptBinString[l];
+      TString preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
+      TString subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       
       recombinedCorr[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
@@ -376,6 +369,8 @@ int generate_output_root() {
       }
     }
   }
+  
+  return 0;
   
   // get the reduced eta and phi ranges for projections
   double etaMax = 1.2;
