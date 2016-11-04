@@ -630,17 +630,17 @@ int generate_output_root() {
 
       // Now set same colors and fit
       dPhiLead[i][j]->SetLineColor( i + 1 );
-      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName, "RM" );
       dPhiSub[i][j]->SetLineColor( i + 1 );
-      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RM" );
+      dPhiSub[i][j]->Fit( dPhiSubName, "RM" );
       dPhiLeadNear[i][j]->SetLineColor( i + 1 );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RM" );
       dPhiSubNear[i][j]->SetLineColor( i + 1 );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RM" );
       dEtaLead[i][j]->SetLineColor( i + 1 );
-      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
+      dEtaLead[i][j]->Fit( dEtaLeadName, "RM" );
       dEtaSub[i][j]->SetLineColor( i + 1 );
-      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dEtaSub[i][j]->Fit( dEtaSubName, "RM" );
       
     }
   }
