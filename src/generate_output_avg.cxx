@@ -912,7 +912,7 @@ int main( int argc, const char** argv) {
     c1.SaveAs( subEtaOut.c_str() );
   }
   
-  
+  std::cout<<"getting yields and widths"<<std::endl;
   // now to get yields
   std::vector<std::vector<double> > leadPhiYield( nFiles );
   std::vector<std::vector<double> > leadPhiWidth( nFiles );
@@ -990,6 +990,8 @@ int main( int argc, const char** argv) {
       subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);
     }
   }
+  
+  std::cout<<"done fitting"<<std::endl;
   // finding the weighted center of the pt bins for future graphs
   std::vector<std::vector<double> > ptBinCenter(nFiles);
   for ( int i = 0; i < nFiles; ++i ) {
@@ -1006,6 +1008,8 @@ int main( int argc, const char** argv) {
       ptBinCenter[i][j] = weightedTotal / entries;
     }
   }
+  
+  std::cout<<"making graphs"<<std::endl;
   
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
