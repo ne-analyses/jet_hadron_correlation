@@ -469,7 +469,7 @@ int generate_output_root() {
       dPhiLeadFar[i][j]->SetMarkerSize(3);
       dPhiLeadFar[i][j]->SetMarkerColor(kRed);
       dPhiLeadFar[i][j]->Draw("SAME");
-      c1.SaveAs( leadPhiName.c_str() );
+      c1.SaveAs( leadPhiName );
       dPhiSubNear[i][j]->SetLineColor(kBlack);
       dPhiSubNear[i][j]->SetMarkerStyle(29);
       dPhiSubNear[i][j]->SetMarkerSize(3);
@@ -480,7 +480,7 @@ int generate_output_root() {
       dPhiSubFar[i][j]->SetMarkerSize(3);
       dPhiSubFar[i][j]->SetMarkerColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
-      c1.SaveAs( subPhiName.c_str() );
+      c1.SaveAs( subPhiName );
       
       // Now do the subtraction
       dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
