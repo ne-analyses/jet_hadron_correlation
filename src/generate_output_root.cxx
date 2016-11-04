@@ -118,7 +118,7 @@ int generate_output_root() {
   
   switch ( 1 ) {
     case 1: { // Default case
-      __OUT( "Using Default Settings" )
+      //__OUT( "Using Default Settings" )
       corrFiles = new TFile*[2];
       mixFiles = new TFile*[2];
       
@@ -137,7 +137,7 @@ int generate_output_root() {
     }
     default: {
       if ( (argc-1)%3 != 0 ) {
-        __ERR("Need correlation file, mixing file, and analysis name for each entry")
+        //__ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
