@@ -777,7 +777,7 @@ int generate_output_root() {
         dPhiSubNear[j][i]->DrawCopy("same");
       }
     }
-    c1->SaveAs( subPhiDifOut.c_str() );
+    c1->SaveAs( subPhiDifOut );
   }
 
   for ( int i = 0; i < nPtBins; ++i ) {
