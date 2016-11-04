@@ -767,7 +767,7 @@ int generate_output_root() {
       dPhiSubNear[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         TString outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
-        dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
+        dPhiSubNear[j][i]->SetTitle( outTitle );
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
