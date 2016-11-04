@@ -399,7 +399,7 @@ int generate_output_root() {
   TH1D* dPhiSubNear[nFiles][nPtBins];
   TH1D* dPhiSubFar[nFiles][nPtBins];
   TH1D* dEtaSub[nFiles][nPtBins];
-  TCanvas* c1;
+  
   for ( int i = 0; i < nFiles; ++i ) {
     
     for ( int j = 0; j < nPtBins; ++j ) {
@@ -411,12 +411,11 @@ int generate_output_root() {
       TString leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_" + j + ".pdf";
       TString subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_"+ j + ".pdf";
       
-      c1 = new TCanvas();
+      TCanvas c1;
       recombinedCorr[i][j]->Draw("surf1");
-      c1->SaveAs( leadOutName );
-      c1 = new TCanvas();
+      c1.SaveAs( leadOutName );
       recombinedSub[i][j]->Draw("surf1");
-      c1->SaveAs( subOutName );
+      c1.SaveAs( subOutName );
       
       
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
@@ -459,7 +458,7 @@ int generate_output_root() {
       TString leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       TString subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+ j +".pdf";
       
-      
+      TCanvas c1;
       dPhiLeadNear[i][j]->SetLineColor(kBlack);
       dPhiLeadNear[i][j]->SetMarkerStyle(29);
       dPhiLeadNear[i][j]->SetMarkerSize(3);
@@ -470,7 +469,7 @@ int generate_output_root() {
       dPhiLeadFar[i][j]->SetMarkerSize(3);
       dPhiLeadFar[i][j]->SetMarkerColor(kRed);
       dPhiLeadFar[i][j]->Draw("SAME");
-      c1->SaveAs( leadPhiName );
+      c1.SaveAs( leadPhiName );
       dPhiSubNear[i][j]->SetLineColor(kBlack);
       dPhiSubNear[i][j]->SetMarkerStyle(29);
       dPhiSubNear[i][j]->SetMarkerSize(3);
@@ -481,7 +480,7 @@ int generate_output_root() {
       dPhiSubFar[i][j]->SetMarkerSize(3);
       dPhiSubFar[i][j]->SetMarkerColor(kRed);
       dPhiSubFar[i][j]->Draw("SAME");
-      c1->SaveAs( subPhiName );
+      c1.SaveAs( subPhiName );
       
       // Now do the subtraction
       dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
