@@ -207,7 +207,7 @@ int generate_output_root() {
         std::string mixDifInitName = "mix_lead_cent_"; mixDifInitName += patch::to_string(j);
         std::string mixSubDifInitName = "mix_sub_cent_";
         mixSubDifInitName += patch::to_string(j);
-        
+        std::cout<<"got here"<<std::endl;
         corrDifInitName += "_vz_"; corrDifInitName += patch::to_string(k);
         subDifInitName += "_vz_"; subDifInitName += patch::to_string(k);
         mixDifInitName += "_vz_"; mixDifInitName += patch::to_string(k);
