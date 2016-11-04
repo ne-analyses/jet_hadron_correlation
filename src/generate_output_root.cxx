@@ -370,7 +370,6 @@ int generate_output_root() {
     }
   }
   
-  return 0;
   
   // get the reduced eta and phi ranges for projections
   double etaMax = 1.2;
@@ -392,33 +391,16 @@ int generate_output_root() {
   
   
   // going to get the 1D projections
-  std::vector<std::vector<TH1D*> > dPhiLead;
-  std::vector<std::vector<TH1D*> > dPhiLeadNear;
-  std::vector<std::vector<TH1D*> > dPhiLeadFar;
-  std::vector<std::vector<TH1D*> > dEtaLead;
-  std::vector<std::vector<TH1D*> > dPhiSub;
-  std::vector<std::vector<TH1D*> > dPhiSubNear;
-  std::vector<std::vector<TH1D*> > dPhiSubFar;
-  std::vector<std::vector<TH1D*> > dEtaSub;
-  
-  dPhiLead.resize( nFiles );
-  dPhiLeadNear.resize( nFiles );
-  dPhiLeadFar.resize( nFiles );
-  dEtaLead.resize( nFiles );
-  dPhiSub.resize( nFiles );
-  dPhiSubNear.resize( nFiles );
-  dPhiSubFar.resize( nFiles );
-  dEtaSub.resize( nFiles );
+  TH1D* dPhiLead[nFiles][nPtBins];
+  TH1D* dPhiLeadNear[nFiles][nPtBins];
+  TH1D* dPhiLeadFar[nFiles][nPtBins];
+  TH1D* dEtaLead[nFiles][nPtBins];
+  TH1D* dPhiSub[nFiles][nPtBins];
+  TH1D* dPhiSubNear[nFiles][nPtBins];
+  TH1D* dPhiSubFar[nFiles][nPtBins];
+  TH1D* dEtaSub[nFiles][nPtBins];
   
   for ( int i = 0; i < nFiles; ++i ) {
-    dPhiLead[i].resize( nPtBins );
-    dPhiLeadNear[i].resize( nPtBins );
-    dPhiLeadFar[i].resize( nPtBins );
-    dEtaLead[i].resize( nPtBins );
-    dPhiSub[i].resize( nPtBins );
-    dPhiSubNear[i].resize( nPtBins );
-    dPhiSubFar[i].resize( nPtBins );
-    dEtaSub[i].resize( nPtBins );
     
     for ( int j = 0; j < nPtBins; ++j ) {
       // first restrict the eta range
@@ -426,14 +408,14 @@ int generate_output_root() {
       recombinedSub[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
       
       // save the 2D histograms
-      std::string leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_" +patch::to_string(j) + ".pdf";
-      std::string subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_"+ patch::to_string(j) + ".pdf";
+      TString leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_" + j + ".pdf";
+      TString subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_"+ j + ".pdf";
       
       TCanvas c1;
       recombinedCorr[i][j]->Draw("surf1");
-      c1.SaveAs( leadOutName.c_str() );
+      c1.SaveAs( leadOutName );
       recombinedSub[i][j]->Draw("surf1");
-      c1.SaveAs( subOutName.c_str() );
+      c1.SaveAs( subOutName );
       
       
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
@@ -468,7 +450,7 @@ int generate_output_root() {
       dPhiSubFar[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
     }
   }
-  
+  return 0;
   // now  first overlay and output,
   // then subtract near from far eta regions
   for ( int i = 0; i < nFiles; ++i )
