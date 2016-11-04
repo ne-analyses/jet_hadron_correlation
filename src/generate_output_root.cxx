@@ -575,7 +575,7 @@ int generate_output_root() {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  std::cout<<"got to final fitting"<<std::endl;
+  
   // final fitting
   TF1* leadPhiFit[nFiles][nPtBins];
   TF1* leadPhiDifFit[nFiles][nPtBins];
@@ -644,7 +644,7 @@ int generate_output_root() {
       
     }
   }
-  std::cout<<"got to making output"<<std::endl;
+  
   // Now start making output
   TString outBase = "tmp/";
   TString leadPhiOutBase = outBase + "leadphi_pt";
@@ -657,7 +657,9 @@ int generate_output_root() {
   
   for ( int i = 0; i < nPtBins; ++i ) {
     
-    TString leadPhiOut = leadPhiOutBase + i + outExt;
+    TString leadPhiOut = leadPhiOutBase;
+    leadPhiOut.Add(i);
+    leadPhiOut.Add(outExt);
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( j == 0 ) {
         TString outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
