@@ -165,23 +165,15 @@ int generate_output_root() {
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
   TH3D* mixHist[ nFiles ];
-  vector<vector<vector<TH3D*> > > corrCentVz;
-  std::vector<std::vector<std::vector<TH3D*> > > subCentVz;
-  std::vector<std::vector<std::vector<TH3D*> > > mixCentVz;
-  std::vector<std::vector<std::vector<TH3D*> > > mixSubCentVz;
+  TH3D* corrCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
+  TH3D* subCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
+  TH3D* mixCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
+  TH3D* mixSubCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
   std::vector<TH1D*> recombinedPtLead;
   std::vector<TH1D*> recombinedPtSub;
-  corrCentVz.resize( nFiles );
-  subCentVz.resize( nFiles );
-  mixCentVz.resize( nFiles );
-  mixSubCentVz.resize( nFiles );
   recombinedPtLead.resize( nFiles );
   recombinedPtSub.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVz[i].resize( corrAnalysis::binsCentrality );
-    subCentVz[i].resize( corrAnalysis::binsCentrality );
-    mixCentVz[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVz[i].resize( corrAnalysis::binsCentrality );
     
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
     std::string ptSubName = analysisNames[i] + "_pt_sub";
@@ -189,12 +181,6 @@ int generate_output_root() {
     recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
     recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
     
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVz[i][j].resize( corrAnalysis::binsVz );
-      subCentVz[i][j].resize( corrAnalysis::binsVz );
-      mixCentVz[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVz[i][j].resize( corrAnalysis::binsVz );
-    }
   }
   
   for ( int i = 0; i < nFiles; ++i ) {
@@ -266,17 +252,6 @@ int generate_output_root() {
   
   std::cout<<"loaded all histograms"<<std::endl;
   
-  // Printing out eta and phi bins
-  std::cout<<"ETA BINS: "<<mixSubCentVz[0][0][0]->GetXaxis()->GetNbins()<<std::endl;
-  for ( int i = 1; i <= mixSubCentVz[0][0][0]->GetXaxis()->GetNbins(); ++i ) {
-    std::cout<<"bin: "<<i<<" low: "<< mixSubCentVz[0][0][0]->GetXaxis()->GetBinLowEdge(i)<<" upper: "<<mixSubCentVz[0][0][0]->GetXaxis()->GetBinUpEdge(i)<<std::endl;
-  }
-  
-  std::cout<<"PHI BINS: "<<mixSubCentVz[0][0][0]->GetYaxis()->GetNbins()<<std::endl;
-  for ( int i = 1; i <= mixSubCentVz[0][0][0]->GetYaxis()->GetNbins(); ++i ) {
-    std::cout<<"bin: "<<i<<" low: "<< mixSubCentVz[0][0][0]->GetYaxis()->GetBinLowEdge(i)<<" upper: "<<mixSubCentVz[0][0][0]->GetYaxis()->GetBinUpEdge(i)<<std::endl;
-  }
-
   
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPt;
