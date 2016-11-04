@@ -165,7 +165,7 @@ int generate_output_root() {
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
   TH3D* mixHist[ nFiles ];
-  std::vector<std::vector<std::vector<TH3D*> > > corrCentVz;
+  vector<vector<vector<TH3D*> > > corrCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > subCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > mixCentVz;
   std::vector<std::vector<std::vector<TH3D*> > > mixSubCentVz;
