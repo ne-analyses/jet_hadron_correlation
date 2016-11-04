@@ -169,10 +169,8 @@ int generate_output_root() {
   TH3D* subCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
   TH3D* mixCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
   TH3D* mixSubCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
-  std::vector<TH1D*> recombinedPtLead;
-  std::vector<TH1D*> recombinedPtSub;
-  recombinedPtLead.resize( nFiles );
-  recombinedPtSub.resize( nFiles );
+  TH1D* recombinedPtLead[nFiles];
+  TH1D* recombinedPtSub[nFiles];
   for ( int i = 0; i < nFiles; ++i ) {
     
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
