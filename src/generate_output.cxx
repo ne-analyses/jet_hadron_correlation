@@ -1306,7 +1306,7 @@ int main( int argc, const char** argv) {
     
     subPhiGraph[i]->Draw();
     subPhiDifGraph[i]->Draw("P");
-    subEtaGraph[i]->Draw("P"");
+    subEtaGraph[i]->Draw("P");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
