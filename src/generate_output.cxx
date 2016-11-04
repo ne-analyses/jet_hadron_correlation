@@ -1236,7 +1236,7 @@ int main( int argc, const char** argv) {
     subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiDifWidthGraph[i]->Draw();
+      subPhiDifWidthGraph[i]->Draw("P");
     else
       subPhiDifWidthGraph[i]->Draw("P");
   }
