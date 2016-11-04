@@ -1122,7 +1122,7 @@ int main( int argc, const char** argv) {
     if ( i == 0)
       subPhiGraph[i]->Draw();
     else
-      subPhiGraph[i]->Draw("P"");
+      subPhiGraph[i]->Draw("P");
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas;
