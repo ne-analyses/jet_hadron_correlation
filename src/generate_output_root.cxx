@@ -212,14 +212,14 @@ int generate_output_root() {
         subDifInitName += "_vz_"; subDifInitName += patch::to_string(k);
         mixDifInitName += "_vz_"; mixDifInitName += patch::to_string(k);
         mixSubDifInitName += "_vz_"; mixSubDifInitName += patch::to_string(k);
-        
+        std::cout<<"and here"<<std::endl;
         
         // make the new histogram name
         std::string corrDifBaseName = "corr_file_"; corrDifBaseName += patch::to_string(i);
         std::string subDifBaseName = "sub_file_"; subDifBaseName += patch::to_string(i);
         std::string mixDifBaseName = "mix_file_"; mixDifBaseName += patch::to_string(i);
         std::string mixSubDifBaseName = "mix_file_"; mixSubDifBaseName += patch::to_string(i);
-        
+        std::cout<<"finally here"<<std::endl;
         corrDifBaseName += "_cent_"; corrDifBaseName += patch::to_string(j);
         corrDifBaseName += "_vz_"; corrDifBaseName += patch::to_string(k);
         
