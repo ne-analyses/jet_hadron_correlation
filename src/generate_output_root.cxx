@@ -681,7 +681,9 @@ int generate_output_root() {
   
   for ( int i = 0; i < nPtBins; ++i ) {
     c1 = new TCanvas();
-    TString leadPhiDifOut = leadPhiDifOutBase + i + outExt;
+    TString leadPhiDifOut = leadPhiDifOutBase;
+    leadPhiDifOut += i;
+    leadPhiDifOut += outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       dPhiLeadNear[j][i]->SetLineColor(j+1);
       dPhiLeadNear[j][i]->SetMarkerStyle(29);
@@ -705,7 +707,9 @@ int generate_output_root() {
   for ( int i = 0; i < nPtBins; ++i ) {
     c1 = new TCanvas();
     
-    TString leadEtaOut = leadEtaOutBase + i + outExt;
+    TString leadEtaOut = leadEtaOutBase;
+    leadEtaOut += i;
+    leadEtaOut += outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
       dEtaLead[j][i]->SetLineColor(j+1);
       dEtaLead[j][i]->SetMarkerStyle(29);
@@ -728,7 +732,9 @@ int generate_output_root() {
   for ( int i = 0; i < nPtBins; ++i ) {
     c1 = new TCanvas();
     
-    TString subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
+    TString subPhiOut = subPhiOutBase;
+    subPhiOut += i;
+    subPhiOut += outExt;
     for ( int j = 0; j < nFiles; ++j ) {
       dPhiSub[j][i]->SetLineColor(j+1);
       dPhiSub[j][i]->SetMarkerStyle(29);
@@ -751,7 +757,9 @@ int generate_output_root() {
   for ( int i = 0; i < nPtBins; ++i ) {
     c1 = new TCanvas();
     
-    TString subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
+    TString subPhiDifOut = subPhiDifOutBase;
+    subPhiDifOut += i;
+    subPhiDifOut += outExt;
     for ( int j = 0; j < nFiles; ++j ) {
       dPhiSubNear[j][i]->SetLineColor(j+1);
       dPhiSubNear[j][i]->SetMarkerStyle(29);
@@ -775,7 +783,9 @@ int generate_output_root() {
   for ( int i = 0; i < nPtBins; ++i ) {
     c1 = new TCanvas();
     
-    TString subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
+    TString subEtaOut = subEtaOutBase;
+    subEtaOut += i;
+    subEtaOut += outExt;
     for ( int j = 0; j < nFiles; ++j ) {
       dEtaSub[j][i]->SetLineColor(j+1);
       dEtaSub[j][i]->SetMarkerStyle(29);
