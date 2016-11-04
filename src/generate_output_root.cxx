@@ -494,51 +494,51 @@ int generate_output_root() {
   TString phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
   TString etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
   TString phiDifForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
-  return 0;
+
   // do a first, temporary fit to remove background
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
-      std::string dPhiLeadName = "tmp_fit_lead_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubName = "tmp_fit_sub_phi_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiLeadNameDif = "tmp_fit_lead_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dPhiSubNameDif = "tmp_fit_sub_phi_dif_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaLeadName = "tmp_fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
-      std::string dEtaSubName = "tmp_fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
+      TString dPhiLeadName = "tmp_fit_lead_phi_" + i + j;
+      TString dPhiSubName = "tmp_fit_sub_phi_" + i + j;
+      TString dPhiLeadNameDif = "tmp_fit_lead_phi_dif_" + i + j;
+      TString dPhiSubNameDif = "tmp_fit_sub_phi_dif_" + i + j;
+      TString dEtaLeadName = "tmp_fit_lead_eta_" + i + j;
+      TString dEtaSubName = "tmp_fit_sub_eta_" + i + j;
       
-      TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiDifMax );
+      TF1* leadPhiInitFit = new TF1( dPhiLeadName, phiForm, phiMin, phiDifMax );
       leadPhiInitFit->FixParameter( 2, 0 );
       leadPhiInitFit->FixParameter( 5, corrAnalysis::pi );
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
-      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiMax );
+      TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif, phiDifForm, phiMin, phiMax );
       leadPhiDifInitFit->FixParameter( 2, 0 );
       leadPhiDifInitFit->SetParameter( 3, 0.2 );
       
-      TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
+      TF1* subPhiInitFit = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
       subPhiInitFit->FixParameter( 5, corrAnalysis::pi );
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
-      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
+      TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif, phiDifForm, phiMin, phiDifMax );
       subPhiDifInitFit->FixParameter( 2, 0 );
       subPhiDifInitFit->SetParameter( 3, 0.2 );
       
-      TF1* leadEtaInitFit = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      TF1* leadEtaInitFit = new TF1( dEtaLeadName, etaForm, etaMin, etaMax );
       leadEtaInitFit->FixParameter( 2, 0 );
       leadEtaInitFit->SetParameter( 3, 0.2 );
       
-      TF1* subEtaInitFit = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
+      TF1* subEtaInitFit = new TF1( dEtaSubName, etaForm, etaMin, etaMax );
       subEtaInitFit->FixParameter( 2, 0 );
       subEtaInitFit->SetParameter( 3, 0.2 );
       
-      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
-      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RM" );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
-      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
-      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName, "RM" );
+      dPhiSub[i][j]->Fit( dPhiSubName, "RM" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RM" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RM" );
+      dEtaLead[i][j]->Fit( dEtaLeadName, "RM" );
+      dEtaSub[i][j]->Fit( dEtaSubName, "RM" );
       
       // Now to subtract the constants
       TF1* subConst = new TF1( "subConst", "[0]", phiMin, phiMax);
@@ -572,7 +572,7 @@ int generate_output_root() {
       dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
     }
   }
-  
+  return 0;
   // final fitting
   std::vector<std::vector<TF1*> > leadPhiFit;
   leadPhiFit.resize( nFiles );
