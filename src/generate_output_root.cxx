@@ -656,147 +656,145 @@ int generate_output_root() {
   TString outExt = ".pdf";
   
   for ( int i = 0; i < nPtBins; ++i ) {
-    
+    c1 = new TCanvas();
     TString leadPhiOut = leadPhiOutBase;
     leadPhiOut += i;
     leadPhiOut += outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiLead[j][i]->SetLineColor(j+1);
+      dPhiLead[j][i]->SetMarkerStyle(29);
+      dPhiLead[j][i]->SetMarkerSize(3);
+      dPhiLead[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         TString outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
         dPhiLead[j][i]->SetTitle( outTitle );
-        dPhiLead[j][i]->SetLineColor(j+1);
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLead[j][i]->SetMarkerStyle(29);
-        dPhiLead[j][i]->SetMarkerSize(3);
-        dPhiLead[j][i]->SetMarkerColor(j+1);
         dPhiLead[j][i]->DrawCopy();
       }
       else {
         dPhiLead[j][i]->DrawCopy("same");
       }
     }
-    c1 = new TCanvas();
-    c1.SaveAs( leadPhiOut );
+    c1->SaveAs( leadPhiOut );
   }
-  return 0;
+  
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
-    
-    std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
+    c1 = new TCanvas();
+    TString leadPhiDifOut = leadPhiDifOutBase + i + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dPhiLeadNear[j][i]->SetLineColor(j+1);
+      dPhiLeadNear[j][i]->SetMarkerStyle(29);
+      dPhiLeadNear[j][i]->SetMarkerSize(3);
+      dPhiLeadNear[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
-        dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
+        TString outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        dPhiLeadNear[j][i]->SetTitle( outTitle );
         dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
-        dPhiLeadNear[j][i]->SetLineColor(j+1);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLeadNear[j][i]->SetMarkerStyle(29);
-        dPhiLeadNear[j][i]->SetMarkerSize(3);
-        dPhiLeadNear[j][i]->SetMarkerColor(j+1);
         dPhiLeadNear[j][i]->DrawCopy();
       }
       else {
         dPhiLeadNear[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( leadPhiDifOut.c_str() );
+    c1->SaveAs( leadPhiDifOut );
   }
   
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
+    c1 = new TCanvas();
     
-    std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
+    TString leadEtaOut = leadEtaOutBase + i + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
+      dEtaLead[j][i]->SetLineColor(j+1);
+      dEtaLead[j][i]->SetMarkerStyle(29);
+      dEtaLead[j][i]->SetMarkerSize(3);
+      dEtaLead[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        std::string outTitle = "Trigger Jet #Delta#eta " + ptBinString[i];
-        dEtaLead[j][i]->SetTitle( outTitle.c_str() );
-        dEtaLead[j][i]->SetLineColor(j+1);
+        TString outTitle = "Trigger Jet #Delta#eta " + ptBinString[i];
+        dEtaLead[j][i]->SetTitle( outTitle );
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaLead[j][i]->SetMarkerStyle(29);
-        dEtaLead[j][i]->SetMarkerSize(3);
-        dEtaLead[j][i]->SetMarkerColor(j+1);
         dEtaLead[j][i]->DrawCopy();
       }
       else {
         dEtaLead[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( leadEtaOut.c_str() );
+    c1->SaveAs( leadEtaOut );
   }
   
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
+    c1 = new TCanvas();
     
-    std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
-    for ( int j = 0; j < nFiles; ++ j ) {
+    TString subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++j ) {
+      dPhiSub[j][i]->SetLineColor(j+1);
+      dPhiSub[j][i]->SetMarkerStyle(29);
+      dPhiSub[j][i]->SetMarkerSize(3);
+      dPhiSub[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        std::string outTitle = "Recoil Jet #Delta#phi " + ptBinString[i];
-        dPhiSub[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSub[j][i]->SetLineColor(j+1);
+        TString outTitle = "Recoil Jet #Delta#phi " + ptBinString[i];
+        dPhiSub[j][i]->SetTitle( outTitle );
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSub[j][i]->SetMarkerStyle(29);
-        dPhiSub[j][i]->SetMarkerSize(3);
-        dPhiSub[j][i]->SetMarkerColor(j+1);
         dPhiSub[j][i]->DrawCopy();
       }
       else {
         dPhiSub[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( subPhiOut.c_str() );
+    c1->SaveAs( subPhiOut );
   }
 
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
+    c1 = new TCanvas();
     
-    std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
-    for ( int j = 0; j < nFiles; ++ j ) {
+    TString subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++j ) {
+      dPhiSubNear[j][i]->SetLineColor(j+1);
+      dPhiSubNear[j][i]->SetMarkerStyle(29);
+      dPhiSubNear[j][i]->SetMarkerSize(3);
+      dPhiSubNear[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
+        TString outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
-        dPhiSubNear[j][i]->SetLineColor(j+1);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSubNear[j][i]->SetMarkerStyle(29);
-        dPhiSubNear[j][i]->SetMarkerSize(3);
-        dPhiSubNear[j][i]->SetMarkerColor(j+1);
         dPhiSubNear[j][i]->DrawCopy();
       }
       else {
         dPhiSubNear[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( subPhiDifOut.c_str() );
+    c1->SaveAs( subPhiDifOut.c_str() );
   }
 
   for ( int i = 0; i < nPtBins; ++i ) {
-    TCanvas c1;
+    c1 = new TCanvas();
     
-    std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
-    for ( int j = 0; j < nFiles; ++ j ) {
+    TString subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
+    for ( int j = 0; j < nFiles; ++j ) {
+      dEtaSub[j][i]->SetLineColor(j+1);
+      dEtaSub[j][i]->SetMarkerStyle(29);
+      dEtaSub[j][i]->SetMarkerSize(3);
+      dEtaSub[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
-        std::string outTitle = "Recoil Jet #Delta#eta " + ptBinString[i];
-        dEtaSub[j][i]->SetTitle( outTitle.c_str() );
-        dEtaSub[j][i]->SetLineColor(j+1);
+        TString outTitle = "Recoil Jet #Delta#eta " + ptBinString[i];
+        dEtaSub[j][i]->SetTitle( outTitle );
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaSub[j][i]->SetMarkerStyle(29);
-        dEtaSub[j][i]->SetMarkerSize(3);
-        dEtaSub[j][i]->SetMarkerColor(j+1);
         dEtaSub[j][i]->DrawCopy();
       }
       else {
         dEtaSub[j][i]->DrawCopy("same");
       }
     }
-    c1.SaveAs( subEtaOut.c_str() );
+    c1->SaveAs( subEtaOut );
   }
-  
+  return 0;
   // now to get yields
   std::vector<std::vector<double> > leadPhiYield( nFiles );
   std::vector<std::vector<double> > leadPhiWidth( nFiles );
