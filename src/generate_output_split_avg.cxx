@@ -632,7 +632,7 @@ int main( int argc, const char** argv) {
   dEtaSubSmall.resize( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
-    std::cout<<"got here: i = "<<i<<std::endl;
+
     dPhiLeadLarge[i].resize( nPtBins );
     dPhiLeadNearLarge[i].resize( nPtBins );
     dPhiLeadFarLarge[i].resize( nPtBins );
@@ -650,8 +650,6 @@ int main( int argc, const char** argv) {
     dPhiSubNearSmall[i].resize( nPtBins );
     dPhiSubFarSmall[i].resize( nPtBins );
     dEtaSubSmall[i].resize( nPtBins );
-    
-    std::cout<<"got here"<<std::endl;
     
     for ( int j = 0; j < nPtBins; ++j ) {
       // first restrict the eta range
@@ -765,9 +763,7 @@ int main( int argc, const char** argv) {
     }
   }
   
-  return 0;
-}
-/*
+
   // now  first overlay and output,
   // then subtract near from far eta regions
   for ( int i = 0; i < nFiles; ++i )
@@ -775,39 +771,78 @@ int main( int argc, const char** argv) {
       std::string leadPhiName = "tmp/lead_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
       std::string subPhiName = "tmp/sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
       
+      std::string leadPhiNameSmall = "";
+      std::string subPhiNameSmall = "";
+      
+      if ( ajSplit[i] ) {
+        leadPhiName = "tmp/largeAj_lead_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+        subPhiName = "tmp/largeAj_sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+        leadPhiNameSmall = "tmp/smallAj_lead_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+        subPhiNameSmall = "tmp/smallAj_sub_phi_near_far_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      }
+      
+      
       TCanvas c1;
-      dPhiLeadNear[i][j]->SetLineColor(kBlack);
-      dPhiLeadNear[i][j]->SetMarkerStyle(29);
-      dPhiLeadNear[i][j]->SetMarkerSize(3);
-      dPhiLeadNear[i][j]->SetMarkerColor(kBlack);
-      dPhiLeadNear[i][j]->Draw();
-      dPhiLeadFar[i][j]->SetLineColor(kRed);
-      dPhiLeadFar[i][j]->SetMarkerStyle(29);
-      dPhiLeadFar[i][j]->SetMarkerSize(3);
-      dPhiLeadFar[i][j]->SetMarkerColor(kRed);
-      dPhiLeadFar[i][j]->Draw("SAME");
+      dPhiLeadNearLarge[i][j]->SetLineColor(kBlack);
+      dPhiLeadNearLarge[i][j]->SetMarkerStyle(29);
+      dPhiLeadNearLarge[i][j]->SetMarkerSize(3);
+      dPhiLeadNearLarge[i][j]->SetMarkerColor(kBlack);
+      dPhiLeadNearLarge[i][j]->Draw();
+      dPhiLeadFarLarge[i][j]->SetLineColor(kRed);
+      dPhiLeadFarLarge[i][j]->SetMarkerStyle(29);
+      dPhiLeadFarLarge[i][j]->SetMarkerSize(3);
+      dPhiLeadFarLarge[i][j]->SetMarkerColor(kRed);
+      dPhiLeadFarLarge[i][j]->Draw("SAME");
       c1.SaveAs( leadPhiName.c_str() );
-      dPhiSubNear[i][j]->SetLineColor(kBlack);
-      dPhiSubNear[i][j]->SetMarkerStyle(29);
-      dPhiSubNear[i][j]->SetMarkerSize(3);
-      dPhiSubNear[i][j]->SetMarkerColor(kBlack);
-      dPhiSubNear[i][j]->Draw();
-      dPhiSubFar[i][j]->SetLineColor(kRed);
-      dPhiSubFar[i][j]->SetMarkerStyle(29);
-      dPhiSubFar[i][j]->SetMarkerSize(3);
-      dPhiSubFar[i][j]->SetMarkerColor(kRed);
-      dPhiSubFar[i][j]->Draw("SAME");
+      dPhiSubNearLarge[i][j]->SetLineColor(kBlack);
+      dPhiSubNearLarge[i][j]->SetMarkerStyle(29);
+      dPhiSubNearLarge[i][j]->SetMarkerSize(3);
+      dPhiSubNearLarge[i][j]->SetMarkerColor(kBlack);
+      dPhiSubNearLarge[i][j]->Draw();
+      dPhiSubFarLarge[i][j]->SetLineColor(kRed);
+      dPhiSubFarLarge[i][j]->SetMarkerStyle(29);
+      dPhiSubFarLarge[i][j]->SetMarkerSize(3);
+      dPhiSubFarLarge[i][j]->SetMarkerColor(kRed);
+      dPhiSubFarLarge[i][j]->Draw("SAME");
       c1.SaveAs( subPhiName.c_str() );
+      
+      if ( ajSplit[i] ) {
+        dPhiLeadNearSmall[i][j]->SetLineColor(kBlack);
+        dPhiLeadNearSmall[i][j]->SetMarkerStyle(29);
+        dPhiLeadNearSmall[i][j]->SetMarkerSize(3);
+        dPhiLeadNearSmall[i][j]->SetMarkerColor(kBlack);
+        dPhiLeadNearSmall[i][j]->Draw();
+        dPhiLeadFarSmall[i][j]->SetLineColor(kRed);
+        dPhiLeadFarSmall[i][j]->SetMarkerStyle(29);
+        dPhiLeadFarSmall[i][j]->SetMarkerSize(3);
+        dPhiLeadFarSmall[i][j]->SetMarkerColor(kRed);
+        dPhiLeadFarSmall[i][j]->Draw("SAME");
+        c1.SaveAs( leadPhiNameSmall.c_str() );
+        dPhiSubNearSmall[i][j]->SetLineColor(kBlack);
+        dPhiSubNearSmall[i][j]->SetMarkerStyle(29);
+        dPhiSubNearSmall[i][j]->SetMarkerSize(3);
+        dPhiSubNearSmall[i][j]->SetMarkerColor(kBlack);
+        dPhiSubNearSmall[i][j]->Draw();
+        dPhiSubFarSmall[i][j]->SetLineColor(kRed);
+        dPhiSubFarSmall[i][j]->SetMarkerStyle(29);
+        dPhiSubFarSmall[i][j]->SetMarkerSize(3);
+        dPhiSubFarSmall[i][j]->SetMarkerColor(kRed);
+        dPhiSubFarSmall[i][j]->Draw("SAME");
+        c1.SaveAs( subPhiNameSmall.c_str() );
+
+      }
 
       
       // Now do the subtraction
-      dPhiLeadNear[i][j]->Add( dPhiLeadFar[i][j], -1 );
-      dPhiSubNear[i][j]->Add( dPhiSubFar[i][j], -1 );
+      dPhiLeadNearLarge[i][j]->Add( dPhiLeadFarLarge[i][j], -1 );
+      dPhiSubNearLarge[i][j]->Add( dPhiSubFarLarge[i][j], -1 );
+      
+      if ( ajSplit[i] ) {
+        dPhiLeadNearSmall[i][j]->Add( dPhiLeadFarSmall[i][j], -1 );
+        dPhiSubNearSmall[i][j]->Add( dPhiSubFarSmall[i][j], -1 );
+
+      }
     }
-  
-  return 0;
-}
-/*
   
   // Now to do some fitting and subtract the background
   // define the fits
@@ -826,15 +861,34 @@ int main( int argc, const char** argv) {
       std::string dEtaLeadName = "tmp_fit_lead_eta_" + patch::to_string(i) + patch::to_string(j);
       std::string dEtaSubName = "tmp_fit_sub_eta_" + patch::to_string(i) + patch::to_string(j);
       
+      std::string dPhiLeadNameSmall, dPhiSubNameSmall, dPhiLeadNameDifSmall, dPhiSubNameDifSmall, dEtaLeadNameSmall, dEtaSubNameSmall;
+
+      dPhiLeadNameSmall = dPhiLeadName +"_small";
+      dPhiSubNameSmall = dPhiSubName + "_small";
+      dPhiLeadNameDifSmall = dPhiLeadNameDif + "_small";
+      dPhiSubNameDifSmall = dPhiSubNameDif + "_small";
+      dEtaLeadNameSmall = dEtaLeadName + "_small";
+      dEtaSubNameSmall = dEtaSubName + "_small";
+      
       TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiInitFit->FixParameter( 2, 0 );
       leadPhiInitFit->FixParameter( 5, corrAnalysis::pi );
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
+      TF1* leadPhiSmallInitFit = new TF1( dPhiLeadNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
+      leadPhiSmallInitFit->FixParameter( 2, 0 );
+      leadPhiSmallInitFit->FixParameter( 5, corrAnalysis::pi );
+      leadPhiSmallInitFit->SetParameter( 3, 0.2 );
+      leadPhiSmallInitFit->SetParameter( 6, 0.2 );
+      
       TF1* leadPhiDifInitFit = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifInitFit->FixParameter( 2, 0 );
       leadPhiDifInitFit->SetParameter( 3, 0.2 );
+      
+      TF1* leadPhiSmallDifInitFit = new TF1( dPhiLeadNameDifSmall.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
+      leadPhiSmallDifInitFit->FixParameter( 2, 0 );
+      leadPhiSmallDifInitFit->SetParameter( 3, 0.2 );
       
       TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
@@ -842,58 +896,142 @@ int main( int argc, const char** argv) {
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
+      TF1* subPhiSmallInitFit = new TF1( dPhiSubNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
+      subPhiSmallInitFit->FixParameter( 2, 0 );
+      subPhiSmallInitFit->FixParameter( 5, corrAnalysis::pi );
+      subPhiSmallInitFit->SetParameter( 3, 0.2 );
+      subPhiSmallInitFit->SetParameter( 6, 0.2 );
+      
       TF1* subPhiDifInitFit = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifInitFit->FixParameter( 2, 0 );
       subPhiDifInitFit->SetParameter( 3, 0.2 );
+      
+      TF1* subPhiDifSmallInitFit = new TF1( dPhiSubNameDifSmall.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
+      subPhiDifSmallInitFit->FixParameter( 2, 0 );
+      subPhiDifSmallInitFit->SetParameter( 3, 0.2 );
       
       TF1* leadEtaInitFit = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
       leadEtaInitFit->FixParameter( 2, 0 );
       leadEtaInitFit->SetParameter( 3, 0.2 );
       
+      TF1* leadEtaSmallInitFit = new TF1( dEtaLeadNameSmall.c_str(), etaForm.c_str(), etaMin, etaMax );
+      leadEtaSmallInitFit->FixParameter( 2, 0 );
+      leadEtaSmallInitFit->SetParameter( 3, 0.2 );
+      
       TF1* subEtaInitFit = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
       subEtaInitFit->FixParameter( 2, 0 );
       subEtaInitFit->SetParameter( 3, 0.2 );
       
-      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
-      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RM" );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
-      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
-      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      TF1* subEtaSmallInitFit = new TF1( dEtaSubNameSmall.c_str(), etaForm.c_str(), etaMin, etaMax );
+      subEtaSmallInitFit->FixParameter( 2, 0 );
+      subEtaSmallInitFit->SetParameter( 3, 0.2 );
+      
+      dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
+      dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RM" );
+      dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
+      dPhiSubNearLarge[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
+      dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
+      dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      
+      if ( ajSplit) {
+        dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RM" );
+        dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RM" );
+        dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RM" );
+        dPhiSubNearSmall[i][j]->Fit( dPhiSubNameDifSmall.c_str(), "RM" );
+        dEtaLeadSmall[i][j]->Fit( dEtaLeadNameSmall.c_str(), "RM" );
+        dEtaSubSmall[i][j]->Fit( dEtaSubNameSmall.c_str(), "RM" );
+      }
       
       // Now to subtract the constants
       TF1* subConst = new TF1( "subConst", "[0]", phiMin, phiMax);
       TF1* subConstEta = new TF1("subConstEta", "[0]", etaMin, etaMax);
       subConst->SetParameter( 0, leadPhiInitFit->GetParameter(0) );
-      dPhiLead[i][j]->Add( subConst, -1 );
+      dPhiLeadLarge[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, leadPhiDifInitFit->GetParameter(0));
-      dPhiLeadNear[i][j]->Add( subConst, -1 );
+      dPhiLeadNearLarge[i][j]->Add( subConst, -1 );
       subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0));
-      dEtaLead[i][j]->Add( subConstEta, -1 );
+      dEtaLeadLarge[i][j]->Add( subConstEta, -1 );
       
       subConst->SetParameter( 0, subPhiInitFit->GetParameter(0) );
-      dPhiSub[i][j]->Add( subConst, -1 );
+      dPhiSubLarge[i][j]->Add( subConst, -1 );
       subConst->SetParameter( 0, subPhiDifInitFit->GetParameter(0));
-      dPhiSubNear[i][j]->Add( subConst, -1 );
+      dPhiSubNearLarge[i][j]->Add( subConst, -1 );
       subConstEta->SetParameter( 0, subEtaInitFit->GetParameter(0));
-      dEtaSub[i][j]->Add( subConstEta, -1 );
+      dEtaSubLarge[i][j]->Add( subConstEta, -1 );
+      
+      id ( ajSplit[i] ) {
+        subConst->SetParameter( 0, leadPhiSmallInitFit->GetParameter(0) );
+        dPhiLeadSmall[i][j]->Add( subConst, -1 );
+        subConst->SetParameter( 0, leadPhiDifSmallInitFit->GetParameter(0));
+        dPhiLeadNearSmall[i][j]->Add( subConst, -1 );
+        subConstEta->SetParameter( 0, leadEtaSmallInitFit->GetParameter(0));
+        dEtaLeadSmall[i][j]->Add( subConstEta, -1 );
+        
+        subConst->SetParameter( 0, subPhiSmallInitFit->GetParameter(0) );
+        dPhiSubSmall[i][j]->Add( subConst, -1 );
+        subConst->SetParameter( 0, subPhiDifSmallInitFit->GetParameter(0));
+        dPhiSubNearSmall[i][j]->Add( subConst, -1 );
+        subConstEta->SetParameter( 0, subEtaSmallInitFit->GetParameter(0));
+        dEtaSubSmall[i][j]->Add( subConstEta, -1 );
+      }
       
       // now scale the histograms
-      dPhiLead[i][j]->Scale( 1.0 / dPhiLead[i][j]->GetXaxis()->GetBinWidth(1) );
-      dPhiLead[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
-      dPhiLeadNear[i][j]->Scale( 1.0 / dPhiLeadNear[i][j]->GetXaxis()->GetBinWidth(1) );
-      dPhiLeadNear[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
-      dEtaLead[i][j]->Scale( 1.0 / dEtaLead[i][j]->GetXaxis()->GetBinWidth(1) );
-      dEtaLead[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
-      dPhiSub[i][j]->Scale( 1.0 / dPhiSub[i][j]->GetXaxis()->GetBinWidth(1) );
-      dPhiSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
-      dPhiSubNear[i][j]->Scale( 1.0 / dPhiSubNear[i][j]->GetXaxis()->GetBinWidth(1) );
-      dPhiSubNear[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
-      dEtaSub[i][j]->Scale( 1.0 / dEtaSub[i][j]->GetXaxis()->GetBinWidth(1) );
-      dEtaSub[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      if ( !ajSplit[i] ) {
+        dPhiLeadLarge[i][j]->Scale( 1.0 / dPhiLeadLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadNearLarge[i][j]->Scale( 1.0 / dPhiLeadNearLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaLeadLarge[i][j]->Scale( 1.0 / dEtaLeadLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubLarge[i][j]->Scale( 1.0 / dPhiSubLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubNearLarge[i][j]->Scale( 1.0 / dPhiSubNearLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaSubLarge[i][j]->Scale( 1.0 / dEtaSubLarge[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      }
+      else {
+        
+        // we have to find the integral depending on small or large aj
+        double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, binsVz );
+        double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, binsVz );
+        
+        std::cout<<" low Aj: "<<ajLowCount<<std::endl;
+        std::cout<<" high Aj: "<< ajHighCount<<std::endl;
+        
+        dPhiLeadLarge[i][j]->Scale( 1.0 / dPhiLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadNearLarge[i][j]->Scale( 1.0 / dPhiLeadNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaLeadLarge[i][j]->Scale( 1.0 / dEtaLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubLarge[i][j]->Scale( 1.0 / dPhiSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubNearLarge[i][j]->Scale( 1.0 / dPhiSubNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaSubLarge[i][j]->Scale( 1.0 / dEtaSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        
+        dPhiLeadSmall[i][j]->Scale( 1.0 / dPhiLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadNearSmall[i][j]->Scale( 1.0 / dPhiLeadNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiLeadNearSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaLeadSmall[i][j]->Scale( 1.0 / dEtaLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaLeadSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubSmall[i][j]->Scale( 1.0 / dPhiSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubNearSmall[i][j]->Scale( 1.0 / dPhiSubNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dPhiSubNearSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaSubSmall[i][j]->Scale( 1.0 / dEtaSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
+        dEtaSubSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+      }
     }
   }
   
+  return 0;
+}
+/*
+
   // final fitting
   std::vector<std::vector<TF1*> > leadPhiFit;
   leadPhiFit.resize( nFiles );
