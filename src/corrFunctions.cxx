@@ -791,7 +791,7 @@ namespace corrAnalysis {
       
       for ( int i = 0; i < ajBins; ++i ) {
         leadingArrays[i] = new TObjArray*[binsCentrality];
-        subleadingArrays = new TObjArray*[binsCentrality];
+        subleadingArrays[i] = new TObjArray*[binsCentrality];
         
         
         for ( int j = 0; j < binsCentrality; ++j ) {
