@@ -793,9 +793,13 @@ namespace corrAnalysis {
         leadingArrays[i] = new TObjArray*[binsCentrality];
         subleadingArrays = new TObjArray**[binsCentrality];
         
+        __OUT("GOT HERE")
+        
         for ( int j = 0; j < binsCentrality; ++j ) {
           leadingArrays[i][j] = new TObjArray();
           subleadingArrays[i][j] = new TObjArray();
+          
+          __OUT("GOT HERE TOO")
           for ( int k = 0; k < binsVz; ++k ) {
             // create unique identifiers for each histogram
             std::stringstream s1, s2;
