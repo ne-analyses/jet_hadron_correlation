@@ -995,7 +995,7 @@ namespace corrAnalysis {
 	}
   
   bool histograms::SetAjSplit( bool split, double splitval ) {
-    if ( useAjSplitting == split && ajSplitValue == splitVal )
+    if ( useAjSplitting == split && ajSplitValue == splitval )
       return true;
     
     if ( split == false ) {
@@ -1003,9 +1003,9 @@ namespace corrAnalysis {
       ajSplitValue = 0.0;
       return true;
     }
-    else if ( splitVal > 0.0 && splitVal < 1.0 ) {
+    else if ( splitVal > 0.0 && splitval < 1.0 ) {
       useAjSplitting = split;
-      ajSplitValue = splitVal;
+      ajSplitValue = splitval;
       return true;
     }
     
