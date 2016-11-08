@@ -70,8 +70,7 @@ endif
 
 # Create the folder name for output
 set outFile = ${analysis}
-echo $analysis
-if ( $analysis == 'dijet'} ) then
+if ( $analysis == 'dijet' ) then
 set outFile = ${outFile}_splitaj_${splitOnAj}_val_${splitOnAjVal}
 echo 'GOT HERE'
 endif
