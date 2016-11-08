@@ -490,7 +490,7 @@ namespace corrAnalysis {
     return true;
   }
   
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency ) {
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -507,12 +507,12 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin );
+    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin, aj );
     
     return true;
   }
   
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency ) {
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -528,7 +528,7 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin );
+    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin, aj );
     
     return true;
   }
@@ -863,34 +863,10 @@ namespace corrAnalysis {
             std::stringstream s1, s2;
             s1 << j;
             s2 << k;
-            TString leadName;
-            
-            if ( splitOnAj ) {
-              if ( i == 0 ) {
-                leadName = "large_lead_cent_";
-                if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
-                  leadName = "large_mix_lead_cent_";
-                }
-                leadName += s1.str() + "_vz_" + s2.str();
-                subName += s1.str() + "_vz_" + s2.str();
-              }
-              else if ( i == 1 ) {
-                leadName = "small_lead_cent_";
-                if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
-                  leadName = "small_mix_lead_cent_";
-                }
-              }
-              else {
-                __ERR("Something happened when generating histograms")
-              }
-            }
-            else {
-              leadName = "lead_cent_";
-              if ( analysisType == "jetmix" ) {
+            TString leadName = "lead_cent_";
+              if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
                 leadName = "mix_lead_cent_";
               }
-
-            }
             
             leadName += s1.str() + "_vz_" + s2.str();
             
@@ -1041,6 +1017,11 @@ namespace corrAnalysis {
 	int histograms::Init() {
 		if ( initialized )
 			return 0;
+    
+    if ( ( splitOnAj && analysisType == "jet" ) || ( splitOnAj && analysisType == "ppjet" ) ) {
+      __ERR("Can't split on Aj for jet analyses, no dijets")
+      return -1;
+    }
 		
 		if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
 			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
@@ -1320,7 +1301,7 @@ namespace corrAnalysis {
 			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[centBin]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) leadingArrays[0][centBin]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
 			return true;
 		}
@@ -1328,7 +1309,7 @@ namespace corrAnalysis {
       h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) leadingArrays[0][0]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
       return true;
     }
@@ -1406,12 +1387,17 @@ namespace corrAnalysis {
 		
 		if ( dPhi < phiLowEdge )
 			dPhi += 2.0*pi;
+    
+    // find aj bin, if applicable
+    int binAj = 0;
+    if ( splitOnAj && aj < ajSplitValue )
+      binAj = 1;
 		
 		if ( IsDijet() && IsAuAu() ) {
 			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[centBin]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) leadingArrays[binAj][centBin]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
 			return true;
@@ -1420,7 +1406,7 @@ namespace corrAnalysis {
       h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) leadingArrays[binAj][0]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
       return true;
@@ -1433,7 +1419,7 @@ namespace corrAnalysis {
 
 	}
 	
-	bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
+	bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin, double aj ) {
 		if ( !initialized ) {
 			__ERR("histograms instance not initialized")
 			return false;
@@ -1441,12 +1427,17 @@ namespace corrAnalysis {
 		
 		if ( dPhi < phiLowEdge )
 			dPhi += 2.0*pi;
+    
+    // find aj bin, if applicable
+    int binAj = 0;
+    if ( splitOnAj && aj < ajSplitValue )
+      binAj = 1;
 		
 		if ( IsDijet() && IsAuAu() ) {
 			h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[centBin]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][centBin]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
 			return true;
@@ -1455,7 +1446,7 @@ namespace corrAnalysis {
       h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
       // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[0]->At(vzBin);
+      TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][0]->At(vzBin);
       tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
       return true;

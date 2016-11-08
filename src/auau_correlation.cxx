@@ -225,7 +225,7 @@ int main ( int argc, const char** argv ) {
   else { corrAnalysis::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
   
   // We know what analysis we are doing now, so build our output histograms
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj,  splitOnAjVal );
   histograms->Init();
   
   // Build our input now
@@ -301,10 +301,12 @@ int main ( int argc, const char** argv ) {
   TLorentzVector leadingJet, subleadingJet;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
+  Double_t dijetAj;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
+  TBranch* CDJBranchAj;
   
   if ( requireDijets ) {
     correlatedDiJets = new TTree("dijets","Correlated Dijets" );
@@ -312,6 +314,7 @@ int main ( int argc, const char** argv ) {
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
     CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
     CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
+    CDJBranchAj = correlatedDiJets->Branch("aj", &dijetAj );
   }
   else {
     correlatedDiJets = new TTree("jets","Correlated Jets" );
@@ -440,6 +443,7 @@ int main ( int argc, const char** argv ) {
         // leading jet
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
         subleadingJet.SetPtEtaPhiE( analysisJets.at(1).pt(), analysisJets.at(1).eta(), analysisJets.at(1).phi_std(), analysisJets.at(1).E() );
+        dijetAj = corrAnalysis::CalcAj( analysisJets );
       }
       else {
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
@@ -477,8 +481,8 @@ int main ( int argc, const char** argv ) {
         
         // now correlate it with leading and subleading jets
         if ( requireDijets ) {
-          corrAnalysis::correlateLeading( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
-          corrAnalysis::correlateSubleading( analysisType, VzBin, refCent, histograms, analysisJets.at(1), assocParticle, assocEfficiency );
+          corrAnalysis::correlateLeading( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency, dijetAj );
+          corrAnalysis::correlateSubleading( analysisType, VzBin, refCent, histograms, analysisJets.at(1), assocParticle, assocEfficiency, dijetAj );
         }
         else {
           corrAnalysis::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );

@@ -159,10 +159,10 @@ namespace corrAnalysis {
   bool useTrack( fastjet::PseudoJet& assocTrack, double efficiency );
   
   // Correlate Leading
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency );
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj );
   
   // Correlate Subleading
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency );
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj );
   
   // Correlate for jet-hadron
   bool correlateTrigger( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& triggerJet, fastjet::PseudoJet& assocTrack, double efficiency );
@@ -315,8 +315,8 @@ namespace corrAnalysis {
 		bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
 		bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
 		// Records trigger-associated correlations with trigger = leading/subleading
-		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
-    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
+		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1, double aj );
+    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1, double aj );
     
     // Associated track info
     bool FillAssocPt( double pt );
