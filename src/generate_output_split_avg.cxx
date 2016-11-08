@@ -632,6 +632,7 @@ int main( int argc, const char** argv) {
   dEtaSubSmall.resize( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
+    std::cout<<"got here: i = "<<i<<std::endl;
     dPhiLeadLarge[i].resize( nPtBins );
     dPhiLeadNearLarge[i].resize( nPtBins );
     dPhiLeadFarLarge[i].resize( nPtBins );
@@ -650,12 +651,17 @@ int main( int argc, const char** argv) {
     dPhiSubFarSmall[i].resize( nPtBins );
     dEtaSubSmall[i].resize( nPtBins );
     
+    std::cout<<"got here"<<std::endl;
+    
     for ( int j = 0; j < nPtBins; ++j ) {
       // first restrict the eta range
       recombinedCorrLarge[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax  );
-      recombinedCorrSmall[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax  );
       recombinedSubLarge[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
-      recombinedSubSmall[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
+      
+      if ( ajSplit[i] ) {
+        recombinedCorrSmall[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax  );
+        recombinedSubSmall[i][j]->GetXaxis()->SetRangeUser( etaMin, etaMax );
+      }
       
       // save the 2D histograms
       std::string leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_"+ patch::to_string(j) + ".pdf";
@@ -682,8 +688,7 @@ int main( int argc, const char** argv) {
         recombinedSubSmall[i][j]->Draw("surf1");
         c1.SaveAs( subOutNameSmall.c_str() );
       }
-      std::cout<<"GOT HERE"<<std::endl;
-      std::cout<<"i: "<<i<<std::endl;
+      
       dPhiLeadLarge[i][j] = (TH1D*) ((TH1D*) recombinedCorrLarge[i][j]->ProjectionY())->Clone();
       dPhiSubLarge[i][j] = (TH1D*) ((TH1D*) recombinedSubLarge[i][j]->ProjectionY())->Clone();
       
@@ -698,7 +703,7 @@ int main( int argc, const char** argv) {
         recombinedCorrSmall[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
         recombinedSubSmall[i][j]->GetYaxis()->SetRangeUser( phiMinClose, phiMaxClose );
       }
-      std::cout<<"got here 1"<<std::endl;
+
       dEtaLeadLarge[i][j] = (TH1D*) ((TH1D*) recombinedCorrLarge[i][j]->ProjectionX())->Clone();
       dEtaSubLarge[i][j] = (TH1D*) ((TH1D*) recombinedSubLarge[i][j]->ProjectionX())->Clone();
       if ( ajSplit[i] ) {
@@ -712,7 +717,6 @@ int main( int argc, const char** argv) {
         recombinedCorrSmall[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
         recombinedSubSmall[i][j]->GetYaxis()->SetRangeUser( phiMin, phiMaxFar );
       }
-      std::cout<<"got here 2"<<std::endl;
 
       // now get dphi in "near" and "far" eta ranges
       recombinedCorrLarge[i][j]->GetXaxis()->SetRange( etaNearMinBin, etaNearMaxBin  );
@@ -728,7 +732,6 @@ int main( int argc, const char** argv) {
         dPhiLeadNearSmall[i][j] = (TH1D*) ((TH1D*) recombinedCorrSmall[i][j]->ProjectionY())->Clone();
         dPhiSubNearSmall[i][j] = (TH1D*) ((TH1D*) recombinedSubSmall[i][j]->ProjectionY())->Clone();
       }
-      std::cout<<"got here 3"<<std::endl;
 
       recombinedCorrLarge[i][j]->GetXaxis()->SetRange( etaFarMinBin, etaFarMaxBin  );
       recombinedSubLarge[i][j]->GetXaxis()->SetRange( etaFarMinBin, etaFarMaxBin );
@@ -744,7 +747,6 @@ int main( int argc, const char** argv) {
         dPhiSubFarSmall[i][j] = (TH1D*) ((TH1D*) recombinedSubSmall[i][j]->ProjectionY())->Clone();
         
       }
-      std::cout<<"got here 4"<<std::endl;
 
       recombinedCorrLarge[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin  );
       recombinedSubLarge[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin );
@@ -759,7 +761,6 @@ int main( int argc, const char** argv) {
         dPhiLeadFarSmall[i][j]->Add( recombinedCorrSmall[i][j]->ProjectionY() );
         dPhiSubFarSmall[i][j]->Add( recombinedSubSmall[i][j]->ProjectionY() );
       }
-      std::cout<<"got here 5"<<std::endl;
 
     }
   }
