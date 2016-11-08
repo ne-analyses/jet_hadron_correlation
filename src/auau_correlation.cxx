@@ -301,7 +301,7 @@ int main ( int argc, const char** argv ) {
   TLorentzVector leadingJet, subleadingJet;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
-  Double_t dijetAj;
+  Double_t dijetAj = 1.0;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
   TBranch* CDJBranchCentralityBin;
@@ -453,7 +453,7 @@ int main ( int argc, const char** argv ) {
       correlatedDiJets->Fill();
       
       // Now we can fill our event histograms
-      histograms->CountEvent( refCent, VzBin );
+      histograms->CountEvent( refCent, VzBin, dijetAj );
       histograms->FillGRefMult( gRefMult );
       histograms->FillVz( vertexZ );
       if ( requireDijets ) {
