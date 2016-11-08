@@ -996,34 +996,31 @@ int main( int argc, const char** argv) {
         double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
         double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
         
-        std::cout<<" low Aj: "<<ajLowCount<<std::endl;
-        std::cout<<" high Aj: "<< ajHighCount<<std::endl;
-        
         dPhiLeadLarge[i][j]->Scale( 1.0 / dPhiLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadLarge[i][j]->Scale( 1.0 / ajHighCount );
         dPhiLeadNearLarge[i][j]->Scale( 1.0 / dPhiLeadNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiLeadNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadNearLarge[i][j]->Scale( 1.0 / ajHighCount );
         dEtaLeadLarge[i][j]->Scale( 1.0 / dEtaLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dEtaLeadLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaLeadLarge[i][j]->Scale( 1.0 / ajHighCount );
         dPhiSubLarge[i][j]->Scale( 1.0 / dPhiSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubLarge[i][j]->Scale( 1.0 / ajHighCount );
         dPhiSubNearLarge[i][j]->Scale( 1.0 / dPhiSubNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiSubNearLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubNearLarge[i][j]->Scale( 1.0 / ajHighCount );
         dEtaSubLarge[i][j]->Scale( 1.0 / dEtaSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dEtaSubLarge[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaSubLarge[i][j]->Scale( 1.0 / ajHighCount );
         
         dPhiLeadSmall[i][j]->Scale( 1.0 / dPhiLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiLeadSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadSmall[i][j]->Scale( 1.0 / ajLowCount );
         dPhiLeadNearSmall[i][j]->Scale( 1.0 / dPhiLeadNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiLeadNearSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiLeadNearSmall[i][j]->Scale( 1.0 / ajLowCount );
         dEtaLeadSmall[i][j]->Scale( 1.0 / dEtaLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dEtaLeadSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaLeadSmall[i][j]->Scale( 1.0 / ajLowCount );
         dPhiSubSmall[i][j]->Scale( 1.0 / dPhiSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiSubSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubSmall[i][j]->Scale( 1.0 / ajLowCount );
         dPhiSubNearSmall[i][j]->Scale( 1.0 / dPhiSubNearSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dPhiSubNearSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dPhiSubNearSmall[i][j]->Scale( 1.0 / ajLowCount );
         dEtaSubSmall[i][j]->Scale( 1.0 / dEtaSubSmall[i][j]->GetXaxis()->GetBinWidth(1) );
-        dEtaSubSmall[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
+        dEtaSubSmall[i][j]->Scale( 1.0 / ajLowCount );
       }
     }
   }
