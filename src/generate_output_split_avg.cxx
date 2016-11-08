@@ -270,7 +270,8 @@ int main( int argc, const char** argv) {
           std::string largeName = "large_" + corrDifBaseName;
           std::string smallDifName = "small_" + corrDifInitName;
           std::string largeDifName = "large_" + corrDifInitName;
-          
+          std::cout<<largeName<<std::endl;
+          std::cout<<smallName<<std::endl;
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
           corrCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
           corrCentVzSmall[i][j][k] = (TH3D*) corrFiles[i]->Get( smallName.c_str() );
