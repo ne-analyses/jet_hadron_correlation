@@ -933,7 +933,7 @@ int main( int argc, const char** argv) {
       dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
       dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RM" );
       
-      if ( ajSplit) {
+      if ( ajSplit[i] ) {
         dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RM" );
         dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RM" );
         dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RM" );
