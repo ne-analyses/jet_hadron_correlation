@@ -385,15 +385,6 @@ int main( int argc, const char** argv) {
     }
   }
 
-  for ( int i = 0; i < nFiles; ++i )
-    std::cout<<ajSplit[i]<<std::endl;
-  return 0;
-}
-
-
-
-/*
-
   // TESTING PAST HERE
   // Averaging the event mixing over vz/cent
   // NEEDS TO BE UPDATED FOR UPDATED PT BINS
@@ -472,38 +463,69 @@ int main( int argc, const char** argv) {
       std::string corrSmallName = "";
       std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
       
-      
       std::string subName = analysisNames[i] + "_sub " + ptBinString[l];
+      std::string subSmallName = "";
       std::string subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       
-      recombinedCorr[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      if ( ajSplit[i] ) {
+        corrName = "large " + analysisNames[i] + " " + ptBinString[l];
+        corrSmallName = "small " + analysisNames[i] + " " + ptBinString[l];
+        subName = "large " + analysisNames[i] + "_sub " + ptBinString[l];
+        subSmallName = "small " + analysisNames[i] + "_sub " + ptBinString[l];
+      }
+      
+      recombinedCorrLarge[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       recombinedPre[i][l] = new TH2D( preName.c_str(), preName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
-      recombinedSub[i][l] = new TH2D( subName.c_str(), subName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedSubLarge[i][l] = new TH2D( subName.c_str(), subName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       recombinedSubPre[i][l] = new TH2D( subPreName.c_str(), subPreName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      
+      if ( ajSplit[i] ) {
+        recombinedCorrSmall[i][l] = new TH2D( corrSmallName.c_str(), corrSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        
+        recombinedSubSmall[i][l] = new TH2D( subSmallName.c_str(), subSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        
+        
+      }
       
       if ( l <= 2 ) {
       
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-            if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+            if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              recombinedPre[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
               
-              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][l] );
+              corrCentVzPtLarge[i][j][k][l]->Divide( weightedMix[i][l] );
             
-              recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              recombinedCorrLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
             }
-            if ( subCentVzPt[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetEntries() != 0 ) {
+            if ( ajSplit[i] && weightedMix[i][l]->GetEntries() != 0 && corrCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedSubPre[i][l]->Add( subCentVzPt[i][j][k][l] );
+              recombinedPre[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
               
-              subCentVzPt[i][j][k][l]->Divide( weightedSub[i][l] );
+              corrCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][l] );
               
-              recombinedSub[i][l]->Add( subCentVzPt[i][j][k][l] );
+              recombinedCorrSmall[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
+            }
+            if ( subCentVzPtLarge[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetEntries() != 0 ) {
               
+              recombinedSubPre[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+              
+              subCentVzPtLarge[i][j][k][l]->Divide( weightedSub[i][l] );
+              
+              recombinedSubLarge[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+              
+            }
+            if ( ajSplit[i] && weightedMix[i][l]->GetEntries() != 0 && subCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedPre[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
+              
+              subCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][l] );
+              
+              recombinedSubSmall[i][l]->Add( corrCentVzPtSub[i][j][k][l] );
             }
           }
         }
@@ -512,22 +534,39 @@ int main( int argc, const char** argv) {
       else {
         for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
-            if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+            if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              recombinedPre[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
               
-              corrCentVzPt[i][j][k][l]->Divide( weightedMix[i][2] );
+              corrCentVzPtLarge[i][j][k][l]->Divide( weightedMix[i][2] );
               
-              recombinedCorr[i][l]->Add( corrCentVzPt[i][j][k][l] );
+              recombinedCorrLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
             }
-            if ( weightedSub[i][2]->GetEntries() != 0 && subCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
+            if ( ajSplit[i] && weightedMix[i][2]->GetEntries() != 0 && corrCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedSubPre[i][l]->Add( subCentVzPt[i][j][k][l] );
+              recombinedPre[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
               
-              subCentVzPt[i][j][k][l]->Divide( weightedSub[i][2] );
+              corrCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][2] );
               
-              recombinedSub[i][l]->Add( subCentVzPt[i][j][k][l] );
+              recombinedCorrSmall[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
             }
+            if ( weightedSub[i][2]->GetEntries() != 0 && subCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedSubPre[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+              
+              subCentVzPtLarge[i][j][k][l]->Divide( weightedSub[i][2] );
+              
+              recombinedSubLarge[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+            }
+            if ( ajSplit[i] && weightedMix[i][2]->GetEntries() != 0 && subCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
+              
+              recombinedPre[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
+              
+              subCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][2] );
+              
+              recombinedSubSmall[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
+            }
+
           }
         }
       }
