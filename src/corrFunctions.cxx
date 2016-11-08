@@ -490,7 +490,7 @@ namespace corrAnalysis {
     return true;
   }
   
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double aj, double efficiency ) {
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -507,12 +507,12 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin, aj );
+    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, aj, vzBin, centBin );
     
     return true;
   }
   
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double aj, double efficiency ) {
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -528,7 +528,7 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin, aj );
+    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, aj, vzBin, centBin );
     
     return true;
   }
@@ -1009,7 +1009,7 @@ namespace corrAnalysis {
       return true;
     }
     
-    __Err("Aj split value must be between 0 and 1, exclusive")
+    __ERR("Aj split value must be between 0 and 1, exclusive")
     return false;
     
   }
@@ -1379,7 +1379,7 @@ namespace corrAnalysis {
 		return false;
 	}
 	
-	bool histograms::FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
+  bool histograms::FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin ) {
 		if ( !initialized ) {
 			__ERR("histograms instance not initialized")
 			return false;
@@ -1419,7 +1419,7 @@ namespace corrAnalysis {
 
 	}
 	
-	bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin, double aj ) {
+	bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin ) {
 		if ( !initialized ) {
 			__ERR("histograms instance not initialized")
 			return false;
