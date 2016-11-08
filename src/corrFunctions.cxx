@@ -821,7 +821,6 @@ namespace corrAnalysis {
               }
               else {
                 __ERR("Something happened when generating histograms")
-                return -1;
               }
             }
             else {
@@ -883,7 +882,6 @@ namespace corrAnalysis {
               }
               else {
                 __ERR("Something happened when generating histograms")
-                return -1;
               }
             }
             else {
@@ -989,12 +987,16 @@ namespace corrAnalysis {
     
     if ( leadingArrays ) {
       for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i]->Delete();
+        leadingArrays[0][i]->Delete();
+        if ( splitOnAj )
+          leadingArrays[1][i]->Delete();
       }
     }
     if ( subleadingArrays ) {
       for ( int i = 0; i < binsCentrality; ++i ) {
-        subleadingArrays[i]->Delete();
+        subleadingArrays[0][i]->Delete();
+        if ( splitOnAj )
+          subleadingArrays[1][i]->Delete();
       }
     }
 	}
@@ -1172,12 +1174,18 @@ namespace corrAnalysis {
 			h3DimCorrSub->Write();
     
     for ( int i = 0; i < binsCentrality; ++i ) {
-      if ( leadingArrays )
-        if ( leadingArrays[i] )
-          leadingArrays[i]->Write();
-      if ( subleadingArrays )
-        if ( subleadingArrays[i] )
-          subleadingArrays[i]->Write();
+      if ( leadingArrays ) {
+        if ( leadingArrays[0][i] )
+          leadingArrays[0][i]->Write();
+        if ( splitOnAj && leadingArrays[1][i] )
+          leadingArrays[1][i]->Write();
+      }
+      if ( subleadingArrays ) {
+        if ( subleadingArrays[0][i] )
+          subleadingArrays[0][i]->Write();
+        if ( splitOnAj && subleadingArrays[1][i] )
+          subleadingArrays[1][i]->Write();
+      }
     }
 	}
 	
