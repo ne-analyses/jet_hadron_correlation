@@ -70,8 +70,9 @@ endif
 
 # Create the folder name for output
 set outFile = ${analysis}
-if (${analysis} == 'dijet'} ) then
+if ( $analysis == 'dijet'} ) then
 set outFile = ${outFile}_splitaj_${splitOnAj}_val_${splitOnAjVal}
+echo 'GOT HERE'
 endif
 set outFile = ${outFile}_trigger_${triggerCoincidence}_eff_${useEfficiency}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}
 # Make the directories since they may not exist...
@@ -85,7 +86,7 @@ endif
 if ( ! -d log/${analysis}/${outFile} ) then
 mkdir -p log/${analysis}/${outFile}
 endif
-
+echo $outFile
 
 # Now Submit jobs for each data file
 foreach input ( ${base}* )
