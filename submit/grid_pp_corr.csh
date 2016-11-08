@@ -109,7 +109,7 @@ set ErrFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.err
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
-set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $splitOnAj $SplitOnAjVal $outLocation $outName $outNameTree $Files $mbData"
+set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $splitOnAj $splitOnAjVal $outLocation $outName $outNameTree $Files $mbData"
 
 qsub -V -q erhiq -l mem=3GB -o $LogFile -e $ErrFile -N ppCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
