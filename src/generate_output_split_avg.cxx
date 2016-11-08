@@ -525,7 +525,7 @@ int main( int argc, const char** argv) {
               
               subCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][l] );
               
-              recombinedSubSmall[i][l]->Add( corrCentVzPtSub[i][j][k][l] );
+              recombinedSubSmall[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
             }
           }
         }
