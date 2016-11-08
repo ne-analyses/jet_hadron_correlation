@@ -1024,7 +1024,7 @@ namespace corrAnalysis {
     }
 		
 		if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
-			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+			hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
 			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
@@ -1049,7 +1049,7 @@ namespace corrAnalysis {
 			return 0;
 		}
 		else if ( analysisType == "jet" || analysisType == "jetmix" ) {
-			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+			hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
 			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
@@ -1067,7 +1067,7 @@ namespace corrAnalysis {
 			return 0;
 		}
 		else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
-			hBinVz			= new TH1D( "nevents", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
+			hBinVz			= new TH2D( "nevents", "Vz Bin Distribution;aj;bins vz", 2, -0.5, 1.5, binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
 			
 			hLeadJetPt 	= new TH1D( "leadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
@@ -1092,7 +1092,7 @@ namespace corrAnalysis {
 			return 0;
 		}
 		else if ( analysisType == "ppjet" || analysisType == "ppjetmix" ) {
-			hBinVz			= new TH1D( "nevents", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
+			hBinVz			= new TH2D( "nevents", "Vz Bin Distribution; aj; bins vz", 2, -0.5, 1.5, binsVz, -0.5, (double) binsVz - 0.5 );
 			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
 			
 			hLeadJetPt 	= new TH1D( "triggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
@@ -1172,14 +1172,20 @@ namespace corrAnalysis {
 	
 	
 	// --------------------------- Histogram Filling Functions ------------------------------- //
-	bool histograms::CountEvent( int centrality, int vzbin ) {
+	bool histograms::CountEvent( int centrality, int vzbin, double aj ) {
 		if ( !initialized ) {
 			__ERR("histograms instance not initialized")
 			return false;
 		}
+    
+    // check to see which aj bin to use
+    int ajbin = 0;
+    if ( useAjSplitting && aj < ajSplitValue )
+      ajbin = 1;
+      
 		
 		if ( IsAuAu() ) {
-			hCentVz->Fill( centrality, vzbin );
+			hCentVz->Fill( ajbin, centrality, vzbin );
 			return true;
 		}
 		
@@ -1187,14 +1193,19 @@ namespace corrAnalysis {
 		return false;
 	}
 	
-	bool histograms::CountEvent( int vzbin ) {
+	bool histograms::CountEvent( int vzbin, double aj ) {
 		if ( !initialized ) {
 			__ERR("histograms instance not initialized")
 			return false;
 		}
+    
+    // check to see which aj bin to use
+    int ajbin = 0;
+    if ( useAjSplitting && aj < ajSplitValue )
+      ajbin = 1;
 		
 		if ( IsPP() ) {
-			hBinVz->Fill(  vzbin );
+			hBinVz->Fill(  ajbin, vzbin );
 			return true;
 		}
 		

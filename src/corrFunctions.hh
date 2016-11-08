@@ -219,8 +219,8 @@ namespace corrAnalysis {
 		bool initialized;							// Used for control flow - must be true before filling
 		
 		// Event statistics
-		TH2D* hCentVz;
-		TH1D* hBinVz;
+		TH3D* hCentVz;
+		TH2D* hBinVz;
 		TH1D* hGRefMult;
 		TH1D* hVz;
 		
@@ -294,8 +294,8 @@ namespace corrAnalysis {
 		
 		
 		// Fill histogram functions
-		bool CountEvent( int centrality, int vzbin ); 	// Used to count AuAu events
-		bool CountEvent( int vzbin );										// Used to count PP events
+		bool CountEvent( int centrality, int vzbin, double aj = 1.0 ); 	// Used to count AuAu events
+		bool CountEvent( int vzbin, double aj = 1.0 );										// Used to count PP events
 		
 		bool FillGRefMult( int gRefMult );							// For AuAu events, records gRefMult
 		bool FillVz( double vz );												// Records Vz distribution
