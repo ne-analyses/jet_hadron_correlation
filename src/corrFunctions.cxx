@@ -1003,7 +1003,7 @@ namespace corrAnalysis {
       ajSplitValue = 0.0;
       return true;
     }
-    else if ( splitVal > 0.0 && splitval < 1.0 ) {
+    else if ( splitval > 0.0 && splitval < 1.0 ) {
       useAjSplitting = split;
       ajSplitValue = splitval;
       return true;
