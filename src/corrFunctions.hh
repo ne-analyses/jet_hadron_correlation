@@ -315,8 +315,8 @@ namespace corrAnalysis {
 		bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
 		bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
 		// Records trigger-associated correlations with trigger = leading/subleading
-		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1, double aj );
-    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1, double aj );
+		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, double aj, int centBin = -1 );
+    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, double aj, int centBin = -1 );
     
     // Associated track info
     bool FillAssocPt( double pt );

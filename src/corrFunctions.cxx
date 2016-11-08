@@ -490,7 +490,7 @@ namespace corrAnalysis {
     return true;
   }
   
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double aj, double efficiency ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -512,7 +512,7 @@ namespace corrAnalysis {
     return true;
   }
   
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double aj, double efficiency ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
