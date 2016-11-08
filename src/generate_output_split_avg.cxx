@@ -302,6 +302,7 @@ int main( int argc, const char** argv) {
         // now we can get the pt spectrum as well
         recombinedPtLead[i]->Add( (TH1D*) corrCentVzLarge[i][j][k]->Project3D("Z") );
         recombinedPtSub[i]->Add( (TH1D*) subCentVzLarge[i][j][k]->Project3D("Z") );
+        std::cout<<"here?"<<std::endl;
         if ( corrCentVzSmall[i][j][k] )
           recombinedPtLead[i]->Add( (TH1D*) corrCentVzSmall[i][j][k]->Project3D("Z") );
         if ( subCentVzSmall[i][j][k] )
