@@ -379,7 +379,11 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  
+  TCanvas c1;
+  recombinedPtLead[0]->Draw();
+  c1.SaveAs("lead.pdf");
+  recombinedPtSub[i]->Draw();
+  c1.SaveAs("sub.pdf");
   return 0;
 }
 /*
