@@ -72,7 +72,7 @@ endif
 
 # Create the folder name for output
 set outFile = ${analysis}
-if (${analysis == 'ppdijet'} ) then
+if (${analysis} == 'ppdijet'} ) then
 set outFile = ${outFile}_splitaj_${splitOnAj}_val_${splitOnAjVal}
 endif
 set outFile = ${outFile}_trigger_${triggerCoincidence}_eff_${useEfficiency}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}
