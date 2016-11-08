@@ -962,7 +962,7 @@ int main( int argc, const char** argv) {
       if ( ajSplit[i] ) {
         subConst->SetParameter( 0, leadPhiSmallInitFit->GetParameter(0) );
         dPhiLeadSmall[i][j]->Add( subConst, -1 );
-        subConst->SetParameter( 0, leadPhiDifSmallInitFit->GetParameter(0));
+        subConst->SetParameter( 0, leadPhiSmallDifInitFit->GetParameter(0));
         dPhiLeadNearSmall[i][j]->Add( subConst, -1 );
         subConstEta->SetParameter( 0, leadEtaSmallInitFit->GetParameter(0));
         dEtaLeadSmall[i][j]->Add( subConstEta, -1 );
