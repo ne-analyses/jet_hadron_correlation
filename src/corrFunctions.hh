@@ -279,8 +279,8 @@ namespace corrAnalysis {
 		void Write();
 		
 		// Get Histograms
-		TH2D* GetCentVz()				{ return hCentVz; }
-		TH1D* GetBinVz()				{ return hBinVz; }
+		TH3D* GetCentVz()				{ return hCentVz; }
+		TH2D* GetBinVz()				{ return hBinVz; }
 		TH1D*	GetGRefMult()			{ return hGRefMult; }
 		TH1D* GetVz()						{ return hVz; }
 		TH1D* GetLeadPt()				{ return hLeadJetPt; }
