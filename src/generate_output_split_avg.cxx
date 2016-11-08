@@ -215,7 +215,7 @@ int main( int argc, const char** argv) {
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
-
+    std::cout<<"got here"<<std::endl;
     nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
@@ -224,6 +224,7 @@ int main( int argc, const char** argv) {
     corrHist[i]->SetName( corrhistBaseName.c_str() );
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
+    std::cout<<"and here"<<std::endl;
     
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
