@@ -769,14 +769,14 @@ namespace corrAnalysis {
   
   // Used to build the cent/vz(/aj) arrays used to
   // hold correlations
-  histograms::BuildArrays() {
+  void histograms::BuildArrays() {
     
     // decide how many bins in aj to use
     // 2 if splitting on aj
     // 1 if not splitting
     int ajBins = 1;
     
-    if ( splitOnAj == true )
+    if ( useAjSplitting == true )
       ajBins = 2;
     
     // split by analysis type
@@ -802,7 +802,7 @@ namespace corrAnalysis {
             s1 << j;
             s2 << k;
             TString leadName, subName;
-            if ( splitOnAj ) {
+            if ( useAjSplitting ) {
               if ( i == 0 ) {
                 leadName = "large_lead_cent_";
                 subName = "large_sub_cent_";
@@ -964,14 +964,14 @@ namespace corrAnalysis {
     if ( leadingArrays ) {
       for ( int i = 0; i < binsCentrality; ++i ) {
         leadingArrays[0][i]->Delete();
-        if ( splitOnAj )
+        if ( useAjSplitting )
           leadingArrays[1][i]->Delete();
       }
     }
     if ( subleadingArrays ) {
       for ( int i = 0; i < binsCentrality; ++i ) {
         subleadingArrays[0][i]->Delete();
-        if ( splitOnAj )
+        if ( useAjSplitting )
           subleadingArrays[1][i]->Delete();
       }
     }
@@ -995,16 +995,16 @@ namespace corrAnalysis {
 	}
   
   bool histogram::SetAjSplit( bool split, double splitval ) {
-    if ( splitOnAj == split && ajSplitValue == splitVal )
+    if ( useAjSplitting == split && ajSplitValue == splitVal )
       return true;
     
     if ( split == false ) {
-      splitOnAj = split;
+      useAjSplitting = split;
       ajSplitValue = 0.0;
       return true;
     }
     else if ( splitVal > 0.0 && splitVal < 1.0 ) {
-      splitOnAj = split;
+      useAjSplitting = split;
       ajSplitValue = splitVal;
       return true;
     }
@@ -1018,7 +1018,7 @@ namespace corrAnalysis {
 		if ( initialized )
 			return 0;
     
-    if ( ( splitOnAj && analysisType == "jet" ) || ( splitOnAj && analysisType == "ppjet" ) ) {
+    if ( ( useAjSplitting && analysisType == "jet" ) || ( useAjSplitting && analysisType == "ppjet" ) ) {
       __ERR("Can't split on Aj for jet analyses, no dijets")
       return -1;
     }
@@ -1158,13 +1158,13 @@ namespace corrAnalysis {
       if ( leadingArrays ) {
         if ( leadingArrays[0][i] )
           leadingArrays[0][i]->Write();
-        if ( splitOnAj && leadingArrays[1][i] )
+        if ( useAjSplitting && leadingArrays[1][i] )
           leadingArrays[1][i]->Write();
       }
       if ( subleadingArrays ) {
         if ( subleadingArrays[0][i] )
           subleadingArrays[0][i]->Write();
-        if ( splitOnAj && subleadingArrays[1][i] )
+        if ( useAjSplitting && subleadingArrays[1][i] )
           subleadingArrays[1][i]->Write();
       }
     }
@@ -1390,7 +1390,7 @@ namespace corrAnalysis {
     
     // find aj bin, if applicable
     int binAj = 0;
-    if ( splitOnAj && aj < ajSplitValue )
+    if ( useAjSplitting && aj < ajSplitValue )
       binAj = 1;
 		
 		if ( IsDijet() && IsAuAu() ) {
@@ -1430,7 +1430,7 @@ namespace corrAnalysis {
     
     // find aj bin, if applicable
     int binAj = 0;
-    if ( splitOnAj && aj < ajSplitValue )
+    if ( useAjSplitting && aj < ajSplitValue )
       binAj = 1;
 		
 		if ( IsDijet() && IsAuAu() ) {
