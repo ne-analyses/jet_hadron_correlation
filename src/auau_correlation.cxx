@@ -98,10 +98,12 @@
 // [4]: leading jet pt min
 // [5]: jet pt max
 // [6]: jet radius, used in the jet definition
-// [7]: output directory
-// [8]: name for the correlation histogram file
-// [9]: name for the dijet TTree file
-// [10]: input file: can be a single .root or a .txt or .list of root files
+// [7]: split correlations on high/low aj? true or false
+// [8]: if [7] is true, on what value of aj? (between 0 and 1)
+// [9]: output directory
+// [10]: name for the correlation histogram file
+// [11]: name for the dijet TTree file
+// [12]: input file: can be a single .root or a .txt or .list of root files
 
 // DEF MAIN()
 int main ( int argc, const char** argv ) {
@@ -137,7 +139,9 @@ int main ( int argc, const char** argv ) {
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
-  double				jetRadius 		= 0.4;											// jet radius for jet finding
+  double				jetRadius 		= 0.4;                      // jet radius for jet finding
+  bool          splitOnAj     = false;                    // split analysis by aj value
+  double        splitOnAjVal  = 0.0;                      // what value to split on
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
@@ -149,7 +153,7 @@ int main ( int argc, const char** argv ) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 12: { // Custom case
+    case 14: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       // Set non-default values
@@ -186,11 +190,25 @@ int main ( int argc, const char** argv ) {
       jetPtMax 			= atof ( arguments[5].c_str() );
       jetRadius 		= atof ( arguments[6].c_str() );
       
+      // aj splitting
+      if ( arguments[7] == "true" ) 			{ splitOnAj = true; }
+      else if ( arguments[7] == "false" ) 	{ splitOnAj = false; }
+      else { __ERR( "splitOnAj must be true or false" ) return -1; }
+      
+      if ( splitOnAj ) {
+        double tempAj = atof ( arguments[8].c_str() );
+        if ( tempAj <= 0.0 || tempAj >= 1.0 ) {
+          __ERR( "Aj split value must be between 0 and 1, exclusive" )
+          return -1;
+        }
+        splitOnAjVal = tempAj;
+      }
+      
       // output and file names
-      outputDir 		= arguments[7];
-      corrOutFile		= arguments[8];
-      treeOutFile		= arguments[9];
-      inputFile 		= arguments[10];
+      outputDir 		= arguments[9];
+      corrOutFile		= arguments[10];
+      treeOutFile		= arguments[11];
+      inputFile 		= arguments[12];
       
       break;
     }
