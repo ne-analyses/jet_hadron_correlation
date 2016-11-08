@@ -213,6 +213,9 @@ namespace corrAnalysis {
 	private:
 
 		std::string analysisType;			// Used by Init() to create proper histograms
+    bool useAjSplitting;          // Used by Init() to create histograms - chooses to split
+                                  // correlations by the event value of Aj
+    double ajSplitValue;          // the value of Aj to split at
 		bool initialized;							// Used for control flow - must be true before filling
 		
 		// Event statistics
@@ -240,8 +243,8 @@ namespace corrAnalysis {
 		TH3D* h3DimCorrSub;
     
     // Holders for the vz/cent binned histograms
-    TObjArray** leadingArrays;
-    TObjArray** subleadingArrays;
+    TObjArray*** leadingArrays;
+    TObjArray*** subleadingArrays;
     
     // Used internally when filling histograms
     bool IsPP();
@@ -249,18 +252,24 @@ namespace corrAnalysis {
     bool IsDijet();
     bool IsJet();
     bool IsMix();
+    
+    // Used internally during initialization
+    // to generate the histogram arrays properly
+    // depending on analysis settings
+    void BuildArrays();
 		
 	public:
 		histograms( );
-		histograms( std::string type ); // In general, this should be used, passing "dijet" or "jet"
+		histograms( std::string type, bool splitOnAj, double splitVal = 0.3 ); // In general, this should be used, passing "dijet" or "jet" for analysis, and proper arguments for using aj splitting or not
 		~histograms();
 		
 		// Deletes all histograms
 		void Clear();
 		
-		// Can set analysisType - careful, if it changes after Init() is called
+		// Can set analysisType or Aj splitting - careful, if it changes after Init() is called
 		// Reinitialization will be needed
 		bool SetAnalysisType( std::string type );
+    bool SetAjSplit( bool split, double splitval );
 		
 		// Must be called before filling
 		// Checks analysisType and creates histograms

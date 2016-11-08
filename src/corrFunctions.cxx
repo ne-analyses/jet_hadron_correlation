@@ -766,9 +766,176 @@ namespace corrAnalysis {
 
     return false;
   }
+  
+  // Used to build the cent/vz(/aj) arrays used to
+  // hold correlations
+  histograms::BuildArrays() {
+    
+    // decide how many bins in aj to use
+    // 2 if splitting on aj
+    // 1 if not splitting
+    int ajBins = 1;
+    
+    if ( splitOnAj == true )
+      ajBins = 2;
+    
+    // split by analysis type
+    
+    if ( analysisType == "dijet" || analysisType == "ppdijet" || analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
+      
+      //now build the full 3D vz/centrality binned histograms
+      TH3D* tmpHistLead, * tmpHistSub;
+      
+      leadingArrays = new TObjArray**[ajBins];
+      subleadingArrays = new TObjArray**[ajBins];
+      
+      for ( int i = 0; i < ajBins; ++i ) {
+        leadingArrays[i] = new TObjArray*[binsCentrality];
+        subleadingArrays = new TObjArray**[binsCentrality];
+        
+        for ( int j = 0; j < binsCentrality; ++j ) {
+          leadingArrays[i][j] = new TObjArray();
+          subleadingArrays[i][j] = new TObjArray();
+          for ( int k = 0; k < binsVz; ++k ) {
+            // create unique identifiers for each histogram
+            std::stringstream s1, s2;
+            s1 << j;
+            s2 << k;
+            TString leadName, subName;
+            if ( splitOnAj ) {
+              if ( i == 0 ) {
+                leadName = "large_lead_cent_";
+                subName = "large_sub_cent_";
+                if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
+                  leadName = "large_mix_lead_cent_";
+                  subName = "large_mix_sub_cent_";
+                }
+              }
+              else if ( i == 1 ) {
+                leadName = "small_lead_cent_";
+                subName = "small_sub_cent_";
+                if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
+                  leadName = "small_mix_lead_cent_";
+                  subName = "small_mix_sub_cent_";
+                }
+              }
+              else {
+                __ERR("Something happened when generating histograms")
+                return -1;
+              }
+            }
+            else {
+              leadName = "lead_cent_";
+              subName = "sub_cent_";
+              if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
+                leadName = "mix_lead_cent_";
+                subName = "mix_sub_cent_";
+              }
+            }
+            leadName += s1.str() + "_vz_" + s2.str();
+            subName += s1.str() + "_vz_" + s2.str();
+            
+            // make each histogram
+            tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+            
+            // add to the correct bin
+            leadingArrays[i][j]->AddLast( tmpHistLead );
+            subleadingArrays[i][j]->AddLast( tmpHistSub );
+          }
+        }
+      }
+    }
+    
+    if ( analysisType == "jet" || analysisType == "ppjet" || analysisType == "jetmix" || analysisType == "ppjetmix" ) {
+      
+      
+      TH3D* tmpHistTrig;
+      leadingArrays = new TObjArray**[ajBins];
+      
+      for ( int i = 0; i < ajBins; ++i ) {
+        leadingArrays[i] = new TObjArray*[binsCentrality];
+        
+        for ( int j = 0; j < binsCentrality; ++j ) {
+          leadingArrays[i][j] = new TObjArray();
+          
+          for ( int k = 0; k < binsVz; ++k ) {
+            // create unique identifiers for each histogram
+            std::stringstream s1, s2;
+            s1 << j;
+            s2 << k;
+            TString leadName;
+            
+            if ( splitOnAj ) {
+              if ( i == 0 ) {
+                leadName = "large_lead_cent_";
+                if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
+                  leadName = "large_mix_lead_cent_";
+                }
+                leadName += s1.str() + "_vz_" + s2.str();
+                subName += s1.str() + "_vz_" + s2.str();
+              }
+              else if ( i == 1 ) {
+                leadName = "small_lead_cent_";
+                if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
+                  leadName = "small_mix_lead_cent_";
+                }
+              }
+              else {
+                __ERR("Something happened when generating histograms")
+                return -1;
+              }
+            }
+            else {
+              leadName = "lead_cent_";
+              if ( analysisType == "jetmix" ) {
+                leadName = "mix_lead_cent_";
+              }
+
+            }
+            
+            leadName += s1.str() + "_vz_" + s2.str();
+            
+            tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+            
+            // add to the correct bin
+            leadingArrays[i][j]->AddLast( tmpHistTrig );
+          }
+        }
+      
+      
+      
+//      // now build the full 3D vz/centrality binned histograms
+//      TH3D* tmpHistTrig;
+//      leadingArrays = new TObjArray*[binsCentrality];
+//      for ( int i = 0; i < binsCentrality; ++i ) {
+//        leadingArrays[i] = new TObjArray();
+//        for ( int j = 0; j < binsVz; ++j ) {
+//          // Unique name for each TH3D
+//          std::stringstream s1, s2;
+//          s1 << i;
+//          s2 << j;
+//          TString leadName = "lead_cent_";
+//          if ( analysisType == "jetmix" ) {
+//            leadName = "mix_lead_cent_";
+//          }
+//          leadName += s1.str() + "_vz_" + s2.str();
+//          
+//          // make each histogram
+//          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+//      
+//          // add to the correct bin
+//          leadingArrays[i]->AddLast( tmpHistTrig );
+//                
+//        }
+//      }
+    }
+  }
 	
 	histograms::histograms() {
 		analysisType = "none";
+    useAjSplitting = false;
+    ajSplitValue = 0.0;
 		initialized = false;
 		
 		hLeadJetPt 	= 0;
@@ -789,9 +956,11 @@ namespace corrAnalysis {
     subleadingArrays = 0;
 	}
 	
-	histograms::histograms( std::string anaType ) {
+	histograms::histograms( std::string anaType, bool splitOnAj, double splitVal ) {
 		analysisType = anaType;
 		initialized = false;
+    useAjSplitting = splitOnAj;
+    ajSplitValue = splitVal;
 		hLeadJetPt 	= 0;
 		hLeadEtaPhi = 0;
 		hSubJetPt 	= 0;
@@ -872,6 +1041,26 @@ namespace corrAnalysis {
 		return false;
 		
 	}
+  
+  bool histogram::SetAjSplit( bool split, double splitval ) {
+    if ( splitOnAj == split && ajSplitValue == splitVal )
+      return true;
+    
+    if ( split == false ) {
+      splitOnAj = split;
+      ajSplitValue = 0.0;
+      return true;
+    }
+    else if ( splitVal > 0.0 && splitVal < 1.0 ) {
+      splitOnAj = split;
+      ajSplitValue = splitVal;
+      return true;
+    }
+    
+    __Err("Aj split value must be between 0 and 1, exclusive")
+    return false;
+    
+  }
 	
 	int histograms::Init() {
 		if ( initialized )
@@ -897,37 +1086,7 @@ namespace corrAnalysis {
 			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
 			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistLead, * tmpHistSub;
-      leadingArrays = new TObjArray*[binsCentrality];
-      subleadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        subleadingArrays[i] = new TObjArray;
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          TString subName = "sub_cent_";
-          if ( analysisType == "dijetmix" ) {
-            leadName = "mix_lead_cent_";
-            subName = "mix_sub_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          subName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistLead );
-          subleadingArrays[i]->AddLast( tmpHistSub );
-
-        }
-      }
+      BuildArrays();
 			
 			initialized = true;
 			return 0;
@@ -945,30 +1104,7 @@ namespace corrAnalysis {
 			
 			h3DimCorrLead		= new TH3D("leadjetcorr", "Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistTrig;
-      leadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          if ( analysisType == "jetmix" ) {
-            leadName = "mix_lead_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistTrig );
-          
-        }
-      }
+      BuildArrays();
 			
 			initialized = true;
 			return 0;
@@ -993,38 +1129,7 @@ namespace corrAnalysis {
 			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
 			h3DimCorrSub		= new TH3D("subjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistLead, * tmpHistSub;
-      leadingArrays = new TObjArray*[binsCentrality];
-      subleadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        subleadingArrays[i] = new TObjArray;
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          TString subName = "sub_cent_";
-          if ( analysisType == "ppdijetmix" ) {
-            leadName = "mix_lead_cent_";
-            subName = "mix_sub_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          subName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistLead );
-          subleadingArrays[i]->AddLast( tmpHistSub );
-          
-        }
-      }
-
+      BuildArrays();
 			
 			initialized = true;
 			return 0;
@@ -1041,30 +1146,8 @@ namespace corrAnalysis {
 			
 			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
       
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistTrig;
-      leadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          if ( analysisType == "ppjetmix" ) {
-            leadName = "mix_lead_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistTrig );
-          
-        }
-      }
+      
+      BuildArrays();
 			
 			initialized = true;
 			return 0;
