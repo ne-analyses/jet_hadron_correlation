@@ -215,7 +215,7 @@ int main( int argc, const char** argv) {
     std::string hvzBaseName = "hvz_"; hvzBaseName += analysisNames[i];
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
-    std::cout<<"got here"<<std::endl;
+
     nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
@@ -224,7 +224,6 @@ int main( int argc, const char** argv) {
     corrHist[i]->SetName( corrhistBaseName.c_str() );
     mixHist[i] = (TH3D*) mixFiles[i]->Get( "leadjetcorr" );
     mixHist[i]->SetName( mixhistBaseName.c_str() );
-    std::cout<<"and here"<<std::endl;
     
     // pull in the cent/vz diffentiated histograms
     for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
@@ -260,7 +259,7 @@ int main( int argc, const char** argv) {
         
         mixSubDifBaseName += "_cent_"; mixSubDifBaseName += patch::to_string(j);
         mixSubDifBaseName += "_vz_"; mixSubDifBaseName += patch::to_string(k);
-        
+        std::cout<<"got here"<<std::endl;
         // get the histograms
         if ( corrFiles[i]->Get( corrDifInitName.c_str() ) ) {
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
@@ -278,6 +277,7 @@ int main( int argc, const char** argv) {
           corrCentVzSmall[i][j][k]->SetName( smallDifName.c_str() );
           
         }
+        std::cout<<"and here"<<std::endl;
         mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName.c_str() );
         mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
         if ( corrFiles[i]->Get( subDifInitName.c_str() ) ) {
@@ -297,7 +297,7 @@ int main( int argc, const char** argv) {
         }
         mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName.c_str() );
         mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
-        
+        std::cout<<"AAAND HERE"<<std::endl;
         // now we can get the pt spectrum as well
         recombinedPtLead[i]->Add( (TH1D*) corrCentVzLarge[i][j][k]->Project3D("Z") );
         recombinedPtSub[i]->Add( (TH1D*) subCentVzLarge[i][j][k]->Project3D("Z") );
@@ -305,6 +305,7 @@ int main( int argc, const char** argv) {
           recombinedPtLead[i]->Add( (TH1D*) corrCentVzSmall[i][j][k]->Project3D("Z") );
         if ( subCentVzSmall[i][j][k] )
           recombinedPtSub[i]->Add( (TH1D*) subCentVzSmall[i][j][k]->Project3D("Z") );
+        std::cout<<"and here"<<std::endl;
       }
   }
   
