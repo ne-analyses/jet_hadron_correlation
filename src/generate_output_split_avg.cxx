@@ -259,7 +259,7 @@ int main( int argc, const char** argv) {
         
         mixSubDifBaseName += "_cent_"; mixSubDifBaseName += patch::to_string(j);
         mixSubDifBaseName += "_vz_"; mixSubDifBaseName += patch::to_string(k);
-        std::cout<<"got here"<<std::endl;
+
         // get the histograms
         if ( corrFiles[i]->Get( corrDifInitName.c_str() ) ) {
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
@@ -270,15 +270,14 @@ int main( int argc, const char** argv) {
           std::string largeName = "large_" + corrDifInitName;
           std::string smallDifName = "small_" + corrDifBaseName;
           std::string largeDifName = "large_" + corrDifBaseName;
-          std::cout<<largeName<<std::endl;
-          std::cout<<smallName<<std::endl;
+
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
           corrCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
           corrCentVzSmall[i][j][k] = (TH3D*) corrFiles[i]->Get( smallName.c_str() );
           corrCentVzSmall[i][j][k]->SetName( smallDifName.c_str() );
           
         }
-        std::cout<<"and here"<<std::endl;
+
         mixCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixDifInitName.c_str() );
         mixCentVz[i][j][k]->SetName( mixDifBaseName.c_str() );
         if ( corrFiles[i]->Get( subDifInitName.c_str() ) ) {
@@ -291,23 +290,23 @@ int main( int argc, const char** argv) {
           std::string smallDifName = "small_" + subDifBaseName;
           std::string largeDifName = "large_" + subDifBaseName;
           
-          corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
-          corrCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
-          corrCentVzSmall[i][j][k] = (TH3D*) corrFiles[i]->Get( smallName.c_str() );
-          corrCentVzSmall[i][j][k]->SetName( smallDifName.c_str() );
+          subCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
+          subCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
+          subCentVzSmall[i][j][k] = (TH3D*) corrFiles[i]->Get( smallName.c_str() );
+          subCentVzSmall[i][j][k]->SetName( smallDifName.c_str() );
         }
         mixSubCentVz[i][j][k] = (TH3D*) mixFiles[i]->Get( mixSubDifInitName.c_str() );
         mixSubCentVz[i][j][k]->SetName( mixSubDifBaseName.c_str() );
-        std::cout<<"AAAND HERE"<<std::endl;
+        
         // now we can get the pt spectrum as well
         recombinedPtLead[i]->Add( (TH1D*) corrCentVzLarge[i][j][k]->Project3D("Z") );
         recombinedPtSub[i]->Add( (TH1D*) subCentVzLarge[i][j][k]->Project3D("Z") );
-        std::cout<<"here?"<<std::endl;
+        
         if ( corrCentVzSmall[i][j][k] )
           recombinedPtLead[i]->Add( (TH1D*) corrCentVzSmall[i][j][k]->Project3D("Z") );
         if ( subCentVzSmall[i][j][k] )
           recombinedPtSub[i]->Add( (TH1D*) subCentVzSmall[i][j][k]->Project3D("Z") );
-        std::cout<<"and here"<<std::endl;
+        
       }
   }
   
