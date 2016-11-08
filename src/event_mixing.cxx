@@ -164,6 +164,10 @@ int main ( int argc, const char** argv) {
   // Tree name in input file
   std::string 	 chainName     = "JetTree";
   
+  // TEMPORARY:
+  bool splitOnAj = false;
+  double SplitOnAjVal = 0.0;
+  
   // now check if we'll use the defaults or not
   switch ( argc ) {
     case 1: // Default case
@@ -255,7 +259,7 @@ int main ( int argc, const char** argv) {
     }
   
   // initialize histogram container
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj, SplitOnAjVal );
   histograms->Init();
   
   // we need to pick a minimum jet pt in case
@@ -381,12 +385,14 @@ int main ( int argc, const char** argv) {
   TLorentzVector *leadBranch = new TLorentzVector();
   TLorentzVector *subBranch = new TLorentzVector();
   int centBranch, vzBranch;
+  double ajBranch;
   
   // set the branch addresses for the tree
   if ( requireDijets ) {
     jetTree->SetBranchAddress( "leadJet", &leadBranch );
     jetTree->SetBranchAddress( "subLeadJet", &subBranch );
     jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
+    jetTree->SetBranchAddress( "aj", &ajBranch );
     if ( analysisType == "dijetmix" )
       jetTree->SetBranchAddress( "centralityBin", &centBranch );
     
@@ -578,8 +584,8 @@ int main ( int argc, const char** argv) {
           else if ( useEfficiency && corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
           }
           
-          corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
-          corrAnalysis::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency );
+          corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency, ajBranch );
+          corrAnalysis::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency, ajBranch );
         }
         
       }
