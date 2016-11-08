@@ -266,10 +266,10 @@ int main( int argc, const char** argv) {
           corrCentVzLarge[i][j][k]->SetName( corrDifBaseName.c_str() );
         }
         else {
-          std::string smallName = "small_" + corrDifBaseName;
-          std::string largeName = "large_" + corrDifBaseName;
-          std::string smallDifName = "small_" + corrDifInitName;
-          std::string largeDifName = "large_" + corrDifInitName;
+          std::string smallName = "small_" + corrDifInitName;
+          std::string largeName = "large_" + corrDifInitName;
+          std::string smallDifName = "small_" + corrDifBaseName;
+          std::string largeDifName = "large_" + corrDifBaseName;
           std::cout<<largeName<<std::endl;
           std::cout<<smallName<<std::endl;
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
@@ -286,10 +286,10 @@ int main( int argc, const char** argv) {
           subCentVzLarge[i][j][k]->SetName( subDifBaseName.c_str() );
         }
         else {
-          std::string smallName = "small_" + subDifBaseName;
-          std::string largeName = "large_" + subDifBaseName;
-          std::string smallDifName = "small_" + subDifInitName;
-          std::string largeDifName = "large_" + subDifInitName;
+          std::string smallName = "small_" + subDifInitName;
+          std::string largeName = "large_" + subDifInitName;
+          std::string smallDifName = "small_" + subDifBaseName;
+          std::string largeDifName = "large_" + subDifBaseName;
           
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( largeName.c_str() );
           corrCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
