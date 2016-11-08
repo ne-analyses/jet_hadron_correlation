@@ -160,8 +160,11 @@ int main( int argc, const char** argv) {
   
   int nFiles = analysisNames.size();
   
+  // define if the analyses are split or not
+  bool ajSplit[nFiles];
+  
   // Load in the histograms
-  TH2D* nEvents[ nFiles ];
+  TH3D* nEvents[ nFiles ];
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
   TH3D* mixHist[ nFiles ];
@@ -216,7 +219,7 @@ int main( int argc, const char** argv) {
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
 
-    nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
+    nEvents[i] = (TH3D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
     hVz[i]->SetName( hvzBaseName.c_str() );
@@ -264,6 +267,7 @@ int main( int argc, const char** argv) {
         if ( corrFiles[i]->Get( corrDifInitName.c_str() ) ) {
           corrCentVzLarge[i][j][k] = (TH3D*) corrFiles[i]->Get( corrDifInitName.c_str() );
           corrCentVzLarge[i][j][k]->SetName( corrDifBaseName.c_str() );
+          ajSplit[i] = false;
         }
         else {
           std::string smallName = "small_" + corrDifInitName;
@@ -275,6 +279,7 @@ int main( int argc, const char** argv) {
           corrCentVzLarge[i][j][k]->SetName( largeDifName.c_str() );
           corrCentVzSmall[i][j][k] = (TH3D*) corrFiles[i]->Get( smallName.c_str() );
           corrCentVzSmall[i][j][k]->SetName( smallDifName.c_str() );
+          ajSplit[i] = true;
           
         }
 
@@ -379,14 +384,12 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  TCanvas c1;
-  recombinedPtLead[0]->Draw();
-  c1.SaveAs("lead.pdf");
-  recombinedPtSub[0]->Draw();
-  c1.SaveAs("sub.pdf");
+  
   return 0;
 }
+
 /*
+
   // TESTING PAST HERE
   // Averaging the event mixing over vz/cent
   // NEEDS TO BE UPDATED FOR UPDATED PT BINS
@@ -434,28 +437,38 @@ int main( int argc, const char** argv) {
       weightedSub[i][j]->Scale( 1.0/weightedSub[i][j]->GetMaximum() );
     }
   }
+              
   
   // make the container for the recombined histograms
-  std::vector<std::vector<TH2D*> > recombinedCorr;
+  std::vector<std::vector<TH2D*> > recombinedCorrLarge;
+  std::vector<std::vector<TH2D*> > recombinedCorrSmall;
   std::vector<std::vector<TH2D*> > recombinedPre;
-  std::vector<std::vector<TH2D*> > recombinedSub;
+  std::vector<std::vector<TH2D*> > recombinedSubLarge;
+  std::vector<std::vector<TH2D*> > recombinedSubSmall;
   std::vector<std::vector<TH2D*> > recombinedSubPre;
-  recombinedCorr.resize( nFiles );
+  recombinedCorrLarge.resize( nFiles );
+  recombinedCorrSmall.resize( nFiles );
   recombinedPre.resize( nFiles );
-  recombinedSub.resize( nFiles );
+  recombinedSubLarge.resize( nFiles );
+  recombinedSubSmall.resize( nFiles );
   recombinedSubPre.resize( nFiles );
   
   for (int i = 0; i < nFiles; ++ i ) {
     
-    recombinedCorr[i].resize( nPtBins );
+    recombinedCorrLarge[i].resize( nPtBins );
+    recombinedCorrSmall[i].resize( nPtBins );
     recombinedPre[i].resize( nPtBins );
-    recombinedSub[i].resize( nPtBins );
+    recombinedSubLarge[i].resize( nPtBins );
+    recombinedSubSmall[i].resize( nPtBins );
     recombinedSubPre[i].resize( nPtBins );
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
       std::string corrName = analysisNames[i] + " " + ptBinString[l];
+      std::string corrSmallName = "";
       std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
+      
+      
       std::string subName = analysisNames[i] + "_sub " + ptBinString[l];
       std::string subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       
@@ -517,6 +530,10 @@ int main( int argc, const char** argv) {
     }
   }
   
+  return 0;
+}
+/*
+
   // get the reduced eta and phi ranges for projections
   double etaMax = 1.2;
   double etaMin = -1.2;
