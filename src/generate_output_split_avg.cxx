@@ -682,7 +682,7 @@ int main( int argc, const char** argv) {
         recombinedSubSmall[i][j]->Draw("surf1");
         c1.SaveAs( subOutNameSmall.c_str() );
       }
-      
+      std::cout<<"GOT HERE"<<std::endl;
       dPhiLeadLarge[i][j] = (TH1D*) ((TH1D*) recombinedCorrLarge[i][j]->ProjectionY())->Clone();
       dPhiSubLarge[i][j] = (TH1D*) ((TH1D*) recombinedSubLarge[i][j]->ProjectionY())->Clone();
       
