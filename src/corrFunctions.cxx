@@ -902,33 +902,7 @@ namespace corrAnalysis {
             leadingArrays[i][j]->AddLast( tmpHistTrig );
           }
         }
-      
-      
-      
-//      // now build the full 3D vz/centrality binned histograms
-//      TH3D* tmpHistTrig;
-//      leadingArrays = new TObjArray*[binsCentrality];
-//      for ( int i = 0; i < binsCentrality; ++i ) {
-//        leadingArrays[i] = new TObjArray();
-//        for ( int j = 0; j < binsVz; ++j ) {
-//          // Unique name for each TH3D
-//          std::stringstream s1, s2;
-//          s1 << i;
-//          s2 << j;
-//          TString leadName = "lead_cent_";
-//          if ( analysisType == "jetmix" ) {
-//            leadName = "mix_lead_cent_";
-//          }
-//          leadName += s1.str() + "_vz_" + s2.str();
-//          
-//          // make each histogram
-//          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-//      
-//          // add to the correct bin
-//          leadingArrays[i]->AddLast( tmpHistTrig );
-//                
-//        }
-//      }
+      }
     }
   }
 	
