@@ -749,11 +749,11 @@ int main( int argc, const char** argv) {
         recombinedSubSmall[i][j]->GetXaxis()->SetRange( etaMinBin, etaMaxBin );
       }
       
-      dPhiLeadFarLarge[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
-      dPhiSubFarLarge[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
+      dPhiLeadFarLarge[i][j]->Add( recombinedCorrLarge[i][j]->ProjectionY() );
+      dPhiSubFarLarge[i][j]->Add( recombinedSubLarge[i][j]->ProjectionY() );
       if ( ajSplit[i] ) {
-        dPhiLeadFarSmall[i][j]->Add( recombinedCorr[i][j]->ProjectionY() );
-        dPhiSubFarSmall[i][j]->Add( recombinedSub[i][j]->ProjectionY() );
+        dPhiLeadFarSmall[i][j]->Add( recombinedCorrSmall[i][j]->ProjectionY() );
+        dPhiSubFarSmall[i][j]->Add( recombinedSubSmall[i][j]->ProjectionY() );
       }
     }
   }
