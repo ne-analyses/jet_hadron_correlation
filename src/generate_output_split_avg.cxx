@@ -959,7 +959,7 @@ int main( int argc, const char** argv) {
       subConstEta->SetParameter( 0, subEtaInitFit->GetParameter(0));
       dEtaSubLarge[i][j]->Add( subConstEta, -1 );
       
-      id ( ajSplit[i] ) {
+      if ( ajSplit[i] ) {
         subConst->SetParameter( 0, leadPhiSmallInitFit->GetParameter(0) );
         dPhiLeadSmall[i][j]->Add( subConst, -1 );
         subConst->SetParameter( 0, leadPhiDifSmallInitFit->GetParameter(0));
@@ -993,8 +993,8 @@ int main( int argc, const char** argv) {
       else {
         
         // we have to find the integral depending on small or large aj
-        double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, binsVz );
-        double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, binsVz );
+        double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
+        double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
         
         std::cout<<" low Aj: "<<ajLowCount<<std::endl;
         std::cout<<" high Aj: "<< ajHighCount<<std::endl;
