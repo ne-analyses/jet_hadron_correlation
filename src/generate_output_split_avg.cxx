@@ -384,9 +384,13 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  
+
+  for ( int i = 0; i < nFiles; ++i )
+    std::cout<<ajSplit[i]<<std::endl;
   return 0;
 }
+
+
 
 /*
 
