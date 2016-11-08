@@ -70,6 +70,7 @@ endif
 
 # Create the folder name for output
 set outFile = ${analysis}
+echo $analysis
 if ( $analysis == 'dijet'} ) then
 set outFile = ${outFile}_splitaj_${splitOnAj}_val_${splitOnAjVal}
 echo 'GOT HERE'
@@ -86,7 +87,6 @@ endif
 if ( ! -d log/${analysis}/${outFile} ) then
 mkdir -p log/${analysis}/${outFile}
 endif
-echo $outFile
 
 # Now Submit jobs for each data file
 foreach input ( ${base}* )
