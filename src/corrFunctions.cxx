@@ -994,7 +994,7 @@ namespace corrAnalysis {
 		
 	}
   
-  bool histogram::SetAjSplit( bool split, double splitval ) {
+  bool histograms::SetAjSplit( bool split, double splitval ) {
     if ( useAjSplitting == split && ajSplitValue == splitVal )
       return true;
     
