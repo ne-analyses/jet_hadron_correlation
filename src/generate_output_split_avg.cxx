@@ -301,7 +301,7 @@ int main( int argc, const char** argv) {
         recombinedPtLead[i]->Add( (TH1D*) corrCentVzLarge[i][j][k]->Project3D("Z") );
         recombinedPtSub[i]->Add( (TH1D*) subCentVzLarge[i][j][k]->Project3D("Z") );
         if ( corrCentVzSmall[i][j][k] )
-          recombinedPtLead[i]->Add( TH1D*) corrCentVzSmall[i][j][k]->Project3D("Z") );
+          recombinedPtLead[i]->Add( (TH1D*) corrCentVzSmall[i][j][k]->Project3D("Z") );
         if ( subCentVzSmall[i][j][k] )
           recombinedPtSub[i]->Add( (TH1D*) subCentVzSmall[i][j][k]->Project3D("Z") );
       }
