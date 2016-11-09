@@ -622,22 +622,22 @@ int main( int argc, const char** argv) {
         double phiMin = -corrAnalysis::pi/2.0;
         double phiMax = 3.0*corrAnalysis::pi/2.0;
         
-        TF1* triggerLargeTmpFit = new TF1(triggerLargeName, phiForm, phiMin, phiMax);
+        TF1* triggerLargeTmpFit = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerLargeTmpFit->FixParameter( 2, 0 );
         triggerLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
         triggerLargeTmpFit->SetParameter( 3, 0.2 );
         triggerLargeTmpFit->SetParameter( 6, 0.2 );
-        TF1* triggerSmallTmpFit = new TF1(triggerSmallName, phiForm, phiMin, phiMax);
+        TF1* triggerSmallTmpFit = new TF1(triggerSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerSmallTmpFit->FixParameter( 2, 0 );
         triggerSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
         triggerSmallTmpFit->SetParameter( 3, 0.2 );
         triggerSmallTmpFit->SetParameter( 6, 0.2 );
-        TF1* recoilLargeTmpFit = new TF1(recoilLargeName, phiForm, phiMin, phiMax);
+        TF1* recoilLargeTmpFit = new TF1(recoilLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilLargeTmpFit->FixParameter( 2, 0 );
         recoilLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
         recoilLargeTmpFit->SetParameter( 3, 0.2 );
         recoilLargeTmpFit->SetParameter( 6, 0.2 );
-        TF1* recoilSmallTmpFit = new TF1(recoilSmallName, phiForm, phiMin, phiMax);
+        TF1* recoilSmallTmpFit = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSmallTmpFit->FixParameter( 2, 0 );
         recoilSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
         recoilSmallTmpFit->SetParameter( 3, 0.2 );
