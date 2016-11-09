@@ -940,7 +940,7 @@ int main( int argc, const char** argv) {
   std::string recoilOutBase = ajSubDir + "recoildphi_aj_split_";
   std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
-  std::string outExt = ".pdf";
+  std::string ajOutExt = ".pdf";
   
   
   for ( int i = 0; i < nFiles; ++i ) {
@@ -948,7 +948,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nPtBins; ++ j ) {
       if ( ajSplit[i] ) {
         TCanvas c1;
-        std::string triggerPhiOut = triggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + outExt;
+        std::string triggerPhiOut = triggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + ajOutExt;
       
         triggerLargeAjdPhi[i][j]->SetLineColor(1);
         triggerLargeAjdPhi[i][j]->SetMarkerStyle(29);
@@ -973,7 +973,7 @@ int main( int argc, const char** argv) {
         leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
         
-        c1.SaveAs( triggerPhiOut );
+        c1.SaveAs( triggerPhiOut.c_str() );
       }
     }
   }
@@ -983,7 +983,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nPtBins; ++ j ) {
       if ( ajSplit[i] ) {
         TCanvas c1;
-        std::string recoilPhiOut = recoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + outExt;
+        std::string recoilPhiOut = recoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + ajOutExt;
         
         recoilLargeAjdPhi[i][j]->SetLineColor(1);
         recoilLargeAjdPhi[i][j]->SetMarkerStyle(29);
@@ -1008,14 +1008,14 @@ int main( int argc, const char** argv) {
         leg->AddEntry(recoilSmallAjdPhi[i][j],"Recoil #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
         
-        c1.SaveAs( recoilPhiOut );
+        c1.SaveAs( recoilPhiOut.c_str() );
       }
     }
   }
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
-    std::string ajSubRecoilPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + outExt;
+    std::string ajSubRecoilPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     for ( int j = 0; j < nFiles; ++ j ) {
@@ -1046,12 +1046,12 @@ int main( int argc, const char** argv) {
       }
     }
     leg->Draw();
-    c1.SaveAs( ajSubRecoilPhiOut );
+    c1.SaveAs( ajSubRecoilPhiOut.c_str() );
   }
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
-    std::string ajSubTriggerPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + outExt;
+    std::string ajSubTriggerPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     for ( int j = 0; j < nFiles; ++ j ) {
@@ -1082,7 +1082,7 @@ int main( int argc, const char** argv) {
       }
     }
     leg->Draw();
-    c1.SaveAs( ajSubTriggerPhiOut );
+    c1.SaveAs( ajSubTriggerPhiOut.c_str() );
   }
   
   // ***************************
