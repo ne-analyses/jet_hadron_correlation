@@ -933,9 +933,157 @@ int main( int argc, const char** argv) {
     }
   }
  
-  // now do output
+  // now plot the 1D histograms
+  // Now start making output
+  std::string ajSubDir = "tmp/";
+  std::string triggerOutBase = ajSubDir + "triggerdphi_aj_split_";
+  std::string recoilOutBase = ajSubDir + "recoildphi_aj_split_";
+  std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
+  std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
+  std::string outExt = ".pdf";
   
   
+  for ( int i = 0; i < nFiles; ++i ) {
+    
+    for ( int j = 0; j < nPtBins; ++ j ) {
+      if ( ajSplit[i] ) {
+        TCanvas c1;
+        std::string triggerPhiOut = triggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + outExt;
+      
+        triggerLargeAjdPhi[i][j]->SetLineColor(1);
+        triggerLargeAjdPhi[i][j]->SetMarkerStyle(29);
+        triggerLargeAjdPhi[i][j]->SetMarkerSize(2);
+        triggerLargeAjdPhi[i][j]->SetMarkerColor(1);
+        std::string outTitle = "";
+        triggerLargeAjdPhi[i][j]->SetTitle( outTitle.c_str() );
+        triggerLargeAjdPhi[i][j]->GetXaxis()->SetTitle("#Delta#phi");
+        triggerLargeAjdPhi[i][j]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        triggerLargeAjdPhi[i][j]->Draw();
+        
+        
+        triggerSmallAjdPhi[i][j]->SetLineColor(2);
+        triggerSmallAjdPhi[i][j]->SetMarkerStyle(29);
+        triggerSmallAjdPhi[i][j]->SetMarkerSize(2);
+        triggerSmallAjdPhi[i][j]->SetMarkerColor(2);
+        triggerSmallAjdPhi[i][j]->Draw("same");
+        
+        TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+        leg->SetHeader(""); // option "C" allows to center the header
+        leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
+        leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
+        leg->Draw();
+        
+        c1.SaveAs( triggerPhiOut );
+      }
+    }
+  }
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    
+    for ( int j = 0; j < nPtBins; ++ j ) {
+      if ( ajSplit[i] ) {
+        TCanvas c1;
+        std::string recoilPhiOut = recoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(j) + outExt;
+        
+        recoilLargeAjdPhi[i][j]->SetLineColor(1);
+        recoilLargeAjdPhi[i][j]->SetMarkerStyle(29);
+        recoilLargeAjdPhi[i][j]->SetMarkerSize(2);
+        recoilLargeAjdPhi[i][j]->SetMarkerColor(1);
+        std::string outTitle = "";
+        recoilLargeAjdPhi[i][j]->SetTitle( outTitle.c_str() );
+        recoilLargeAjdPhi[i][j]->GetXaxis()->SetTitle("#Delta#phi");
+        recoilLargeAjdPhi[i][j]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        recoilLargeAjdPhi[i][j]->Draw();
+        
+        
+        recoilSmallAjdPhi[i][j]->SetLineColor(2);
+        recoilSmallAjdPhi[i][j]->SetMarkerStyle(29);
+        recoilSmallAjdPhi[i][j]->SetMarkerSize(2);
+        recoilSmallAjdPhi[i][j]->SetMarkerColor(2);
+        recoilSmallAjdPhi[i][j]->Draw("same");
+        
+        TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+        leg->SetHeader(""); // option "C" allows to center the header
+        leg->AddEntry(recoilLargeAjdPhi[i][j],"Recoil #Delta#phi |Aj| > 0.2","lep");
+        leg->AddEntry(recoilSmallAjdPhi[i][j],"Recoil #Delta#phi |Aj| < 0.2","lep");
+        leg->Draw();
+        
+        c1.SaveAs( recoilPhiOut );
+      }
+    }
+  }
+
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    std::string ajSubRecoilPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + outExt;
+    
+    TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( ajSplit[j] ) {
+        
+        recoilSubtracted[j][i]->SetLineColor(1+j);
+        recoilSubtracted[j][i]->SetMarkerStyle(29);
+        recoilSubtracted[j][i]->SetMarkerSize(2);
+        recoilSubtracted[j][i]->SetMarkerColor(1+j);
+        std::string outTitle = "A_{J}^{Balanced}-A_{J}^{Unbalanced}";
+        recoilSubtracted[j][i]->SetTitle( outTitle.c_str() );
+        recoilSubtracted[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        recoilSubtracted[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        if ( j == 0 )
+          recoilSubtracted[j][i]->Draw();
+        else
+          recoilSubtracted[j][i]->Draw("same");
+        
+        recoilSubtracted[j][i]->SetLineColor(1+j+nFiles);
+        recoilSubtracted[j][i]->SetMarkerStyle(29);
+        recoilSubtracted[j][i]->SetMarkerSize(2);
+        recoilSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
+        recoilSubtracted[j][i]->Draw("same");
+        
+        leg->SetHeader("Recoil"); // option "C" allows to center the header
+        leg->AddEntry(recoilSubtracted[j][i], analysisNames[j].c_str() ,"lep");
+        
+      }
+    }
+    leg->Draw();
+    c1.SaveAs( ajSubRecoilPhiOut );
+  }
+
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    std::string ajSubTriggerPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + outExt;
+    
+    TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( ajSplit[j] ) {
+        
+        triggerSubtracted[j][i]->SetLineColor(1+j);
+        triggerSubtracted[j][i]->SetMarkerStyle(29);
+        triggerSubtracted[j][i]->SetMarkerSize(2);
+        triggerSubtracted[j][i]->SetMarkerColor(1+j);
+        std::string outTitle = "A_{J}^{Balanced}-A_{J}^{Unbalanced}";
+        triggerSubtracted[j][i]->SetTitle( outTitle.c_str() );
+        triggerSubtracted[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        triggerSubtracted[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        if ( j == 0 )
+          triggerSubtracted[j][i]->Draw();
+        else
+          triggerSubtracted[j][i]->Draw("same");
+        
+        triggerSubtracted[j][i]->SetLineColor(1+j+nFiles);
+        triggerSubtracted[j][i]->SetMarkerStyle(29);
+        triggerSubtracted[j][i]->SetMarkerSize(2);
+        triggerSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
+        triggerSubtracted[j][i]->Draw("same");
+        
+        leg->SetHeader("Trigger"); // option "C" allows to center the header
+        leg->AddEntry(triggerSubtracted[j][i], analysisNames[j].c_str() ,"lep");
+        
+      }
+    }
+    leg->Draw();
+    c1.SaveAs( ajSubTriggerPhiOut );
+  }
   
   // ***************************
 
