@@ -673,12 +673,12 @@ int main( int argc, const char** argv) {
     recoilSmallWidthErr[i].resize( nPtBins );
     
     triggerSubYield[i].resize( nPtBins );
-    triggerSubYieldErr.resize( nPtBins );
+    triggerSubYieldErr[i].resize( nPtBins );
     triggerSubWidth[i].resize( nPtBins );
     triggerSubWidthErr[i].resize( nPtBins );
 
     recoilSubYield[i].resize( nPtBins );
-    recoilSubYieldErr.resize( nPtBins );
+    recoilSubYieldErr[i].resize( nPtBins );
     recoilSubWidth[i].resize( nPtBins );
     recoilSubWidthErr[i].resize( nPtBins );
     
@@ -837,11 +837,11 @@ int main( int argc, const char** argv) {
         recoilSmallWidthErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(3);
         
         triggerSubYield[i][j] = triggerSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
-        triggerSubYieldErr[i][j] = 0; //triggerSubFit[i][j]->GetParError(1);
-        std::cout<<"yup"<<std::endl;
+        triggerSubYieldErr[i][j] = triggerSubFit[i][j]->GetParError(1);
+
         triggerSubWidth[i][j] = triggerSubFit[i][j]->GetParameter(3);
         triggerSubWidthErr[i][j] = triggerSubFit[i][j]->GetParError(3);
-        std::cout<<"got here"<<std::endl;
+
         recoilSubYield[i][j] = recoilSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilSubYieldErr[i][j] = recoilSubFit[i][j]->GetParError(1);
         recoilSubWidth[i][j] = recoilSubFit[i][j]->GetParameter(3);
