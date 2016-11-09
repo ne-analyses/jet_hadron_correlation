@@ -840,7 +840,7 @@ int main( int argc, const char** argv) {
         triggerSubYieldErr[i][j] = 0; //triggerSubFit[i][j]->GetParError(1);
         triggerSubWidth[i][j] = triggerSubFit[i][j]->GetParameter(3);
         triggerSubWidthErr[i][j] = triggerSubFit[i][j]->GetParError(3);
-        
+        std::cout<<"got here"<<std::endl;
         recoilSubYield[i][j] = recoilSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilSubYieldErr[i][j] = recoilSubFit[i][j]->GetParError(1);
         recoilSubWidth[i][j] = recoilSubFit[i][j]->GetParameter(3);
