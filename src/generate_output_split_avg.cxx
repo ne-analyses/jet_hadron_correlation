@@ -797,16 +797,16 @@ int main( int argc, const char** argv) {
         triggerSubtracted[i][j]->Add( triggerLargeAjdPhi[i][j], -1 );
         recoilSubtracted[i][j]->Add( recoilLargeAjdPhi[i][j], -1 );
         
-        triggerSubName = "trigger_sub_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
-        recoilSubName = "recoil_sub_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
+        subTriggerName = "trigger_sub_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
+        subRecoilName = "recoil_sub_"; subRecoilName += patch::to_string(i); subRecoilName += patch::to_string(j);
         
-        triggerSubFit[i][j] = new TF1(triggerSubName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerSubFit[i][j] = new TF1(subTriggerName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerSubFit[i][j]->FixParameter( 2, 0 );
         triggerSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         triggerSubFit[i][j]->SetParameter( 3, 0.2 );
-        triggerSubFitt[i][j]->SetParameter( 6, 0.2 );
+        triggerSubFit[i][j]->SetParameter( 6, 0.2 );
         
-        recoilSubFit[i][j] = new TF1(recoilSubName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSubFit[i][j] = new TF1(subTriggerName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSubFit[i][j]->FixParameter( 2, 0 );
         recoilSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilSubFit[i][j]->SetParameter( 3, 0.2 );
