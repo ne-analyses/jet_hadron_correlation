@@ -1723,106 +1723,147 @@ int main( int argc, const char** argv) {
 
   }
   
-  return 0;
-}
-/*
   // print out the yields
   
   TCanvas* c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiGraph[i]->SetLineColor(i+1);
-    leadPhiGraph[i]->SetMarkerStyle(29);
-    leadPhiGraph[i]->SetMarkerSize(3);
-    leadPhiGraph[i]->SetMarkerColor(i+1);
-    leadPhiGraph[i]->SetTitle("Trigger Jet - #Delta#phi Fit Yield");
-    leadPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadPhiGraphLarge[i]->SetLineColor(i+1);
+    leadPhiGraphLarge[i]->SetMarkerStyle(29);
+    leadPhiGraphLarge[i]->SetMarkerSize(3);
+    leadPhiGraphLarge[i]->SetMarkerColor(i+1);
+    leadPhiGraphLarge[i]->SetTitle("Trigger Jet - #Delta#phi Fit Yield");
+    leadPhiGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    leadPhiGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiGraph[i]->Draw("P");
+      leadPhiGraphLarge[i]->Draw("P");
     else
-      leadPhiGraph[i]->Draw("P");
+      leadPhiGraphLarge[i]->Draw("P");
+    
+    if ( ajSplit[i] ) {
+      leadPhiGraphSmall[i]->SetLineColor(i+1 + nFiles);
+      leadPhiGraphSmall[i]->SetMarkerStyle(29);
+      leadPhiGraphSmall[i]->SetMarkerSize(3);
+      leadPhiGraphSmall[i]->SetMarkerColor(i+1 + nFiles);
+      leadPhiGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/leadphiyield.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiDifGraph[i]->SetLineColor(i+1);
-    leadPhiDifGraph[i]->SetMarkerStyle(29);
-    leadPhiDifGraph[i]->SetMarkerSize(3);
-    leadPhiDifGraph[i]->SetMarkerColor(i+1);
-    leadPhiDifGraph[i]->SetTitle("Trigger Jet - #eta Subtracted #Delta#phi Fit Yield");
-    leadPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadPhiDifGraphLarge[i]->SetLineColor(i+1);
+    leadPhiDifGraphLarge[i]->SetMarkerStyle(29);
+    leadPhiDifGraphLarge[i]->SetMarkerSize(3);
+    leadPhiDifGraphLarge[i]->SetMarkerColor(i+1);
+    leadPhiDifGraphLarge[i]->SetTitle("Trigger Jet - #eta Subtracted #Delta#phi Fit Yield");
+    leadPhiDifGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiDifGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    leadPhiDifGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadPhiDifGraph[i]->Draw("P");
+      leadPhiDifGraphLarge[i]->Draw("P");
     else
-      leadPhiDifGraph[i]->Draw("P");
+      leadPhiDifGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      leadPhiDifGraphSmall[i]->SetLineColor(i+1+nFiles);
+      leadPhiDifGraphSmall[i]->SetMarkerStyle(29);
+      leadPhiDifGraphSmall[i]->SetMarkerSize(3);
+      leadPhiDifGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      leadPhiDifGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/leadphidifyield.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadEtaGraph[i]->SetLineColor(i+1);
-    leadEtaGraph[i]->SetMarkerStyle(29);
-    leadEtaGraph[i]->SetMarkerSize(3);
-    leadEtaGraph[i]->SetMarkerColor(i+1);
-    leadEtaGraph[i]->SetTitle("Trigger Jet - #Delta#eta Fit Yield");
-    leadEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadEtaGraphLarge[i]->SetLineColor(i+1);
+    leadEtaGraphLarge[i]->SetMarkerStyle(29);
+    leadEtaGraphLarge[i]->SetMarkerSize(3);
+    leadEtaGraphLarge[i]->SetMarkerColor(i+1);
+    leadEtaGraphLarge[i]->SetTitle("Trigger Jet - #Delta#eta Fit Yield");
+    leadEtaGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadEtaGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    leadEtaGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadEtaGraph[i]->Draw("P");
+      leadEtaGraphLarge[i]->Draw("P");
     else
-      leadEtaGraph[i]->Draw("P");
+      leadEtaGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      leadEtaGraphSmall[i]->SetLineColor(i+1+nFiles);
+      leadEtaGraphSmall[i]->SetMarkerStyle(29);
+      leadEtaGraphSmall[i]->SetMarkerSize(3);
+      leadEtaGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      leadEtaGraphSmall[i]->Draw("P");
+
+    }
   }
   c1->SaveAs("tmp/leadetayield.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subPhiGraph[i]->SetLineColor(i+1);
-    subPhiGraph[i]->SetMarkerStyle(29);
-    subPhiGraph[i]->SetMarkerSize(3);
-    subPhiGraph[i]->SetMarkerColor(i+1);
-    subPhiGraph[i]->SetTitle("Recoil Jet - #Delta#phi Fit Yield");
-    subPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subPhiGraphLarge[i]->SetLineColor(i+1);
+    subPhiGraphLarge[i]->SetMarkerStyle(29);
+    subPhiGraphLarge[i]->SetMarkerSize(3);
+    subPhiGraphLarge[i]->SetMarkerColor(i+1);
+    subPhiGraphLarge[i]->SetTitle("Recoil Jet - #Delta#phi Fit Yield");
+    subPhiGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    subPhiGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiGraph[i]->Draw("P");
+      subPhiGraphLarge[i]->Draw("P");
     else
-      subPhiGraph[i]->Draw("P");
+      subPhiGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      subPhiGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subPhiGraphSmall[i]->SetMarkerStyle(29);
+      subPhiGraphSmall[i]->SetMarkerSize(3);
+      subPhiGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subPhiGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/subphiyield.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subPhiDifGraph[i]->SetLineColor(i+1);
-    subPhiDifGraph[i]->SetMarkerStyle(29);
-    subPhiDifGraph[i]->SetMarkerSize(3);
-    subPhiDifGraph[i]->SetMarkerColor(i+1);
-    subPhiDifGraph[i]->SetTitle("Recoil Jet - #eta Subtracted #Delta#phi Fit Yield");
-    subPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subPhiDifGraphLarge[i]->SetLineColor(i+1);
+    subPhiDifGraphLarge[i]->SetMarkerStyle(29);
+    subPhiDifGraphLarge[i]->SetMarkerSize(3);
+    subPhiDifGraphLarge[i]->SetMarkerColor(i+1);
+    subPhiDifGraphLarge[i]->SetTitle("Recoil Jet - #eta Subtracted #Delta#phi Fit Yield");
+    subPhiDifGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiDifGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    subPhiDifGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      subPhiDifGraph[i]->Draw("P");
+      subPhiDifGraphLarge[i]->Draw("P");
     else
-      subPhiDifGraph[i]->Draw("P");
+      subPhiDifGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      subPhiDifGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subPhiDifGraphSmall[i]->SetMarkerStyle(29);
+      subPhiDifGraphSmall[i]->SetMarkerSize(3);
+      subPhiDifGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subPhiDifGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/subphidifyield.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subEtaGraph[i]->SetLineColor(i+1);
-    subEtaGraph[i]->SetMarkerStyle(29);
-    subEtaGraph[i]->SetMarkerSize(3);
-    subEtaGraph[i]->SetMarkerColor(i+1);
-    subEtaGraph[i]->SetTitle("Recoil Jet - #Delta#eta Fit Yield");
-    subEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subEtaGraphLarge[i]->SetLineColor(i+1);
+    subEtaGraphLarge[i]->SetMarkerStyle(29);
+    subEtaGraphLarge[i]->SetMarkerSize(3);
+    subEtaGraphLarge[i]->SetMarkerColor(i+1);
+    subEtaGraphLarge[i]->SetTitle("Recoil Jet - #Delta#eta Fit Yield");
+    subEtaGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subEtaGraphLarge[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
+    subEtaGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0) {
-      subEtaGraph[i]->Draw("P");
+      subEtaGraphLarge[i]->Draw("P");
     }
     else {
-      subEtaGraph[i]->Draw("P");
+      subEtaGraphLarge[i]->Draw("P");
+    }
+    if ( ajSplit[i] ) {
+      subEtaGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subEtaGraphSmall[i]->SetMarkerStyle(29);
+      subEtaGraphSmall[i]->SetMarkerSize(3);
+      subEtaGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subEtaGraphSmall[i]->Draw("P");
     }
   }
   c1->SaveAs("tmp/subetayield.pdf");
@@ -1830,98 +1871,140 @@ int main( int argc, const char** argv) {
   // now print out widths
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiWidthGraph[i]->SetLineColor(i+1);
-    leadPhiWidthGraph[i]->SetMarkerStyle(29);
-    leadPhiWidthGraph[i]->SetMarkerSize(3);
-    leadPhiWidthGraph[i]->SetMarkerColor(i+1);
-    leadPhiWidthGraph[i]->SetTitle("Trigger Jet #Delta#phi - Gaussian Widths");
-    leadPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    leadPhiWidthGraphLarge[i]->SetLineColor(i+1);
+    leadPhiWidthGraphLarge[i]->SetMarkerStyle(29);
+    leadPhiWidthGraphLarge[i]->SetMarkerSize(3);
+    leadPhiWidthGraphLarge[i]->SetMarkerColor(i+1);
+    leadPhiWidthGraphLarge[i]->SetTitle("Trigger Jet #Delta#phi - Gaussian Widths");
+    leadPhiWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    leadPhiWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiWidthGraph[i]->Draw("P");
+      leadPhiWidthGraphLarge[i]->Draw("P");
     else
-      leadPhiWidthGraph[i]->Draw("P");
+      leadPhiWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      leadPhiWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      leadPhiWidthGraphSmall[i]->SetMarkerStyle(29);
+      leadPhiWidthGraphSmall[i]->SetMarkerSize(3);
+      leadPhiWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      leadPhiWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/leadphiwidth.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiDifWidthGraph[i]->SetLineColor(i+1);
-    leadPhiDifWidthGraph[i]->SetMarkerStyle(29);
-    leadPhiDifWidthGraph[i]->SetMarkerSize(3);
-    leadPhiDifWidthGraph[i]->SetMarkerColor(i+1);
-    leadPhiDifWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
-    leadPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    leadPhiDifWidthGraphLarge[i]->SetLineColor(i+1);
+    leadPhiDifWidthGraphLarge[i]->SetMarkerStyle(29);
+    leadPhiDifWidthGraphLarge[i]->SetMarkerSize(3);
+    leadPhiDifWidthGraphLarge[i]->SetMarkerColor(i+1);
+    leadPhiDifWidthGraphLarge[i]->SetTitle("Trigger Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
+    leadPhiDifWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadPhiDifWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    leadPhiDifWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadPhiDifWidthGraph[i]->Draw("P");
+      leadPhiDifWidthGraphLarge[i]->Draw("P");
     else
-      leadPhiDifWidthGraph[i]->Draw("P");
+      leadPhiDifWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      leadPhiDifWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      leadPhiDifWidthGraphSmall[i]->SetMarkerStyle(29);
+      leadPhiDifWidthGraphSmall[i]->SetMarkerSize(3);
+      leadPhiDifWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      leadPhiDifWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/leadphidifwidth.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    leadEtaWidthGraph[i]->SetLineColor(i+1);
-    leadEtaWidthGraph[i]->SetMarkerStyle(29);
-    leadEtaWidthGraph[i]->SetMarkerSize(3);
-    leadEtaWidthGraph[i]->SetMarkerColor(i+1);
-    leadEtaWidthGraph[i]->SetTitle("Trigger Jet #Delta#eta - Gaussian Widths");
-    leadEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    leadEtaWidthGraphLarge[i]->SetLineColor(i+1);
+    leadEtaWidthGraphLarge[i]->SetMarkerStyle(29);
+    leadEtaWidthGraphLarge[i]->SetMarkerSize(3);
+    leadEtaWidthGraphLarge[i]->SetMarkerColor(i+1);
+    leadEtaWidthGraphLarge[i]->SetTitle("Trigger Jet #Delta#eta - Gaussian Widths");
+    leadEtaWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    leadEtaWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    leadEtaWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      leadEtaWidthGraph[i]->Draw("P");
+      leadEtaWidthGraphLarge[i]->Draw("P");
     else
-      leadEtaWidthGraph[i]->Draw("P");
+      leadEtaWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      leadEtaWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      leadEtaWidthGraphSmall[i]->SetMarkerStyle(29);
+      leadEtaWidthGraphSmall[i]->SetMarkerSize(3);
+      leadEtaWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      leadEtaWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/leadetawidth.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subPhiWidthGraph[i]->SetLineColor(i+1);
-    subPhiWidthGraph[i]->SetMarkerStyle(29);
-    subPhiWidthGraph[i]->SetMarkerSize(3);
-    subPhiWidthGraph[i]->SetMarkerColor(i+1);
-    subPhiWidthGraph[i]->SetTitle("Recoil Jet #Delta#phi - Gaussian Widths");
-    subPhiWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    subPhiWidthGraphLarge[i]->SetLineColor(i+1);
+    subPhiWidthGraphLarge[i]->SetMarkerStyle(29);
+    subPhiWidthGraphLarge[i]->SetMarkerSize(3);
+    subPhiWidthGraphLarge[i]->SetMarkerColor(i+1);
+    subPhiWidthGraphLarge[i]->SetTitle("Recoil Jet #Delta#phi - Gaussian Widths");
+    subPhiWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    subPhiWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiWidthGraph[i]->Draw("P");
+      subPhiWidthGraphLarge[i]->Draw("P");
     else
-      subPhiWidthGraph[i]->Draw("P");
+      subPhiWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      subPhiWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subPhiWidthGraphSmall[i]->SetMarkerStyle(29);
+      subPhiWidthGraphSmall[i]->SetMarkerSize(3);
+      subPhiWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subPhiWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/subphiwidth.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subPhiDifWidthGraph[i]->SetLineColor(i+1);
-    subPhiDifWidthGraph[i]->SetMarkerStyle(29);
-    subPhiDifWidthGraph[i]->SetMarkerSize(3);
-    subPhiDifWidthGraph[i]->SetMarkerColor(i+1);
-    subPhiDifWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
-    subPhiDifWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    subPhiDifWidthGraphLarge[i]->SetLineColor(i+1);
+    subPhiDifWidthGraphLarge[i]->SetMarkerStyle(29);
+    subPhiDifWidthGraphLarge[i]->SetMarkerSize(3);
+    subPhiDifWidthGraphLarge[i]->SetMarkerColor(i+1);
+    subPhiDifWidthGraphLarge[i]->SetTitle("Recoil Jet #Delta#eta Subtracted #Delta#phi - Gaussian Widths");
+    subPhiDifWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subPhiDifWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    subPhiDifWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subPhiDifWidthGraph[i]->Draw("P");
+      subPhiDifWidthGraphLarge[i]->Draw("P");
     else
-      subPhiDifWidthGraph[i]->Draw("P");
+      subPhiDifWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      subPhiDifWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subPhiDifWidthGraphSmall[i]->SetMarkerStyle(29);
+      subPhiDifWidthGraphSmall[i]->SetMarkerSize(3);
+      subPhiDifWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subPhiDifWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/subphidifwidth.pdf");
   c1 = new TCanvas;
   for ( int i = 0; i < nFiles; ++i ) {
-    subEtaWidthGraph[i]->SetLineColor(i+1);
-    subEtaWidthGraph[i]->SetMarkerStyle(29);
-    subEtaWidthGraph[i]->SetMarkerSize(3);
-    subEtaWidthGraph[i]->SetMarkerColor(i+1);
-    subEtaWidthGraph[i]->SetTitle("Recoil Jet #Delta#eta - Gaussian Widths");
-    subEtaWidthGraph[i]->GetXaxis()->SetTitle("p_{T}");
-    subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
-    subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
+    subEtaWidthGraphLarge[i]->SetLineColor(i+1);
+    subEtaWidthGraphLarge[i]->SetMarkerStyle(29);
+    subEtaWidthGraphLarge[i]->SetMarkerSize(3);
+    subEtaWidthGraphLarge[i]->SetMarkerColor(i+1);
+    subEtaWidthGraphLarge[i]->SetTitle("Recoil Jet #Delta#eta - Gaussian Widths");
+    subEtaWidthGraphLarge[i]->GetXaxis()->SetTitle("p_{T}");
+    subEtaWidthGraphLarge[i]->GetYaxis()->SetTitle("Width");
+    subEtaWidthGraphLarge[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0)
-      subEtaWidthGraph[i]->Draw("P");
+      subEtaWidthGraphLarge[i]->Draw("P");
     else
-      subEtaWidthGraph[i]->Draw("P");
+      subEtaWidthGraphLarge[i]->Draw("P");
+    if ( ajSplit[i] ) {
+      subEtaWidthGraphSmall[i]->SetLineColor(i+1+nFiles);
+      subEtaWidthGraphSmall[i]->SetMarkerStyle(29);
+      subEtaWidthGraphSmall[i]->SetMarkerSize(3);
+      subEtaWidthGraphSmall[i]->SetMarkerColor(i+1+nFiles);
+      subEtaWidthGraphSmall[i]->Draw("P");
+    }
   }
   c1->SaveAs("tmp/subetawidth.pdf");
   
@@ -1929,28 +2012,47 @@ int main( int argc, const char** argv) {
   // now put leading and subleading yields on their own plots
   for ( int i = 0; i < nFiles; ++i ) {
     c1 = new TCanvas();
-    leadPhiGraph[i]->SetLineColor(1);
-    leadPhiGraph[i]->SetMarkerStyle(29);
-    leadPhiGraph[i]->SetMarkerSize(2);
-    leadPhiGraph[i]->SetMarkerColor(1);
-    leadPhiDifGraph[i]->SetLineColor(2);
-    leadPhiDifGraph[i]->SetMarkerStyle(20);
-    leadPhiDifGraph[i]->SetMarkerSize(2);
-    leadPhiDifGraph[i]->SetMarkerColor(2);
-    leadEtaGraph[i]->SetLineColor(3);
-    leadEtaGraph[i]->SetMarkerStyle(21);
-    leadEtaGraph[i]->SetMarkerSize(2);
-    leadEtaGraph[i]->SetMarkerColor(3);
+    leadPhiGraphLarge[i]->SetLineColor(1);
+    leadPhiGraphLarge[i]->SetMarkerStyle(29);
+    leadPhiGraphLarge[i]->SetMarkerSize(2);
+    leadPhiGraphLarge[i]->SetMarkerColor(1);
+    leadPhiDifGraphLarge[i]->SetLineColor(2);
+    leadPhiDifGraphLarge[i]->SetMarkerStyle(20);
+    leadPhiDifGraphLarge[i]->SetMarkerSize(2);
+    leadPhiDifGraphLarge[i]->SetMarkerColor(2);
+    leadEtaGraphLarge[i]->SetLineColor(3);
+    leadEtaGraphLarge[i]->SetMarkerStyle(21);
+    leadEtaGraphLarge[i]->SetMarkerSize(2);
+    leadEtaGraphLarge[i]->SetMarkerColor(3);
     
-    leadPhiGraph[i]->Draw("P");
-    leadPhiDifGraph[i]->Draw("P");
-    leadEtaGraph[i]->Draw("P");
+    leadPhiGraphSmall[i]->SetLineColor(4);
+    leadPhiGraphSmall[i]->SetMarkerStyle(29);
+    leadPhiGraphSmall[i]->SetMarkerSize(2);
+    leadPhiGraphSmall[i]->SetMarkerColor(4);
+    leadPhiDifGraphSmall[i]->SetLineColor(5);
+    leadPhiDifGraphSmall[i]->SetMarkerStyle(20);
+    leadPhiDifGraphSmall[i]->SetMarkerSize(2);
+    leadPhiDifGraphSmall[i]->SetMarkerColor(5);
+    leadEtaGraphSmall[i]->SetLineColor(6);
+    leadEtaGraphSmall[i]->SetMarkerStyle(21);
+    leadEtaGraphSmall[i]->SetMarkerSize(2);
+    leadEtaGraphSmall[i]->SetMarkerColor(7);
+    
+    leadPhiGraphLarge[i]->Draw("P");
+    leadPhiDifGraphLarge[i]->Draw("P");
+    leadEtaGraphLarge[i]->Draw("P");
+    leadPhiGraphSmall[i]->Draw("P");
+    leadPhiDifGraphSmall[i]->Draw("P");
+    leadEtaGraphSmall[i]->Draw("P");
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     leg->SetHeader("Trigger Jet Yields"); // option "C" allows to center the header
-    leg->AddEntry(leadPhiGraph[i],"#Delta#phi","lep");
-    leg->AddEntry(leadPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
-    leg->AddEntry(leadEtaGraph[i],"#Delta#eta","lep");
+    leg->AddEntry(leadPhiGraphLarge[i],"#Delta#phi |Aj| > 0.2","lep");
+    leg->AddEntry(leadPhiDifGraphLarge[i],"#Delta#phi #Delta#eta subtracted |Aj| > 0.2","lep");
+    leg->AddEntry(leadEtaGraphLarge[i],"#Delta#eta |Aj| > 0.2","lep");
+    leg->AddEntry(leadPhiGraphSmall[i],"#Delta#phi |Aj| < 0.2","lep");
+    leg->AddEntry(leadPhiDifGraphSmall[i],"#Delta#phi #Delta#eta subtracted |Aj| < 0.2","lep");
+    leg->AddEntry(leadEtaGraphSmall[i],"#Delta#eta |Aj| < 0.2","lep");
     leg->Draw();
     
     std::string graphOutName = "tmp/graph_out_"+analysisNames[i]+"_lead.pdf";
@@ -1958,28 +2060,47 @@ int main( int argc, const char** argv) {
     c1->SaveAs( graphOutName.c_str() );
     
     c1 = new TCanvas();
-    subPhiGraph[i]->SetLineColor(1);
-    subPhiGraph[i]->SetMarkerStyle(29);
-    subPhiGraph[i]->SetMarkerSize(2);
-    subPhiGraph[i]->SetMarkerColor(1);
-    subPhiDifGraph[i]->SetLineColor(2);
-    subPhiDifGraph[i]->SetMarkerStyle(20);
-    subPhiDifGraph[i]->SetMarkerSize(2);
-    subPhiDifGraph[i]->SetMarkerColor(2);
-    subEtaGraph[i]->SetLineColor(3);
-    subEtaGraph[i]->SetMarkerStyle(21);
-    subEtaGraph[i]->SetMarkerSize(2);
-    subEtaGraph[i]->SetMarkerColor(3);
-    
-    subPhiGraph[i]->Draw("P");
-    subPhiDifGraph[i]->Draw("P");
-    subEtaGraph[i]->Draw("P");
+    subPhiGraphLarge[i]->SetLineColor(1);
+    subPhiGraphLarge[i]->SetMarkerStyle(29);
+    subPhiGraphLarge[i]->SetMarkerSize(2);
+    subPhiGraphLarge[i]->SetMarkerColor(1);
+    subPhiDifGraphLarge[i]->SetLineColor(2);
+    subPhiDifGraphLarge[i]->SetMarkerStyle(20);
+    subPhiDifGraphLarge[i]->SetMarkerSize(2);
+    subPhiDifGraphLarge[i]->SetMarkerColor(2);
+    subEtaGraphLarge[i]->SetLineColor(3);
+    subEtaGraphLarge[i]->SetMarkerStyle(21);
+    subEtaGraphLarge[i]->SetMarkerSize(2);
+    subEtaGraphLarge[i]->SetMarkerColor(3);
+
+    subPhiGraphSmall[i]->SetLineColor(4);
+    subPhiGraphSmall[i]->SetMarkerStyle(29);
+    subPhiGraphSmall[i]->SetMarkerSize(2);
+    subPhiGraphSmall[i]->SetMarkerColor(4);
+    subPhiDifGraphSmall[i]->SetLineColor(5);
+    subPhiDifGraphSmall[i]->SetMarkerStyle(20);
+    subPhiDifGraphSmall[i]->SetMarkerSize(2);
+    subPhiDifGraphSmall[i]->SetMarkerColor(5);
+    subEtaGraphSmall[i]->SetLineColor(6);
+    subEtaGraphSmall[i]->SetMarkerStyle(21);
+    subEtaGraphSmall[i]->SetMarkerSize(2);
+    subEtaGraphSmall[i]->SetMarkerColor(6);
+
+    subPhiGraphLarge[i]->Draw("P");
+    subPhiDifGraphLarge[i]->Draw("P");
+    subEtaGraphLarge[i]->Draw("P");
+    subPhiGraphSmall[i]->Draw("P");
+    subPhiDifGraphSmall[i]->Draw("P");
+    subEtaGraphSmall[i]->Draw("P");
     
     leg = new TLegend(0.6,0.7,0.9,0.9);
     leg->SetHeader("Recoil Jet Yields"); // option "C" allows to center the header
-    leg->AddEntry(subPhiGraph[i],"#Delta#phi","lep");
-    leg->AddEntry(subPhiDifGraph[i],"#Delta#phi #Delta#eta subtracted","lep");
-    leg->AddEntry(subEtaGraph[i],"#Delta#eta","lep");
+    leg->AddEntry(subPhiGraphLarge[i],"#Delta#phi |Aj| > 0.2","lep");
+    leg->AddEntry(subPhiDifGraphLarge[i],"#Delta#phi #Delta#eta subtracted |Aj| > 0.2","lep");
+    leg->AddEntry(subEtaGraphLarge[i],"#Delta#eta |Aj| > 0.2","lep");
+    leg->AddEntry(subPhiGraphLarge[i],"#Delta#phi |Aj| < 0.2","lep");
+    leg->AddEntry(subPhiDifGraphLarge[i],"#Delta#phi #Delta#eta subtracted |Aj| < 0.2","lep");
+    leg->AddEntry(subEtaGraphLarge[i],"#Delta#eta |Aj| < 0.2","lep");
     leg->Draw();
     
     graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
@@ -1989,20 +2110,32 @@ int main( int argc, const char** argv) {
     // joern asked for dphi without subtraction overlayed
     graphOutName = "tmp/dphi_trig_recoil_yield_"+analysisNames[i]+".pdf";
     c1 = new TCanvas();
-    leadPhiGraph[i]->SetTitle("");
-    leadPhiGraph[i]->SetLineColor(1);
-    leadPhiGraph[i]->SetMarkerColor(1);
-    subPhiGraph[i]->SetLineColor(7);
-    subPhiGraph[i]->SetMarkerColor(7);
-    subPhiGraph[i]->SetMarkerStyle(20);
+    leadPhiGraphLarge[i]->SetTitle("");
+    leadPhiGraphLarge[i]->SetLineColor(1);
+    leadPhiGraphLarge[i]->SetMarkerColor(1);
+    subPhiGraphLarge[i]->SetLineColor(7);
+    subPhiGraphLarge[i]->SetMarkerColor(7);
+    subPhiGraphLarge[i]->SetMarkerStyle(20);
     
-    leadPhiGraph[i]->Draw("P");
-    subPhiGraph[i]->Draw("P");
+    leadPhiGraphSmall[i]->SetTitle("");
+    leadPhiGraphSmall[i]->SetLineColor(2);
+    leadPhiGraphSmall[i]->SetMarkerColor(2);
+    subPhiGraphSmall[i]->SetLineColor(8);
+    subPhiGraphSmall[i]->SetMarkerColor(8);
+    subPhiGraphSmall[i]->SetMarkerStyle(21);
+    
+    leadPhiGraphLarge[i]->Draw("P");
+    subPhiGraphLarge[i]->Draw("P");
+    leadPhiGraphSmall[i]->Draw("P");
+    subPhiGraphSmall[i]->Draw("P");
+
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
     leg->SetHeader("#Delta#phi Jet Yields");
-    leg->AddEntry(leadPhiGraph[i],"Trigger","lep");
-    leg->AddEntry(subPhiGraph[i],"Recoil","lep");
+    leg->AddEntry(leadPhiGraphLarge[i],"Trigger |Aj| > 0.2","lep");
+    leg->AddEntry(subPhiGraphLarge[i],"Recoil |Aj| > 0.2","lep");
+    leg->AddEntry(leadPhiGraphSmall[i],"Trigger |Aj| < 0.2","lep");
+    leg->AddEntry(subPhiGraphSmall[i],"Recoil |Aj| < 0.2","lep");
     leg->Draw();
     
     c1->SaveAs( graphOutName.c_str() );
@@ -2011,4 +2144,3 @@ int main( int argc, const char** argv) {
 
   return 0;
 }
-*/
