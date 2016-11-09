@@ -437,41 +437,53 @@ int main( int argc, const char** argv) {
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorrLarge;
   std::vector<std::vector<TH2D*> > recombinedCorrSmall;
-  std::vector<std::vector<TH2D*> > recombinedPre;
+  std::vector<std::vector<TH2D*> > recombinedPreLarge;
+  std::vector<std::vector<TH2D*> > recombinedPreSmall;
   std::vector<std::vector<TH2D*> > recombinedSubLarge;
   std::vector<std::vector<TH2D*> > recombinedSubSmall;
-  std::vector<std::vector<TH2D*> > recombinedSubPre;
+  std::vector<std::vector<TH2D*> > recombinedSubPreLarge;
+  std::vector<std::vector<TH2D*> > recombinedSubPreSmall;
+  
   recombinedCorrLarge.resize( nFiles );
   recombinedCorrSmall.resize( nFiles );
-  recombinedPre.resize( nFiles );
+  recombinedPreSmall.resize( nFiles );
+  recombinedPreSmall.resize( nFiles );
   recombinedSubLarge.resize( nFiles );
   recombinedSubSmall.resize( nFiles );
-  recombinedSubPre.resize( nFiles );
+  recombinedSubPreLarge.resize( nFiles );
+  recombinedSubPreSmall.resize( nFiles );
   
   for (int i = 0; i < nFiles; ++ i ) {
     
     recombinedCorrLarge[i].resize( nPtBins );
     recombinedCorrSmall[i].resize( nPtBins );
-    recombinedPre[i].resize( nPtBins );
+    recombinedPreLarge[i].resize( nPtBins );
+    recombinedPreSmall[i].resize( nPtBins );
     recombinedSubLarge[i].resize( nPtBins );
     recombinedSubSmall[i].resize( nPtBins );
-    recombinedSubPre[i].resize( nPtBins );
+    recombinedSubPreLarge[i].resize( nPtBins );
+    recombinedSubPreSmall[i].resize( nPtBins );
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
       std::string corrName = analysisNames[i] + " " + ptBinString[l];
       std::string corrSmallName = "";
       std::string preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
-      
+      std::string preSmallName = "";
       std::string subName = analysisNames[i] + "_sub " + ptBinString[l];
       std::string subSmallName = "";
       std::string subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
+      std::string subPreSmallName = "";
       
       if ( ajSplit[i] ) {
         corrName = "large " + analysisNames[i] + " " + ptBinString[l];
         corrSmallName = "small " + analysisNames[i] + " " + ptBinString[l];
         subName = "large " + analysisNames[i] + "_sub " + ptBinString[l];
         subSmallName = "small " + analysisNames[i] + "_sub " + ptBinString[l];
+        preName = "large pre_" + analysisNames[i] + " " + ptBinString[l];
+        preSmallName = "small pre_" + analysisNames[i] + " " + ptBinString[l];
+        subPreName = "large pre_" + analysisNames[i] + "_sub " + ptBinString[l];
+        subPreSmallName = "small pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       }
       
       recombinedCorrLarge[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
@@ -487,6 +499,10 @@ int main( int argc, const char** argv) {
         
         recombinedSubSmall[i][l] = new TH2D( subSmallName.c_str(), subSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
         
+        recombinedPreSmall[i][l] = new TH2D( preSmallName.c_str(), preSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        
+        recombinedSubPreSmall[i][l] = new TH2D( subPreSmallName.c_str(), subPreSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        
         
       }
       
@@ -496,7 +512,7 @@ int main( int argc, const char** argv) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
             if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
+              recombinedPreLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
               
               corrCentVzPtLarge[i][j][k][l]->Divide( weightedMix[i][l] );
             
@@ -504,7 +520,7 @@ int main( int argc, const char** argv) {
             }
             if ( ajSplit[i] && weightedMix[i][l]->GetEntries() != 0 && corrCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
+              recombinedPreSmall[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
               
               corrCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][l] );
               
@@ -512,7 +528,7 @@ int main( int argc, const char** argv) {
             }
             if ( subCentVzPtLarge[i][j][k][l]->GetEntries() != 0 && weightedSub[i][l]->GetEntries() != 0 ) {
               
-              recombinedSubPre[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+              recombinedSubPreLarge[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
               
               subCentVzPtLarge[i][j][k][l]->Divide( weightedSub[i][l] );
               
@@ -521,7 +537,7 @@ int main( int argc, const char** argv) {
             }
             if ( ajSplit[i] && weightedMix[i][l]->GetEntries() != 0 && subCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
+              recombinedSubPreSmall[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
               
               subCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][l] );
               
@@ -536,7 +552,7 @@ int main( int argc, const char** argv) {
           for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
             if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
+              recombinedPreLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
               
               corrCentVzPtLarge[i][j][k][l]->Divide( weightedMix[i][2] );
               
@@ -544,7 +560,7 @@ int main( int argc, const char** argv) {
             }
             if ( ajSplit[i] && weightedMix[i][2]->GetEntries() != 0 && corrCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
+              recombinedPreSmall[i][l]->Add( corrCentVzPtSmall[i][j][k][l] );
               
               corrCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][2] );
               
@@ -552,7 +568,7 @@ int main( int argc, const char** argv) {
             }
             if ( weightedSub[i][2]->GetEntries() != 0 && subCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedSubPre[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
+              recombinedSubPreLarge[i][l]->Add( subCentVzPtLarge[i][j][k][l] );
               
               subCentVzPtLarge[i][j][k][l]->Divide( weightedSub[i][2] );
               
@@ -560,7 +576,7 @@ int main( int argc, const char** argv) {
             }
             if ( ajSplit[i] && weightedMix[i][2]->GetEntries() != 0 && subCentVzPtSmall[i][j][k][l]->GetEntries() != 0 ) {
               
-              recombinedPre[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
+              recombinedSubPreSmall[i][l]->Add( subCentVzPtSmall[i][j][k][l] );
               
               subCentVzPtSmall[i][j][k][l]->Divide( weightedMix[i][2] );
               
@@ -573,7 +589,82 @@ int main( int argc, const char** argv) {
     }
   }
   
-
+  // Testing Aj Small - Aj Large
+  // ***************************
+  std::vector<std::vector<TH1D*> > triggerSmallAjdPhi( nFiles );
+  std::vector<std::vector<TH1D*> > triggerLargeAjdPhi( nFiles );
+  std::vector<std::vector<TH1D*> > recoilSmallAjdPhi( nFiles );
+  std::vector<std::vector<TH1D*> > recoilLargeAjdPhi( nFiles );
+  for ( int i = 0; i < nFiles; ++i ) {
+    
+    triggerSmallAjdPhi[i].resize( nPtBins );
+    triggerLargeAjdPhi[i].resize( nPtBins );
+    recoilSmallAjdPhi[i].resize( nPtBins );
+    recoilLargeAjdPhi[i].resize( nPtBins );
+    
+    if ( ajSplit[i] ) {
+      // for normalization
+      double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
+      double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
+      
+      for ( int j = 0; j < nPtBins; ++j ) {
+        triggerSmallAjdPhi[i][j] = ((TH1D*) recombinedPreSmall[i][j]->ProjectionY())->Clone();
+        triggerLargeAjdPhi[i][j] = ((TH1D*) recombinedPreLarge[i][j]->ProjectionY())->Clone();
+        recoilSmallAjdPhi[i][j] = ((TH1D*) recombinedSubPreSmall[i][j]->ProjectionY())->Clone();
+        recoilLargeAjdPhi[i][j] = ((TH1D*) recombinedSubPreLarge[i][j]->ProjectionY())->Clone();
+        
+        // Fit and subtract
+        std::string triggerLargeName = "tmp_trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
+        std::string triggerSmallName = "tmp_trigger_small_"; triggerSmallName += patch::to_string(i); triggerSmallName += patch::to_string(j);
+        std::string recoilSmallName = "tmp_recoil_small_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
+        std::string recoilLargeName = "tmp_recoil_large_" recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
+        std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+        double phiMin = -corrAnalysis::pi/2.0;
+        double phiMax = 3.0*corrAnalysis::pi/2.0;
+        
+        TF1* triggerLargeTmpFit = new TF1(triggerLargeName, phiForm, phiMin, phiMax);
+        triggerLargeTmpFit->FixParameter( 2, 0 );
+        triggerLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerLargeTmpFit->SetParameter( 3, 0.2 );
+        triggerLargeTmpFit->SetParameter( 6, 0.2 );
+        TF1* triggerSmallTmpFit = new TF1(triggerSmallName, phiForm, phiMin, phiMax);
+        triggerSmallTmpFit->FixParameter( 2, 0 );
+        triggerSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerSmallTmpFit->SetParameter( 3, 0.2 );
+        triggerSmallTmpFit->SetParameter( 6, 0.2 );
+        TF1* recoilLargeTmpFit = new TF1(recoilLargeName, phiForm, phiMin, phiMax);
+        recoilLargeTmpFit->FixParameter( 2, 0 );
+        recoilLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilLargeTmpFit->SetParameter( 3, 0.2 );
+        recoilLargeTmpFit->SetParameter( 6, 0.2 );
+        TF1* recoilSmallTmpFit = new TF1(recoilSmallName, phiForm, phiMin, phiMax);
+        recoilSmallTmpFit->FixParameter( 2, 0 );
+        recoilSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilSmallTmpFit->SetParameter( 3, 0.2 );
+        recoilSmallTmpFit->SetParameter( 6, 0.2 );
+        
+        
+        // fit
+        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RM" );
+        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RM" );
+        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RM" );
+        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RM" );
+        
+        // subtract
+        TF1* subFunction = new TF1("subFunc", "[0]", phiMin, phiMax );
+        subFunction->SetParameter( 0, triggerLargeTmpFit->GetParameter(0) );
+        triggerLargeAjdPhi[i][j]->Add( subFunction, -1 );
+        subFunction->SetParameter( 0, triggerSmallTmpFit->GetParameter(0) );
+        triggerSmallAjdPhi[i][j]->Add( subFunction, -1 );
+        subFunction->SetParameter( 0, recoilSmallTmpFit->GetParameter(0) );
+        recoilSmallAjdPhi[i][j]->Add( subFunction, -1 );
+        subFunction->SetParameter( 0, recoilLargeTmpFit->GetParameter(0) );
+        recoilLargeAjdPhi[i][j]->Add( subFunction, -1 );
+      }
+    }
+  }
+  
+  // ***************************
 
   // get the reduced eta and phi ranges for projections
   double etaMax = 1.2;
