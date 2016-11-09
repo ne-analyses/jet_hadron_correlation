@@ -638,7 +638,7 @@ int main( int argc, const char** argv) {
   
   
   for ( int i = 0; i < nFiles; ++i ) {
-    
+    std::cout<<"got here"<<std::endl;
     triggerSmallAjdPhi[i].resize( nPtBins );
     triggerLargeAjdPhi[i].resize( nPtBins );
     recoilSmallAjdPhi[i].resize( nPtBins );
@@ -683,11 +683,13 @@ int main( int argc, const char** argv) {
     recoilSubWidthErr[i].resize( nPtBins );
     
     if ( ajSplit[i] ) {
+      std::cout<<"and here"<<std::endl;
       // for normalization
       double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
       double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
       
       for ( int j = 0; j < nPtBins; ++j ) {
+        std::cout<<"and here...."<<std::endl;
         triggerSmallAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedPreSmall[i][j]->ProjectionY())->Clone();
         triggerLargeAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedPreLarge[i][j]->ProjectionY())->Clone();
         recoilSmallAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedSubPreSmall[i][j]->ProjectionY())->Clone();
@@ -701,7 +703,7 @@ int main( int argc, const char** argv) {
         std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
         double phiMin = -corrAnalysis::pi/2.0;
         double phiMax = 3.0*corrAnalysis::pi/2.0;
-        
+        std::cout<<"got to creating fits"<<std::endl;
         TF1* triggerLargeTmpFit = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerLargeTmpFit->FixParameter( 2, 0 );
         triggerLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
