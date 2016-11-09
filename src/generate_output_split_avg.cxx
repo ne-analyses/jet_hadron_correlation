@@ -2098,9 +2098,9 @@ int main( int argc, const char** argv) {
     leg->AddEntry(subPhiGraphLarge[i],"#Delta#phi |Aj| > 0.2","lep");
     leg->AddEntry(subPhiDifGraphLarge[i],"#Delta#phi #Delta#eta subtracted |Aj| > 0.2","lep");
     leg->AddEntry(subEtaGraphLarge[i],"#Delta#eta |Aj| > 0.2","lep");
-    leg->AddEntry(subPhiGraphLarge[i],"#Delta#phi |Aj| < 0.2","lep");
-    leg->AddEntry(subPhiDifGraphLarge[i],"#Delta#phi #Delta#eta subtracted |Aj| < 0.2","lep");
-    leg->AddEntry(subEtaGraphLarge[i],"#Delta#eta |Aj| < 0.2","lep");
+    leg->AddEntry(subPhiGraphSmall[i],"#Delta#phi |Aj| < 0.2","lep");
+    leg->AddEntry(subPhiDifGraphSmall[i],"#Delta#phi #Delta#eta subtracted |Aj| < 0.2","lep");
+    leg->AddEntry(subEtaGraphSmall[i],"#Delta#eta |Aj| < 0.2","lep");
     leg->Draw();
     
     graphOutName = "tmp/graph_out_"+analysisNames[i]+"_sub.pdf";
