@@ -1051,7 +1051,7 @@ int main( int argc, const char** argv) {
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
-    std::string ajSubTriggerPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
+    std::string ajSubTriggerPhiOut = ajSubTriggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     for ( int j = 0; j < nFiles; ++ j ) {
