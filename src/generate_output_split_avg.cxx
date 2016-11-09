@@ -1093,7 +1093,7 @@ int main( int argc, const char** argv) {
       leadPhiFitSmall[i][j]->FixParameter( 5, corrAnalysis::pi );
       leadPhiFitSmall[i][j]->SetParameter( 3, 0.2 );
       leadPhiFitSmall[i][j]->SetParameter( 6, 0.2 );
-      leadPhiFitSmall[i][j]->SetLineColor( i + 1 );
+      leadPhiFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
       
       leadPhiDifFitLarge[i][j] = new TF1( dPhiLeadNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifFitLarge[i][j]->FixParameter( 2, 0 );
@@ -1103,7 +1103,7 @@ int main( int argc, const char** argv) {
       leadPhiDifFitSmall[i][j] = new TF1( dPhiLeadNameDifSmall.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       leadPhiDifFitSmall[i][j]->FixParameter( 2, 0 );
       leadPhiDifFitSmall[i][j]->SetParameter( 3, 0.2 );
-      leadPhiDifFitSmall[i][j]->SetLineColor( i + 1 );
+      leadPhiDifFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
       
       subPhiFitLarge[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiFitLarge[i][j]->FixParameter( 2, 0 );
@@ -1117,7 +1117,7 @@ int main( int argc, const char** argv) {
       subPhiFitSmall[i][j]->FixParameter( 5, corrAnalysis::pi );
       subPhiFitSmall[i][j]->SetParameter( 3, 0.2 );
       subPhiFitSmall[i][j]->SetParameter( 6, 0.2 );
-      subPhiFitSmall[i][j]->SetLineColor( i + 1 );
+      subPhiFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
       
       subPhiDifFitLarge[i][j] = new TF1( dPhiSubNameDif.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifFitLarge[i][j]->FixParameter( 2, 0 );
@@ -1127,7 +1127,7 @@ int main( int argc, const char** argv) {
       subPhiDifFitSmall[i][j] = new TF1( dPhiSubNameDifSmall.c_str(), phiDifForm.c_str(), phiMin, phiDifMax );
       subPhiDifFitSmall[i][j]->FixParameter( 2, 0 );
       subPhiDifFitSmall[i][j]->SetParameter( 3, 0.2 );
-      subPhiDifFitSmall[i][j]->SetLineColor( i + 1 );
+      subPhiDifFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
 
       
       leadEtaFitLarge[i][j] = new TF1( dEtaLeadName.c_str(), etaForm.c_str(), etaMin, etaMax );
@@ -1138,7 +1138,7 @@ int main( int argc, const char** argv) {
       leadEtaFitSmall[i][j] = new TF1( dEtaLeadNameSmall.c_str(), etaForm.c_str(), etaMin, etaMax );
       leadEtaFitSmall[i][j]->FixParameter( 2, 0 );
       leadEtaFitSmall[i][j]->SetParameter( 3, 0.2 );
-      leadEtaFitSmall[i][j]->SetLineColor( i + 1 );
+      leadEtaFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
       
       subEtaFitLarge[i][j] = new TF1( dEtaSubName.c_str(), etaForm.c_str(), etaMin, etaMax );
       subEtaFitLarge[i][j]->FixParameter( 2, 0 );
@@ -1148,12 +1148,12 @@ int main( int argc, const char** argv) {
       subEtaFitSmall[i][j] = new TF1( dEtaSubNameSmall.c_str(), etaForm.c_str(), etaMin, etaMax );
       subEtaFitSmall[i][j]->FixParameter( 2, 0 );
       subEtaFitSmall[i][j]->SetParameter( 3, 0.2 );
-      subEtaFitSmall[i][j]->SetLineColor( i + 1 );
+      subEtaFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
       
       // Now set same colors and fit
       dPhiLeadLarge[i][j]->SetLineColor( i + 1 );
       dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
-      dPhiSubLarge[i][j]->SetLineColor( i + 1 );
+      dPhiSubLarge[i][j]->SetLineColor( i + 1  );
       dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RM" );
       dPhiLeadNearLarge[i][j]->SetLineColor( i + 1 );
       dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
@@ -1559,94 +1559,173 @@ int main( int argc, const char** argv) {
     }
   }
   
-  return 0;
-}
-/*
-  std::vector<TGraphErrors*> leadPhiGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
-  std::vector<TGraphErrors*> leadPhiDifWidthGraph( nFiles );
-  std::vector<TGraphErrors*> leadEtaGraph( nFiles );
-  std::vector<TGraphErrors*> leadEtaWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiDifGraph( nFiles );
-  std::vector<TGraphErrors*> subPhiDifWidthGraph( nFiles );
-  std::vector<TGraphErrors*> subEtaGraph( nFiles );
-  std::vector<TGraphErrors*> subEtaWidthGraph( nFiles );
+  
+  std::vector<TGraphErrors*> leadPhiGraphLarge( nFiles );
+  std::vector<TGraphErrors*> leadPhiWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifGraphLarge( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> leadEtaGraphLarge( nFiles );
+  std::vector<TGraphErrors*> leadEtaWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subPhiGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subPhiWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subPhiDifGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subPhiDifWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subEtaGraphLarge( nFiles );
+  std::vector<TGraphErrors*> subEtaWidthGraphLarge( nFiles );
+  
+  std::vector<TGraphErrors*> leadPhiGraphSmall( nFiles );
+  std::vector<TGraphErrors*> leadPhiWidthGraphSmall( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifGraphSmall( nFiles );
+  std::vector<TGraphErrors*> leadPhiDifWidthGraphSmall( nFiles );
+  std::vector<TGraphErrors*> leadEtaGraphSmall( nFiles );
+  std::vector<TGraphErrors*> leadEtaWidthGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subPhiGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subPhiWidthGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subPhiDifGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subPhiDifWidthGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subEtaGraphSmall( nFiles );
+  std::vector<TGraphErrors*> subEtaWidthGraphSmall( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
-    double leadPhiTmp[nPtBins-startPtBin];
-    double leadPhiErr[nPtBins-startPtBin];
-    double leadPhiWidthTmp[nPtBins-startPtBin];
-    double leadPhiWidthErrTmp[nPtBins-startPtBin];
-    double leadPhiDifTmp[nPtBins-startPtBin];
-    double leadPhiDifErr[nPtBins-startPtBin];
-    double leadPhiDifWidthTmp[nPtBins-startPtBin];
-    double leadPhiDifWidthErrTmp[nPtBins-startPtBin];
-    double leadEtaTmp[nPtBins-startPtBin];
-    double leadEtaErr[nPtBins-startPtBin];
-    double leadEtaWidthTmp[nPtBins-startPtBin];
-    double leadEtaWidthErrTmp[nPtBins-startPtBin];
-    double subPhiTmp[nPtBins-startPtBin];
-    double subPhiErr[nPtBins-startPtBin];
-    double subPhiWidthTmp[nPtBins-startPtBin];
-    double subPhiWidthErrTmp[nPtBins-startPtBin];
-    double subPhiDifTmp[nPtBins-startPtBin];
-    double subPhiDifErr[nPtBins-startPtBin];
-    double subPhiDifWidthTmp[nPtBins-startPtBin];
-    double subPhiDifWidthErrTmp[nPtBins-startPtBin];
-    double subEtaTmp[nPtBins-startPtBin];
-    double subEtaErr[nPtBins-startPtBin];
-    double subEtaWidthTmp[nPtBins-startPtBin];
-    double subEtaWidthErrTmp[nPtBins-startPtBin];
+    double leadPhiTmpLarge[nPtBins-startPtBin];
+    double leadPhiErrLarge[nPtBins-startPtBin];
+    double leadPhiWidthTmpLarge[nPtBins-startPtBin];
+    double leadPhiWidthErrTmpLarge[nPtBins-startPtBin];
+    double leadPhiDifTmpLarge[nPtBins-startPtBin];
+    double leadPhiDifErrLarge[nPtBins-startPtBin];
+    double leadPhiDifWidthTmpLarge[nPtBins-startPtBin];
+    double leadPhiDifWidthErrTmpLarge[nPtBins-startPtBin];
+    double leadEtaTmpLarge[nPtBins-startPtBin];
+    double leadEtaErrLarge[nPtBins-startPtBin];
+    double leadEtaWidthTmpLarge[nPtBins-startPtBin];
+    double leadEtaWidthErrTmpLarge[nPtBins-startPtBin];
+    double subPhiTmpLarge[nPtBins-startPtBin];
+    double subPhiErrLarge[nPtBins-startPtBin];
+    double subPhiWidthTmpLarge[nPtBins-startPtBin];
+    double subPhiWidthErrTmpLarge[nPtBins-startPtBin];
+    double subPhiDifTmpLarge[nPtBins-startPtBin];
+    double subPhiDifErrLarge[nPtBins-startPtBin];
+    double subPhiDifWidthTmpLarge[nPtBins-startPtBin];
+    double subPhiDifWidthErrTmpLarge[nPtBins-startPtBin];
+    double subEtaTmpLarge[nPtBins-startPtBin];
+    double subEtaErrLarge[nPtBins-startPtBin];
+    double subEtaWidthTmpLarge[nPtBins-startPtBin];
+    double subEtaWidthErrTmpLarge[nPtBins-startPtBin];
+    
+    double leadPhiTmpSmall[nPtBins-startPtBin];
+    double leadPhiErrSmall[nPtBins-startPtBin];
+    double leadPhiWidthTmpSmall[nPtBins-startPtBin];
+    double leadPhiWidthErrTmpSmall[nPtBins-startPtBin];
+    double leadPhiDifTmpSmall[nPtBins-startPtBin];
+    double leadPhiDifErrSmall[nPtBins-startPtBin];
+    double leadPhiDifWidthTmpSmall[nPtBins-startPtBin];
+    double leadPhiDifWidthErrTmpSmall[nPtBins-startPtBin];
+    double leadEtaTmpSmall[nPtBins-startPtBin];
+    double leadEtaErrSmall[nPtBins-startPtBin];
+    double leadEtaWidthTmpSmall[nPtBins-startPtBin];
+    double leadEtaWidthErrTmpSmall[nPtBins-startPtBin];
+    double subPhiTmpSmall[nPtBins-startPtBin];
+    double subPhiErrSmall[nPtBins-startPtBin];
+    double subPhiWidthTmpSmall[nPtBins-startPtBin];
+    double subPhiWidthErrTmpSmall[nPtBins-startPtBin];
+    double subPhiDifTmpSmall[nPtBins-startPtBin];
+    double subPhiDifErrSmall[nPtBins-startPtBin];
+    double subPhiDifWidthTmpSmall[nPtBins-startPtBin];
+    double subPhiDifWidthErrTmpSmall[nPtBins-startPtBin];
+    double subEtaTmpSmall[nPtBins-startPtBin];
+    double subEtaErrSmall[nPtBins-startPtBin];
+    double subEtaWidthTmpSmall[nPtBins-startPtBin];
+    double subEtaWidthErrTmpSmall[nPtBins-startPtBin];
     
     double errX[nPtBins - startPtBin];
     double tmpPtBin[nPtBins - startPtBin];
     for ( int j = 0; j < nPtBins-startPtBin; ++j ) {
       errX[j] = 0;
       tmpPtBin[j] = ptBinCenter[i][j+startPtBin];
-      leadPhiTmp[j] = leadPhiYield[i][j+startPtBin];
-      leadPhiErr[j] = leadPhiError[i][j+startPtBin];
-      leadPhiWidthTmp[j] = leadPhiWidth[i][j+startPtBin];
-      leadPhiWidthErrTmp[j] = leadPhiWidthError[i][j+startPtBin];
-      leadPhiDifTmp[j] = leadPhiDifYield[i][j+startPtBin];
-      leadPhiDifErr[j] = leadPhiDifError[i][j+startPtBin];
-      leadPhiDifWidthTmp[j] = leadPhiDifWidth[i][j+startPtBin];
-      leadPhiDifWidthErrTmp[j] = leadPhiDifWidthError[i][j+startPtBin];
-      leadEtaTmp[j] = leadEtaYield[i][j+startPtBin];
-      leadEtaErr[j] = leadEtaError[i][j+startPtBin];
-      leadEtaWidthTmp[j] = leadEtaWidth[i][j+startPtBin];
-      leadEtaWidthErrTmp[j] = leadEtaWidthError[i][j+startPtBin];
-      subPhiTmp[j] = subPhiYield[i][j+startPtBin];
-      subPhiErr[j] = subPhiError[i][j+startPtBin];
-      subPhiWidthTmp[j] = subPhiWidth[i][j+startPtBin];
-      subPhiWidthErrTmp[j] = subPhiWidthError[i][j+startPtBin];
-      subPhiDifTmp[j] = subPhiDifYield[i][j+startPtBin];
-      subPhiDifErr[j] = subPhiDifError[i][j+startPtBin];
-      subPhiDifWidthTmp[j] = subPhiDifWidth[i][j+startPtBin];
-      subPhiDifWidthErrTmp[j] = subPhiDifWidthError[i][j+startPtBin];
-      subEtaTmp[j] = subEtaYield[i][j+startPtBin];
-      subEtaErr[j] = subEtaError[i][j+startPtBin];
-      subEtaWidthTmp[j] = subEtaWidth[i][j+startPtBin];
-      subEtaWidthErrTmp[j] = subEtaWidthError[i][j+startPtBin];
+      
+      leadPhiTmpLarge[j] = leadPhiYieldLarge[i][j+startPtBin];
+      leadPhiErrLarge[j] = leadPhiErrorLarge[i][j+startPtBin];
+      leadPhiWidthTmpLarge[j] = leadPhiWidthLarge[i][j+startPtBin];
+      leadPhiWidthErrTmpLarge[j] = leadPhiWidthErrorLarge[i][j+startPtBin];
+      leadPhiDifTmpLarge[j] = leadPhiDifYieldLarge[i][j+startPtBin];
+      leadPhiDifErrLarge[j] = leadPhiDifErrorLarge[i][j+startPtBin];
+      leadPhiDifWidthTmpLarge[j] = leadPhiDifWidthLarge[i][j+startPtBin];
+      leadPhiDifWidthErrTmpLarge[j] = leadPhiDifWidthErrorLarge[i][j+startPtBin];
+      leadEtaTmpLarge[j] = leadEtaYieldLarge[i][j+startPtBin];
+      leadEtaErrLarge[j] = leadEtaErrorLarge[i][j+startPtBin];
+      leadEtaWidthTmpLarge[j] = leadEtaWidthLarge[i][j+startPtBin];
+      leadEtaWidthErrTmpLarge[j] = leadEtaWidthErrorLarge[i][j+startPtBin];
+      subPhiTmpLarge[j] = subPhiYieldLarge[i][j+startPtBin];
+      subPhiErrLarge[j] = subPhiErrorLarge[i][j+startPtBin];
+      subPhiWidthTmpLarge[j] = subPhiWidthLarge[i][j+startPtBin];
+      subPhiWidthErrTmpLarge[j] = subPhiWidthErrorLarge[i][j+startPtBin];
+      subPhiDifTmpLarge[j] = subPhiDifYieldLarge[i][j+startPtBin];
+      subPhiDifErrLarge[j] = subPhiDifErrorLarge[i][j+startPtBin];
+      subPhiDifWidthTmpLarge[j] = subPhiDifWidthLarge[i][j+startPtBin];
+      subPhiDifWidthErrTmpLarge[j] = subPhiDifWidthErrorLarge[i][j+startPtBin];
+      subEtaTmpLarge[j] = subEtaYieldLarge[i][j+startPtBin];
+      subEtaErrLarge[j] = subEtaErrorLarge[i][j+startPtBin];
+      subEtaWidthTmpLarge[j] = subEtaWidthLarge[i][j+startPtBin];
+      subEtaWidthErrTmpLarge[j] = subEtaWidthErrorLarge[i][j+startPtBin];
+      
+      leadPhiTmpSmall[j] = leadPhiYieldSmall[i][j+startPtBin];
+      leadPhiErrSmall[j] = leadPhiErrorSmall[i][j+startPtBin];
+      leadPhiWidthTmpSmall[j] = leadPhiWidthSmall[i][j+startPtBin];
+      leadPhiWidthErrTmpSmall[j] = leadPhiWidthErrorSmall[i][j+startPtBin];
+      leadPhiDifTmpSmall[j] = leadPhiDifYieldSmall[i][j+startPtBin];
+      leadPhiDifErrSmall[j] = leadPhiDifErrorSmall[i][j+startPtBin];
+      leadPhiDifWidthTmpSmall[j] = leadPhiDifWidthSmall[i][j+startPtBin];
+      leadPhiDifWidthErrTmpSmall[j] = leadPhiDifWidthErrorSmall[i][j+startPtBin];
+      leadEtaTmpSmall[j] = leadEtaYieldSmall[i][j+startPtBin];
+      leadEtaErrSmall[j] = leadEtaErrorSmall[i][j+startPtBin];
+      leadEtaWidthTmpSmall[j] = leadEtaWidthSmall[i][j+startPtBin];
+      leadEtaWidthErrTmpSmall[j] = leadEtaWidthErrorSmall[i][j+startPtBin];
+      subPhiTmpSmall[j] = subPhiYieldSmall[i][j+startPtBin];
+      subPhiErrSmall[j] = subPhiErrorSmall[i][j+startPtBin];
+      subPhiWidthTmpSmall[j] = subPhiWidthSmall[i][j+startPtBin];
+      subPhiWidthErrTmpSmall[j] = subPhiWidthErrorSmall[i][j+startPtBin];
+      subPhiDifTmpSmall[j] = subPhiDifYieldSmall[i][j+startPtBin];
+      subPhiDifErrSmall[j] = subPhiDifErrorSmall[i][j+startPtBin];
+      subPhiDifWidthTmpSmall[j] = subPhiDifWidthSmall[i][j+startPtBin];
+      subPhiDifWidthErrTmpSmall[j] = subPhiDifWidthErrorSmall[i][j+startPtBin];
+      subEtaTmpSmall[j] = subEtaYieldSmall[i][j+startPtBin];
+      subEtaErrSmall[j] = subEtaErrorSmall[i][j+startPtBin];
+      subEtaWidthTmpSmall[j] = subEtaWidthSmall[i][j+startPtBin];
+      subEtaWidthErrTmpSmall[j] = subEtaWidthErrorSmall[i][j+startPtBin];
     }
     
-    leadPhiGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiTmp, errX, leadPhiErr );
-    leadPhiWidthGraph[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiWidthTmp, errX, leadPhiWidthErrTmp );
-    leadPhiDifGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiDifTmp, errX, leadPhiDifErr );
-    leadPhiDifWidthGraph[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiDifWidthTmp, errX, leadPhiDifWidthErrTmp );
-    leadEtaGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaTmp, errX, leadEtaErr );
-    leadEtaWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaWidthTmp, errX, leadEtaWidthErrTmp );
-    subPhiGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiTmp, errX, subPhiErr );
-    subPhiWidthGraph[i] = new TGraphErrors(nPtBins-startPtBin, tmpPtBin, subPhiWidthTmp, errX, subPhiWidthErrTmp );
-    subPhiDifGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifTmp, errX, subPhiDifErr );
-    subPhiDifWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifWidthTmp, errX, subPhiDifWidthErrTmp );
-    subEtaGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaTmp, errX, subEtaErr );
-    subEtaWidthGraph[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaWidthTmp, errX, subEtaWidthErrTmp );
+    leadPhiGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiTmpLarge, errX, leadPhiErrLarge );
+    leadPhiWidthGraphLarge[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiWidthTmpLarge, errX, leadPhiWidthErrTmpLarge );
+    leadPhiDifGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiDifTmpLarge, errX, leadPhiDifErrLarge );
+    leadPhiDifWidthGraphLarge[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiDifWidthTmpLarge, errX, leadPhiDifWidthErrTmpLarge );
+    leadEtaGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaTmpLarge, errX, leadEtaErrLarge );
+    leadEtaWidthGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaWidthTmpLarge, errX, leadEtaWidthErrTmpLarge );
+    subPhiGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiTmpLarge, errX, subPhiErrLarge );
+    subPhiWidthGraphLarge[i] = new TGraphErrors(nPtBins-startPtBin, tmpPtBin, subPhiWidthTmpLarge, errX, subPhiWidthErrTmpLarge );
+    subPhiDifGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifTmpLarge, errX, subPhiDifErrLarge );
+    subPhiDifWidthGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifWidthTmpLarge, errX, subPhiDifWidthErrTmpLarge );
+    subEtaGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaTmpLarge, errX, subEtaErrLarge );
+    subEtaWidthGraphLarge[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaWidthTmpLarge, errX, subEtaWidthErrTmpLarge );
+
     
+    leadPhiGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiTmpSmall, errX, leadPhiErrSmall );
+    leadPhiWidthGraphSmall[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiWidthTmpSmall, errX, leadPhiWidthErrTmpSmall );
+    leadPhiDifGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadPhiDifTmpSmall, errX, leadPhiDifErrSmall );
+    leadPhiDifWidthGraphSmall[i] = new TGraphErrors( nPtBins - startPtBin, tmpPtBin, leadPhiDifWidthTmpSmall, errX, leadPhiDifWidthErrTmpSmall );
+    leadEtaGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaTmpSmall, errX, leadEtaErrSmall );
+    leadEtaWidthGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, leadEtaWidthTmpSmall, errX, leadEtaWidthErrTmpSmall );
+    subPhiGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiTmpSmall, errX, subPhiErrSmall );
+    subPhiWidthGraphSmall[i] = new TGraphErrors(nPtBins-startPtBin, tmpPtBin, subPhiWidthTmpSmall, errX, subPhiWidthErrTmpSmall );
+    subPhiDifGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifTmpSmall, errX, subPhiDifErrSmall );
+    subPhiDifWidthGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subPhiDifWidthTmpSmall, errX, subPhiDifWidthErrTmpSmall );
+    subEtaGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaTmpSmall, errX, subEtaErrSmall );
+    subEtaWidthGraphSmall[i] = new TGraphErrors(nPtBins - startPtBin, tmpPtBin, subEtaWidthTmpSmall, errX, subEtaWidthErrTmpSmall );
+
   }
   
+  return 0;
+}
+/*
   // print out the yields
   
   TCanvas* c1 = new TCanvas;
