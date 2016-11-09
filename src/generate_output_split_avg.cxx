@@ -1173,6 +1173,16 @@ int main( int argc, const char** argv) {
       
     }
     
+    triggerPhiGraphLarge[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, triggerPhiYieldLargeArray, errX, triggerPhiYieldErrLargeArray );
+    triggerPhiWidthGraphLarge[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, triggerPhiWidthLargeArray, errX, triggerPhiWidthErrLargeArray );
+    triggerPhiGraphSmall[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, triggerPhiYieldSmallArray, errX, triggerPhiYieldErrSmallArray );
+    triggerPhiWidthGraphSmall[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, triggerPhiWidthSmallArray, errX, triggerPhiWidthErrSmallArray );
+    
+    recoilPhiGraphLarge[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, recoilPhiYieldLargeArray, errX, recoilPhiYieldErrLargeArray );
+    recoilPhiWidthGraphLarge[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, recoilPhiWidthLargeArray, errX, recoilPhiWidthErrLargeArray );
+    recoilPhiGraphSmall[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, recoilPhiYieldSmallArray, errX, recoilPhiYieldErrSmallArray );
+    recoilPhiWidthGraphSmall[i] = new TGraphErrors( nPtBins-startPtBin, tmpPtBin, recoilPhiWidthSmallArray, errX, recoilPhiWidthErrSmallArray );
+    
     
   }
   
