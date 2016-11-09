@@ -204,7 +204,6 @@ int main ( int argc, const char** argv) {
         splitOnAjVal = tempAj;
       }
 
-      std::cout<<"got here"<<std::endl;
       // output and file names
       outputDir 		= arguments[9];
       corrOutFile		= arguments[10];
@@ -221,7 +220,6 @@ int main ( int argc, const char** argv) {
     }
   }
   
-  std::cout<<"got here"<<std::endl;
   // Announce our settings
   if ( requireDijets ) { corrAnalysis::BeginSummaryDijet ( jetRadius, leadJetPtMin, subJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::trackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
   else { corrAnalysis::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
