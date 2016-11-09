@@ -608,10 +608,10 @@ int main( int argc, const char** argv) {
       double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
       
       for ( int j = 0; j < nPtBins; ++j ) {
-        triggerSmallAjdPhi[i][j] = ((TH1D*) recombinedPreSmall[i][j]->ProjectionY())->Clone();
-        triggerLargeAjdPhi[i][j] = ((TH1D*) recombinedPreLarge[i][j]->ProjectionY())->Clone();
-        recoilSmallAjdPhi[i][j] = ((TH1D*) recombinedSubPreSmall[i][j]->ProjectionY())->Clone();
-        recoilLargeAjdPhi[i][j] = ((TH1D*) recombinedSubPreLarge[i][j]->ProjectionY())->Clone();
+        triggerSmallAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedPreSmall[i][j]->ProjectionY())->Clone();
+        triggerLargeAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedPreLarge[i][j]->ProjectionY())->Clone();
+        recoilSmallAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedSubPreSmall[i][j]->ProjectionY())->Clone();
+        recoilLargeAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedSubPreLarge[i][j]->ProjectionY())->Clone();
         
         // Fit and subtract
         std::string triggerLargeName = "tmp_trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
