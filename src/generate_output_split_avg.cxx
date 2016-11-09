@@ -816,23 +816,21 @@ int main( int argc, const char** argv) {
         triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RM" );
         recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RM" );
         
-        std::cout<<"finished fitting"<<std::endl;
-        
         triggerLargeYield[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerLargeYieldErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(1);
         triggerLargeWidth[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(3);
         triggerLargeWidthErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(3);
-        std::cout<<"got here too"<<std::endl;
+        
         triggerSmallYield[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerSmallYieldErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(1);
         triggerSmallWidth[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(3);
         triggerSmallWidthErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(3);
-        std::cout<<"got here too"<<std::endl;
+        
         recoilLargeYield[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilLargeYieldErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(1);
         recoilLargeWidth[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(3);
         recoilLargeWidthErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(3);
-        std::cout<<"got here too"<<std::endl;
+        
         recoilSmallYield[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilSmallYieldErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(1);
         recoilSmallWidth[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(3);
