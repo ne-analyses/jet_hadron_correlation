@@ -1015,7 +1015,7 @@ int main( int argc, const char** argv) {
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
-    std::string ajSubRecoilPhiOut = ajSubRecoilOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
+    std::string ajSubRecoilPhiOut = ajSubRecoilOutBase + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
     for ( int j = 0; j < nFiles; ++ j ) {
@@ -1051,14 +1051,14 @@ int main( int argc, const char** argv) {
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
-    std::cout<<"got here"<<std::endl;
-    std::string ajSubTriggerPhiOut = ajSubTriggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
+
+    std::string ajSubTriggerPhiOut = ajSubTriggerOutBase + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
-    std::cout<<"and here"<<std::endl;
+
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( ajSplit[j] ) {
-        std::cout<<"got here"<<std::endl;
+ 
         triggerSubtracted[j][i]->SetLineColor(1+j);
         triggerSubtracted[j][i]->SetMarkerStyle(29);
         triggerSubtracted[j][i]->SetMarkerSize(2);
@@ -1071,7 +1071,7 @@ int main( int argc, const char** argv) {
           triggerSubtracted[j][i]->Draw();
         else
           triggerSubtracted[j][i]->Draw("same");
-        std::cout<<"got here"<<std::endl;
+
         triggerSubtracted[j][i]->SetLineColor(1+j+nFiles);
         triggerSubtracted[j][i]->SetMarkerStyle(29);
         triggerSubtracted[j][i]->SetMarkerSize(2);
@@ -1080,7 +1080,6 @@ int main( int argc, const char** argv) {
         
         leg->SetHeader("Trigger"); // option "C" allows to center the header
         leg->AddEntry(triggerSubtracted[j][i], analysisNames[j].c_str() ,"lep");
-        std::cout<<"and here"<<std::endl;
       }
     }
     leg->Draw();
