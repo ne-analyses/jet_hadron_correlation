@@ -1382,84 +1382,163 @@ int main( int argc, const char** argv) {
     c1.SaveAs( subEtaOut.c_str() );
   }
   
-  return 0;
-}
-/*
   // now to get yields
-  std::vector<std::vector<double> > leadPhiYield( nFiles );
-  std::vector<std::vector<double> > leadPhiWidth( nFiles );
-  std::vector<std::vector<double> > leadPhiError( nFiles );
-  std::vector<std::vector<double> > leadPhiWidthError( nFiles );
-  std::vector<std::vector<double> > leadPhiDifYield( nFiles );
-  std::vector<std::vector<double> > leadPhiDifWidth( nFiles );
-  std::vector<std::vector<double> > leadPhiDifError( nFiles );
-  std::vector<std::vector<double> > leadPhiDifWidthError( nFiles );
-  std::vector<std::vector<double> > leadEtaYield( nFiles );
-  std::vector<std::vector<double> > leadEtaWidth( nFiles );
-  std::vector<std::vector<double> > leadEtaError( nFiles );
-  std::vector<std::vector<double> > leadEtaWidthError( nFiles );
-  std::vector<std::vector<double> > subPhiYield( nFiles );
-  std::vector<std::vector<double> > subPhiWidth( nFiles );
-  std::vector<std::vector<double> > subPhiError( nFiles );
-  std::vector<std::vector<double> > subPhiWidthError( nFiles );
-  std::vector<std::vector<double> > subPhiDifYield( nFiles );
-  std::vector<std::vector<double> > subPhiDifWidth( nFiles );
-  std::vector<std::vector<double> > subPhiDifError( nFiles );
-  std::vector<std::vector<double> > subPhiDifWidthError( nFiles );
-  std::vector<std::vector<double> > subEtaYield( nFiles );
-  std::vector<std::vector<double> > subEtaWidth( nFiles );
-  std::vector<std::vector<double> > subEtaError( nFiles );
-  std::vector<std::vector<double> > subEtaWidthError( nFiles );
+  std::vector<std::vector<double> > leadPhiYieldLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiWidthLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiErrorLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiWidthErrorLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiDifYieldLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidthLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiDifErrorLarge( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidthErrorLarge( nFiles );
+  std::vector<std::vector<double> > leadEtaYieldLarge( nFiles );
+  std::vector<std::vector<double> > leadEtaWidthLarge( nFiles );
+  std::vector<std::vector<double> > leadEtaErrorLarge( nFiles );
+  std::vector<std::vector<double> > leadEtaWidthErrorLarge( nFiles );
+  std::vector<std::vector<double> > subPhiYieldLarge( nFiles );
+  std::vector<std::vector<double> > subPhiWidthLarge( nFiles );
+  std::vector<std::vector<double> > subPhiErrorLarge( nFiles );
+  std::vector<std::vector<double> > subPhiWidthErrorLarge( nFiles );
+  std::vector<std::vector<double> > subPhiDifYieldLarge( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidthLarge( nFiles );
+  std::vector<std::vector<double> > subPhiDifErrorLarge( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidthErrorLarge( nFiles );
+  std::vector<std::vector<double> > subEtaYieldLarge( nFiles );
+  std::vector<std::vector<double> > subEtaWidthLarge( nFiles );
+  std::vector<std::vector<double> > subEtaErrorLarge( nFiles );
+  std::vector<std::vector<double> > subEtaWidthErrorLarge( nFiles );
+  
+  // and for possible split values...
+  std::vector<std::vector<double> > leadPhiYieldSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiWidthSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiErrorSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiWidthErrorSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiDifYieldSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidthSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiDifErrorSmall( nFiles );
+  std::vector<std::vector<double> > leadPhiDifWidthErrorSmall( nFiles );
+  std::vector<std::vector<double> > leadEtaYieldSmall( nFiles );
+  std::vector<std::vector<double> > leadEtaWidthSmall( nFiles );
+  std::vector<std::vector<double> > leadEtaErrorSmall( nFiles );
+  std::vector<std::vector<double> > leadEtaWidthErrorSmall( nFiles );
+  std::vector<std::vector<double> > subPhiYieldSmall( nFiles );
+  std::vector<std::vector<double> > subPhiWidthSmall( nFiles );
+  std::vector<std::vector<double> > subPhiErrorSmall( nFiles );
+  std::vector<std::vector<double> > subPhiWidthErrorSmall( nFiles );
+  std::vector<std::vector<double> > subPhiDifYieldSmall( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidthSmall( nFiles );
+  std::vector<std::vector<double> > subPhiDifErrorSmall( nFiles );
+  std::vector<std::vector<double> > subPhiDifWidthErrorSmall( nFiles );
+  std::vector<std::vector<double> > subEtaYieldSmall( nFiles );
+  std::vector<std::vector<double> > subEtaWidthSmall( nFiles );
+  std::vector<std::vector<double> > subEtaErrorSmall( nFiles );
+  std::vector<std::vector<double> > subEtaWidthErrorSmall( nFiles );
+  
   for ( int i = 0; i < nFiles; ++i ) {
-    leadPhiYield[i].resize( nPtBins );
-    leadPhiWidth[i].resize( nPtBins );
-    leadPhiError[i].resize( nPtBins );
-    leadPhiWidthError[i].resize( nPtBins );
-    leadPhiDifYield[i].resize( nPtBins );
-    leadPhiDifWidth[i].resize( nPtBins );
-    leadPhiDifError[i].resize( nPtBins );
-    leadPhiDifWidthError[i].resize( nPtBins );
-    leadEtaYield[i].resize( nPtBins );
-    leadEtaWidth[i].resize( nPtBins );
-    leadEtaError[i].resize( nPtBins );
-    leadEtaWidthError[i].resize( nPtBins );
-    subPhiYield[i].resize( nPtBins );
-    subPhiWidth[i].resize( nPtBins );
-    subPhiError[i].resize( nPtBins );
-    subPhiWidthError[i].resize( nPtBins );
-    subPhiDifYield[i].resize( nPtBins );
-    subPhiDifWidth[i].resize( nPtBins );
-    subPhiDifError[i].resize( nPtBins );
-    subPhiDifWidthError[i].resize( nPtBins );
-    subEtaYield[i].resize( nPtBins );
-    subEtaWidth[i].resize( nPtBins );
-    subEtaError[i].resize( nPtBins );
-    subEtaWidthError[i].resize( nPtBins );
+    leadPhiYieldLarge[i].resize( nPtBins );
+    leadPhiWidthLarge[i].resize( nPtBins );
+    leadPhiErrorLarge[i].resize( nPtBins );
+    leadPhiWidthErrorLarge[i].resize( nPtBins );
+    leadPhiDifYieldLarge[i].resize( nPtBins );
+    leadPhiDifWidthLarge[i].resize( nPtBins );
+    leadPhiDifErrorLarge[i].resize( nPtBins );
+    leadPhiDifWidthErrorLarge[i].resize( nPtBins );
+    leadEtaYieldLarge[i].resize( nPtBins );
+    leadEtaWidthLarge[i].resize( nPtBins );
+    leadEtaErrorLarge[i].resize( nPtBins );
+    leadEtaWidthErrorLarge[i].resize( nPtBins );
+    subPhiYieldLarge[i].resize( nPtBins );
+    subPhiWidthLarge[i].resize( nPtBins );
+    subPhiErrorLarge[i].resize( nPtBins );
+    subPhiWidthErrorLarge[i].resize( nPtBins );
+    subPhiDifYieldLarge[i].resize( nPtBins );
+    subPhiDifWidthLarge[i].resize( nPtBins );
+    subPhiDifErrorLarge[i].resize( nPtBins );
+    subPhiDifWidthErrorLarge[i].resize( nPtBins );
+    subEtaYieldLarge[i].resize( nPtBins );
+    subEtaWidthLarge[i].resize( nPtBins );
+    subEtaErrorLarge[i].resize( nPtBins );
+    subEtaWidthErrorLarge[i].resize( nPtBins );
+    
+    leadPhiYieldSmall[i].resize( nPtBins );
+    leadPhiWidthSmall[i].resize( nPtBins );
+    leadPhiErrorSmall[i].resize( nPtBins );
+    leadPhiWidthErrorSmall[i].resize( nPtBins );
+    leadPhiDifYieldSmall[i].resize( nPtBins );
+    leadPhiDifWidthSmall[i].resize( nPtBins );
+    leadPhiDifErrorSmall[i].resize( nPtBins );
+    leadPhiDifWidthErrorSmall[i].resize( nPtBins );
+    leadEtaYieldSmall[i].resize( nPtBins );
+    leadEtaWidthSmall[i].resize( nPtBins );
+    leadEtaErrorSmall[i].resize( nPtBins );
+    leadEtaWidthErrorSmall[i].resize( nPtBins );
+    subPhiYieldSmall[i].resize( nPtBins );
+    subPhiWidthSmall[i].resize( nPtBins );
+    subPhiErrorSmall[i].resize( nPtBins );
+    subPhiWidthErrorSmall[i].resize( nPtBins );
+    subPhiDifYieldSmall[i].resize( nPtBins );
+    subPhiDifWidthSmall[i].resize( nPtBins );
+    subPhiDifErrorSmall[i].resize( nPtBins );
+    subPhiDifWidthErrorSmall[i].resize( nPtBins );
+    subEtaYieldSmall[i].resize( nPtBins );
+    subEtaWidthSmall[i].resize( nPtBins );
+    subEtaErrorSmall[i].resize( nPtBins );
+    subEtaWidthErrorSmall[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
-      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
-      leadPhiWidth[i][j] = fabs(leadPhiFit[i][j]->GetParameter(3));
-      leadPhiWidthError[i][j] = leadPhiFit[i][j]->GetParError(3);
-      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      leadPhiDifError[i][j] = leadPhiDifFit[i][j]->GetParError(1);
-      leadPhiDifWidth[i][j] = fabs(leadPhiDifFit[i][j]->GetParameter(3));
-      leadPhiDifWidthError[i][j] = leadPhiDifFit[i][j]->GetParError(3);
-      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
-      leadEtaWidth[i][j] = fabs(leadEtaFit[i][j]->GetParameter(3));
-      leadEtaWidthError[i][j] = leadEtaFit[i][j]->GetParError(3);
-      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
-      subPhiWidth[i][j] = fabs(subPhiFit[i][j]->GetParameter(3));
-      subPhiWidthError[i][j] = subPhiFit[i][j]->GetParError(3);
-      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
-      subPhiDifWidth[i][j] = fabs(subPhiDifFit[i][j]->GetParameter(3));
-      subPhiDifWidthError[i][j] = subPhiDifFit[i][j]->GetParError(3);
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
-      subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
-      subEtaWidth[i][j] = fabs(subEtaFit[i][j]->GetParameter(3));
-      subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);
+      
+      // for default
+      leadPhiYieldLarge[i][j] = leadPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiErrorLarge[i][j] = leadPhiFitLarge[i][j]->GetParError(1);
+      leadPhiWidthLarge[i][j] = fabs(leadPhiFitLarge[i][j]->GetParameter(3));
+      leadPhiWidthErrorLarge[i][j] = leadPhiFitLarge[i][j]->GetParError(3);
+      leadPhiDifYieldLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiDifErrorLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParError(1);
+      leadPhiDifWidthLarge[i][j] = fabs(leadPhiDifFitLarge[i][j]->GetParameter(3));
+      leadPhiDifWidthErrorLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParError(3);
+      leadEtaYieldLarge[i][j] = leadEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadEtaErrorLarge[i][j] = leadEtaFitLarge[i][j]->GetParError(1);
+      leadEtaWidthLarge[i][j] = fabs(leadEtaFitLarge[i][j]->GetParameter(3));
+      leadEtaWidthErrorLarge[i][j] = leadEtaFitLarge[i][j]->GetParError(3);
+      subPhiYieldLarge[i][j] = subPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiErrorLarge[i][j] = subPhiFitLarge[i][j]->GetParError(1);
+      subPhiWidthLarge[i][j] = fabs(subPhiFitLarge[i][j]->GetParameter(3));
+      subPhiWidthErrorLarge[i][j] = subPhiFitLarge[i][j]->GetParError(3);
+      subPhiDifYieldLarge[i][j] = subPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiDifErrorLarge[i][j] = subPhiDifFitLarge[i][j]->GetParError(1);
+      subPhiDifWidthLarge[i][j] = fabs(subPhiDifFitLarge[i][j]->GetParameter(3));
+      subPhiDifWidthErrorLarge[i][j] = subPhiDifFitLarge[i][j]->GetParError(3);
+      subEtaYieldLarge[i][j] = subEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subEtaErrorLarge[i][j] = subEtaFitLarge[i][j]->GetParError(1);
+      subEtaWidthLarge[i][j] = fabs(subEtaFitLarge[i][j]->GetParameter(3));
+      subEtaWidthErrorLarge[i][j] = subEtaFitLarge[i][j]->GetParError(3);
+      
+      // if we split on aj we have this as well....
+      if ( ajSplit[i] ) {
+        leadPhiYieldSmall[i][j] = leadPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadPhiErrorSmall[i][j] = leadPhiFitSmall[i][j]->GetParError(1);
+        leadPhiWidthSmall[i][j] = fabs(leadPhiFitSmall[i][j]->GetParameter(3));
+        leadPhiWidthErrorSmall[i][j] = leadPhiFitSmall[i][j]->GetParError(3);
+        leadPhiDifYieldSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadPhiDifErrorSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParError(1);
+        leadPhiDifWidthSmall[i][j] = fabs(leadPhiDifFitSmall[i][j]->GetParameter(3));
+        leadPhiDifWidthErrorSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParError(3);
+        leadEtaYieldSmall[i][j] = leadEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadEtaErrorSmall[i][j] = leadEtaFitSmall[i][j]->GetParError(1);
+        leadEtaWidthSmall[i][j] = fabs(leadEtaFitSmall[i][j]->GetParameter(3));
+        leadEtaWidthErrorSmall[i][j] = leadEtaFitSmall[i][j]->GetParError(3);
+        subPhiYieldSmall[i][j] = subPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subPhiErrorSmall[i][j] = subPhiFitSmall[i][j]->GetParError(1);
+        subPhiWidthSmall[i][j] = fabs(subPhiFitSmall[i][j]->GetParameter(3));
+        subPhiWidthErrorSmall[i][j] = subPhiFitSmall[i][j]->GetParError(3);
+        subPhiDifYieldSmall[i][j] = subPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subPhiDifErrorSmall[i][j] = subPhiDifFitSmall[i][j]->GetParError(1);
+        subPhiDifWidthSmall[i][j] = fabs(subPhiDifFitSmall[i][j]->GetParameter(3));
+        subPhiDifWidthErrorSmall[i][j] = subPhiDifFitSmall[i][j]->GetParError(3);
+        subEtaYieldSmall[i][j] = subEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subEtaErrorSmall[i][j] = subEtaFitSmall[i][j]->GetParError(1);
+        subEtaWidthSmall[i][j] = fabs(subEtaFitSmall[i][j]->GetParameter(3));
+        subEtaWidthErrorSmall[i][j] = subEtaFitSmall[i][j]->GetParError(3);
+      }
     }
   }
   
@@ -1480,6 +1559,9 @@ int main( int argc, const char** argv) {
     }
   }
   
+  return 0;
+}
+/*
   std::vector<TGraphErrors*> leadPhiGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraph( nFiles );
   std::vector<TGraphErrors*> leadPhiDifGraph( nFiles );
