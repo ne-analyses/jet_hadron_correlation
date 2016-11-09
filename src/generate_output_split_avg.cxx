@@ -617,7 +617,7 @@ int main( int argc, const char** argv) {
         std::string triggerLargeName = "tmp_trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
         std::string triggerSmallName = "tmp_trigger_small_"; triggerSmallName += patch::to_string(i); triggerSmallName += patch::to_string(j);
         std::string recoilSmallName = "tmp_recoil_small_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
-        std::string recoilLargeName = "tmp_recoil_large_" recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
+        std::string recoilLargeName = "tmp_recoil_large_"; recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
         std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
         double phiMin = -corrAnalysis::pi/2.0;
         double phiMax = 3.0*corrAnalysis::pi/2.0;
