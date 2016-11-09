@@ -1051,9 +1051,11 @@ int main( int argc, const char** argv) {
 
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
+    std::cout<<"got here"<<std::endl
     std::string ajSubTriggerPhiOut = ajSubTriggerOutBase + analysisNames[i] + "_pt_" + patch::to_string(i) + ajOutExt;
     
     TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+    std::cout<<"and here"<<std::endl;
     for ( int j = 0; j < nFiles; ++ j ) {
       if ( ajSplit[j] ) {
         std::cout<<"got here"<<std::endl;
