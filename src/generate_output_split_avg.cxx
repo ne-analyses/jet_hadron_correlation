@@ -838,6 +838,7 @@ int main( int argc, const char** argv) {
         
         triggerSubYield[i][j] = triggerSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerSubYieldErr[i][j] = 0; //triggerSubFit[i][j]->GetParError(1);
+        std::cout<<"yup"<<std::endl;
         triggerSubWidth[i][j] = triggerSubFit[i][j]->GetParameter(3);
         triggerSubWidthErr[i][j] = triggerSubFit[i][j]->GetParError(3);
         std::cout<<"got here"<<std::endl;
