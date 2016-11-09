@@ -1219,6 +1219,7 @@ int main( int argc, const char** argv) {
         dPhiLeadSmall[j][i]->SetMarkerSize(3);
         dPhiLeadSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dPhiLeadSmall[j][i]->Draw("same");
+        leadPhiFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadPhiOut.c_str() );
@@ -1250,6 +1251,7 @@ int main( int argc, const char** argv) {
         dPhiLeadNearSmall[j][i]->SetMarkerSize(3);
         dPhiLeadNearSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dPhiLeadNearSmall[j][i]->Draw("same");
+        leadPhiDifFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadPhiDifOut.c_str() );
@@ -1280,6 +1282,7 @@ int main( int argc, const char** argv) {
         dEtaLeadSmall[j][i]->SetMarkerSize(3);
         dEtaLeadSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dEtaLeadSmall[j][i]->Draw("same");
+        leadEtaFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadEtaOut.c_str() );
@@ -1310,6 +1313,7 @@ int main( int argc, const char** argv) {
         dPhiSubSmall[j][i]->SetMarkerSize(3);
         dPhiSubSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dPhiSubSmall[j][i]->Draw("same");
+        subPhiFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( subPhiOut.c_str() );
@@ -1340,6 +1344,8 @@ int main( int argc, const char** argv) {
         dPhiSubNearSmall[j][i]->SetMarkerStyle(29);
         dPhiSubNearSmall[j][i]->SetMarkerSize(3);
         dPhiSubNearSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dPhiSubNearSmall[j][i]->Draw("same");
+        subPhiDifFit[j][i]->Draw('same');
       }
     }
     c1.SaveAs( subPhiDifOut.c_str() );
@@ -1369,6 +1375,8 @@ int main( int argc, const char** argv) {
         dEtaSubSmall[j][i]->SetMarkerStyle(29);
         dEtaSubSmall[j][i]->SetMarkerSize(3);
         dEtaSubSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dEtaSubSmall[j][i]->Draw("same");
+        subEtaFit[j][i]->Draw('same');
       }
     }
     c1.SaveAs( subEtaOut.c_str() );
