@@ -807,7 +807,7 @@ int main( int argc, const char** argv) {
         triggerSubFit[i][j]->SetParameter( 3, 0.2 );
         triggerSubFit[i][j]->SetParameter( 6, 0.2 );
         
-        recoilSubFit[i][j] = new TF1(subTriggerName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSubFit[i][j] = new TF1(subRecoilName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSubFit[i][j]->FixParameter( 2, 0 );
         recoilSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilSubFit[i][j]->SetParameter( 3, 0.2 );
