@@ -1182,9 +1182,7 @@ int main( int argc, const char** argv) {
     }
   }
   
-  return 0;
-}
-/*
+
   // Now start making output
   std::string outBase = "tmp/";
   std::string leadPhiOutBase = outBase + "leadphi_pt";
@@ -1195,24 +1193,32 @@ int main( int argc, const char** argv) {
   std::string subEtaOutBase = outBase + "subeta_pt";
   std::string outExt = ".pdf";
   
+  
   for ( int i = 0; i < nPtBins; ++i ) {
     TCanvas c1;
     
     std::string leadPhiOut = leadPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dPhiLead[j][i]->SetLineColor(j+1);
-      dPhiLead[j][i]->SetMarkerStyle(29);
-      dPhiLead[j][i]->SetMarkerSize(3);
-      dPhiLead[j][i]->SetMarkerColor(j+1);
+      dPhiLeadLarge[j][i]->SetLineColor(j+1);
+      dPhiLeadLarge[j][i]->SetMarkerStyle(29);
+      dPhiLeadLarge[j][i]->SetMarkerSize(3);
+      dPhiLeadLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#phi " + ptBinString[i];
-        dPhiLead[j][i]->SetTitle( outTitle.c_str() );
-        dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
-        dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLead[j][i]->Draw();
+        dPhiLeadLarge[j][i]->SetTitle( outTitle.c_str() );
+        dPhiLeadLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        dPhiLeadLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        dPhiLeadLarge[j][i]->Draw();
       }
       else {
-        dPhiLead[j][i]->Draw("same");
+        dPhiLeadLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[j] ) {
+        dPhiLeadSmall[j][i]->SetLineColor(j+1+nFiles);
+        dPhiLeadSmall[j][i]->SetMarkerStyle(29);
+        dPhiLeadSmall[j][i]->SetMarkerSize(3);
+        dPhiLeadSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dPhiLeadSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadPhiOut.c_str() );
@@ -1223,20 +1229,27 @@ int main( int argc, const char** argv) {
     
     std::string leadPhiDifOut = leadPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dPhiLeadNear[j][i]->SetLineColor(j+1);
-      dPhiLeadNear[j][i]->SetMarkerStyle(29);
-      dPhiLeadNear[j][i]->SetMarkerSize(3);
-      dPhiLeadNear[j][i]->SetMarkerColor(j+1);
+      dPhiLeadNearLarge[j][i]->SetLineColor(j+1);
+      dPhiLeadNearLarge[j][i]->SetMarkerStyle(29);
+      dPhiLeadNearLarge[j][i]->SetMarkerSize(3);
+      dPhiLeadNearLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
-        dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
-        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
-        dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
-        dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLeadNear[j][i]->Draw();
+        dPhiLeadNearLarge[j][i]->SetTitle( outTitle.c_str() );
+        dPhiLeadNearLarge[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
+        dPhiLeadNearLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        dPhiLeadNearLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        dPhiLeadNearLarge[j][i]->Draw();
       }
       else {
-        dPhiLeadNear[j][i]->Draw("same");
+        dPhiLeadNearLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[j] ) {
+        dPhiLeadNearSmall[j][i]->SetLineColor(j+1+nFiles);
+        dPhiLeadNearSmall[j][i]->SetMarkerStyle(29);
+        dPhiLeadNearSmall[j][i]->SetMarkerSize(3);
+        dPhiLeadNearSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dPhiLeadNearSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadPhiDifOut.c_str() );
@@ -1247,19 +1260,25 @@ int main( int argc, const char** argv) {
     
     std::string leadEtaOut = leadEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dEtaLead[j][i]->SetLineColor(j+1);
-      dEtaLead[j][i]->SetMarkerStyle(29);
-      dEtaLead[j][i]->SetMarkerSize(3);
-      dEtaLead[j][i]->SetMarkerColor(j+1);
+      dEtaLeadLarge[j][i]->SetLineColor(j+1);
+      dEtaLeadLarge[j][i]->SetMarkerStyle(29);
+      dEtaLeadLarge[j][i]->SetMarkerSize(3);
+      dEtaLeadLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#eta " + ptBinString[i];
-        dEtaLead[j][i]->SetTitle( outTitle.c_str() );
-        dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
-        dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaLead[j][i]->Draw();
+        dEtaLeadLarge[j][i]->SetTitle( outTitle.c_str() );
+        dEtaLeadLarge[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        dEtaLeadLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
+        dEtaLeadLarge[j][i]->Draw();
       }
       else {
-        dEtaLead[j][i]->Draw("same");
+        dEtaLeadLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[j] ) {
+        dEtaLeadSmall[j][i]->SetLineColor(j+1+nFiles);
+        dEtaLeadSmall[j][i]->SetMarkerStyle(29);
+        dEtaLeadSmall[j][i]->SetMarkerSize(3);
+        dEtaLeadSmall[j][i]->SetMarkerColor(j+1+nFiles);
       }
     }
     c1.SaveAs( leadEtaOut.c_str() );
@@ -1270,19 +1289,26 @@ int main( int argc, const char** argv) {
     
     std::string subPhiOut = subPhiOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dPhiSub[j][i]->SetLineColor(j+1);
-      dPhiSub[j][i]->SetMarkerStyle(29);
-      dPhiSub[j][i]->SetMarkerSize(3);
-      dPhiSub[j][i]->SetMarkerColor(j+1);
+      dPhiSubLarge[j][i]->SetLineColor(j+1);
+      dPhiSubLarge[j][i]->SetMarkerStyle(29);
+      dPhiSubLarge[j][i]->SetMarkerSize(3);
+      dPhiSubLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#phi " + ptBinString[i];
-        dPhiSub[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
-        dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSub[j][i]->Draw();
+        dPhiSubLarge[j][i]->SetTitle( outTitle.c_str() );
+        dPhiSubLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        dPhiSubLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        dPhiSubLarge[j][i]->Draw();
       }
       else {
-        dPhiSub[j][i]->Draw("same");
+        dPhiSubLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[i] ) {
+        dPhiSubSmall[j][i]->SetLineColor(j+1+nFiles);
+        dPhiSubSmall[j][i]->SetMarkerStyle(29);
+        dPhiSubSmall[j][i]->SetMarkerSize(3);
+        dPhiSubSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dPhiSubSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( subPhiOut.c_str() );
@@ -1293,20 +1319,26 @@ int main( int argc, const char** argv) {
     
     std::string subPhiDifOut = subPhiDifOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dPhiSubNear[j][i]->SetLineColor(j+1);
-      dPhiSubNear[j][i]->SetMarkerStyle(29);
-      dPhiSubNear[j][i]->SetMarkerSize(3);
-      dPhiSubNear[j][i]->SetMarkerColor(j+1);
+      dPhiSubNearLarge[j][i]->SetLineColor(j+1);
+      dPhiSubNearLarge[j][i]->SetMarkerStyle(29);
+      dPhiSubNearLarge[j][i]->SetMarkerSize(3);
+      dPhiSubNearLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
-        dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
-        dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
-        dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSubNear[j][i]->Draw();
+        dPhiSubNearLarge[j][i]->SetTitle( outTitle.c_str() );
+        dPhiSubNearLarge[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
+        dPhiSubNearLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        dPhiSubNearLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        dPhiSubNearLarge[j][i]->Draw();
       }
       else {
-        dPhiSubNear[j][i]->Draw("same");
+        dPhiSubNearLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[j] ) {
+        dPhiSubNearSmall[j][i]->SetLineColor(j+1+nFiles);
+        dPhiSubNearSmall[j][i]->SetMarkerStyle(29);
+        dPhiSubNearSmall[j][i]->SetMarkerSize(3);
+        dPhiSubNearSmall[j][i]->SetMarkerColor(j+1+nFiles);
       }
     }
     c1.SaveAs( subPhiDifOut.c_str() );
@@ -1317,24 +1349,33 @@ int main( int argc, const char** argv) {
     
     std::string subEtaOut = subEtaOutBase + patch::to_string(i) + outExt;
     for ( int j = 0; j < nFiles; ++ j ) {
-      dEtaSub[j][i]->SetLineColor(j+1);
-      dEtaSub[j][i]->SetMarkerStyle(29);
-      dEtaSub[j][i]->SetMarkerSize(3);
-      dEtaSub[j][i]->SetMarkerColor(j+1);
+      dEtaSubLarge[j][i]->SetLineColor(j+1);
+      dEtaSubLarge[j][i]->SetMarkerStyle(29);
+      dEtaSubLarge[j][i]->SetMarkerSize(3);
+      dEtaSubLarge[j][i]->SetMarkerColor(j+1);
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta " + ptBinString[i];
-        dEtaSub[j][i]->SetTitle( outTitle.c_str() );
-        dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
-        dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
-        dEtaSub[j][i]->Draw();
+        dEtaSubLarge[j][i]->SetTitle( outTitle.c_str() );
+        dEtaSubLarge[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        dEtaSubLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
+        dEtaSubLarge[j][i]->Draw();
       }
       else {
-        dEtaSub[j][i]->Draw("same");
+        dEtaSubLarge[j][i]->Draw("same");
+      }
+      if ( ajSplit[j] ) {
+        dEtaSubSmall[j][i]->SetLineColor(j+1+nFiles);
+        dEtaSubSmall[j][i]->SetMarkerStyle(29);
+        dEtaSubSmall[j][i]->SetMarkerSize(3);
+        dEtaSubSmall[j][i]->SetMarkerColor(j+1+nFiles);
       }
     }
     c1.SaveAs( subEtaOut.c_str() );
   }
   
+  return 0;
+}
+/*
   // now to get yields
   std::vector<std::vector<double> > leadPhiYield( nFiles );
   std::vector<std::vector<double> > leadPhiWidth( nFiles );
