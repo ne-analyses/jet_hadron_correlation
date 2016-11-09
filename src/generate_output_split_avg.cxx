@@ -1036,7 +1036,7 @@ int main( int argc, const char** argv) {
   leadPhiDifFitSmall.resize( nFiles );
   std::vector<std::vector<TF1*> > leadEtaFitLarge;
   leadEtaFitLarge.resize( nFiles );
-  std::vector<std::vector<TF1*> > leadEtaFitSMall;
+  std::vector<std::vector<TF1*> > leadEtaFitSmall;
   leadEtaFitSmall.resize( nFiles );
   std::vector<std::vector<TF1*> > subPhiFitLarge;
   subPhiFitLarge.resize( nFiles );
@@ -1048,7 +1048,7 @@ int main( int argc, const char** argv) {
   subPhiDifFitSmall.resize( nFiles );
   std::vector<std::vector<TF1*> > subEtaFitLarge;
   subEtaFitLarge.resize( nFiles );
-  std::vector<std::vector<TF1*> > subEtaFitSMall;
+  std::vector<std::vector<TF1*> > subEtaFitSmall;
   subEtaFitSmall.resize( nFiles );
   
   for ( int i = 0; i < nFiles; ++i ) {
