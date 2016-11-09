@@ -79,7 +79,7 @@ namespace patch
 int main( int argc, const char** argv) {
   
   gStyle->SetOptStat(false);
-  gStyle->SetOptFit(true);
+  gStyle->SetOptFit(false);
   
   // Pt bins
   const int nPtBins = 5;
@@ -316,6 +316,23 @@ int main( int argc, const char** argv) {
   }
   
   std::cout<<"finished loading all histograms"<<std::endl;
+  
+  // finding the weighted center of the pt bins for future graphs
+  std::vector<std::vector<double> > ptBinCenter(nFiles);
+  for ( int i = 0; i < nFiles; ++i ) {
+    ptBinCenter[i].resize(nPtBins);
+    
+    for ( int j = 0; j < nPtBins; ++j ) {
+      double weightedTotal = 0;
+      double entries = 0;
+      
+      for ( int k = ptBinLo[j]; k <= ptBinHi[j]; ++k ) {
+        entries += recombinedPtLead[i]->GetBinContent(k);
+        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinCenter(k);
+      }
+      ptBinCenter[i][j] = weightedTotal / entries;
+    }
+  }
   
   // setup for 2d projections along pt axis
   std::vector<std::vector<std::vector<std::vector<TH2D*> > > > corrCentVzPtLarge;
@@ -802,25 +819,36 @@ int main( int argc, const char** argv) {
         recoilLargeName = "recoil_large_"; recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
         
         triggerLargeAjdPhiFit[i][j] = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerLargeAjdPhiFit[i][j]->FixParameter( 0, 0 );
         triggerLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
         triggerLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         triggerLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         triggerLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        triggerLargeAjdPhiFit[i][j]->SetLineColor( kBlack );
+        
         triggerSmallAjdPhiFit[i][j] = new TF1(triggerSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerSmallAjdPhiFit[i][j]->FixParameter( 0, 0 );
         triggerSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
         triggerSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         triggerSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         triggerSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        triggerSmallAjdPhiFit[i][j]->SetLineColor( kRed );
+        
         recoilLargeAjdPhiFit[i][j] = new TF1(recoilLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilLargeAjdPhiFit[i][j]->FixParameter( 0, 0 );
         recoilLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
         recoilLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        recoilLargeAjdPhi[i][j]->SetLineColor( kBlack );
+        
         recoilSmallAjdPhiFit[i][j] = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSmallAjdPhiFit[i][j]->FixParameter( 0, 0 );
         recoilSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
         recoilSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         recoilSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        recoilSmallAjdPhiFit[i][j]->SetLineColor( kRed );
         
         // now scale the histograms
         triggerSmallAjdPhi[i][j]->Scale( 1.0/triggerSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
@@ -855,12 +883,14 @@ int main( int argc, const char** argv) {
         subRecoilName = "recoil_sub_"; subRecoilName += patch::to_string(i); subRecoilName += patch::to_string(j);
         
         triggerSubFit[i][j] = new TF1(subTriggerName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerSubFit[i][j]->FixParameter( 0, 0 );
         triggerSubFit[i][j]->FixParameter( 2, 0 );
         triggerSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         triggerSubFit[i][j]->SetParameter( 3, 0.2 );
         triggerSubFit[i][j]->SetParameter( 6, 0.2 );
         
         recoilSubFit[i][j] = new TF1(subRecoilName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSubFit[i][j]->FixParameter( 0, 0 );
         recoilSubFit[i][j]->FixParameter( 2, 0 );
         recoilSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilSubFit[i][j]->SetParameter( 3, 0.2 );
@@ -1084,6 +1114,66 @@ int main( int argc, const char** argv) {
     }
     leg->Draw();
     c1.SaveAs( ajSubTriggerPhiOut.c_str() );
+  }
+  
+  // now for the widths
+  std::vector<TGraphErrors*> triggerPhiGraphLarge( nFiles );
+  std::vector<TGraphErrors*> triggerPhiWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> triggerPhiGraphSmall( nFiles );
+  std::vector<TGraphErrors*> triggerPhiWidthGraphSmall( nFiles );
+  
+  std::vector<TGraphErrors*> recoilPhiGraphLarge( nFiles );
+  std::vector<TGraphErrors*> recoilPhiWidthGraphLarge( nFiles );
+  std::vector<TGraphErrors*> recoilPhiGraphSmall( nFiles );
+  std::vector<TGraphErrors*> recoilPhiWidthGraphSmall( nFiles );
+  
+  for ( int i = 0; i < nFiles; ++i ) {
+    double triggerPhiYieldLargeArray[nPtBins-startPtBin];
+    double triggerPhiYieldErrLargeArray[nPtBins-startPtBin];
+    double triggerPhiYieldSmallArray[nPtBins-startPtBin];
+    double triggerPhiYieldErrSmallArray[nPtBins-startPtBin];
+    double triggerPhiWidthLargeArray[nPtBins-startPtBin];
+    double triggerPhiWidthErrLargeArray[nPtBins-startPtBin];
+    double triggerPhiWidthSmallArray[nPtBins-startPtBin];
+    double triggerPhiWidthErrSmallArray[nPtBins-startPtBin];
+    
+    double recoilPhiYieldLargeArray[nPtBins-startPtBin];
+    double recoilPhiYieldErrLargeArray[nPtBins-startPtBin];
+    double recoilPhiYieldSmallArray[nPtBins-startPtBin];
+    double recoilPhiYieldErrSmallArray[nPtBins-startPtBin];
+    double recoilPhiWidthLargeArray[nPtBins-startPtBin];
+    double recoilPhiWidthErrLargeArray[nPtBins-startPtBin];
+    double recoilPhiWidthSmallArray[nPtBins-startPtBin];
+    double recoilPhiWidthErrSmallArray[nPtBins-startPtBin];
+    
+    double errX[nPtBins-startPtBin];
+    double tmpPtBin[nPtBins-startPtBin];
+    for ( int j = 0; j < nPtBins-startPtBin; ++j ) {
+      errX[j] = 0;
+      tmpPtBin[j] = ptBinCenter[i][j+startPtBin];
+      
+      triggerPhiYieldLargeArray[j] = triggerLargeYieldAway[i][j+startPtBin];
+      triggerPhiYieldErrLargeArray[j] = triggerLargeYieldAwayErr[i][j+startPtBin];
+      triggerPhiYieldSmallArray[j] = triggerSmallYieldAway[i][j+startPtBin];
+      triggerPhiYieldErrSmallArray[j] = triggerSmallYieldAwayErr[i][j+startPtBin];
+      triggerPhiWidthLargeArray[j] = triggerLargeWidthAway[i][j+startPtBin];
+      triggerPhiWidthErrLargeArray[j] = triggerLargeWidthAwayErr[i][j+startPtBin];
+      triggerPhiWidthSmallArray[j] = triggerSmallWidthAway[i][j+startPtBin];
+      triggerPhiWidthErrSmallArray[j] = triggerSmallWidthAwayErr[i][j+startPtBin];
+      
+      recoilPhiYieldLargeArray[j] = recoilLargeYieldAway[i][j+startPtBin];
+      recoilPhiYieldErrLargeArray[j]  = recoilLargeYieldAwayErr[i][j+startPtBin];
+      recoilPhiYieldSmallArray[j] = recoilSmallYieldAway[i][j+startPtBin];
+      recoilPhiYieldErrSmallArray[j] = recoilSmallYieldAwayErr[i][j+startPtBin];
+      recoilPhiWidthLargeArray[j] = recoilLargeWidthAway[i][j+startPtBin];
+      recoilPhiWidthErrLargeArray[j] = recoilLargeWidthAwayErr[i][j+startPtBin];
+      recoilPhiWidthSmallArray[j] = recoilSmallWidthAway[i][j+startPtBin];
+      recoilPhiWidthErrSmallArray[j] = recoilSmallWidthAwayErr[i][j+startPtBin];
+      
+      
+    }
+    
+    
   }
   
   // ***************************
@@ -2054,24 +2144,6 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  
-  // finding the weighted center of the pt bins for future graphs
-  std::vector<std::vector<double> > ptBinCenter(nFiles);
-  for ( int i = 0; i < nFiles; ++i ) {
-    ptBinCenter[i].resize(nPtBins);
-    
-    for ( int j = 0; j < nPtBins; ++j ) {
-      double weightedTotal = 0;
-      double entries = 0;
-      
-      for ( int k = ptBinLo[j]; k <= ptBinHi[j]; ++k ) {
-        entries += recombinedPtLead[i]->GetBinContent(k);
-        weightedTotal += recombinedPtLead[i]->GetBinContent(k) * recombinedPtLead[i]->GetBinCenter(k);
-      }
-      ptBinCenter[i][j] = weightedTotal / entries;
-    }
-  }
-  
   
   std::vector<TGraphErrors*> leadPhiGraphLarge( nFiles );
   std::vector<TGraphErrors*> leadPhiWidthGraphLarge( nFiles );
