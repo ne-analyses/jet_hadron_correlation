@@ -432,8 +432,7 @@ int main( int argc, const char** argv) {
       weightedSub[i][j]->Scale( 1.0/weightedSub[i][j]->GetMaximum() );
     }
   }
-              
-  std::cout<<"got here"<<std::endl;
+  
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorrLarge;
   std::vector<std::vector<TH2D*> > recombinedCorrSmall;
@@ -446,7 +445,7 @@ int main( int argc, const char** argv) {
   
   recombinedCorrLarge.resize( nFiles );
   recombinedCorrSmall.resize( nFiles );
-  recombinedPreSmall.resize( nFiles );
+  recombinedPreLarge.resize( nFiles );
   recombinedPreSmall.resize( nFiles );
   recombinedSubLarge.resize( nFiles );
   recombinedSubSmall.resize( nFiles );
@@ -454,7 +453,7 @@ int main( int argc, const char** argv) {
   recombinedSubPreSmall.resize( nFiles );
   
   for (int i = 0; i < nFiles; ++ i ) {
-    
+
     recombinedCorrLarge[i].resize( nPtBins );
     recombinedCorrSmall[i].resize( nPtBins );
     recombinedPreLarge[i].resize( nPtBins );
@@ -463,6 +462,7 @@ int main( int argc, const char** argv) {
     recombinedSubSmall[i].resize( nPtBins );
     recombinedSubPreLarge[i].resize( nPtBins );
     recombinedSubPreSmall[i].resize( nPtBins );
+
     
     for ( int l = 0; l < nPtBins; ++l ) {
       
@@ -485,7 +485,7 @@ int main( int argc, const char** argv) {
         subPreName = "large pre_" + analysisNames[i] + "_sub " + ptBinString[l];
         subPreSmallName = "small pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       }
-      std::cout<<"got here too"<<std::endl;
+      
       recombinedCorrLarge[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       recombinedPreLarge[i][l] = new TH2D( preName.c_str(), preName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
