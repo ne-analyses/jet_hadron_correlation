@@ -595,12 +595,92 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1D*> > triggerLargeAjdPhi( nFiles );
   std::vector<std::vector<TH1D*> > recoilSmallAjdPhi( nFiles );
   std::vector<std::vector<TH1D*> > recoilLargeAjdPhi( nFiles );
+  // fits
+  std::vector<std::vector<TF1*> > triggerSmallAjdPhiFit( nFiles );
+  std::vector<std::vector<TF1*> > triggerLargeAjdPhiFit( nFiles );
+  std::vector<std::vector<TF1*> > recoilSmallAjdPhiFit( nFiles );
+  std::vector<std::vector<TF1*> > recoilLargeAjdPhiFit( nFiles );
+  
+  // subtracted histograms
+  std::vector<std::vector<TH1D*> > triggerSubtracted( nFiles );
+  std::vector<std::vector<TH1D*> > recoilSubtracted( nFiles );
+  
+  std::vector<std::vector<TF1*> > triggerSubFit( nFiles );
+  std::vector<std::vector<TF1*> > recoilSubFit( nFiles );
+  
+  // and we'll need some arrays for the widths and yields
+  std::vector<std::vector<double> > triggerLargeYield( nFiles );
+  std::vector<std::vector<double> > triggerLargeYieldErr( nFiles );
+  std::vector<std::vector<double> > triggerLargeWidth( nFiles );
+  std::vector<std::vector<double> > triggerLargeWidthErr( nFiles );
+  std::vector<std::vector<double> > triggerSmallYield( nFiles );
+  std::vector<std::vector<double> > triggerSmallYieldErr( nFiles );
+  std::vector<std::vector<double> > triggerSmallWidth( nFiles );
+  std::vector<std::vector<double> > triggerSmallWidthErr( nFiles );
+  std::vector<std::vector<double> > recoilLargeYield( nFiles );
+  std::vector<std::vector<double> > recoilLargeYieldErr( nFiles );
+  std::vector<std::vector<double> > recoilLargeWidth( nFiles );
+  std::vector<std::vector<double> > recoilLargeWidthErr( nFiles );
+  std::vector<std::vector<double> > recoilSmallYield( nFiles );
+  std::vector<std::vector<double> > recoilSmallYieldErr( nFiles );
+  std::vector<std::vector<double> > recoilSmallWidth( nFiles );
+  std::vector<std::vector<double> > recoilSmallWidthErr( nFiles );
+  
+  std::vector<std::vector<double> > triggerSubYield( nFiles );
+  std::vector<std::vector<double> > triggerSubYieldErr( nFiles );
+  std::vector<std::vector<double> > triggerSubWidth( nFiles );
+  std::vector<std::vector<double> > triggerSubWidthErr( nFiles );
+  
+  std::vector<std::vector<double> > recoilSubYield( nFiles );
+  std::vector<std::vector<double> > recoilSubYieldErr( nFiles );
+  std::vector<std::vector<double> > recoilSubWidth( nFiles );
+  std::vector<std::vector<double> > recoilSubWidthErr( nFiles );
+  
+  
   for ( int i = 0; i < nFiles; ++i ) {
     
     triggerSmallAjdPhi[i].resize( nPtBins );
     triggerLargeAjdPhi[i].resize( nPtBins );
     recoilSmallAjdPhi[i].resize( nPtBins );
     recoilLargeAjdPhi[i].resize( nPtBins );
+    
+    triggerSmallAjdPhiFit[i].resize( nPtBins );
+    triggerLargeAjdPhiFit[i].resize( nPtBins );
+    recoilSmallAjdPhiFit[i].resize( nPtBins );
+    recoilLargeAjdPhiFit[i].resize( nPtBins );
+    
+    triggerSubtracted[i].resize( nPtBins );
+    recoilSubtracted[i].resize( nPtBins );
+    
+    triggerSubFit[i].resize( nPtBins );
+    recoilSubFit[i].resize( nPtBins );
+    
+    triggerLargeYield[i].resize( nPtBins );
+    triggerLargeYieldErr[i].resize( nPtBins );
+    triggerLargeWidth[i].resize( nPtBins );
+    triggerLargeWidthErr[i].resize( nPtBins );
+    triggerSmallYield[i].resize( nPtBins );
+    triggerSmallYieldErr[i].resize( nPtBins );
+    triggerSmallWidth[i].resize( nPtBins );
+    triggerSmallWidthErr[i].resize( nPtBins );
+    recoilLargeYield[i].resize( nPtBins );
+    recoilLargeYieldErr[i].resize( nPtBins );
+    recoilLargeWidth[i].resize( nPtBins );
+    recoilLargeWidthErr[i].resize( nPtBins );
+    recoilSmallYield[i].resize( nPtBins );
+    recoilSmallYieldErr[i].resize( nPtBins );
+    recoilSmallWidth[i].resize( nPtBins );
+    recoilSmallWidthErr[i].resize( nPtBins );
+    
+    triggerSubYield[i].resize( nPtBins );
+    triggerSubYieldErr.resize( nPtBins );
+    triggerSubWidth[i].resize( nPtBins );
+    triggerSubWidthErr[i].resize( nPtBins );
+
+    recoilSubYield[i].resize( nPtBins );
+    recoilSubYieldErr.resize( nPtBins );
+    recoilSubWidth[i].resize( nPtBins );
+    recoilSubWidthErr[i].resize( nPtBins );
     
     if ( ajSplit[i] ) {
       // for normalization
@@ -660,9 +740,117 @@ int main( int argc, const char** argv) {
         recoilSmallAjdPhi[i][j]->Add( subFunction, -1 );
         subFunction->SetParameter( 0, recoilLargeTmpFit->GetParameter(0) );
         recoilLargeAjdPhi[i][j]->Add( subFunction, -1 );
+        
+        // now do final fits
+        triggerLargeName = "trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
+        triggerSmallName = "trigger_small_"; triggerSmallName += patch::to_string(i); triggerSmallName += patch::to_string(j);
+        recoilSmallName = "recoil_small_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
+        recoilLargeName = "recoil_large_"; recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
+        
+        triggerLargeAjdPhiFit[i][j] = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        triggerLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        triggerLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        triggerSmallAjdPhiFit[i][j] = new TF1(triggerSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        triggerSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        triggerSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        recoilLargeAjdPhiFit[i][j] = new TF1(recoilLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        recoilLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        recoilLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        recoilSmallAjdPhiFit[i][j] = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        recoilSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        recoilSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        
+        // now scale the histograms
+        triggerSmallAjdPhi[i][j]->Scale( 1.0/triggerSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        triggerSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
+        triggerLargeAjdPhi[i][j]->Scale( 1.0/triggerLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        triggerLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
+        recoilSmallAjdPhi[i][j]->Scale( 1.0/recoilSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        recoilSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
+        recoilLargeAjdPhi[i][j]->Scale( 1.0/recoilLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
+        
+        // do the final fits
+        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RM" );
+        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RM" );
+        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RM" );
+        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RM" );
+        
+        // now copy and subtract
+        std::string subTriggerName = "ajsub_dphi_trigger_file_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
+        std::string subRecoilName = "ajsub_dphi_recoil_file_"; subRecoilName += patch::to_string(i); subRecoilName += patch::to_string(j);
+        
+        
+        triggerSubtracted[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
+        triggerSubtracted[i][j]->SetName( subTriggerName.c_str() );
+        recoilSubtracted[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Clone();
+        recoilSubtracted[i][j]->SetName( subRecoilName.c_str() );
+        
+        triggerSubtracted[i][j]->Add( triggerLargeAjdPhi[i][j], -1 );
+        recoilSubtracted[i][j]->Add( recoilLargeAjdPhi[i][j], -1 );
+        
+        triggerSubName = "trigger_sub_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
+        recoilSubName = "recoil_sub_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
+        
+        triggerSubFit[i][j] = new TF1(triggerSubName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerSubFit[i][j]->FixParameter( 2, 0 );
+        triggerSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerSubFit[i][j]->SetParameter( 3, 0.2 );
+        triggerSubFitt[i][j]->SetParameter( 6, 0.2 );
+        
+        recoilSubFit[i][j] = new TF1(recoilSubName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilSubFit[i][j]->FixParameter( 2, 0 );
+        recoilSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilSubFit[i][j]->SetParameter( 3, 0.2 );
+        recoilSubFit[i][j]->SetParameter( 6, 0.2 );
+        
+        triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RM" );
+        recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RM" );
+        
+        triggerLargeYield[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerLargeYieldErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(1);
+        triggerLargeWidth[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(3);
+        triggerLargeWidthErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(3);
+        
+        triggerSmallYield[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerSmallYieldErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(1);
+        triggerSmallWidth[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(3);
+        triggerSmallWidthErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(3);
+        
+        recoilLargeYield[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilLargeYieldErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(1);
+        recoilLargeWidth[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(3);
+        recoilLargeWidthErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(3);
+        
+        recoilSmallYield[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilSmallYieldErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(1);
+        recoilSmallWidth[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(3);
+        recoilSmallWidthErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(3);
+        
+        triggerSubYield[i][j] = triggerSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerSubYieldErr[i][j] = triggerSubFit[i][j]->GetParError(1);
+        triggerSubWidth[i][j] = triggerSubFit[i][j]->GetParameter(3);
+        triggerSubWidthErr[i][j] = triggerSubFit[i][j]->GetParError(3);
+        
+        recoilSubYield[i][j] = recoilSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilSubYieldErr[i][j] = recoilSubFit[i][j]->GetParError(1);
+        recoilSubWidth[i][j] = recoilSubFit[i][j]->GetParameter(3);
+        recoilSubWidthErr[i][j] = recoilSubFit[i][j]->GetParError(3);
+        
       }
     }
   }
+  
+  // now do output
+  
   
   // ***************************
 
