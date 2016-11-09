@@ -816,6 +816,8 @@ int main( int argc, const char** argv) {
         triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RM" );
         recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RM" );
         
+        std::cout<<"finished fitting"<<std::endl;
+        
         triggerLargeYield[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerLargeYieldErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(1);
         triggerLargeWidth[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(3);
@@ -845,11 +847,11 @@ int main( int argc, const char** argv) {
         recoilSubYieldErr[i][j] = recoilSubFit[i][j]->GetParError(1);
         recoilSubWidth[i][j] = recoilSubFit[i][j]->GetParameter(3);
         recoilSubWidthErr[i][j] = recoilSubFit[i][j]->GetParError(3);
-        
+        std::cout<<"got here too"<<std::endl;
       }
     }
   }
-  
+  std::cout<<"got out"<<std::endl;
   // now do output
   
   
