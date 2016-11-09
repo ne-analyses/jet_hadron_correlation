@@ -1345,7 +1345,7 @@ int main( int argc, const char** argv) {
         dPhiSubNearSmall[j][i]->SetMarkerSize(3);
         dPhiSubNearSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dPhiSubNearSmall[j][i]->Draw("same");
-        subPhiDifFitSmall[j][i]->Draw('same');
+        subPhiDifFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( subPhiDifOut.c_str() );
@@ -1376,7 +1376,7 @@ int main( int argc, const char** argv) {
         dEtaSubSmall[j][i]->SetMarkerSize(3);
         dEtaSubSmall[j][i]->SetMarkerColor(j+1+nFiles);
         dEtaSubSmall[j][i]->Draw("same");
-        subEtaFitSmall[j][i]->Draw('same');
+        subEtaFitSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( subEtaOut.c_str() );
