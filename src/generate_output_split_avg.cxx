@@ -1279,6 +1279,7 @@ int main( int argc, const char** argv) {
         dEtaLeadSmall[j][i]->SetMarkerStyle(29);
         dEtaLeadSmall[j][i]->SetMarkerSize(3);
         dEtaLeadSmall[j][i]->SetMarkerColor(j+1+nFiles);
+        dEtaLeadSmall[j][i]->Draw("same");
       }
     }
     c1.SaveAs( leadEtaOut.c_str() );
@@ -1303,7 +1304,7 @@ int main( int argc, const char** argv) {
       else {
         dPhiSubLarge[j][i]->Draw("same");
       }
-      if ( ajSplit[i] ) {
+      if ( ajSplit[j] ) {
         dPhiSubSmall[j][i]->SetLineColor(j+1+nFiles);
         dPhiSubSmall[j][i]->SetMarkerStyle(29);
         dPhiSubSmall[j][i]->SetMarkerSize(3);
