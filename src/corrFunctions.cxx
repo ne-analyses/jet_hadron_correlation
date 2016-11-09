@@ -1189,7 +1189,7 @@ namespace corrAnalysis {
       
 		
 		if ( IsAuAu() ) {
-			hCentVz->Fill( ajbin, centrality, vzbin );
+			hCentVz->Fill( (double)ajbin, centrality,(double) vzbin );
 			return true;
 		}
 		
@@ -1209,7 +1209,7 @@ namespace corrAnalysis {
       ajbin = 1;
 		
 		if ( IsPP() ) {
-			hCentVz->Fill(  ajbin, 0, vzbin );
+			hCentVz->Fill( (double) ajbin, 0.0, (double) vzbin );
 			return true;
 		}
 		
