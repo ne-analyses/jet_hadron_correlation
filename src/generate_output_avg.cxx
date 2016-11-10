@@ -393,9 +393,13 @@ int main( int argc, const char** argv) {
       
       TCanvas c1;
       weightedMix[i][j]->SetTitle( leadOutName.c_str() );
+      weightedMix[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      weightedMix[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       weightedMix[i][j]->Draw("surf1");
       c1.SaveAs( mixLeadName.c_str() );
       weightedSub[i][j]->SetTitle( subOutName.c_str() );
+      weightedSub[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      weightedSub[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       weightedSub[i][j]->Draw("surf1");
       c1.SetTitle( mixSubName.c_str() );
       
@@ -565,16 +569,24 @@ int main( int argc, const char** argv) {
       
       TCanvas c1;
       recombinedCorr[i][j]->SetTitle( leadOutNameCorrected.c_str() );
+      recombinedCorr[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      recombinedCorr[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       recombinedCorr[i][j]->Draw("surf1");
       c1.SaveAs( leadOutName.c_str() );
       recombinedSub[i][j]->SetTitle( subOutNameCorrected.c_str() );
+      recombinedSub[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      recombinedSub[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       recombinedSub[i][j]->Draw("surf1");
       c1.SaveAs( subOutName.c_str() );
       recombinedPre[i][j]->SetTitle( leadOutNameCorr.c_str());
+      recombinedPre[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      recombinedPre[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       recombinedPre[i][j]->Draw("surf1");
       c1.SaveAs( corrLeadName.c_str() );
       recombinedSubPre[i][j]->SetTitle( subOutNameCorrected.c_str() );
       recombinedSubPre[i][j]->SetTitle("surf1");
+      recombinedSubPre[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+      recombinedSubPre[i][j]->GetYaxis()->SetTitle("#Delta#phi");
       c1.SaveAs( corrSubName.c_str());
       
       
