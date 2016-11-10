@@ -1187,7 +1187,7 @@ int main( int argc, const char** argv) {
     leadPhiGraph[i]->SetTitle("Trigger Jet - #Delta#phi Fit Yield");
     leadPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       leadPhiGraph[i]->SetLineColor(0);
       leadPhiGraph[i]->Draw("");
@@ -1205,7 +1205,7 @@ int main( int argc, const char** argv) {
     leadPhiDifGraph[i]->SetTitle("Trigger Jet - #eta Subtracted #Delta#phi Fit Yield");
     leadPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       leadPhiDifGraph[i]->SetLineColor(0);
       leadPhiDifGraph[i]->Draw("");
@@ -1223,7 +1223,7 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->SetTitle("Trigger Jet - #Delta#eta Fit Yield");
     leadEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       leadEtaGraph[i]->SetLineColor(0);
       leadEtaGraph[i]->Draw("");
@@ -1241,7 +1241,7 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->SetTitle("Recoil Jet - #Delta#phi Fit Yield");
     subPhiGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       subPhiGraph[i]->SetLineColor(0);
       subPhiGraph[i]->Draw("");
@@ -1259,7 +1259,7 @@ int main( int argc, const char** argv) {
     subPhiDifGraph[i]->SetTitle("Recoil Jet - #eta Subtracted #Delta#phi Fit Yield");
     subPhiDifGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       subPhiDifGraph[i]->SetLineColor(0);
       subPhiDifGraph[i]->Draw("");
@@ -1277,7 +1277,7 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->SetTitle("Recoil Jet - #Delta#eta Fit Yield");
     subEtaGraph[i]->GetXaxis()->SetTitle("p_{T}");
     subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
-    subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
+    subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
       subEtaGraph[i]->SetLineColor(0);
       subEtaGraph[i]->Draw("");
