@@ -55,8 +55,8 @@ if ( $2 == 'default' ) then
 		set subLeadPtMin = 10.0
 		set leadPtMin = 20.0
 		set jetPtMax = 100.0
-    set splitOnAj = 'true'
-    set splitOnAjVal = 0.2
+    set splitOnAj = 'false'
+    set splitOnAjVal = 0.0
 	else if ( $analysis == 'jet' ) then
 		set subLeadPtMin = 0.0
 		set leadPtMin = 20.0
