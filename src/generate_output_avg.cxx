@@ -904,6 +904,11 @@ int main( int argc, const char** argv) {
         dEtaLead[j][i]->SetTitle( outTitle.c_str() );
         dEtaLead[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
+        if ( j <= 1 )
+          dEtaLead[j][i]->GetYaxis()->SetRangeUser( -0.5, 4.0 );
+        else {
+          dEtaSub[j][i]->GetYaxis()->SetRangeUser( -0.5, 3.0 );
+        }
         dEtaLead[j][i]->Draw();
       }
       else {
@@ -974,6 +979,12 @@ int main( int argc, const char** argv) {
         dEtaSub[j][i]->SetTitle( outTitle.c_str() );
         dEtaSub[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         dEtaSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#eta");
+        if ( j <= 1 )
+          dEtaSub[j][i]->GetYaxis()->SetRangeUser( -0.5, 6.0 );
+        else {
+          dEtaSub[j][i]->GetYaxis()->SetRangeUser( -0.5, 3.0 );
+        }
+
         dEtaSub[j][i]->Draw();
       }
       else {
