@@ -723,7 +723,7 @@ int main( int argc, const char** argv) {
       dPhiLeadNear[i][j]->Add( subConst, -1 );
       subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0));
       if ( j == 1 && analysisNames[i] == "dijet")
-        subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0)+900.4);
+        subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0)+1000.4);
       dEtaLead[i][j]->Add( subConstEta, -1 );
       
       subConst->SetParameter( 0, subPhiInitFit->GetParameter(0) );
