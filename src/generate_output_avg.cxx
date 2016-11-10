@@ -382,11 +382,11 @@ int main( int argc, const char** argv) {
       std::string leadOutName = "Mixing - Trigger " + ptBinString[j];
       std::string subOutName = "Mixing - Recoil " + ptBinString[j];
       
-      if ( analysisNames[i].c_str() = "dijet" ) {
+      if ( analysisNames[i] == "dijet" ) {
         leadOutName = "Dijet " + leadOutName;
         subOutName = "Dijet " + subOutName;
       }
-      else if ( analysisNames[i].c_str() = "ppdijet" ) {
+      else if ( analysisNames[i] == "ppdijet" ) {
         leadOutName = "PP Dijet " + leadOutName;
         subOutName = "PP Dijet " + subOutName;
       }
@@ -548,13 +548,13 @@ int main( int argc, const char** argv) {
       std::string subOutNameCorr = "Signal - Recoil " + ptBinString[j];
       std::string leadOutNameCorrected = "Corrected - Trigger " + ptBinString[j];
       std::string subOutNameCorrected = "Corrected - Recoil " + ptBinString[j];
-      if ( analysisNames[i].c_str() = "dijet" ) {
+      if ( analysisNames[i] == "dijet" ) {
         leadOutNameCorr = "Dijet " + leadOutNameCorr;
         subOutNameCorr = "Dijet " + subOutNameCorr;
         leadOutNameCorrected = "Dijet " + leadOutNameCorrected;
         subOutNameCorrected = "Dijet " + subOutNameCorrected;
       }
-      else if ( analysisNames[i].c_str() = "ppdijet" ) {
+      else if ( analysisNames[i] == "ppdijet" ) {
         leadOutNameCorr = "PP Dijet " + leadOutNameCorr;
         subOutNameCorr = "PP Dijet " + subOutNameCorr;
         leadOutNameCorrected = "PP Dijet " + leadOutNameCorrected;
