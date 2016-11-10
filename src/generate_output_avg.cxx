@@ -161,7 +161,7 @@ int main( int argc, const char** argv) {
   int nFiles = analysisNames.size();
   
   // Load in the histograms
-  TH2D* nEvents[ nFiles ];
+  TH3D* nEvents[ nFiles ];
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
   TH3D* mixHist[ nFiles ];
@@ -208,7 +208,7 @@ int main( int argc, const char** argv) {
     std::string corrhistBaseName = "corrHist_"; corrhistBaseName += analysisNames[i];
     std::string mixhistBaseName = "mixHist_"; mixhistBaseName += analysisNames[i];
 
-    nEvents[i] = (TH2D*) corrFiles[i]->Get( "nevents" );
+    nEvents[i] = (TH3D*) corrFiles[i]->Get( "nevents" );
     nEvents[i]->SetName( neventsBaseName.c_str() );
     hVz[i] = (TH1D*) corrFiles[i]->Get( "vzdist" );
     hVz[i]->SetName( hvzBaseName.c_str() );
