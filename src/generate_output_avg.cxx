@@ -79,7 +79,7 @@ namespace patch
 int main( int argc, const char** argv) {
   
   gStyle->SetOptStat(false);
-  gStyle->SetOptFit(true);
+  gStyle->SetOptFit(false);
   
   // Pt bins
   const int nPtBins = 5;
@@ -722,6 +722,10 @@ int main( int argc, const char** argv) {
       subConst->SetParameter( 0, leadPhiDifInitFit->GetParameter(0));
       dPhiLeadNear[i][j]->Add( subConst, -1 );
       subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0));
+      std::cout<<"HERE WE ARE"<<std::endl;
+      std::cout<<"i: "<<std::endl;
+      std::cout<<"ETA FIT: "<<leadEtaInitFit->GetParameter(0)<<std::endl;
+      std::cout<<"VALUE: "<<subConstEta->GetParameter(0)<<std::endl;
       if ( j == 0 && analysisNames[i] == "dijet")
         subConstEta->SetParameter( 0, leadEtaInitFit->GetParameter(0)+6.4);
       dEtaLead[i][j]->Add( subConstEta, -1 );
