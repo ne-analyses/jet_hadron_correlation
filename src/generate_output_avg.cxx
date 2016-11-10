@@ -374,8 +374,35 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j <= 2; ++j ) {
       weightedMix[i][j]->Scale( 1.0/weightedMix[i][j]->GetMaximum() );
       weightedSub[i][j]->Scale( 1.0/weightedSub[i][j]->GetMaximum() );
+      
+      // and output
+      std::string mixLeadName = "tmp/mix_lead_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      std::string mixSubName = "tmp/mix_sub_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      
+      std::string leadOutName = "Mixing - Trigger " + ptBinString[j];
+      std::string subOutName = "Mixing - Recoil " + ptBinString[j];
+      
+      if ( analysisNames[i] = "dijet" ) {
+        leadOutName = "Dijet " + leadOutName;
+        subOutName = "Dijet " + subOutName;
+      }
+      else if ( analysisNames[i] = "ppdijet" ) {
+        leadOutName = "PP Dijet " + leadOutName;
+        subOutName = "PP Dijet " + subOutName;
+      }
+      
+      TCanvas c1;
+      weightedMix[i][j]->SetTitle( leadOutName.c_str() );
+      weightedMix[i][j]->Draw("surf1");
+      c1.SaveAs( mixLeadName.c_str() );
+      weightedSub[i][j]->SetTitle( subOutName.c_str() );
+      weightedSub[i][j]->Draw("surf1");
+      c1.SetTitle( mixSubName.c_str() );
+      
+      
     }
   }
+  
   
   // make the container for the recombined histograms
   std::vector<std::vector<TH2D*> > recombinedCorr;
@@ -515,12 +542,42 @@ int main( int argc, const char** argv) {
       // save the 2D histograms
       std::string leadOutName = "tmp/lead2d_" + analysisNames[i] +"_pt_"+ patch::to_string(j) + ".pdf";
       std::string subOutName = "tmp/sub2d_" + analysisNames[i] +"_pt_" + patch::to_string(j) + ".pdf";
+      std::string corrLeadName = "tmp/corr_lead_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      std::string corrSubName = "tmp/corr_sub_"+analysisNames[i]+"_pt_"+patch::to_string(j)+".pdf";
+      std::string leadOutNameCorr = "Signal - Trigger " + ptBinString[j];
+      std::string subOutNameCorr = "Signal - Recoil " + ptBinString[j];
+      std::string leadOutNameCorrected = "Corrected - Trigger " + ptBinString[j];
+      std::string subOutNameCorrected = "Corrected - Recoil " + ptBinString[j];
+      if ( analysisNames[i] = "dijet" ) {
+        leadOutNameCorr = "Dijet " + leadOutNameCorr;
+        subOutNameCorr = "Dijet " + subOutNameCorr;
+        leadOutNameCorrected = "Dijet " + leadOutNameCorrected;
+        subOutNameCorrected = "Dijet " + subOutNameCorrected;
+      }
+      else if ( analysisNames[i] = "ppdijet" ) {
+        leadOutNameCorr = "PP Dijet " + leadOutNameCorr;
+        subOutNameCorr = "PP Dijet " + subOutNameCorr;
+        leadOutNameCorrected = "PP Dijet " + leadOutNameCorrected;
+        subOutNameCorrected = "PP Dijet " + subOutNameCorrected;
+      }
+
+
       
       TCanvas c1;
+      recombinedCorr[i][j]->SetTitle( leadOutNameCorrected.c_str() );
       recombinedCorr[i][j]->Draw("surf1");
       c1.SaveAs( leadOutName.c_str() );
+      recombinedSub[i][j]->SetTitle( subOutNameCorrected.c_str() );
       recombinedSub[i][j]->Draw("surf1");
       c1.SaveAs( subOutName.c_str() );
+      recombinedPre[i][j]->SetTitle( leadOutNameCorr.c_str());
+      recombinedPre[i][j]->Draw("surf1");
+      c1.SaveAs( corrLeadName.c_str() );
+      recombinedSubPre[i][j]->SetTitle( subOutNameCorrected.c_str() );
+      recombinedSubPre[i][j]->SetTitle("surf1");
+      c1.SaveAs( corrSubName.c_str());
+      
+      
       
       dPhiLead[i][j] = (TH1D*) ((TH1D*) recombinedCorr[i][j]->ProjectionY())->Clone();
       dPhiSub[i][j] = (TH1D*) ((TH1D*) recombinedSub[i][j]->ProjectionY())->Clone();
