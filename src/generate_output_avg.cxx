@@ -857,7 +857,7 @@ int main( int argc, const char** argv) {
         dPhiLead[j][i]->SetTitle( outTitle.c_str() );
         dPhiLead[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLead[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLead[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.0 );
+        dPhiLead[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.5 );
         dPhiLead[j][i]->Draw();
       }
       else {
@@ -882,7 +882,7 @@ int main( int argc, const char** argv) {
         dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiLeadNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.0 );
+        dPhiLeadNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.5 );
         dPhiLeadNear[j][i]->Draw();
       }
       else {
@@ -936,7 +936,7 @@ int main( int argc, const char** argv) {
         dPhiSub[j][i]->SetTitle( outTitle.c_str() );
         dPhiSub[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSub[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSub[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.0 );
+        dPhiSub[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.5 );
         dPhiSub[j][i]->Draw();
       }
       else {
@@ -961,7 +961,7 @@ int main( int argc, const char** argv) {
         dPhiSubNear[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
-        dPhiSubNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.0 );
+        dPhiSubNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.5 );
         dPhiSubNear[j][i]->Draw();
       }
       else {
