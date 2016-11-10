@@ -970,6 +970,8 @@ int main( int argc, const char** argv) {
         dPhiSubNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 2.5 );
         if ( i <= 2 )
           dPhiSubNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 3.5 );
+        if ( i == 4 )
+          dPhiSubNear[j][i]->GetYaxis()->SetRangeUser( -0.5, 3.5 );
         dPhiSubNear[j][i]->Draw();
       }
       else {
