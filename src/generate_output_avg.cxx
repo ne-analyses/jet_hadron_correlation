@@ -1221,7 +1221,7 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 5 );
     if ( i == 0)
-      leadEtaGraph[i]->Draw("A");
+      leadEtaGraph[i]->Draw("");
     else
       leadEtaGraph[i]->Draw("P");
   }
