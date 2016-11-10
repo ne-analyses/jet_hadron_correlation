@@ -1203,8 +1203,8 @@ int main( int argc, const char** argv) {
     leadPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      leadPhiGraph[i]->SetLineColor(0);
-      leadPhiGraph[i]->Draw("");
+      //leadPhiGraph[i]->SetLineColor(0);
+      leadPhiGraph[i]->Draw("ap");
     }
     else
       leadPhiGraph[i]->Draw("P");
@@ -1221,8 +1221,8 @@ int main( int argc, const char** argv) {
     leadPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      leadPhiDifGraph[i]->SetLineColor(0);
-      leadPhiDifGraph[i]->Draw("");
+      //leadPhiDifGraph[i]->SetLineColor(0);
+      leadPhiDifGraph[i]->Draw("ap");
     }
     else
       leadPhiDifGraph[i]->Draw("P");
@@ -1239,8 +1239,8 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     leadEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      leadEtaGraph[i]->SetLineColor(0);
-      leadEtaGraph[i]->Draw("");
+      //leadEtaGraph[i]->SetLineColor(0);
+      leadEtaGraph[i]->Draw("ap");
     }
     else
       leadEtaGraph[i]->Draw("P");
@@ -1257,8 +1257,8 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      subPhiGraph[i]->SetLineColor(0);
-      subPhiGraph[i]->Draw("");
+      //subPhiGraph[i]->SetLineColor(0);
+      subPhiGraph[i]->Draw("ap");
     }
     else
       subPhiGraph[i]->Draw("P");
@@ -1275,8 +1275,8 @@ int main( int argc, const char** argv) {
     subPhiDifGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subPhiDifGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      subPhiDifGraph[i]->SetLineColor(0);
-      subPhiDifGraph[i]->Draw("");
+      //subPhiDifGraph[i]->SetLineColor(0);
+      subPhiDifGraph[i]->Draw("ap");
     }
     else
       subPhiDifGraph[i]->Draw("P");
@@ -1293,8 +1293,8 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->GetYaxis()->SetTitle("1/N_{dijet}dN/dp_{T}");
     subEtaGraph[i]->GetYaxis()->SetRangeUser( 0, 2 );
     if ( i == 0) {
-      subEtaGraph[i]->SetLineColor(0);
-      subEtaGraph[i]->Draw("");
+      //subEtaGraph[i]->SetLineColor(0);
+      subEtaGraph[i]->Draw("ap");
     }
     else {
       subEtaGraph[i]->Draw("P");
@@ -1314,8 +1314,8 @@ int main( int argc, const char** argv) {
     leadPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      leadPhiWidthGraph[i]->SetLineColor(0);
-      leadPhiWidthGraph[i]->Draw("");
+      //leadPhiWidthGraph[i]->SetLineColor(0);
+      leadPhiWidthGraph[i]->Draw("ap");
     }
     else
       leadPhiWidthGraph[i]->Draw("P");
@@ -1332,8 +1332,8 @@ int main( int argc, const char** argv) {
     leadPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      leadPhiDifWidthGraph[i]->SetLineColor(0);
-      leadPhiDifWidthGraph[i]->Draw("");
+      //leadPhiDifWidthGraph[i]->SetLineColor(0);
+      leadPhiDifWidthGraph[i]->Draw("ap");
     }
     else
       leadPhiDifWidthGraph[i]->Draw("P");
@@ -1350,8 +1350,8 @@ int main( int argc, const char** argv) {
     leadEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     leadEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      leadEtaWidthGraph[i]->SetLineColor(0);
-      leadEtaWidthGraph[i]->Draw("");
+      //leadEtaWidthGraph[i]->SetLineColor(0);
+      leadEtaWidthGraph[i]->Draw("ap");
     }
     else
       leadEtaWidthGraph[i]->Draw("P");
@@ -1368,8 +1368,8 @@ int main( int argc, const char** argv) {
     subPhiWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      subPhiWidthGraph[i]->SetLineColor(0);
-      subPhiWidthGraph[i]->Draw("");
+      //subPhiWidthGraph[i]->SetLineColor(0);
+      subPhiWidthGraph[i]->Draw("ap");
     }
     else
       subPhiWidthGraph[i]->Draw("P");
@@ -1386,8 +1386,8 @@ int main( int argc, const char** argv) {
     subPhiDifWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subPhiDifWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      subPhiDifWidthGraph[i]->SetLineColor(0);
-      subPhiDifWidthGraph[i]->Draw("");
+      //subPhiDifWidthGraph[i]->SetLineColor(0);
+      subPhiDifWidthGraph[i]->Draw("ap");
     }
     else
       subPhiDifWidthGraph[i]->Draw("P");
@@ -1404,8 +1404,8 @@ int main( int argc, const char** argv) {
     subEtaWidthGraph[i]->GetYaxis()->SetTitle("Width");
     subEtaWidthGraph[i]->GetYaxis()->SetRangeUser( 0, 1);
     if ( i == 0) {
-      subEtaWidthGraph[i]->SetLineColor(0);
-      subEtaWidthGraph[i]->Draw("");
+      //subEtaWidthGraph[i]->SetLineColor(0);
+      subEtaWidthGraph[i]->Draw("ap");
     }
     else
       subEtaWidthGraph[i]->Draw("P");
@@ -1429,8 +1429,8 @@ int main( int argc, const char** argv) {
     leadEtaGraph[i]->SetMarkerSize(2);
     leadEtaGraph[i]->SetMarkerColor(3);
     
-    leadPhiGraph[i]->SetLineColor(0);
-    leadPhiGraph[i]->Draw("");
+    //leadPhiGraph[i]->SetLineColor(0);
+    leadPhiGraph[i]->Draw("ap");
     leadPhiDifGraph[i]->Draw("P");
     leadEtaGraph[i]->Draw("P");
     
@@ -1459,8 +1459,8 @@ int main( int argc, const char** argv) {
     subEtaGraph[i]->SetMarkerSize(2);
     subEtaGraph[i]->SetMarkerColor(3);
     
-    subPhiGraph[i]->SetLineColor(0);
-    subPhiGraph[i]->Draw("");
+    //subPhiGraph[i]->SetLineColor(0);
+    subPhiGraph[i]->Draw("ap");
     subPhiDifGraph[i]->Draw("P");
     subEtaGraph[i]->Draw("P");
     
@@ -1485,8 +1485,8 @@ int main( int argc, const char** argv) {
     subPhiGraph[i]->SetMarkerColor(7);
     subPhiGraph[i]->SetMarkerStyle(20);
     
-    leadPhiGraph[i]->SetLineColor(0);
-    leadPhiGraph[i]->Draw("");
+    //leadPhiGraph[i]->SetLineColor(0);
+    leadPhiGraph[i]->Draw("ap");
     subPhiGraph[i]->Draw("P");
     
     leg = new TLegend(0.65,0.7,0.9,0.9);
