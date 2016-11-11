@@ -43,7 +43,7 @@ endif
 
 if ( $2 == 'default' ) then
 
-set mixEvents = 'auau_list/grid_AuAuy14MidMix.list'
+set mixEvents = 'auau_list/grid_AuAu14MidMix.list'
 set dataType = 'HT'
 set nEvents = '-1'
 set eventsPerTrigger = '2000'
