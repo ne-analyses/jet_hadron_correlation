@@ -1264,7 +1264,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( IsDijet() && !isMix() ) {
+		if ( IsDijet() && !IsMix() ) {
 			hAjHigh->Fill( aj );
 			return true;
 		}
@@ -1522,7 +1522,7 @@ namespace corrAnalysis {
   }
   
   // Looking for correlations between Aj, Cent, and Pt
-  bool histograms::FillhAjStruct( double aj, int centrality, double pt ) {
+  bool histograms::FillAjStruct( double aj, int centrality, double pt ) {
     if ( !initialized ) {
       __ERR("histograms instance not initialized")
       return false;
