@@ -1003,7 +1003,7 @@ int main( int argc, const char** argv) {
         //leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
         //leg->Draw();
         
-        c1.SaveAs( triggerPhiOut.c_str() );
+        c1.SaveAs( "tmp/test.pdf" );
         
       }
     }
