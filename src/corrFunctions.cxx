@@ -904,6 +904,7 @@ namespace corrAnalysis {
 		h3DimCorrSub 	= 0;
     leadingArrays = 0;
     subleadingArrays = 0;
+    ajStruct = 0;
 	}
 	
 	histograms::histograms( std::string anaType, bool splitOnAj, double splitVal ) {
@@ -927,6 +928,7 @@ namespace corrAnalysis {
 		h3DimCorrSub 	= 0;
     leadingArrays = 0;
     subleadingArrays = 0;
+    ajStruct = 0;
 	}
 	
 	histograms::~histograms() {
@@ -962,6 +964,8 @@ namespace corrAnalysis {
 			delete h3DimCorrLead;
 		if ( h3DimCorrSub )
 			delete h3DimCorrSub;
+    if ( ajStruct )
+      delete ajStruct;
     
     if ( leadingArrays ) {
       for ( int i = 0; i < binsCentrality; ++i ) {
@@ -1041,6 +1045,7 @@ namespace corrAnalysis {
       if ( analysisType == "dijet" ) {
         hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
         hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+        ajStruct = new TH3D("ajstruct", "Aj Centrality Pt" 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
 			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
 			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
@@ -1082,8 +1087,9 @@ namespace corrAnalysis {
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
       if ( analysisType == "ppdijet" ) {
-			hAjHigh 		= new TH1D( "ajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-			hAjLow 			= new TH1D( "ajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+        hAjHigh 		= new TH1D( "ajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+        hAjLow 			= new TH1D( "ajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+        ajStruct = new TH3D("ajstruct", "Aj Centrality Pt" 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
 			
 			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
@@ -1157,6 +1163,8 @@ namespace corrAnalysis {
 			h3DimCorrLead->Write();
 		if ( h3DimCorrSub )
 			h3DimCorrSub->Write();
+    if ( ajStruct )
+      ajStruct->Write();
     
     for ( int i = 0; i < binsCentrality; ++i ) {
       if ( leadingArrays ) {
@@ -1492,4 +1500,31 @@ namespace corrAnalysis {
     return true;
   }
   
+  // Looking for correlations between Aj, Cent, and Pt
+  bool histograms::FillAjStruct( double aj, int centrality, double pt ) {
+    if ( !initialized ) {
+      __ERR("histograms instance not initialized")
+      return false;
+    }
+    if ( IsDijet() && IsAuAu() ) {
+
+      ajStruct->Fill( aj, centrality, pt );
+      
+      return true;
+    }
+    else if ( IsDijet() && IsPP() ) {
+
+      ajStruct->Fill( aj, 0, pt );
+      
+      return true;
+    }
+    
+    else
+      return false;
+    
+  }
+  
 }
+
+
+

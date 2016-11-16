@@ -246,6 +246,10 @@ namespace corrAnalysis {
     TObjArray*** leadingArrays;
     TObjArray*** subleadingArrays;
     
+    // a histogram to see if there is some event or jet structure
+    // relating to Aj
+    TH3D* ajStruct;
+    
     // Used internally when filling histograms
     bool IsPP();
     bool IsAuAu();
@@ -321,6 +325,9 @@ namespace corrAnalysis {
     // Associated track info
     bool FillAssocPt( double pt );
     bool FillAssocEtaPhi( double eta, double phi );
+    
+    // Looking for correlations between Aj, Cent, and Pt
+    bool FillAjStruct( double aj, int centrality, double pt );
     
 	};
 }
