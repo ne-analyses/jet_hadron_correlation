@@ -997,15 +997,14 @@ int main( int argc, const char** argv) {
         triggerSmallAjdPhi[i][j]->SetMarkerColor(2);
         triggerSmallAjdPhi[i][j]->Draw("same");
         
-        TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
-        leg->SetHeader(""); // option "C" allows to center the header
-        leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
-        leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
-        leg->Draw();
-        std::cout<<"and here"<<std::endl;
-        std::cout<<triggerPhiOut<<std::endl;
+        //TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+        //leg->SetHeader(""); // option "C" allows to center the header
+        //leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
+        //leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
+        //leg->Draw();
+        
         c1.SaveAs( triggerPhiOut.c_str() );
-        std::cout<<"and here"<<std::endl;
+        
       }
     }
   }
