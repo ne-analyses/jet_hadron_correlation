@@ -316,8 +316,8 @@ int main( int argc, const char** argv) {
   }
   
   std::cout<<"finished loading all histograms"<<std::endl;
-  std::cout<<"split: "<<ajSplit[0]<<std::endl;
-  /*
+  
+  
   // finding the weighted center of the pt bins for future graphs
   std::vector<std::vector<double> > ptBinCenter(nFiles);
   for ( int i = 0; i < nFiles; ++i ) {
@@ -974,7 +974,10 @@ int main( int argc, const char** argv) {
   std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
   std::string ajOutExt = ".pdf";
-  
+  TCanvas c1;
+  triggerLargeAjdPhi[0][0]->Draw();
+  c1.SaveAs("tmp/test.pdf");
+  /*
   for ( int i = 0; i < nFiles; ++i ) {
     
     for ( int j = 0; j < nPtBins; ++ j ) {
