@@ -840,7 +840,7 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
-        recoilLargeAjdPhi[i][j]->SetLineColor( kBlack );
+        recoilLargeAjdPhiFit[i][j]->SetLineColor( kBlack );
         
         recoilSmallAjdPhiFit[i][j] = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSmallAjdPhiFit[i][j]->FixParameter( 0, 0 );
