@@ -995,7 +995,7 @@ int main( int argc, const char** argv) {
         triggerSmallAjdPhi[i][j]->SetMarkerStyle(29);
         triggerSmallAjdPhi[i][j]->SetMarkerSize(2);
         triggerSmallAjdPhi[i][j]->SetMarkerColor(2);
-        triggerSmallAjdPhi[i][j]->Draw("same");
+        //triggerSmallAjdPhi[i][j]->Draw("same");
         
         //TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
         //leg->SetHeader(""); // option "C" allows to center the header
