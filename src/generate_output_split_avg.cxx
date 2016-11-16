@@ -871,7 +871,7 @@ int main( int argc, const char** argv) {
         std::string subTriggerName = "ajsub_dphi_trigger_file_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
         std::string subRecoilName = "ajsub_dphi_recoil_file_"; subRecoilName += patch::to_string(i); subRecoilName += patch::to_string(j);
         
-        
+        std::cout<<"FITTING SUBTRACTED BIN: i = "<<i<<" j = "<<j<<std::endl;
         triggerSubtracted[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
         triggerSubtracted[i][j]->SetName( subTriggerName.c_str() );
         recoilSubtracted[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Clone();
@@ -974,9 +974,7 @@ int main( int argc, const char** argv) {
   std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
   std::string ajOutExt = ".pdf";
-  TCanvas c1;
-  std::cout<<triggerLargeAjdPhi[0][0]->Integral()<<std::endl;
-  //c1.SaveAs("tmp/test.pdf");
+
   /*
   for ( int i = 0; i < nFiles; ++i ) {
     
