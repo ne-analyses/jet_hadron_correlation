@@ -307,7 +307,7 @@ namespace corrAnalysis {
 		
 		bool FillAjHigh( double aj );										// Records Aj for initial hard jets
 		bool FillAjLow( double aj );										// Records Aj for jets with soft constituents
-    bool FillAjDif( double ajHigh, ajLow );         // Records Aj high, Ajlow, Ajdif
+    bool FillAjDif( double ajHigh, double ajLow );         // Records Aj high, Ajlow, Ajdif
 		
     // For jet-hadron
 		bool FillJetPt( double pt );										// For Jet-hadron: records accepted trigger jet pt
