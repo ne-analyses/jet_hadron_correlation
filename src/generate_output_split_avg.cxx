@@ -862,6 +862,7 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
         
         // do the final fits
+        std::cout<<"FITTING PHI BIN: i = "<<i<<" j = "<<j<<std::endl;
         triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RMI" );
         triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RMI" );
         recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RMI" );
@@ -871,7 +872,7 @@ int main( int argc, const char** argv) {
         std::string subTriggerName = "ajsub_dphi_trigger_file_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
         std::string subRecoilName = "ajsub_dphi_recoil_file_"; subRecoilName += patch::to_string(i); subRecoilName += patch::to_string(j);
         
-        std::cout<<"FITTING SUBTRACTED BIN: i = "<<i<<" j = "<<j<<std::endl;
+        
         triggerSubtracted[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
         triggerSubtracted[i][j]->SetName( subTriggerName.c_str() );
         recoilSubtracted[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Clone();
@@ -899,6 +900,7 @@ int main( int argc, const char** argv) {
         recoilSubFit[i][j]->SetParameter( 6, 0.2 );
         recoilSubFit[i][j]->SetLineColor( i+1 );
         
+        std::cout<<"FITTING SUBTRACTED BIN: i = "<<i<<" j = "<<j<<std::endl;
         triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RMI" );
         recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RMI" );
         
