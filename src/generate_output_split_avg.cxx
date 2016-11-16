@@ -1002,7 +1002,8 @@ int main( int argc, const char** argv) {
         leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
         leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
-        
+        std::cout<<"and here"<<std::endl;
+        std::cout<<triggerPhiOut<<std::endl;
         c1.SaveAs( triggerPhiOut.c_str() );
       }
     }
