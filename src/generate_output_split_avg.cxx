@@ -972,7 +972,6 @@ int main( int argc, const char** argv) {
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
   std::string ajOutExt = ".pdf";
   
-  std::cout<<"got here"<<std::endl;
   for ( int i = 0; i < nFiles; ++i ) {
     
     for ( int j = 0; j < nPtBins; ++ j ) {
@@ -995,15 +994,15 @@ int main( int argc, const char** argv) {
         triggerSmallAjdPhi[i][j]->SetMarkerStyle(29);
         triggerSmallAjdPhi[i][j]->SetMarkerSize(2);
         triggerSmallAjdPhi[i][j]->SetMarkerColor(2);
-        //triggerSmallAjdPhi[i][j]->Draw("same");
+        triggerSmallAjdPhi[i][j]->Draw("same");
         
-        //TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
-        //leg->SetHeader(""); // option "C" allows to center the header
-        //leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
-        //leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
-        //leg->Draw();
+        TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+        leg->SetHeader(""); // option "C" allows to center the header
+        leg->AddEntry(triggerLargeAjdPhi[i][j],"Trigger #Delta#phi |Aj| > 0.2","lep");
+        leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
+        leg->Draw();
         
-        c1.SaveAs( "tmp/test.pdf" );
+        //c1.SaveAs( triggerPhiOut.c_str() );
         
       }
     }
@@ -1039,7 +1038,7 @@ int main( int argc, const char** argv) {
         leg->AddEntry(recoilSmallAjdPhi[i][j],"Recoil #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
         
-        c1.SaveAs( recoilPhiOut.c_str() );
+        //c1.SaveAs( recoilPhiOut.c_str() );
       }
     }
   }
