@@ -237,6 +237,7 @@ namespace corrAnalysis {
 		// A_j if doing dijets
 		TH1D* hAjHigh;
 		TH1D* hAjLow;
+    TH3D* hAjDif;
 		
 		// Correlations that are not differentiated by Vz and Centrality
 		TH3D* h3DimCorrLead;
@@ -248,7 +249,7 @@ namespace corrAnalysis {
     
     // a histogram to see if there is some event or jet structure
     // relating to Aj
-    TH3D* ajStruct;
+    TH3D* hAjStruct;
     
     // Used internally when filling histograms
     bool IsPP();
@@ -306,6 +307,7 @@ namespace corrAnalysis {
 		
 		bool FillAjHigh( double aj );										// Records Aj for initial hard jets
 		bool FillAjLow( double aj );										// Records Aj for jets with soft constituents
+    bool FillAjDif( double ajHigh, ajLow );         // Records Aj high, Ajlow, Ajdif
 		
     // For jet-hadron
 		bool FillJetPt( double pt );										// For Jet-hadron: records accepted trigger jet pt
