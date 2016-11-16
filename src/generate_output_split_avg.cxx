@@ -975,8 +975,8 @@ int main( int argc, const char** argv) {
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
   std::string ajOutExt = ".pdf";
   TCanvas c1;
-  triggerLargeAjdPhi[0][0]->Draw();
-  c1.SaveAs("tmp/test.pdf");
+  std::cout<<triggerLargeAjdPhi[0][0]->Integral()<<std::endl;
+  //c1.SaveAs("tmp/test.pdf");
   /*
   for ( int i = 0; i < nFiles; ++i ) {
     
