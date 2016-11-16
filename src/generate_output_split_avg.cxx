@@ -316,7 +316,8 @@ int main( int argc, const char** argv) {
   }
   
   std::cout<<"finished loading all histograms"<<std::endl;
-  
+  std::cout<<"split: "<<ajSplit[0]<<std::endl;
+  /*
   // finding the weighted center of the pt bins for future graphs
   std::vector<std::vector<double> > ptBinCenter(nFiles);
   for ( int i = 0; i < nFiles; ++i ) {
@@ -1004,7 +1005,7 @@ int main( int argc, const char** argv) {
         leg->AddEntry(triggerSmallAjdPhi[i][j],"Trigger #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
         
-        //c1.SaveAs( triggerPhiOut.c_str() );
+        c1.SaveAs( triggerPhiOut.c_str() );
         
       }
     }
@@ -1040,7 +1041,7 @@ int main( int argc, const char** argv) {
         leg->AddEntry(recoilSmallAjdPhi[i][j],"Recoil #Delta#phi |Aj| < 0.2","lep");
         leg->Draw();
         
-        //c1.SaveAs( recoilPhiOut.c_str() );
+        c1.SaveAs( recoilPhiOut.c_str() );
       }
     }
   }
@@ -2739,5 +2740,6 @@ int main( int argc, const char** argv) {
 
   }
 
+   */
   return 0;
 }
