@@ -707,12 +707,12 @@ int main( int argc, const char** argv) {
       subEtaInitFit->FixParameter( 2, 0 );
       subEtaInitFit->SetParameter( 3, 0.2 );
       
-      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
-      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RM" );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
-      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
-      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RMI" );
+      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RMI" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RMI" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RMI" );
+      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RMI" );
+      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RMI" );
       
       // Now to subtract the constants
       TF1* subConst = new TF1( "subConst", "[0]", phiMin, phiMax);
@@ -817,17 +817,17 @@ int main( int argc, const char** argv) {
       
       // Now set same colors and fit
       dPhiLead[i][j]->SetLineColor( i + 1 );
-      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName.c_str(), "RMI" );
       dPhiSub[i][j]->SetLineColor( i + 1 );
-      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RM" );
+      dPhiSub[i][j]->Fit( dPhiSubName.c_str(), "RMI" );
       dPhiLeadNear[i][j]->SetLineColor( i + 1 );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif.c_str(), "RMI" );
       dPhiSubNear[i][j]->SetLineColor( i + 1 );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif.c_str(), "RMI" );
       dEtaLead[i][j]->SetLineColor( i + 1 );
-      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
+      dEtaLead[i][j]->Fit( dEtaLeadName.c_str(), "RMI" );
       dEtaSub[i][j]->SetLineColor( i + 1 );
-      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dEtaSub[i][j]->Fit( dEtaSubName.c_str(), "RMI" );
       
     }
   }

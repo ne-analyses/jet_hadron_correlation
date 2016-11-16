@@ -536,12 +536,12 @@ int generate_output_root() {
       subEtaInitFit->FixParameter( 2, 0 );
       subEtaInitFit->SetParameter( 3, 0.2 );
       
-      dPhiLead[i][j]->Fit( dPhiLeadName, "RM" );
-      dPhiSub[i][j]->Fit( dPhiSubName, "RM" );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RM" );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RM" );
-      dEtaLead[i][j]->Fit( dEtaLeadName, "RM" );
-      dEtaSub[i][j]->Fit( dEtaSubName, "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName, "RMI" );
+      dPhiSub[i][j]->Fit( dPhiSubName, "RMI" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RMI" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RMI" );
+      dEtaLead[i][j]->Fit( dEtaLeadName, "RMI" );
+      dEtaSub[i][j]->Fit( dEtaSubName, "RMI" );
       
       // Now to subtract the constants
       TF1* subConst = new TF1( "subConst", "[0]", phiMin, phiMax);
@@ -630,17 +630,17 @@ int generate_output_root() {
 
       // Now set same colors and fit
       dPhiLead[i][j]->SetLineColor( i + 1 );
-      dPhiLead[i][j]->Fit( dPhiLeadName, "RM" );
+      dPhiLead[i][j]->Fit( dPhiLeadName, "RMI" );
       dPhiSub[i][j]->SetLineColor( i + 1 );
-      dPhiSub[i][j]->Fit( dPhiSubName, "RM" );
+      dPhiSub[i][j]->Fit( dPhiSubName, "RMI" );
       dPhiLeadNear[i][j]->SetLineColor( i + 1 );
-      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RM" );
+      dPhiLeadNear[i][j]->Fit( dPhiLeadNameDif, "RMI" );
       dPhiSubNear[i][j]->SetLineColor( i + 1 );
-      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RM" );
+      dPhiSubNear[i][j]->Fit( dPhiSubNameDif, "RMI" );
       dEtaLead[i][j]->SetLineColor( i + 1 );
-      dEtaLead[i][j]->Fit( dEtaLeadName, "RM" );
+      dEtaLead[i][j]->Fit( dEtaLeadName, "RMI" );
       dEtaSub[i][j]->SetLineColor( i + 1 );
-      dEtaSub[i][j]->Fit( dEtaSubName, "RM" );
+      dEtaSub[i][j]->Fit( dEtaSubName, "RMI" );
       
     }
   }

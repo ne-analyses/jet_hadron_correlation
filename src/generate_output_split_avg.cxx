@@ -796,10 +796,10 @@ int main( int argc, const char** argv) {
         
         
         // fit
-        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RM" );
-        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RM" );
-        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RM" );
-        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RM" );
+        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RMI" );
+        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RMI" );
+        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RMI" );
+        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RMI" );
         
         // subtract
         TF1* subFunction = new TF1("subFunc", "[0]", phiMin, phiMax );
@@ -861,10 +861,10 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
         
         // do the final fits
-        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RM" );
-        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RM" );
-        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RM" );
-        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RM" );
+        triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RMI" );
+        triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RMI" );
+        recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RMI" );
+        recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RMI" );
         
         // now copy and subtract
         std::string subTriggerName = "ajsub_dphi_trigger_file_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
@@ -896,8 +896,8 @@ int main( int argc, const char** argv) {
         recoilSubFit[i][j]->SetParameter( 3, 0.2 );
         recoilSubFit[i][j]->SetParameter( 6, 0.2 );
         
-        triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RM" );
-        recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RM" );
+        triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RMI" );
+        recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RMI" );
         
         triggerLargeYieldNear[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerLargeYieldNearErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(1);
@@ -1539,20 +1539,20 @@ int main( int argc, const char** argv) {
       subEtaSmallInitFit->FixParameter( 2, 0 );
       subEtaSmallInitFit->SetParameter( 3, 0.2 );
       
-      dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
-      dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RM" );
-      dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
-      dPhiSubNearLarge[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
-      dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
-      dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RMI" );
+      dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RMI" );
+      dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RMI" );
+      dPhiSubNearLarge[i][j]->Fit( dPhiSubNameDif.c_str(), "RMI" );
+      dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RMI" );
+      dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RMI" );
       
       if ( ajSplit[i] ) {
-        dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RM" );
-        dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RM" );
-        dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RM" );
-        dPhiSubNearSmall[i][j]->Fit( dPhiSubNameDifSmall.c_str(), "RM" );
-        dEtaLeadSmall[i][j]->Fit( dEtaLeadNameSmall.c_str(), "RM" );
-        dEtaSubSmall[i][j]->Fit( dEtaSubNameSmall.c_str(), "RM" );
+        dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RMI" );
+        dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RMI" );
+        dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RMI" );
+        dPhiSubNearSmall[i][j]->Fit( dPhiSubNameDifSmall.c_str(), "RMI" );
+        dEtaLeadSmall[i][j]->Fit( dEtaLeadNameSmall.c_str(), "RMI" );
+        dEtaSubSmall[i][j]->Fit( dEtaSubNameSmall.c_str(), "RMI" );
       }
       
       // Now to subtract the constants
@@ -1765,31 +1765,31 @@ int main( int argc, const char** argv) {
       
       // Now set same colors and fit
       dPhiLeadLarge[i][j]->SetLineColor( i + 1 );
-      dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RM" );
+      dPhiLeadLarge[i][j]->Fit( dPhiLeadName.c_str(), "RMI" );
       dPhiSubLarge[i][j]->SetLineColor( i + 1  );
-      dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RM" );
+      dPhiSubLarge[i][j]->Fit( dPhiSubName.c_str(), "RMI" );
       dPhiLeadNearLarge[i][j]->SetLineColor( i + 1 );
-      dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RM" );
+      dPhiLeadNearLarge[i][j]->Fit( dPhiLeadNameDif.c_str(), "RMI" );
       dPhiSubNearLarge[i][j]->SetLineColor( i + 1 );
-      dPhiSubNearLarge[i][j]->Fit( dPhiSubNameDif.c_str(), "RM" );
+      dPhiSubNearLarge[i][j]->Fit( dPhiSubNameDif.c_str(), "RMI" );
       dEtaLeadLarge[i][j]->SetLineColor( i + 1 );
-      dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RM" );
+      dEtaLeadLarge[i][j]->Fit( dEtaLeadName.c_str(), "RMI" );
       dEtaSubLarge[i][j]->SetLineColor( i + 1 );
-      dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RM" );
+      dEtaSubLarge[i][j]->Fit( dEtaSubName.c_str(), "RMI" );
       
       if ( ajSplit[i] ) {
         dPhiLeadSmall[i][j]->SetLineColor( i + 1 + nFiles );
-        dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RM" );
+        dPhiLeadSmall[i][j]->Fit( dPhiLeadNameSmall.c_str(), "RMI" );
         dPhiSubSmall[i][j]->SetLineColor( i + 1 + nFiles);
-        dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RM" );
+        dPhiSubSmall[i][j]->Fit( dPhiSubNameSmall.c_str(), "RMI" );
         dPhiLeadNearSmall[i][j]->SetLineColor( i + 1 + nFiles);
-        dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RM" );
+        dPhiLeadNearSmall[i][j]->Fit( dPhiLeadNameDifSmall.c_str(), "RMI" );
         dPhiSubNearSmall[i][j]->SetLineColor( i + 1 + nFiles);
-        dPhiSubNearSmall[i][j]->Fit( dPhiSubNameDifSmall.c_str(), "RM" );
+        dPhiSubNearSmall[i][j]->Fit( dPhiSubNameDifSmall.c_str(), "RMI" );
         dEtaLeadSmall[i][j]->SetLineColor( i + 1 + nFiles);
-        dEtaLeadSmall[i][j]->Fit( dEtaLeadNameSmall.c_str(), "RM" );
+        dEtaLeadSmall[i][j]->Fit( dEtaLeadNameSmall.c_str(), "RMI" );
         dEtaSubSmall[i][j]->SetLineColor( i + 1 + nFiles);
-        dEtaSubSmall[i][j]->Fit( dEtaSubNameSmall.c_str(), "RM" );
+        dEtaSubSmall[i][j]->Fit( dEtaSubNameSmall.c_str(), "RMI" );
       }
       
     }
