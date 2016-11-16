@@ -95,12 +95,12 @@ namespace corrAnalysis {
 	const double 	ptHighEdge = 30.0;				// upper edge for accepted pt range
 	
 	// Phi binning ( full 2*pi coverage, from -pi/4 to 7*pi/4 )
-	const int 	 	binsPhi = 25;							// number of phi bins
+	const int 	 	binsPhi = 24;							// number of phi bins
 	const double 	phiLowEdge = -pi/2.0;			// lower edge for accepted phi range
 	const double 	phiHighEdge = 3.0*pi/2.0;	// upper edge for accepted phi range
 	
 	// Eta binning
-	const int		 binsEta = 25;							// number of eta bins
+	const int		 binsEta = 24;							// number of eta bins
 	const double etaLowEdge = -1;						// lower edge for accepted eta range
 	const double etaHighEdge = 1;						// upper edge for accepted phi range
 	const double dEtaLowEdge = 2*etaLowEdge;		// lower edge for accepted dEta range
