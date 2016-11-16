@@ -1049,7 +1049,7 @@ namespace corrAnalysis {
       if ( analysisType == "dijet" ) {
         hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
         hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, -1, 1 );
+        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
         hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
 			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
@@ -1094,7 +1094,7 @@ namespace corrAnalysis {
       if ( analysisType == "ppdijet" ) {
         hAjHigh 		= new TH1D( "ajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
         hAjLow 			= new TH1D( "ajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, -1, 1 );
+        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
         hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
 			
@@ -1294,7 +1294,7 @@ namespace corrAnalysis {
       return false;
     }
     if ( IsDijet() && !IsMix() ) {
-      hAjDif->Fill( high, low, high - low );
+      hAjDif->Fill( high, low, fabs(high - low) );
     }
     
     __ERR("hAjLow not initialized for jet-hadron or mixing")
