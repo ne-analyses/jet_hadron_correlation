@@ -499,6 +499,9 @@ int main ( int argc, const char** argv) {
       if ( requireDijets ) {
         histograms->FillAjHigh( corrAnalysis::CalcAj( hardJets ) );
         histograms->FillAjLow( corrAnalysis::CalcAj( analysisJets ) );
+        histograms->FillAjDif( corrAnalysis::CalcAj( hardJets ), corrAnalysis::CalcAj( analysisJets ) );
+        histograms->FillAjStruct( corrAnalysis::CalcAj( analysisJets ), refCent, analysisJets[0].pt() );
+
         histograms->FillLeadJetPt( analysisJets.at(0).pt() );
         histograms->FillLeadEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
         histograms->FillSubJetPt( analysisJets.at(1).pt() );
