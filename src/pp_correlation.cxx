@@ -483,7 +483,7 @@ int main ( int argc, const char** argv) {
         // leading jet
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
         subleadingJet.SetPtEtaPhiE( analysisJets.at(1).pt(), analysisJets.at(1).eta(), analysisJets.at(1).phi_std(), analysisJets.at(1).E() );
-        dijetAj = corrAnalysis::CalcAj( analysisJets );
+        dijetAj = corrAnalysis::CalcAj( hardJets );
         
       }
       else {
