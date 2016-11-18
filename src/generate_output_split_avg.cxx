@@ -977,7 +977,7 @@ int main( int argc, const char** argv) {
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
   std::string ajOutExt = ".pdf";
 
-  /*
+  
   for ( int i = 0; i < nFiles; ++i ) {
     
     for ( int j = 0; j < nPtBins; ++ j ) {
@@ -2743,6 +2743,6 @@ int main( int argc, const char** argv) {
 
   }
 
-   */
+   
   return 0;
 }
