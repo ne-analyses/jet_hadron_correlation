@@ -50,7 +50,7 @@ set splitOnAjVal = $9
 
 if ( $2 == 'default' ) then
 	set useEfficiency = 'true'
-	set triggerCoincidence = 'false'
+	set triggerCoincidence = 'true'
 	if ( $analysis == 'dijet' ) then
 		set subLeadPtMin = 8.0
 		set leadPtMin = 16.0
