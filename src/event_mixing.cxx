@@ -224,10 +224,12 @@ int main ( int argc, const char** argv) {
   // ----------------------------------
   double leadJetPtMin, subJetPtMin, jetPtMax, jetRadius;
   leadJetPtMin = subJetPtMin = jetPtMax = jetRadius = -999;
+  unsigned binsEta, binsPhi;
+  binsEta = binsPhi = 1000;
   bool useEfficiency, matchTrigger;
   
   // set the variables
-  int extractResult = corrAnalysis::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, useEfficiency, matchTrigger );
+  int extractResult = corrAnalysis::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, useEfficiency, matchTrigger, binsEta, binsPhi );
   if (  extractResult == 1 )
     __OUT("Successfully parsed analysis variables")
   else if ( extractResult == 0 )
@@ -259,7 +261,7 @@ int main ( int argc, const char** argv) {
     }
   
   // initialize histogram container
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj, SplitOnAjVal );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj, SplitOnAjVal, binsEta, binsPhi );
   histograms->Init();
   
   // we need to pick a minimum jet pt in case
