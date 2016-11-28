@@ -60,7 +60,7 @@ if ( $2 == 'default' ) then
 		set leadPtMin = 20.0
 		set jetPtMax = 100.0
     set splitOnAj = 'true'
-    set splitOnAjVal = 0.22
+    set splitOnAjVal = 0.30
 	else if ( $analysis == 'jet' ) then
 		set subLeadPtMin = 0.0
 		set leadPtMin = 20.0
@@ -70,8 +70,8 @@ if ( $2 == 'default' ) then
 	endif
   endif
 	set jetRadius = 0.4
-  set binsEta = 25
-  set binsPhi = 25
+  set binsEta = 24
+  set binsPhi = 24
 endif
 
 # Create the folder name for output

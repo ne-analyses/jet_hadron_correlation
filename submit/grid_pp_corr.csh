@@ -62,7 +62,7 @@ set subLeadPtMin = 8.0
 set leadPtMin = 16.0
 set jetPtMax = 100.0
 set splitOnAj = 'true'
-set splitOnAjVal = 0.22
+set splitOnAjVal = 0.30
 else if ( $analysis == 'ppjet' ) then
 set subLeadPtMin = 0.0
 set leadPtMin = 20.0
@@ -72,8 +72,8 @@ set splitOnAjVal = 0.0
 endif
 endif
 set jetRadius = 0.4
-set binsEta = 25
-set binsPhi = 25
+set binsEta = 24
+set binsPhi = 24
 endif
 
 # Create the folder name for output
