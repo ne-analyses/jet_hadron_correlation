@@ -116,7 +116,7 @@ echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
 set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $splitOnAj $splitOnAjVal $binsEta $binsPhi $outLocation $outName $outNameTree $Files $mbData"
-echo $arg
+
 qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N ppCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
