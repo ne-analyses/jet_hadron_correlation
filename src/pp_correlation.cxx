@@ -215,11 +215,11 @@ int main ( int argc, const char** argv) {
       binsPhi = atoi ( arguments[10].c_str() );
 
       // output and file names
-      outputDir 		= arguments[9];
-      corrOutFile		= arguments[10];
-      treeOutFile		= arguments[11];
-      inputFile 		= arguments[12];
-      mbInputFile		= arguments[13];
+      outputDir 		= arguments[11];
+      corrOutFile		= arguments[12];
+      treeOutFile		= arguments[13];
+      inputFile 		= arguments[14];
+      mbInputFile		= arguments[15];
       
       break;
     }
