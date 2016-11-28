@@ -62,7 +62,7 @@ set subLeadPtMin = 8.0
 set leadPtMin = 16.0
 set jetPtMax = 100.0
 set splitOnAj = 'true'
-set splitOnAjVal = 0.20
+set splitOnAjVal = 0.22
 else if ( $analysis == 'ppjet' ) then
 set subLeadPtMin = 0.0
 set leadPtMin = 20.0
