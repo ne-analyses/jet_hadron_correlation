@@ -29,7 +29,7 @@ set analysis = $1
 set execute = './bin/auau_correlation'
 set base = /nfs/rhi/STAR/Data/HaddedAuAu14Mid/AuAu14Pico
 
-if ( $# != "9" && !( $2 == 'default' ) ) then
+if ( $# != "11" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters'
 	exit
 endif
