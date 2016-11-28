@@ -381,6 +381,11 @@ int main ( int argc, const char** argv ) {
       if ( VzBin == -1 )																				{ continue; }
       
       // Convert TStarJetVector to PseudoJet
+      
+      // temporary
+      for ( int i = 0; i < container->GetEntries(); ++i )
+        std::cout<<"charge: "<<container->Get(i)->GetCharge()<<std::endl;
+      
       corrAnalysis::ConvertTStarJetVector( container, particles, true );
       
       // Get HT triggers
