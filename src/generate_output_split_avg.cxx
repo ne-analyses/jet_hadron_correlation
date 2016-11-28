@@ -315,6 +315,10 @@ int main( int argc, const char** argv) {
       }
   }
   
+  // get bin count for eta and phi
+  unsigned binsEta = corrCentVz[0][0]->GetXaxis()->GetNbins();
+  unsigned binsPhi = corrCentVz[0][0]->GetYaxis()->GetNbins();
+  
   std::cout<<"finished loading all histograms"<<std::endl;
   
   
@@ -424,8 +428,8 @@ int main( int argc, const char** argv) {
       std::string weightedSubName = "sub_mix_file_"; weightedSubName += patch::to_string( i );
       weightedSubName += "_ptBin_"; weightedSubName += patch::to_string( l );
       // create new histogram, add all appropriate vz/cent bins
-      weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
-      weightedSub[i][l] = new TH2D( weightedSubName.c_str(), weightedSubName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      weightedSub[i][l] = new TH2D( weightedSubName.c_str(), weightedSubName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
         for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
@@ -504,22 +508,22 @@ int main( int argc, const char** argv) {
         subPreSmallName = "small pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       }
       
-      recombinedCorrLarge[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedCorrLarge[i][l] = new TH2D( corrName.c_str(), corrName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
-      recombinedPreLarge[i][l] = new TH2D( preName.c_str(), preName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedPreLarge[i][l] = new TH2D( preName.c_str(), preName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
-      recombinedSubLarge[i][l] = new TH2D( subName.c_str(), subName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedSubLarge[i][l] = new TH2D( subName.c_str(), subName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
-      recombinedSubPreLarge[i][l] = new TH2D( subPreName.c_str(), subPreName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedSubPreLarge[i][l] = new TH2D( subPreName.c_str(), subPreName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
       
       if ( ajSplit[i] ) {
-        recombinedCorrSmall[i][l] = new TH2D( corrSmallName.c_str(), corrSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        recombinedCorrSmall[i][l] = new TH2D( corrSmallName.c_str(), corrSmallName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
         
-        recombinedSubSmall[i][l] = new TH2D( subSmallName.c_str(), subSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        recombinedSubSmall[i][l] = new TH2D( subSmallName.c_str(), subSmallName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
         
-        recombinedPreSmall[i][l] = new TH2D( preSmallName.c_str(), preSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        recombinedPreSmall[i][l] = new TH2D( preSmallName.c_str(), preSmallName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
         
-        recombinedSubPreSmall[i][l] = new TH2D( subPreSmallName.c_str(), subPreSmallName.c_str(), corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+        recombinedSubPreSmall[i][l] = new TH2D( subPreSmallName.c_str(), subPreSmallName.c_str(), binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
         
         
       }
