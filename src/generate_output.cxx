@@ -265,8 +265,8 @@ int main( int argc, const char** argv) {
   }
   
   // get bin count for eta and phi
-  unsigned binsEta = corrCentVz[0][0]->GetXaxis()->GetNbins();
-  unsigned binsPhi = corrCentVz[0][0]->GetYaxis()->GetNbins();
+  unsigned binsEta = corrCentVz[0][0][0]->GetXaxis()->GetNbins();
+  unsigned binsPhi = corrCentVz[0][0][0]->GetYaxis()->GetNbins();
   
   std::cout<<"loaded all histograms"<<std::endl;
   
