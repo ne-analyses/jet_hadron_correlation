@@ -217,6 +217,9 @@ namespace corrAnalysis {
                                   // correlations by the event value of Aj
     double ajSplitValue;          // the value of Aj to split at
 		bool initialized;							// Used for control flow - must be true before filling
+    
+    unsigned binsEta;             // Binning for histograms
+    unsigned binsPhi;             // Binning for histograms
 		
 		// Event statistics
 		TH3D* hCentVz;
@@ -265,7 +268,7 @@ namespace corrAnalysis {
 		
 	public:
 		histograms( );
-		histograms( std::string type, bool splitOnAj, double splitVal = 0.3 ); // In general, this should be used, passing "dijet" or "jet" for analysis, and proper arguments for using aj splitting or not
+		histograms( std::string type, bool splitOnAj, double splitVal = 0.3, unsigned binsEta = 24, unsigned binsPhi = 24 ); // In general, this should be used, passing "dijet" or "jet" for analysis, and proper arguments for using aj splitting or not
 		~histograms();
 		
 		// Deletes all histograms

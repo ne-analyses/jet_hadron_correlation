@@ -887,6 +887,8 @@ namespace corrAnalysis {
     useAjSplitting = false;
     ajSplitValue = 0.0;
 		initialized = false;
+    binsEta = 0;
+    binsPhi = 0;
 		
 		hLeadJetPt 	= 0;
 		hLeadEtaPhi = 0;
@@ -908,11 +910,15 @@ namespace corrAnalysis {
     hAjStruct    = 0;
 	}
 	
-	histograms::histograms( std::string anaType, bool splitOnAj, double splitVal ) {
+	histograms::histograms( std::string anaType, bool splitOnAj, double splitVal, unsigned tmpBinsEta, unsigned tmpBinsPhi ) {
 		analysisType = anaType;
 		initialized = false;
     useAjSplitting = splitOnAj;
     ajSplitValue = splitVal;
+    
+    binsEta = tmpBinsEta;
+    binsPhi = tmpBinsPhi;
+    
 		hLeadJetPt 	= 0;
 		hLeadEtaPhi = 0;
 		hSubJetPt 	= 0;
