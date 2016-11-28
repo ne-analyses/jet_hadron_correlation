@@ -100,10 +100,12 @@
 // [6]: jet radius, used in the jet definition
 // [7]: split correlations on high/low aj? true or false
 // [8]: if [7] is true, on what value of aj? (between 0 and 1)
-// [9]: output directory
-// [10]: name for the correlation histogram file
-// [11]: name for the dijet TTree file
-// [12]: input file: can be a single .root or a .txt or .list of root files
+// [9]: number of bins for eta in correlation histograms
+// [10]: number of bins for phi in correlation histograms
+// [11]: output directory
+// [12]: name for the correlation histogram file
+// [13]: name for the dijet TTree file
+// [14]: input file: can be a single .root or a .txt or .list of root files
 
 // DEF MAIN()
 int main ( int argc, const char** argv ) {
@@ -142,6 +144,8 @@ int main ( int argc, const char** argv ) {
   double				jetRadius 		= 0.4;                      // jet radius for jet finding
   bool          splitOnAj     = false;                    // split analysis by aj value
   double        splitOnAjVal  = 0.0;                      // what value to split on
+  unsigned      binsEta       = 24;                       // default number of bins for eta for correlation histograms
+  unsigned      binsPhi       = 24;                       // default number of bins for phi for correlation histograms
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
@@ -153,7 +157,7 @@ int main ( int argc, const char** argv ) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 14: { // Custom case
+    case 16: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       // Set non-default values
@@ -204,11 +208,15 @@ int main ( int argc, const char** argv ) {
         splitOnAjVal = tempAj;
       }
       
+      // bins in eta and phi
+      binsEta = atoi ( arguments[9].c_str() );
+      binsPhi = atoi ( arguments[10].c_str() );
+      
       // output and file names
-      outputDir 		= arguments[9];
-      corrOutFile		= arguments[10];
-      treeOutFile		= arguments[11];
-      inputFile 		= arguments[12];
+      outputDir 		= arguments[11];
+      corrOutFile		= arguments[12];
+      treeOutFile		= arguments[13];
+      inputFile 		= arguments[14];
       
       break;
     }
@@ -225,7 +233,7 @@ int main ( int argc, const char** argv ) {
   else { corrAnalysis::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
   
   // We know what analysis we are doing now, so build our output histograms
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj,  splitOnAjVal );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj,  splitOnAjVal, binsEta, binsPhi );
   histograms->Init();
   
   // Build our input now
