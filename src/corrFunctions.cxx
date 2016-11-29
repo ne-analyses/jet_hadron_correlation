@@ -841,8 +841,8 @@ namespace corrAnalysis {
             subName += s1.str() + "_vz_" + s2.str();
             
             // make each histogram
-            tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-            tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
             leadingArrays[i][j]->AddLast( tmpHistLead );
@@ -876,7 +876,7 @@ namespace corrAnalysis {
             
             leadName += s1.str() + "_vz_" + s2.str();
             
-            tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
             leadingArrays[i][j]->AddLast( tmpHistTrig );
@@ -917,6 +917,11 @@ namespace corrAnalysis {
       etaBinShift += etaBinWidth;
 
     }
+    
+    if (phiBinShift < 0.01)
+      phiBinShift = 0.0;
+    if (etaBinShift < 0.01)
+      etaBinShift = 0.0;
     
   }
 	
@@ -1105,8 +1110,8 @@ namespace corrAnalysis {
         hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
         hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
-			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
       
       BuildArrays();
 			
@@ -1124,7 +1129,7 @@ namespace corrAnalysis {
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
-			h3DimCorrLead		= new TH3D("leadjetcorr", "Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrLead		= new TH3D("leadjetcorr", "Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
       
       BuildArrays();
 			
@@ -1151,8 +1156,8 @@ namespace corrAnalysis {
         hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
       }
 			
-			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-			h3DimCorrSub		= new TH3D("subjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrSub		= new TH3D("subjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
       
       BuildArrays();
 			
@@ -1170,7 +1175,7 @@ namespace corrAnalysis {
       hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
       hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
 			
-			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
+			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
       
       
       BuildArrays();
@@ -1392,7 +1397,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( dPhi < phiLowEdge )
+		if ( dPhi < phiLowEdge+phiBinShift)
 			dPhi += 2.0*pi;
 		
 		if ( IsJet() && IsAuAu() ) {
@@ -1483,7 +1488,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( dPhi < phiLowEdge )
+		if ( dPhi < phiLowEdge+phiBinShift )
 			dPhi += 2.0*pi;
     
     // find aj bin, if applicable
@@ -1523,7 +1528,7 @@ namespace corrAnalysis {
 			return false;
 		}
 		
-		if ( dPhi < phiLowEdge )
+		if ( dPhi < phiLowEdge+phiBinShift )
 			dPhi += 2.0*pi;
     
     // find aj bin, if applicable
