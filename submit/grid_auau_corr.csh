@@ -69,7 +69,7 @@ if ( $2 == 'default' ) then
     set SplitOnAjVal = 0.0
 	endif
   endif
-	set jetRadius = 0.4
+	set jetRadius = 0.2
   set binsEta = 24
   set binsPhi = 24
 endif
