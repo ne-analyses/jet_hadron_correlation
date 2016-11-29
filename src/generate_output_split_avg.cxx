@@ -362,10 +362,10 @@ int main( int argc, const char** argv) {
   // get the eta and phi bin edges: they can be shifted
   // depending on the # of bins to keep a bin centered
   // on zero
-  double dEtaLowEdge = corrCentVz[0][0][0]->GetXaxis()->GetBinLowEdge(1);
-  double dEtaHighEdge = corrCentVz[0][0][0]->GetXaxis()->GetBinUpEdge(corrCentVz[0][0][0]->GetXaxis()->GetNbins());
-  double phiLowEdge = corrCentVz[0][0][0]->GetYaxis()->GetBinLowEdge(1);
-  double phiHighEdge = corrCentVz[0][0][0]->GetYaxis()->GetBinUpEdge(corrCentVz[0][0][0]->GetYaxis()->GetNbins());
+  double dEtaLowEdge = corrCentVzLarge[0][0][0]->GetXaxis()->GetBinLowEdge(1);
+  double dEtaHighEdge = corrCentVzLarge[0][0][0]->GetXaxis()->GetBinUpEdge(corrCentVzLarge[0][0][0]->GetXaxis()->GetNbins());
+  double phiLowEdge = corrCentVzLarge[0][0][0]->GetYaxis()->GetBinLowEdge(1);
+  double phiHighEdge = corrCentVzLarge[0][0][0]->GetYaxis()->GetBinUpEdge(corrCentVzLarge[0][0][0]->GetYaxis()->GetNbins());
   
   std::cout<<"finished loading all histograms"<<std::endl;
   
