@@ -1348,6 +1348,7 @@ namespace corrAnalysis {
     }
     if ( IsDijet() && !IsMix() ) {
       hAjDif->Fill( high, low, fabs(high - low) );
+      return true;
     }
     
     __ERR("hAjLow not initialized for jet-hadron or mixing")
