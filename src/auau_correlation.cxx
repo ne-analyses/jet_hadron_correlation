@@ -144,8 +144,8 @@ int main ( int argc, const char** argv ) {
   double				jetRadius 		= 0.4;                      // jet radius for jet finding
   bool          splitOnAj     = false;                    // split analysis by aj value
   double        splitOnAjVal  = 0.0;                      // what value to split on
-  unsigned      binsEta       = 24;                       // default number of bins for eta for correlation histograms
-  unsigned      binsPhi       = 24;                       // default number of bins for phi for correlation histograms
+  unsigned      binsEta       = 25;                       // default number of bins for eta for correlation histograms
+  unsigned      binsPhi       = 25;                       // default number of bins for phi for correlation histograms
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
