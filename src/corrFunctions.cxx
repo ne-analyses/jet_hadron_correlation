@@ -1080,9 +1080,6 @@ namespace corrAnalysis {
     
     // now set up the phi and eta bin shifts
     FindBinShift();
-    std::cout<<"USING BIN SHIFT: "<<std::endl;
-    std::cout<<"phi: "<< phiBinShift<<std::endl;
-    std::cout<<"eta: "<< etaBinShift<<std::endl;
     
     if ( ( useAjSplitting && analysisType == "jet" ) || ( useAjSplitting && analysisType == "ppjet" ) ) {
       __ERR("Can't split on Aj for jet analyses, no dijets")

@@ -280,6 +280,9 @@ namespace corrAnalysis {
 		
 		// Deletes all histograms
 		void Clear();
+    
+    // Get the analysis type
+    std::string GetAnalysisType()  { return analysisType; }
 		
 		// Can set analysisType or Aj splitting - careful, if it changes after Init() is called
 		// Reinitialization will be needed
