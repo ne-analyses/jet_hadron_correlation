@@ -918,9 +918,9 @@ namespace corrAnalysis {
 
     }
     
-    if (phiBinShift < 0.01)
+    if (phiBinShift < 0.001)
       phiBinShift = 0.0;
-    if (etaBinShift < 0.01)
+    if (etaBinShift < 0.001)
       etaBinShift = 0.0;
     
   }
