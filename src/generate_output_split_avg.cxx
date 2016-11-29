@@ -68,44 +68,44 @@ namespace patch
   }
 }
 
-// Used internally to pick histogram edges
-// that give a bin centered at zero in correlation plots
-void FindBinShift(float& phiBinShift, float& etaBinShift ) {
-  
-  // first get the initial variables -
-  // bin edges from corrParameters.hh
-  // and number of bins from
-  // histograms::binsEta, histograms::binsPhi
-  
-  double phiMin = phiLowEdge;
-  double phiMax = phiHighEdge;
-  double etaMin = dEtaLowEdge;
-  double etaMax = dEtaHighEdge;
-  
-  double phiBinWidth = ( phiMax - phiMin ) / binsPhi;
-  double etaBinWidth = ( etaMax - etaMin ) / binsEta;
-  
-  phiBinShift = phiMin + ( phiBinWidth / 2.0 );
-  etaBinShift = etaMin + ( etaBinWidth / 2.0 );
-  
-  for ( int i = 0; i < binsPhi; ++i ) {
-    if ( fabs(phiBinShift) < fabs(phiBinShift + phiBinWidth) )
-      break;
-    phiBinShift += phiBinWidth;
-  }
-  for ( int i = 0; i < binsEta; ++i ) {
-    if ( fabs(etaBinShift) < fabs(etaBinShift + etaBinWidth) )
-      break;
-    etaBinShift += etaBinWidth;
-    
-  }
-  
-  if (phiBinShift < 0.001)
-    phiBinShift = 0.0;
-  if (etaBinShift < 0.001)
-    etaBinShift = 0.0;
-  
-}
+//// Used internally to pick histogram edges
+//// that give a bin centered at zero in correlation plots
+//void FindBinShift(float& phiBinShift, float& etaBinShift ) {
+//  
+//  // first get the initial variables -
+//  // bin edges from corrParameters.hh
+//  // and number of bins from
+//  // histograms::binsEta, histograms::binsPhi
+//  
+//  double phiMin = phiLowEdge;
+//  double phiMax = phiHighEdge;
+//  double etaMin = dEtaLowEdge;
+//  double etaMax = dEtaHighEdge;
+//  
+//  double phiBinWidth = ( phiMax - phiMin ) / binsPhi;
+//  double etaBinWidth = ( etaMax - etaMin ) / binsEta;
+//  
+//  phiBinShift = phiMin + ( phiBinWidth / 2.0 );
+//  etaBinShift = etaMin + ( etaBinWidth / 2.0 );
+//  
+//  for ( int i = 0; i < binsPhi; ++i ) {
+//    if ( fabs(phiBinShift) < fabs(phiBinShift + phiBinWidth) )
+//      break;
+//    phiBinShift += phiBinWidth;
+//  }
+//  for ( int i = 0; i < binsEta; ++i ) {
+//    if ( fabs(etaBinShift) < fabs(etaBinShift + etaBinWidth) )
+//      break;
+//    etaBinShift += etaBinWidth;
+//    
+//  }
+//  
+//  if (phiBinShift < 0.001)
+//    phiBinShift = 0.0;
+//  if (etaBinShift < 0.001)
+//    etaBinShift = 0.0;
+//  
+//}
 
 
 // list all input files as arguments -
