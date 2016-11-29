@@ -885,6 +885,40 @@ namespace corrAnalysis {
       }
     }
   }
+  
+  // Used internally to pick histogram edges
+  // that give a bin centered at zero in correlation plots
+  void histograms::FindBinShift() {
+    
+    // first get the initial variables -
+    // bin edges from corrParameters.hh
+    // and number of bins from
+    // histograms::binsEta, histograms::binsPhi
+    
+    double phiMin = phiLowEdge;
+    double phiMax = phiHighEdge;
+    double etaMin = dEtaLowEdge;
+    double etaMax = dEtaHighEdge;
+    
+    double phiBinWidth = ( phiMax - phiMin ) / binsPhi;
+    double etaBinWidth = ( etaMax - etaMin ) / binsEta;
+    
+    phiBinShift = phiMin + ( phiBinWidth / 2.0 );
+    etaBinShift = etaMin + ( etaBinWidth / 2.0 );
+    
+    for ( int i = 0; i < binsPhi; ++i ) {
+      if ( fabs(phiBinShift) < fabs(phiBinShift + phiBinWidth) )
+        break;
+      phiBinShift += phiBinWidth;
+    }
+    for ( int i = 0; i < binsEta; ++i ) {
+      if ( fabs(etaBinShift) < fabs(etaBinShift + etaBinWidth) )
+        break;
+      etaBinShift += etaBinWidth;
+
+    }
+    
+  }
 	
 	histograms::histograms() {
 		analysisType = "none";
@@ -893,6 +927,9 @@ namespace corrAnalysis {
 		initialized = false;
     binsEta = 0;
     binsPhi = 0;
+    
+    phiBinShift = 0;
+    etaBinShift = 0;
 		
 		hLeadJetPt 	= 0;
 		hLeadEtaPhi = 0;
@@ -922,6 +959,9 @@ namespace corrAnalysis {
     
     binsEta = tmpBinsEta;
     binsPhi = tmpBinsPhi;
+    
+    phiBinShift = 0;
+    etaBinShift = 0;
     
 		hLeadJetPt 	= 0;
 		hLeadEtaPhi = 0;
@@ -1037,6 +1077,12 @@ namespace corrAnalysis {
 	int histograms::Init() {
 		if ( initialized )
 			return 0;
+    
+    // now set up the phi and eta bin shifts
+    FindBinShift();
+    std::cout<<"USING BIN SHIFT: "<<std::endl;
+    std::cout<<"phi: "<< phiBinShift<<std::endl;
+    std::cout<<"eta: "<< etaBinShift<<std::endl;
     
     if ( ( useAjSplitting && analysisType == "jet" ) || ( useAjSplitting && analysisType == "ppjet" ) ) {
       __ERR("Can't split on Aj for jet analyses, no dijets")

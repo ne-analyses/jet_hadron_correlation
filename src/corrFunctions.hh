@@ -220,6 +220,9 @@ namespace corrAnalysis {
     
     unsigned binsEta;             // Binning for histograms
     unsigned binsPhi;             // Binning for histograms
+    
+    double phiBinShift;           // value for shifting histogram edges to force a bin centered at zero
+    double etaBinShift;           // value for shifting histogram edges to force a bin centered at zero
 		
 		// Event statistics
 		TH3D* hCentVz;
@@ -265,6 +268,10 @@ namespace corrAnalysis {
     // to generate the histogram arrays properly
     // depending on analysis settings
     void BuildArrays();
+    
+    // Used internally to pick histogram edges
+    // that give a bin centered at zero in correlation plots
+    void FindBinShift();
 		
 	public:
 		histograms( );
