@@ -257,7 +257,7 @@ int main ( int argc, const char** argv ) {
   // corrParameters.hh
   // --------------------------------------
   TStarJetPicoReader reader;
-  corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, corrAnalysis::allEvents );
+  corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, 1e6 );
   
   // Data classes
   TStarJetVectorContainer<TStarJetVector>* container;
