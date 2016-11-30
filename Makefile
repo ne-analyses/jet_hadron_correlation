@@ -3,6 +3,7 @@ os = $(shell uname -s)
 #INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICOPATH)
 INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include
 
+
 ifeq ($(os),Linux)
 CXXFLAGS      = -std=c++11
 else
