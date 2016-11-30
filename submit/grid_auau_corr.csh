@@ -56,8 +56,8 @@ if ( $2 == 'default' ) then
 	set useEfficiency = 'true'
 	set triggerCoincidence = 'true'
 	if ( $analysis == 'dijet' ) then
-		set subLeadPtMin = 10.0
-		set leadPtMin = 20.0
+		set subLeadPtMin = 8.0
+		set leadPtMin = 16.0
 		set jetPtMax = 100.0
     set splitOnAj = 'true'
     set splitOnAjVal = 0.22
@@ -69,7 +69,7 @@ if ( $2 == 'default' ) then
     set SplitOnAjVal = 0.0
 	endif
   endif
-	set jetRadius = 0.4
+	set jetRadius = 0.2
   set binsEta = 24
   set binsPhi = 24
 endif
