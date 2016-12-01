@@ -72,8 +72,8 @@ set splitOnAjVal = 0.0
 endif
 endif
 set jetRadius = 0.2
-set binsEta = 22
-set binsPhi = 22
+set binsEta = 20
+set binsPhi = 20
 endif
 
 # Create the folder name for output

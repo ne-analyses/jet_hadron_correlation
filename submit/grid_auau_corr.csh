@@ -70,8 +70,8 @@ if ( $2 == 'default' ) then
 	endif
   endif
 	set jetRadius = 0.2
-  set binsEta = 22
-  set binsPhi = 22
+  set binsEta = 20
+  set binsPhi = 20
 endif
 
 # Create the folder name for output
