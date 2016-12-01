@@ -71,7 +71,7 @@ set splitOnAj = 'false'
 set splitOnAjVal = 0.0
 endif
 endif
-set jetRadius = 0.2
+set jetRadius = 0.4
 set binsEta = 22
 set binsPhi = 22
 endif
