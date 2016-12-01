@@ -58,8 +58,8 @@ if ( $2 == 'default' ) then
 set useEfficiency = 'true'
 set triggerCoincidence = 'true'
 if ( $analysis == 'ppdijet' ) then
-set subLeadPtMin = 7.0
-set leadPtMin = 14.0
+set subLeadPtMin = 10.0
+set leadPtMin = 20.0
 set jetPtMax = 100.0
 set splitOnAj = 'true'
 set splitOnAjVal = 0.22
@@ -72,8 +72,8 @@ set splitOnAjVal = 0.0
 endif
 endif
 set jetRadius = 0.2
-set binsEta = 24
-set binsPhi = 24
+set binsEta = 22
+set binsPhi = 22
 endif
 
 # Create the folder name for output
