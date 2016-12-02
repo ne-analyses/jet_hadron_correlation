@@ -921,10 +921,10 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhi[i][j]->Add( subFunction, -1 );
         
         subFunction->SetParameter( 0, triggerRatioTmpFit->GetParameter(0) );
-        triggerAjRatio[i][j]->Add( subFunction, -1 );
+        //triggerAjRatio[i][j]->Add( subFunction, -1 );
         
         subFunction->SetParameter( 0, recoilRatioTmpFit->GetParameter(0) );
-        recoilAjRatio[i][j]->Add( subFunction, -1 );
+        //recoilAjRatio[i][j]->Add( subFunction, -1 );
         
         // now make final fits
         triggerLargeName = "trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
