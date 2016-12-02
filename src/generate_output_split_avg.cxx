@@ -1204,7 +1204,8 @@ int main( int argc, const char** argv) {
         recoilSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
         recoilSubtracted[j][i]->Draw("same");
         
-        leg->SetHeader( ("Recoil" + ptBinString[i].c_str() ) ); // option "C" allows to center the header
+        std::string legName = "Recoil " + ptBinString[i];
+        leg->SetHeader( (legName.c_str() ) ); // option "C" allows to center the header
         leg->AddEntry(recoilSubtracted[j][i], analysisNames[j].c_str() ,"lep");
         
       }
@@ -1242,7 +1243,8 @@ int main( int argc, const char** argv) {
         triggerSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
         triggerSubtracted[j][i]->Draw("same");
         
-        leg->SetHeader( "Trigger " + ptBinString[i].c_str() ); // option "C" allows to center the header
+        std::string legName = "Trigger " + ptBinString[i];
+        leg->SetHeader( legName.c_str() ); // option "C" allows to center the header
         leg->AddEntry(triggerSubtracted[j][i], analysisNames[j].c_str() ,"lep");
       }
     }
@@ -1280,7 +1282,8 @@ int main( int argc, const char** argv) {
         triggerAjRatio[j][i]->SetMarkerColor(1+j+nFiles);
         triggerAjRatio[j][i]->Draw("same");
         
-        leg->SetHeader( "Trigger " + ptBinString[i].c_str() ); // option "C" allows to center the header
+        std::string legName = "Trigger " + ptBinString[i];
+        leg->SetHeader( legName.c_str() ); // option "C" allows to center the header
         leg->AddEntry(triggerAjRatio[j][i], analysisNames[j].c_str() ,"lep");
       }
     }
@@ -1318,7 +1321,8 @@ int main( int argc, const char** argv) {
         recoilAjRatio[j][i]->SetMarkerColor(1+j+nFiles);
         recoilAjRatio[j][i]->Draw("same");
         
-        leg->SetHeader( "Recoil " + ptBinString[i].c_str() ); // option "C" allows to center the header
+        std::string legName = "Recoil " + ptBinString[i];
+        leg->SetHeader( legName.c_str() ); // option "C" allows to center the header
         leg->AddEntry(recoilAjRatio[j][i], analysisNames[j].c_str() ,"lep");
       }
     }
