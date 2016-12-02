@@ -847,7 +847,7 @@ int main( int argc, const char** argv) {
         
         triggerAjRatio[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
         triggerAjRatio[i][j]->SetName( triggerRatioName.c_str() );
-        recoilAjRatio[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Draw();
+        recoilAjRatio[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Clone();
         recoilAjRatio[i][j]->SetName( recoilRatioName.c_str() );
         
         // now divide the balanced by unbalanced Aj correlations
@@ -968,21 +968,21 @@ int main( int argc, const char** argv) {
         recoilSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         recoilSmallAjdPhiFit[i][j]->SetLineColor( kRed );
         
-        triggerRatioAjdPhiFit[i][j] = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
-        triggerRatioAjdPhiFit[i][j]->FixParameter( 0, 0 );
-        triggerRatioAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        triggerRatioAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
-        triggerRatioAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
-        triggerRatioAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
-        triggerRatioAjdPhiFit[i][j]->SetLineColor( kBlack );
+        triggerRatioFit[i][j] = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerRatioFit[i][j]->FixParameter( 0, 0 );
+        triggerRatioFit[i][j]->FixParameter( 2, 0 );
+        triggerRatioFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerRatioFit[i][j]->SetParameter( 3, 0.2 );
+        triggerRatioFit[i][j]->SetParameter( 6, 0.2 );
+        triggerRatioFit[i][j]->SetLineColor( kBlack );
         
-        recoilRatioAjdPhiFit[i][j] = new TF1(recoilRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
-        recoilRatioAjdPhiFit[i][j]->FixParameter( 0, 0 );
-        recoilRatioAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        recoilRatioAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
-        recoilRatioAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
-        recoilRatioAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
-        recoilRatioAjdPhiFit[i][j]->SetLineColor( kBlack );
+        recoilRatioFit[i][j] = new TF1(recoilRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilRatioFit[i][j]->FixParameter( 0, 0 );
+        recoilRatioFit[i][j]->FixParameter( 2, 0 );
+        recoilRatioFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilRatioFit[i][j]->SetParameter( 3, 0.2 );
+        recoilRatioFit[i][j]->SetParameter( 6, 0.2 );
+        recoilRatioFit[i][j]->SetLineColor( kBlack );
         
         // do the final fits
         std::cout<<"FITTING PHI BIN: i = "<<i<<" j = "<<j<<std::endl;
