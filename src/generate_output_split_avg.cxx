@@ -842,8 +842,8 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
         
         // before we do subtractions, perform the ratio ( so that we dont get zeros in the division )
-        std::string triggerRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_"<<patch::to_string(j);
-        std::string recoilRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_"<<patch::to_string(j);
+        std::string triggerRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        std::string recoilRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         
         triggerAjRatio[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
         triggerAjRatio[i][j]->SetName( triggerRatioName.c_str() );
