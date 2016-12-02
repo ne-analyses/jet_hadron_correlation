@@ -678,6 +678,13 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TF1*> > triggerSubFit( nFiles );
   std::vector<std::vector<TF1*> > recoilSubFit( nFiles );
   
+  // ratio histograms
+  std::vector<std::vector<TH1D*> > triggerAjRatio( nFiles );
+  std::vector<std::vector<TH1D*> > recoilAjRatio( nFiles );
+  
+  std::vector<std::vector<TF1*> > triggerRatioFit( nFiles );
+  std::vector<std::vector<TF1*> > recoilRatioFit( nFiles );
+  
   // and we'll need some arrays for the widths and yields
   std::vector<std::vector<double> > triggerLargeYieldNear( nFiles );
   std::vector<std::vector<double> > triggerLargeYieldNearErr( nFiles );
@@ -732,6 +739,7 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<double> > recoilSubYieldAwayErr( nFiles );
   std::vector<std::vector<double> > recoilSubWidthAway( nFiles );
   std::vector<std::vector<double> > recoilSubWidthAwayErr( nFiles );
+
   
   for ( int i = 0; i < nFiles; ++i ) {
     
@@ -750,6 +758,12 @@ int main( int argc, const char** argv) {
     
     triggerSubFit[i].resize( nPtBins );
     recoilSubFit[i].resize( nPtBins );
+    
+    triggerAjRatio[i].resize( nPtBins );
+    recoilAjRatio[i].resize( nPtBins );
+    
+    triggerRatioFit[i].resize( nPtBins );
+    recoilRatioFit[i].resize( nPtBins );
     
     triggerLargeYieldNear[i].resize( nPtBins );
     triggerLargeYieldNearErr[i].resize( nPtBins );
@@ -817,11 +831,37 @@ int main( int argc, const char** argv) {
         recoilSmallAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedSubPreSmall[i][j]->ProjectionY())->Clone();
         recoilLargeAjdPhi[i][j] = (TH1D*) ((TH1D*) recombinedSubPreLarge[i][j]->ProjectionY())->Clone();
         
+        // now scale the histograms
+        triggerSmallAjdPhi[i][j]->Scale( 1.0/triggerSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        triggerSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
+        triggerLargeAjdPhi[i][j]->Scale( 1.0/triggerLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        triggerLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
+        recoilSmallAjdPhi[i][j]->Scale( 1.0/recoilSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        recoilSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
+        recoilLargeAjdPhi[i][j]->Scale( 1.0/recoilLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
+        recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
+        
+        // before we do subtractions, perform the ratio ( so that we dont get zeros in the division )
+        std::string triggerRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_"<<patch::to_string(j);
+        std::string recoilRatioName = "diffajbalance_trigger_file_" + patch::to_string(i) + "_pt_"<<patch::to_string(j);
+        
+        triggerAjRatio[i][j] = (TH1D*) triggerSmallAjdPhi[i][j]->Clone();
+        triggerAjRatio[i][j]->SetName( triggerRatioName.c_str() );
+        recoilAjRatio[i][j] = (TH1D*) recoilSmallAjdPhi[i][j]->Draw();
+        recoilAjRatio[i][j]->SetName( recoilRatioName.c_str() );
+        
+        // now divide the balanced by unbalanced Aj correlations
+        triggerAjRatio[i][j]->Divide( triggerLargeAjdPhi[i][j] );
+        recoilAjRatio[i][j]->Divide( recoilLargeAjdPhi[i][j] );
+        
         // Fit and subtract
         std::string triggerLargeName = "tmp_trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
         std::string triggerSmallName = "tmp_trigger_small_"; triggerSmallName += patch::to_string(i); triggerSmallName += patch::to_string(j);
         std::string recoilSmallName = "tmp_recoil_small_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
         std::string recoilLargeName = "tmp_recoil_large_"; recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
+        std::string triggerRatioFitName = "tmp_trigger_ratio_" + patch::to_string(i) + patch::to_string(j);
+        std::string recoilRatioFitName = "tmp_recoil_ratio_" + patch::to_string(i) + patch::to_string(j);
+        
         std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
         double phiMin = -corrAnalysis::pi/2.0;
         double phiMax = 3.0*corrAnalysis::pi/2.0;
@@ -847,12 +887,27 @@ int main( int argc, const char** argv) {
         recoilSmallTmpFit->SetParameter( 3, 0.2 );
         recoilSmallTmpFit->SetParameter( 6, 0.2 );
         
+        //for the ratios as well
+        TF1* triggerRatioTmpFit = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerRatioTmpFit->FixParameter( 2, 0 );
+        triggerRatioTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerRatioTmpFit->SetParameter( 3, 0.2 );
+        triggerRatioTmpFit->SetParameter( 6, 0.2 );
+        TF1* recoilRatioTmpFit = new TF1(recoilRatioName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilRatioTmpFit->FixParameter( 2, 0 );
+        recoilRatioTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilRatioTmpFit->SetParameter( 3, 0.2 );
+        recoilRatioTmpFit->SetParameter( 6, 0.2 );
+        
         
         // fit
         triggerSmallAjdPhi[i][j]->Fit( triggerSmallName.c_str(), "RMI" );
         triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RMI" );
         recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RMI" );
         recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RMI" );
+        
+        triggerAjRatio[i][j]->Fit( triggerRatioFitName.c_str(), "RMI" );
+        recoilAjRatio[i][j]->Fit( recoilRatioFitName.c_str(), "RMI" );
         
         // subtract
         TF1* subFunction = new TF1("subFunc", "[0]", phiMin, phiMax );
@@ -865,11 +920,21 @@ int main( int argc, const char** argv) {
         subFunction->SetParameter( 0, recoilLargeTmpFit->GetParameter(0) );
         recoilLargeAjdPhi[i][j]->Add( subFunction, -1 );
         
-        // now do final fits
+        subFunction->SetParameter( 0, triggerRatioTmpFit->GetParameter(0) );
+        triggerAjRatio[i][j]->Add( subFunction, -1 );
+        
+        subFunction->SetParameter( 0, recoilRatioTmpFit->GetParameter(0) );
+        recoilAjRatio[i][j]->Add( subFunction, -1 );
+        
+        // now make final fits
         triggerLargeName = "trigger_large_"; triggerLargeName += patch::to_string(i); triggerLargeName += patch::to_string(j);
         triggerSmallName = "trigger_small_"; triggerSmallName += patch::to_string(i); triggerSmallName += patch::to_string(j);
         recoilSmallName = "recoil_small_"; recoilSmallName += patch::to_string(i); recoilSmallName += patch::to_string(j);
         recoilLargeName = "recoil_large_"; recoilLargeName += patch::to_string(i); recoilLargeName += patch::to_string(j);
+        triggerRatioFitName = "trigger_ratio_" + patch::to_string(i) + patch::to_string(j);
+        recoilRatioFitName = "recoil_ratio_" + patch::to_string(i) + patch::to_string(j);
+
+        
         
         triggerLargeAjdPhiFit[i][j] = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerLargeAjdPhiFit[i][j]->FixParameter( 0, 0 );
@@ -903,15 +968,21 @@ int main( int argc, const char** argv) {
         recoilSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         recoilSmallAjdPhiFit[i][j]->SetLineColor( kRed );
         
-        // now scale the histograms
-        triggerSmallAjdPhi[i][j]->Scale( 1.0/triggerSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
-        triggerSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
-        triggerLargeAjdPhi[i][j]->Scale( 1.0/triggerLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
-        triggerLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
-        recoilSmallAjdPhi[i][j]->Scale( 1.0/recoilSmallAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
-        recoilSmallAjdPhi[i][j]->Scale( 1.0 / (double) ajLowCount );
-        recoilLargeAjdPhi[i][j]->Scale( 1.0/recoilLargeAjdPhi[i][j]->GetXaxis()->GetBinWidth(1) );
-        recoilLargeAjdPhi[i][j]->Scale( 1.0 / (double) ajHighCount );
+        triggerRatioAjdPhiFit[i][j] = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        triggerRatioAjdPhiFit[i][j]->FixParameter( 0, 0 );
+        triggerRatioAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        triggerRatioAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerRatioAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        triggerRatioAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        triggerRatioAjdPhiFit[i][j]->SetLineColor( kBlack );
+        
+        recoilRatioAjdPhiFit[i][j] = new TF1(recoilRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
+        recoilRatioAjdPhiFit[i][j]->FixParameter( 0, 0 );
+        recoilRatioAjdPhiFit[i][j]->FixParameter( 2, 0 );
+        recoilRatioAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilRatioAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
+        recoilRatioAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
+        recoilRatioAjdPhiFit[i][j]->SetLineColor( kBlack );
         
         // do the final fits
         std::cout<<"FITTING PHI BIN: i = "<<i<<" j = "<<j<<std::endl;
@@ -919,6 +990,9 @@ int main( int argc, const char** argv) {
         triggerLargeAjdPhi[i][j]->Fit( triggerLargeName.c_str(), "RMI" );
         recoilSmallAjdPhi[i][j]->Fit( recoilSmallName.c_str(), "RMI" );
         recoilLargeAjdPhi[i][j]->Fit( recoilLargeName.c_str(), "RMI" );
+        
+        triggerAjRatio[i][j]->Fit( triggerRatioFitName.c_str(), "RMI" );
+        recoilAjRatio[i][j]->Fit( recoilRatioFitName.c_str(), "RMI" );
         
         // now copy and subtract
         std::string subTriggerName = "ajsub_dphi_trigger_file_"; subTriggerName += patch::to_string(i); subTriggerName += patch::to_string(j);
@@ -1027,6 +1101,8 @@ int main( int argc, const char** argv) {
   std::string recoilOutBase = ajSubDir + "recoildphi_aj_split_";
   std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
+  std::string triggerRatioBase = ajSubDir + "triggerdphi_aj_split_";
+  std::string recoilRatioBase = ajSubDir + "recoildphi_aj_split_";
   std::string ajOutExt = ".pdf";
 
   
@@ -1128,7 +1204,7 @@ int main( int argc, const char** argv) {
         recoilSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
         recoilSubtracted[j][i]->Draw("same");
         
-        leg->SetHeader("Recoil"); // option "C" allows to center the header
+        leg->SetHeader( ("Recoil" + ptBinString[i].c_str() ) ); // option "C" allows to center the header
         leg->AddEntry(recoilSubtracted[j][i], analysisNames[j].c_str() ,"lep");
         
       }
@@ -1166,13 +1242,90 @@ int main( int argc, const char** argv) {
         triggerSubtracted[j][i]->SetMarkerColor(1+j+nFiles);
         triggerSubtracted[j][i]->Draw("same");
         
-        leg->SetHeader("Trigger"); // option "C" allows to center the header
+        leg->SetHeader( "Trigger " + ptBinString[i].c_str() ); // option "C" allows to center the header
         leg->AddEntry(triggerSubtracted[j][i], analysisNames[j].c_str() ,"lep");
       }
     }
     leg->Draw();
     c1.SaveAs( ajSubTriggerPhiOut.c_str() );
   }
+  
+  // and do output for the ratios as well
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    std::string ajRatioTriggerPhiOut = triggerRatioBase + "_pt_" + patch::to_string(i) + ajOutExt;
+    
+    TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+    
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( ajSplit[j] ) {
+        
+        triggerAjRatio[j][i]->SetLineColor(1+j);
+        triggerAjRatio[j][i]->SetMarkerStyle(29);
+        triggerAjRatio[j][i]->SetMarkerSize(2);
+        triggerAjRatio[j][i]->SetMarkerColor(1+j);
+        std::string outTitle = "A_{J}^{Balanced} / A_{J}^{Unbalanced}";
+        triggerAjRatio[j][i]->SetTitle( outTitle.c_str() );
+        triggerAjRatio[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        triggerAjRatio[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        if ( j == 0 )
+        triggerAjRatio[j][i]->Draw();
+        else
+        triggerAjRatio[j][i]->Draw("same");
+        
+        triggerAjRatio[j][i]->SetLineColor(1+j+nFiles);
+        triggerAjRatio[j][i]->SetMarkerStyle(29);
+        triggerAjRatio[j][i]->SetMarkerSize(2);
+        triggerAjRatio[j][i]->SetMarkerColor(1+j+nFiles);
+        triggerAjRatio[j][i]->Draw("same");
+        
+        leg->SetHeader( "Trigger " + ptBinString[i].c_str() ); // option "C" allows to center the header
+        leg->AddEntry(triggerAjRatio[j][i], analysisNames[j].c_str() ,"lep");
+      }
+    }
+    leg->Draw();
+    c1.SaveAs( ajRatioTriggerPhiOut.c_str() );
+  }
+  
+  // and do output for the ratios as well
+  for ( int i = 0; i < nPtBins; ++i ) {
+    TCanvas c1;
+    
+    std::string ajRatioRecoilPhiOut = recoilRatioBase + "_pt_" + patch::to_string(i) + ajOutExt;
+    
+    TLegend* leg = new TLegend(0.6,0.7,0.9,0.9);
+    
+    for ( int j = 0; j < nFiles; ++ j ) {
+      if ( ajSplit[j] ) {
+        
+        recoilAjRatio[j][i]->SetLineColor(1+j);
+        recoilAjRatio[j][i]->SetMarkerStyle(29);
+        recoilAjRatio[j][i]->SetMarkerSize(2);
+        recoilAjRatio[j][i]->SetMarkerColor(1+j);
+        std::string outTitle = "A_{J}^{Balanced} / A_{J}^{Unbalanced}";
+        recoilAjRatio[j][i]->SetTitle( outTitle.c_str() );
+        recoilAjRatio[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        recoilAjRatio[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
+        if ( j == 0 )
+        recoilAjRatio[j][i]->Draw();
+        else
+        recoilAjRatio[j][i]->Draw("same");
+        
+        recoilAjRatio[j][i]->SetLineColor(1+j+nFiles);
+        recoilAjRatio[j][i]->SetMarkerStyle(29);
+        recoilAjRatio[j][i]->SetMarkerSize(2);
+        recoilAjRatio[j][i]->SetMarkerColor(1+j+nFiles);
+        recoilAjRatio[j][i]->Draw("same");
+        
+        leg->SetHeader( "Recoil " + ptBinString[i].c_str() ); // option "C" allows to center the header
+        leg->AddEntry(recoilAjRatio[j][i], analysisNames[j].c_str() ,"lep");
+      }
+    }
+    leg->Draw();
+    c1.SaveAs( ajRatioRecoilPhiOut.c_str() );
+  }
+
   
   // now for the widths
   std::vector<TGraphErrors*> triggerPhiGraphLarge( nFiles );
