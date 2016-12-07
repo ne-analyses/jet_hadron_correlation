@@ -12,6 +12,11 @@
 // Are located in corrParameters.hh
 #include "corrParameters.hh"
 
+// Histogram class used for storing
+// correlation histograms in bins of
+// Aj, Vz and Centrality plus event info
+#include "histograms.hh"
+
 // ROOT is used for histograms and
 // As a base for the TStarJetPico library
 // ROOT Headers
