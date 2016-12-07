@@ -62,8 +62,8 @@ namespace corrAnalysis {
       //now build the full 3D vz/centrality binned histograms
       TH3D* tmpHistLead, * tmpHistSub;
       
-      leadingArrays = new TObjArray**[ajBins];
-      subleadingArrays = new TObjArray**[ajBins];
+      leadingArrays = new TObjArray**[binsAj];
+      subleadingArrays = new TObjArray**[binsAj];
       
       for ( int i = 0; i < binsAj; ++i ) {
         leadingArrays[i] = new TObjArray*[binsCentrality];
@@ -107,7 +107,7 @@ namespace corrAnalysis {
       
       
       TH3D* tmpHistTrig;
-      leadingArrays = new TObjArray**[ajBins];
+      leadingArrays = new TObjArray**[binsAj];
       
       for ( int i = 0; i < binsAj; ++i ) {
         leadingArrays[i] = new TObjArray*[binsCentrality];
