@@ -1101,8 +1101,9 @@ int main( int argc, const char** argv) {
   std::string recoilOutBase = ajSubDir + "recoildphi_aj_split_";
   std::string ajSubTriggerOutBase = ajSubDir + "trigger_aj_subtracted_";
   std::string ajSubRecoilOutBase = ajSubDir + "recoil_aj_subtracted_";
-  std::string triggerRatioBase = ajSubDir + "triggerdphi_aj_split_";
-  std::string recoilRatioBase = ajSubDir + "recoildphi_aj_split_";
+  std::string triggerRatioBase = ajSubDir + "ratio_triggerdphi_aj_split_";
+  std::string recoilRatioBase = ajSubDir + "ratio_recoildphi_aj_split_";
+  std::string triggerDoubleRatioBase = ajSubDir + "ratio_double_triggerdphi_aj_split_";
   std::string ajOutExt = ".pdf";
 
   
