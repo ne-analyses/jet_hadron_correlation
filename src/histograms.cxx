@@ -55,14 +55,6 @@ namespace corrAnalysis {
   // hold correlations
   void histograms::BuildArrays() {
     
-    // decide how many bins in aj to use
-    // 2 if splitting on aj
-    // 1 if not splitting
-    int ajBins = 1;
-    
-    if ( useAjSplitting == true )
-    ajBins = 2;
-    
     // split by analysis type
     
     if ( analysisType == "dijet" || analysisType == "ppdijet" || analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
@@ -73,7 +65,7 @@ namespace corrAnalysis {
       leadingArrays = new TObjArray**[ajBins];
       subleadingArrays = new TObjArray**[ajBins];
       
-      for ( int i = 0; i < ajBins; ++i ) {
+      for ( int i = 0; i < binsAj; ++i ) {
         leadingArrays[i] = new TObjArray*[binsCentrality];
         subleadingArrays[i] = new TObjArray*[binsCentrality];
         
@@ -84,41 +76,20 @@ namespace corrAnalysis {
           
           for ( int k = 0; k < binsVz; ++k ) {
             // create unique identifiers for each histogram
-            std::stringstream s1, s2;
-            s1 << j;
-            s2 << k;
-            TString leadName, subName;
-            if ( useAjSplitting ) {
-              if ( i == 0 ) {
-                leadName = "large_lead_cent_";
-                subName = "large_sub_cent_";
-                if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
-                  leadName = "large_mix_lead_cent_";
-                  subName = "large_mix_sub_cent_";
-                }
-              }
-              else if ( i == 1 ) {
-                leadName = "small_lead_cent_";
-                subName = "small_sub_cent_";
-                if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
-                  leadName = "small_mix_lead_cent_";
-                  subName = "small_mix_sub_cent_";
-                }
-              }
-              else {
-                __ERR("Something happened when generating histograms")
-              }
+            std::stringstream s1, s2, s3;
+            s1 << i;
+            s2 << j;
+            s3 << k;
+            
+            TString leadName = "lead_aj_";
+            TString subName = "sub_aj_";
+            if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
+              leadName = "mix_lead_cent_";
+              subName = "mix_sub_cent_";
             }
-            else {
-              leadName = "lead_cent_";
-              subName = "sub_cent_";
-              if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
-                leadName = "mix_lead_cent_";
-                subName = "mix_sub_cent_";
-              }
-            }
-            leadName += s1.str() + "_vz_" + s2.str();
-            subName += s1.str() + "_vz_" + s2.str();
+            
+            leadName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
+            subName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
             
             // make each histogram
             tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
@@ -138,7 +109,7 @@ namespace corrAnalysis {
       TH3D* tmpHistTrig;
       leadingArrays = new TObjArray**[ajBins];
       
-      for ( int i = 0; i < ajBins; ++i ) {
+      for ( int i = 0; i < binsAj; ++i ) {
         leadingArrays[i] = new TObjArray*[binsCentrality];
         
         for ( int j = 0; j < binsCentrality; ++j ) {
@@ -146,15 +117,16 @@ namespace corrAnalysis {
           
           for ( int k = 0; k < binsVz; ++k ) {
             // create unique identifiers for each histogram
-            std::stringstream s1, s2;
-            s1 << j;
-            s2 << k;
-            TString leadName = "lead_cent_";
+            std::stringstream s1, s2, s3;
+            s1 << i;
+            s2 << j;
+            s3 << k;
+            TString leadName = "lead_aj_";
             if ( analysisType == "jetmix" || analysisType == "ppjetmix" ) {
-              leadName = "mix_lead_cent_";
+              leadName = "mix_lead_aj_";
             }
             
-            leadName += s1.str() + "_vz_" + s2.str();
+            leadName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
             
             tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
@@ -207,8 +179,6 @@ namespace corrAnalysis {
   
   histograms::histograms() {
     analysisType = "none";
-    useAjSplitting = false;
-    ajSplitValue = 0.0;
     initialized = false;
     binsEta = 0;
     binsPhi = 0;
@@ -239,8 +209,6 @@ namespace corrAnalysis {
   histograms::histograms( std::string anaType, bool splitOnAj, double splitVal, unsigned tmpBinsEta, unsigned tmpBinsPhi ) {
     analysisType = anaType;
     initialized = false;
-    useAjSplitting = splitOnAj;
-    ajSplitValue = splitVal;
     
     binsEta = tmpBinsEta;
     binsPhi = tmpBinsPhi;
@@ -307,17 +275,17 @@ namespace corrAnalysis {
     delete hAjStruct;
     
     if ( leadingArrays ) {
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[0][i]->Delete();
-        if ( useAjSplitting )
-        leadingArrays[1][i]->Delete();
+      for ( int i = 0; i < binsAj; ++i ) {
+        for ( int j = 0; j < binsCentrality; ++j ) {
+          leadingArrays[i][j]->Delete();
+        }
       }
     }
     if ( subleadingArrays ) {
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        subleadingArrays[0][i]->Delete();
-        if ( useAjSplitting )
-        subleadingArrays[1][i]->Delete();
+      for ( int i = 0; i < binsAj; ++i ) {
+        for ( int j = 0; j < binsCentrality; ++j ) {
+          subleadingArrays[i][j]->Delete();
+        }
       }
     }
   }
@@ -339,26 +307,6 @@ namespace corrAnalysis {
     
   }
   
-  bool histograms::SetAjSplit( bool split, double splitval ) {
-    if ( useAjSplitting == split && ajSplitValue == splitval )
-    return true;
-    
-    if ( split == false ) {
-      useAjSplitting = split;
-      ajSplitValue = 0.0;
-      return true;
-    }
-    else if ( splitval > 0.0 && splitval < 1.0 ) {
-      useAjSplitting = split;
-      ajSplitValue = splitval;
-      return true;
-    }
-    
-    __ERR("Aj split value must be between 0 and 1, exclusive")
-    return false;
-    
-  }
-  
   int histograms::Init() {
     if ( initialized )
     return 0;
@@ -366,13 +314,8 @@ namespace corrAnalysis {
     // now set up the phi and eta bin shifts
     FindBinShift();
     
-    if ( ( useAjSplitting && analysisType == "jet" ) || ( useAjSplitting && analysisType == "ppjet" ) ) {
-      __ERR("Can't split on Aj for jet analyses, no dijets")
-      return -1;
-    }
-    
     if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
       hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
       hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
       
@@ -399,7 +342,7 @@ namespace corrAnalysis {
       return 0;
     }
     else if ( analysisType == "jet" || analysisType == "jetmix" ) {
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
       hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
       hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
       
@@ -417,8 +360,7 @@ namespace corrAnalysis {
       return 0;
     }
     else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
-      //hBinVz			= new TH2D( "nevents", "Vz Bin Distribution;aj;bins vz", 2, -0.5, 1.5, binsVz, -0.5, (double) binsVz - 0.5 );
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
       hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
       
       hLeadJetPt 	= new TH1D( "leadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
@@ -512,20 +454,21 @@ namespace corrAnalysis {
     if ( hAjStruct )
     hAjStruct->Write();
     
-    for ( int i = 0; i < binsCentrality; ++i ) {
-      if ( leadingArrays ) {
-        if ( leadingArrays[0][i] )
-        leadingArrays[0][i]->Write();
-        if ( useAjSplitting && leadingArrays[1][i] )
-        leadingArrays[1][i]->Write();
-      }
-      if ( subleadingArrays ) {
-        if ( subleadingArrays[0][i] )
-        subleadingArrays[0][i]->Write();
-        if ( useAjSplitting && subleadingArrays[1][i] )
-        subleadingArrays[1][i]->Write();
+    for ( int i = 0; i < binsAj; ++i ) {
+      if (!leadingArrays || !leadingArrays[i])
+        continue;
+      for ( int j = 0; j < binsCentrality; ++j )
+        if ( !leadingArrays[i][j] ) {
+          continue;
+        for ( int k = 0; k < binsVz; ++k ) {
+          if ( leadingArrays[i][j][k] )
+            leadingArrays[i][j][k]->Write();
+          if ( IsDijet() )
+            subleadingArrays[i][j][k]->Write();
+        }
       }
     }
+    
   }
   
   

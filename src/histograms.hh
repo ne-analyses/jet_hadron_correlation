@@ -17,9 +17,6 @@ namespace corrAnalysis {
   private:
     
     std::string analysisType;			// Used by Init() to create proper histograms
-    bool useAjSplitting;          // Used by Init() to create histograms - chooses to split
-    // correlations by the event value of Aj
-    double ajSplitValue;          // the value of Aj to split at
     bool initialized;							// Used for control flow - must be true before filling
     
     unsigned binsEta;             // Binning for histograms
@@ -79,7 +76,7 @@ namespace corrAnalysis {
     
   public:
     histograms( );
-    histograms( std::string type, bool splitOnAj, double splitVal = 0.3, unsigned binsEta = 24, unsigned binsPhi = 24 ); // In general, this should be used, passing "dijet" or "jet" for analysis, and proper arguments for using aj splitting or not
+    histograms( std::string type, unsigned binsEta = 24, unsigned binsPhi = 24 ); // In general, this should be used, passing "dijet" or "jet" for analysis
     ~histograms();
     
     // Deletes all histograms
@@ -91,7 +88,6 @@ namespace corrAnalysis {
     // Can set analysisType or Aj splitting - careful, if it changes after Init() is called
     // Reinitialization will be needed
     bool SetAnalysisType( std::string type );
-    bool SetAjSplit( bool split, double splitval );
     
     // Must be called before filling
     // Checks analysisType and creates histograms
