@@ -3,7 +3,9 @@
 // corrAnalysis::histograms
 // Nick Elsey
 
-
+#include "corrParameters.hh"
+#include "corrFunctions.hh"
+#include "histograms.hh"
 
 namespace corrAnalysis {
   
