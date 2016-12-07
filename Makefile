@@ -89,7 +89,7 @@ $(BDIR)/globvprim : $(ODIR)/globvprim.o $(ODIR)/corrFunctions.o $(ODIR)/histogra
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
-$(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODOR)/histograms.o
+$(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
 $(BDIR)/generate_output_avg : $(ODIR)/generate_output_avg.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
 $(BDIR)/generate_output_split_avg : $(ODIR)/generate_output_split_avg.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
 
