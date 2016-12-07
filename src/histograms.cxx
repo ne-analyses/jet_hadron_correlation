@@ -461,14 +461,12 @@ namespace corrAnalysis {
         if ( !leadingArrays[i][j] ) {
           continue;
         for ( int k = 0; k < binsVz; ++k ) {
-          if ( leadingArrays[i][j][k] )
-            leadingArrays[i][j][k]->Write();
+          leadingArrays[i][j][k]->Write();
           if ( IsDijet() )
             subleadingArrays[i][j][k]->Write();
         }
       }
     }
-    
   }
   
   
