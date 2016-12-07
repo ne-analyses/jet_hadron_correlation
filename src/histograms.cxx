@@ -206,7 +206,7 @@ namespace corrAnalysis {
     hAjStruct    = 0;
   }
   
-  histograms::histograms( std::string anaType, bool splitOnAj, double splitVal, unsigned tmpBinsEta, unsigned tmpBinsPhi ) {
+  histograms::histograms( std::string anaType, unsigned tmpBinsEta, unsigned tmpBinsPhi ) {
     analysisType = anaType;
     initialized = false;
     
