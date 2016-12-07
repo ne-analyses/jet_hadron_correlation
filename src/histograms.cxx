@@ -96,8 +96,8 @@ namespace corrAnalysis {
             tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
-            leadingArrays[i][j]->AddLast( tmpHistLead );
-            subleadingArrays[i][j]->AddLast( tmpHistSub );
+            leadingArrays[i][j][k]->AddLast( tmpHistLead );
+            subleadingArrays[i][j][k]->AddLast( tmpHistSub );
           }
         }
       }
@@ -131,7 +131,7 @@ namespace corrAnalysis {
             tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
-            leadingArrays[i][j]->AddLast( tmpHistTrig );
+            leadingArrays[i][j][k]->AddLast( tmpHistTrig );
           }
         }
       }
@@ -461,9 +461,9 @@ namespace corrAnalysis {
         if ( !leadingArrays[i][j] ) {
           continue;
         for ( int k = 0; k < binsVz; ++k ) {
-          leadingArrays[i][j][k]->Write();
+          leadingArrays[i][j][k].Write();
           if ( IsDijet() )
-            subleadingArrays[i][j][k]->Write();
+            subleadingArrays[i][j][k].Write();
         }
       }
     }
