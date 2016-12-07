@@ -79,6 +79,11 @@ namespace corrAnalysis {
 	const double 	dVz = vzRange/binsVz;			// each bin has a range of dVz
 	const double 	vzLowEdge = -vzRange/2.0;	// lower edge for accepted Vz range
 	const double 	vzHighEdge = vzRange/2.0;	// upper edge for accepted Vz range
+  
+  // Aj binning
+  const int     binsAj = 20;              // number of bins correlations are split into in Aj
+  const double  ajLowEdge = 0.0;          // Aj range is [0,1]
+  const double  ajHighEdge = 1.0;         // Aj range is [0,1]
 	
 	// Centrality binning
 	const int 		binsCentrality = 9;				// using the 9 centrality bins definition
