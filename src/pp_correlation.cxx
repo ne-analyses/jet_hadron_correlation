@@ -103,8 +103,6 @@
 // [4]: leading jet pt min
 // [5]: jet pt max
 // [6]: jet radius, used in the jet definition
-// [7]: split correlations on high/low aj? true or false
-// [8]: if [7] is true, on what value of aj? (between 0 and 1)
 // [9]: number of bins for eta in correlation histograms
 // [10]: number of bins for phi in correlation histograms
 // [11]: output directory
@@ -147,8 +145,6 @@ int main ( int argc, const char** argv) {
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
   double				jetRadius 		= 0.4;											// jet radius for jet finding
-  bool          splitOnAj     = false;                    // split analysis by aj value
-  double        splitOnAjVal  = 0.0;                      // what value to split on
   unsigned      binsEta       = 24;                       // default number of bins for eta for correlation histograms
   unsigned      binsPhi       = 24;                       // default number of bins for phi for correlation histograms
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
@@ -163,7 +159,7 @@ int main ( int argc, const char** argv) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 17: { // Custom case
+    case 15: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       
@@ -200,31 +196,17 @@ int main ( int argc, const char** argv) {
       leadJetPtMin 	= atof ( arguments[4].c_str() );
       jetPtMax 			= atof ( arguments[5].c_str() );
       jetRadius 		= atof ( arguments[6].c_str() );
-      
-      // aj splitting
-      if ( arguments[7] == "true" ) 			{ splitOnAj = true; }
-      else if ( arguments[7] == "false" ) 	{ splitOnAj = false; }
-      else { __ERR( "splitOnAj must be true or false" ) return -1; }
-      
-      if ( splitOnAj ) {
-        double tempAj = atof ( arguments[8].c_str() );
-        if ( tempAj <= 0.0 || tempAj >= 1.0 ) {
-          __ERR( "Aj split value must be between 0 and 1, exclusive" )
-          return -1;
-        }
-        splitOnAjVal = tempAj;
-      }
 
       // bins in eta and phi
-      binsEta = atoi ( arguments[9].c_str() );
-      binsPhi = atoi ( arguments[10].c_str() );
+      binsEta = atoi ( arguments[7].c_str() );
+      binsPhi = atoi ( arguments[8].c_str() );
 
       // output and file names
-      outputDir 		= arguments[11];
-      corrOutFile		= arguments[12];
-      treeOutFile		= arguments[13];
-      inputFile 		= arguments[14];
-      mbInputFile		= arguments[15];
+      outputDir 		= arguments[9];
+      corrOutFile		= arguments[10];
+      treeOutFile		= arguments[11];
+      inputFile 		= arguments[12];
+      mbInputFile		= arguments[13];
       
       break;
     }
