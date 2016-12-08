@@ -169,10 +169,6 @@ int main ( int argc, const char** argv) {
   // Tree name in input file
   std::string 	 chainName     = "JetTree";
   
-  // TEMPORARY:
-  bool splitOnAj = false;
-  double SplitOnAjVal = 0.0;
-  
   // now check if we'll use the defaults or not
   switch ( argc ) {
     case 1: // Default case
@@ -266,7 +262,7 @@ int main ( int argc, const char** argv) {
     }
   
   // initialize histogram container
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj, SplitOnAjVal, binsEta, binsPhi );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, binsEta, binsPhi );
   histograms->Init();
   
   // we need to pick a minimum jet pt in case

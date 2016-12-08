@@ -238,7 +238,7 @@ int main ( int argc, const char** argv ) {
   else { corrAnalysis::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, corrAnalysis::hardTrackMinPt, corrAnalysis::binsVz, corrAnalysis::vzRange, treeOutFile, corrOutFile ); }
   
   // We know what analysis we are doing now, so build our output histograms
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, splitOnAj,  splitOnAjVal, binsEta, binsPhi );
+  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, binsEta, binsPhi );
   histograms->Init();
   
   std::cout<<"histogram analysis type: "<<histograms->GetAnalysisType()<<std::endl;
