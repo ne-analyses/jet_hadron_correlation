@@ -176,7 +176,19 @@ namespace corrAnalysis {
     etaBinShift = 0.0;
     
   }
+
+  // Used to find the respective Aj bin
+  int histograms::FindAjBin(double aj) {
+    double ajBinWidth = ( ajHighEdge - ajLowEdge ) / binsAj;
+
+    for ( int i = 0; i < binsAj; ++i ) {
+      if ( aj < ajBinWidth*( i + 1 ) )
+        return i; 
+    }
+
+  }
   
+
   histograms::histograms() {
     analysisType = "none";
     initialized = false;
@@ -478,13 +490,11 @@ namespace corrAnalysis {
     }
     
     // check to see which aj bin to use
-    int ajbin = 0;
-    if ( useAjSplitting && aj < ajSplitValue )
-    ajbin = 1;
+    int ajbin = FindAjBin( aj );
     
     
     if ( IsAuAu() ) {
-      hCentVz->Fill( (double)ajbin, centrality,(double) vzbin );
+      hCentVz->Fill( aj, centrality,(double) vzbin );
       return true;
     }
     
@@ -499,12 +509,10 @@ namespace corrAnalysis {
     }
     
     // check to see which aj bin to use
-    int ajbin = 0;
-    if ( useAjSplitting && aj < ajSplitValue )
-    ajbin = 1;
+    int ajbin = FindAjBin( aj );
     
     if ( IsPP() ) {
-      hCentVz->Fill( (double) ajbin, 0.0, (double) vzbin );
+      hCentVz->Fill( aj, 0.0, (double) vzbin );
       return true;
     }
     
@@ -713,9 +721,7 @@ namespace corrAnalysis {
     dPhi += 2.0*pi;
     
     // find aj bin, if applicable
-    int binAj = 0;
-    if ( useAjSplitting && aj < ajSplitValue )
-    binAj = 1;
+    int binAj = FindAjBin( aj );
     
     if ( IsDijet() && IsAuAu() ) {
       h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
@@ -753,9 +759,7 @@ namespace corrAnalysis {
     dPhi += 2.0*pi;
     
     // find aj bin, if applicable
-    int binAj = 0;
-    if ( useAjSplitting && aj < ajSplitValue )
-    binAj = 1;
+    int binAj = FindAjBin( aj );
     
     if ( IsDijet() && IsAuAu() ) {
       h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );

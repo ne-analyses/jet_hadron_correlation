@@ -73,6 +73,9 @@ namespace corrAnalysis {
     // Used internally to pick histogram edges
     // that give a bin centered at zero in correlation plots
     void FindBinShift();
+
+    // Used to find the respective Aj bin
+    int FindAjBin(double aj);
     
   public:
     histograms( );
