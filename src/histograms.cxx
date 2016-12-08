@@ -96,8 +96,8 @@ namespace corrAnalysis {
             tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
-            leadingArrays[i][j][k]->AddLast( tmpHistLead );
-            subleadingArrays[i][j][k]->AddLast( tmpHistSub );
+            leadingArrays[i][j][k].AddLast( tmpHistLead );
+            subleadingArrays[i][j][k].AddLast( tmpHistSub );
           }
         }
       }
@@ -131,7 +131,7 @@ namespace corrAnalysis {
             tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
-            leadingArrays[i][j][k]->AddLast( tmpHistTrig );
+            leadingArrays[i][j][k].AddLast( tmpHistTrig );
           }
         }
       }
