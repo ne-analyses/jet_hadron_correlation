@@ -29,10 +29,11 @@ endif
 
 
 ROOTLIBS      = $(shell root-config --libs)
+FJLIBS        = $(shell fastjet-config --libs)
 
-LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
-LIBS          = -lfastjet -lfastjettools -lTStarJetPico
-
+#LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
+#LIBS          = -lTStarJetPico -lfastjet -lfastjettools
+LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS)
 
 # for cleanup
 SDIR          = src
@@ -55,7 +56,7 @@ $(ODIR)/%.o : $(SDIR)/%.cxx $(INCS)
 $(BDIR)/%  : $(ODIR)/%.o 
 	@echo 
 	@echo LINKING
-	$(CXX) $(LDFLAGS) $(LIBPATH) $(LIBS) $^ -o $@
+	$(CXX) $(LDFLAGS) $^ -o $@ $(LIBS)
 
 ###############################################################################
 
