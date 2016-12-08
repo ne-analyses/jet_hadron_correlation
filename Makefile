@@ -56,7 +56,7 @@ $(ODIR)/%.o : $(SDIR)/%.cxx $(INCS)
 $(BDIR)/%  : $(ODIR)/%.o 
 	@echo 
 	@echo LINKING
-	$(CXX) $(LDFLAGS) $(LIBS) $^ -o $@
+	$(CXX) $(LDFLAGS) $^ -o $@ $(LIBS)
 
 ###############################################################################
 
