@@ -45,8 +45,8 @@ set subLeadPtMin = $4
 set leadPtMin = $5
 set jetPtMax = $6
 set jetRadius = $7
-set binsEta = $10
-set binsPhi = $11
+set binsEta = $8
+set binsPhi = $9
 
 if ( $2 == 'default' ) then
 	set useEfficiency = 'true'
