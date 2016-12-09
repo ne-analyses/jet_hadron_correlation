@@ -14,6 +14,7 @@
 #  [5]: leading jet minimum pt ( jet min pt for jet-hadron )
 #  [6]: jet pt max ( global maximum, both dijet and jet )
 #  [7]: jet radius for clustering algorithm
+#  [8]: hard constituent pt cut
 #  [8]: bins in Eta for correlation histograms
 #  [9]: bins in phi for correlation histograms
 #
@@ -27,7 +28,7 @@ set analysis = $1
 set execute = './bin/auau_correlation'
 set base = /nfs/rhi/STAR/Data/HaddedAuAu14Low/AuAu14Pico
 
-if ( $# != "9" && !( $2 == 'default' ) ) then
+if ( $# != "10" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters'
 	exit
 endif
@@ -45,8 +46,9 @@ set subLeadPtMin = $4
 set leadPtMin = $5
 set jetPtMax = $6
 set jetRadius = $7
-set binsEta = $8
-set binsPhi = $9
+set constPtCut = $8
+set binsEta = $9
+set binsPhi = $10
 
 if ( $2 == 'default' ) then
 	set useEfficiency = 'false'
@@ -62,13 +64,14 @@ if ( $2 == 'default' ) then
 	endif
   endif
 	set jetRadius = 0.4
+  set constPtCut = 2.0
   set binsEta = 24
   set binsPhi = 24
 endif
 
 # Create the folder name for output
 set outFile = ${analysis}
-set outFile = ${outFile}_trigger_${triggerCoincidence}_eff_${useEfficiency}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_eta_${binsEta}_phi_${binsPhi}
+set outFile = ${outFile}_trigger_${triggerCoincidence}_eff_${useEfficiency}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
 if ( ! -d out/y14low/${analysis}/${outFile} ) then
 mkdir -p out/y14low/${analysis}/${outFile}
@@ -103,7 +106,7 @@ set ErrFile     = log/y14low/${analysis}/${outFile}/${analysis}_${OutBase}.err
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
-set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $binsEta $binsPhi $outLocation $outName $outNameTree $Files"
+set arg = "$analysis $useEfficiency $triggerCoincidence $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $constPtCut $binsEta $binsPhi $outLocation $outName $outNameTree $Files"
 
 qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
