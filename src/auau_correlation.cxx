@@ -103,12 +103,13 @@
 // [4]: leading jet pt min
 // [5]: jet pt max
 // [6]: jet radius, used in the jet definition
-// [7]: number of bins for eta in correlation histograms
-// [8]: number of bins for phi in correlation histograms
-// [9]: output directory
-// [10]: name for the correlation histogram file
-// [11]: name for the dijet TTree file
-// [12]: input file: can be a single .root or a .txt or .list of root files
+// [7]: hard pt cut
+// [8]: number of bins for eta in correlation histograms
+// [9]: number of bins for phi in correlation histograms
+// [10]: output directory
+// [11]: name for the correlation histogram file
+// [12]: name for the dijet TTree file
+// [13]: input file: can be a single .root or a .txt or .list of root files
 
 // DEF MAIN()
 int main ( int argc, const char** argv ) {
@@ -145,6 +146,7 @@ int main ( int argc, const char** argv ) {
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
   double				jetRadius 		= 0.4;                      // jet radius for jet finding
+  double        hardPtCut     = 2.0;                      // hard cut on constituent momentum for initial jet finding
   unsigned      binsEta       = 24;                       // default number of bins for eta for correlation histograms
   unsigned      binsPhi       = 24;                       // default number of bins for phi for correlation histograms
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
@@ -158,7 +160,7 @@ int main ( int argc, const char** argv ) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 14: { // Custom case
+    case 15: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       // Set non-default values
@@ -194,16 +196,17 @@ int main ( int argc, const char** argv ) {
       leadJetPtMin 	= atof ( arguments[4].c_str() );
       jetPtMax 			= atof ( arguments[5].c_str() );
       jetRadius 		= atof ( arguments[6].c_str() );
+      hardPtCut     = atof ( arguments[7].c_str() );
       
       // bins in eta and phi
-      binsEta = atoi ( arguments[7].c_str() );
-      binsPhi = atoi ( arguments[8].c_str() );
+      binsEta = atoi ( arguments[8].c_str() );
+      binsPhi = atoi ( arguments[9].c_str() );
       
       // output and file names
-      outputDir 		= arguments[9];
-      corrOutFile		= arguments[10];
-      treeOutFile		= arguments[11];
-      inputFile 		= arguments[12];
+      outputDir 		= arguments[10];
+      corrOutFile		= arguments[11];
+      treeOutFile		= arguments[12];
+      inputFile 		= arguments[13];
       
       break;
     }
@@ -273,7 +276,7 @@ int main ( int argc, const char** argv ) {
   // -----------------------------------
   // Constituent selectors
   fastjet::Selector selectorLowPtCons  = corrAnalysis::SelectLowPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::trackMinPt );
-  fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::hardTrackMinPt );
+  fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, hardPtCut );
   
   // Jet candidate selector
   fastjet::Selector	selectorJetCandidate;
