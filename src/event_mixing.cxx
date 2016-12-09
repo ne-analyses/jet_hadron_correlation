@@ -230,7 +230,7 @@ int main ( int argc, const char** argv) {
   bool useEfficiency, matchTrigger;
   
   // set the variables
-  int extractResult = corrAnalysis::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, useEfficiency, matchTrigger, binsEta, binsPhi );
+  int extractResult = corrAnalysis::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, hardConstPt, useEfficiency, matchTrigger, binsEta, binsPhi );
   if (  extractResult == 1 )
     __OUT("Successfully parsed analysis variables")
   else if ( extractResult == 0 )
