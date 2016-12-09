@@ -326,105 +326,32 @@ namespace corrAnalysis {
     // now set up the phi and eta bin shifts
     FindBinShift();
     
-    if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-      hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
-      hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-      
-      hLeadJetPt 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
-      hLeadEtaPhi = new TH2D( "leadjetetaphi", "Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      hSubJetPt 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
-      hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-      
-      if ( analysisType == "dijet" ) {
-        hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
-        hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
-      }
-      h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      
-      BuildArrays();
-      
-      initialized = true;
-      return 0;
-    }
-    else if ( analysisType == "jet" || analysisType == "jetmix" ) {
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-      hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
-      hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-      
-      hLeadJetPt 	= new TH1D( "triggerjetpt", "Trigger Jet Pt;p_{T}", 80, 0, 80 );
-      hLeadEtaPhi = new TH2D( "triggerjetetaphi", "Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-      
-      h3DimCorrLead		= new TH3D("leadjetcorr", "Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      
-      BuildArrays();
-      
-      initialized = true;
-      return 0;
-    }
-    else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-      hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
-      
-      hLeadJetPt 	= new TH1D( "leadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
-      hLeadEtaPhi = new TH2D( "leadjetetaphi", "PP Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      hSubJetPt 	= new TH1D( "subjetpt", "PP Subleading Jet Pt;p_{T}", 80, 0, 80 );
-      hSubEtaPhi 	= new TH2D( "subjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-      
-      if ( analysisType == "ppdijet" ) {
-        hAjHigh 		= new TH1D( "ajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjLow 			= new TH1D( "ajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
-        hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
-      }
-      
-      h3DimCorrLead		= new TH3D("leadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      h3DimCorrSub		= new TH3D("subjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      
-      BuildArrays();
-      
-      initialized = true;
-      return 0;
-    }
-    else if ( analysisType == "ppjet" || analysisType == "ppjetmix" ) {
-      //hBinVz			= new TH2D( "nevents", "Vz Bin Distribution; aj; bins vz", 2, -0.5, 1.5, binsVz, -0.5, (double) binsVz - 0.5 );
-      hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", 2, -0.5, 1.5, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-      hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-      
-      hLeadJetPt 	= new TH1D( "triggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
-      hLeadEtaPhi = new TH2D( "triggerjetetaphi", "PP Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-      
-      h3DimCorrLead		= new TH3D("leadjetcorr", "PP Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-      
-      
-      BuildArrays();
-      
-      initialized = true;
-      return 0;
-    }
+    hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+    hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
+    hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
     
-    else {
-      __ERR("Unrecognized analysis type")
-      
-      initialized = false;
-      return -1;
-    }
+    hLeadJetPt 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
+    hLeadEtaPhi = new TH2D( "leadjetetaphi", "Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
+    hSubJetPt 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
+    hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
     
+    hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
+    hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
+    
+    if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
+      hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+      hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+      hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
+      hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
+    }
+    h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    
+    BuildArrays();
+    
+    initialized = true;
+
+    return 1;
   }
   
   void histograms::Write() {
