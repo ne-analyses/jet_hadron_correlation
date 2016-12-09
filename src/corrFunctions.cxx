@@ -650,7 +650,7 @@ namespace corrAnalysis {
       else if ( varHolder[i] == "rad" )
         jetRadius = atof( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "hardpt" )
-        hardpt = atof( varHolder[i+1].c_str() );
+        hardPt = atof( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "eta" )
         binsEta = atoi( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "phi" )
