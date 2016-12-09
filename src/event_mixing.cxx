@@ -223,8 +223,8 @@ int main ( int argc, const char** argv) {
 
   // set kinematic variables the analysis
   // ----------------------------------
-  double leadJetPtMin, subJetPtMin, jetPtMax, jetRadius;
-  leadJetPtMin = subJetPtMin = jetPtMax = jetRadius = -999;
+  double leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, hardConstPt;
+  leadJetPtMin = subJetPtMin = jetPtMax = jetRadius = hardConstPt = -999;
   unsigned binsEta, binsPhi;
   binsEta = binsPhi = 1000;
   bool useEfficiency, matchTrigger;
@@ -335,7 +335,7 @@ int main ( int argc, const char** argv) {
   // -----------------------------------
   // Constituent selectors
   fastjet::Selector selectorLowPtCons  = corrAnalysis::SelectLowPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::trackMinPt );
-  fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::hardTrackMinPt );
+  fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, hardConstPt );
   
   // initial jet selector to find if there is a high momentum jet
   // only used if the data is HT triggered

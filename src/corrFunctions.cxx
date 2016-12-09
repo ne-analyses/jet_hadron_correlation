@@ -619,7 +619,7 @@ namespace corrAnalysis {
   // This function will check if it can parse the analysis String
   // if its unrecognized it will use defaults
   // if it recognizes the string but can't parse, it returns -2, which will exit the mixing
-  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi ) {
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, double& hardPt, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi ) {
     
     // First, pick out the analysis type from the analysis string
     if ( BeginsWith( analysisString, "dijet" ) )
@@ -649,6 +649,8 @@ namespace corrAnalysis {
         maxPt = atof( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "rad" )
         jetRadius = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "hardpt" )
+        hardpt = atof( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "eta" )
         binsEta = atoi( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "phi" )

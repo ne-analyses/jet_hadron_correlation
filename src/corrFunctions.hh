@@ -195,7 +195,7 @@ namespace corrAnalysis {
   // --------------------------
   
   // Pulls analysis variables from the directory name
-  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi );
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, double& hardPt, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi );
   
   // Used to decide what max pt can be for a jet in
   // HT events to still be used in mixing
