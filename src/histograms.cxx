@@ -409,7 +409,6 @@ namespace jetHadron {
       for ( int j = 0; j < binsCentrality; ++j ) {
         if ( leadingArrays && leadingArrays[i] && leadingArrays[i][j] ) {
           leadingArrays[i][j]->Write();
-          std::cout<<"writing"<<std::endl;
         }
         if ( subleadingArrays && subleadingArrays[i] && subleadingArrays[i][j] )
           subleadingArrays[i][j]->Write();
