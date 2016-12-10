@@ -152,7 +152,7 @@ int main ( int argc, const char** argv ) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
-  std::string	 	inputFile			= "auau_list/grid_AuAuy7HT.list";		// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/CleanAuAuY7/Clean809.root";		// input file: can be .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
