@@ -51,6 +51,18 @@ namespace corrAnalysis {
     return false;
   }
   
+  // Used to check if the histograms have been initialized
+  // before allowing any filling to stop seg faults
+  bool histograms::IsInitialized() {
+    if ( initialized ) {
+      return true;
+    }
+    else {
+      __ERR("histograms instance not initialized")
+      return false;
+    }
+  }
+  
   // Used to build the cent/vz(/aj) arrays used to
   // hold correlations
   void histograms::BuildArrays() {
@@ -410,239 +422,107 @@ namespace corrAnalysis {
   
   
   // --------------------------- Histogram Filling Functions ------------------------------- //
-  bool histograms::CountEvent( int centrality, int vzbin, double aj ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+  bool histograms::CountEvent( int vzbin, int centrality, double aj ) {
+    if ( !IsInitialized() ) { return false; }
     
-    // check to see which aj bin to use
-    int ajbin = FindAjBin( aj );
-    
-    
-    if ( IsAuAu() ) {
-      hCentVz->Fill( aj, centrality,(double) vzbin );
-      return true;
-    }
-    
-    __ERR("hCentVz not initialized for pp")
-    return false;
-  }
-  
-  bool histograms::CountEvent( int vzbin, double aj ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
-    
-    // check to see which aj bin to use
-    int ajbin = FindAjBin( aj );
-    
-    if ( IsPP() ) {
-      hCentVz->Fill( aj, 0.0, (double) vzbin );
-      return true;
-    }
-    
-    __ERR("hBinVz not initialized for auau")
-    return false;
+    hCentVz->Fill( aj, centrality,(double) vzbin );
+    return true;
   }
   
   bool histograms::FillGRefMult( int gRefMult ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsAuAu() ) {
-      hGRefMult->Fill( gRefMult );
-      return true;
-    }
-    
-    __ERR("hGRefMult not initialized for pp")
-    return false;
+    hGRefMult->Fill( gRefMult );
+    return true;
   }
   
   bool histograms::FillVz( double vz ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     hVz->Fill( vz );
     return true;
   }
   
   bool histograms::FillAjHigh( double aj ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsDijet() && !IsMix() ) {
-      hAjHigh->Fill( aj );
-      return true;
-    }
-    
-    __ERR("hAjHigh not initialized for jet-hadron or mixing")
-    return false;
+    hAjHigh->Fill( aj );
+    return true;
   }
   
   bool histograms::FillAjLow( double aj ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsDijet() && !IsMix() ) {
-      hAjLow->Fill( aj );
-      return true;
-    }
-    
-    __ERR("hAjLow not initialized for jet-hadron or mixing")
-    return false;
+    hAjLow->Fill( aj );
+    return true;
   }
   
   bool histograms::FillAjDif( double high, double low ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
-    if ( IsDijet() && !IsMix() ) {
-      hAjDif->Fill( high, low, fabs(high - low) );
-      return true;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    __ERR("hAjLow not initialized for jet-hadron or mixing")
-    return false;
+    hAjDif->Fill( high, low, fabs(high - low) );
+    return true;
   }
   
   bool histograms::FillJetPt( double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsJet() ) {
-      hLeadJetPt->Fill( pt );
-      return true;
-    }
-    
-    __ERR(" FillJetPt not used for dijet-hadron")
-    return false;
+    hLeadJetPt->Fill( pt );
+    return true;
   }
   
   bool histograms::FillJetEtaPhi( double eta, double phi ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsJet() ) {
-      hLeadEtaPhi->Fill( eta, phi );
-      return true;
-    }
-    
-    __ERR("FillJetEtaPhi() not used for dijet-hadron")
-    return false;
+    hLeadEtaPhi->Fill( eta, phi );
+    return true;
   }
   
   bool histograms::FillCorrelation( double dEta,  double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
-    
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     if ( dPhi < phiLowEdge+phiBinShift)
     dPhi += 2.0*pi;
     
-    if ( IsJet() && IsAuAu() ) {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
+    h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0][centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      return true;
-    }
-    else if ( IsJet() && IsPP() ) {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0][0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      return true;
-    }
-    
-    
-    __ERR("FillCorrelation() not used for dijet-hadron")
-    return false;
+    // now do the bin-divided fill
+    TH3D* tmpHist = (TH3D*) leadingArrays[0][centBin]->At(vzBin);
+    tmpHist->Fill( dEta, dPhi, assocPt, weight );
+    return true;
   }
   
   bool histograms::FillLeadJetPt( double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsDijet() ) {
-      hLeadJetPt->Fill( pt );
-      return true;
-    }
-    
-    __ERR("FillLeadJetPt() not used for jet-hadron")
-    return false;
+    hLeadJetPt->Fill( pt );
+    return true;
   }
   
   bool histograms::FillSubJetPt( double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsDijet() ) {
-      hSubJetPt->Fill( pt );
-      return true;
-    }
-    
-    __ERR("FillSubJetPt() not used for jet-hadron")
-    return false;
+    hSubJetPt->Fill( pt );
+    return true;
   }
   
   bool histograms::FillLeadEtaPhi( double eta, double phi ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
-    if ( IsDijet() ) {
-      hLeadEtaPhi->Fill( eta, phi );
-      return true;
-    }
-    
-    __ERR("FillLeadJetEtaPhi() not used for jet-hadron")
-    return false;
+    hLeadEtaPhi->Fill( eta, phi );
+    return true;
   }
   
   bool histograms::FillSubEtaPhi( double eta, double phi ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
+    if ( !IsInitialized() )
       return false;
-    }
     
-    if ( IsDijet() ) {
-      hSubEtaPhi->Fill( eta, phi );
-      return true;
-    }
-    
-    __ERR("FillSubJetEtaPhi() not used for jet-hadron")
-    return false;
+    hSubEtaPhi->Fill( eta, phi );
+    return true;
   }
   
   bool histograms::FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     if ( dPhi < phiLowEdge+phiBinShift )
     dPhi += 2.0*pi;
@@ -650,37 +530,17 @@ namespace corrAnalysis {
     // find aj bin, if applicable
     int binAj = FindAjBin( aj );
     
-    if ( IsDijet() && IsAuAu() ) {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[binAj][centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-      return true;
-    }
-    else if ( IsDijet() && IsPP() )  {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[binAj][0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-      return true;
-      
-      
-    }
+    h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
     
-    __ERR("FillCorrelationLead() not used for jet-hadron")
-    return false;
-    
+    // now do the bin-divided fill
+    TH3D* tmpHist = (TH3D*) leadingArrays[binAj][centBin]->At(vzBin);
+    tmpHist->Fill( dEta, dPhi, assocPt, weight );
+      
+    return true;
   }
   
   bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     if ( dPhi < phiLowEdge+phiBinShift )
     dPhi += 2.0*pi;
@@ -688,72 +548,36 @@ namespace corrAnalysis {
     // find aj bin, if applicable
     int binAj = FindAjBin( aj );
     
-    if ( IsDijet() && IsAuAu() ) {
-      h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
+    h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
+    // now do the bin-divided fill
+    TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][centBin]->At(vzBin);
+    tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
-      return true;
-    }
-    else if ( IsDijet() && IsPP() ) {
-      h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-      return true;
-    }
-    
-    
-    __ERR("FillCorrelationSub() not used for jet-hadron")
-    return false;
+    return true;
   }
   
   bool histograms::FillAssocPt( double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     hAssocPt->Fill( pt );
     return true;
   }
   
   bool histograms::FillAssocEtaPhi( double eta, double phi ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
+    if ( !IsInitialized() ) { return false; }
     
     hAssocEtaPhi->Fill( eta, phi );
     return true;
   }
   
   // Looking for correlations between Aj, Cent, and Pt
-  bool histograms::FillAjStruct( double aj, int centrality, double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
-    if ( IsDijet() && IsAuAu() ) {
-      
-      hAjStruct->Fill( aj, centrality, pt );
-      
-      return true;
-    }
-    else if ( IsDijet() && IsPP() ) {
-      
-      hAjStruct->Fill( aj, 0.0, pt );
-      
-      return true;
-    }
+  bool histograms::FillAjStruct( double aj, double pt, int centrality ) {
+    if ( !IsInitialized() ) { return false; }
     
-    
-    return false;
-    
+      
+    hAjStruct->Fill( aj, centrality, pt );
+    return true;
   }
 
 } // end namespace

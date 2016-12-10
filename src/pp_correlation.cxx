@@ -488,19 +488,21 @@ int main ( int argc, const char** argv) {
       }
       else {
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
+        // default value for counting events
+        dijetAj = 0.05;
       }
       
       // now write
       correlatedDiJets->Fill();
       
       // Now we can fill our event histograms
-      histograms->CountEvent( VzBin, dijetAj );
+      histograms->CountEvent( VzBin, refCent, dijetAj );
       histograms->FillVz( vertexZ );
       if ( requireDijets ) {
         histograms->FillAjHigh( corrAnalysis::CalcAj( hardJets ) );
         histograms->FillAjLow( corrAnalysis::CalcAj( analysisJets ) );
         histograms->FillAjDif( corrAnalysis::CalcAj( hardJets ), corrAnalysis::CalcAj( analysisJets ) );
-        histograms->FillAjStruct( corrAnalysis::CalcAj( analysisJets ), refCent, analysisJets[0].pt() );
+        histograms->FillAjStruct( corrAnalysis::CalcAj( analysisJets ), analysisJets[0].pt() );
 
         histograms->FillLeadJetPt( analysisJets.at(0).pt() );
         histograms->FillLeadEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );

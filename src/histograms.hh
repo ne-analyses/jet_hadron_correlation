@@ -65,6 +65,10 @@ namespace corrAnalysis {
     bool IsJet();
     bool IsMix();
     
+    // Checked to make sure the histogram class
+    // has been initialized before filling
+    bool IsInitialized();
+    
     // Used internally during initialization
     // to generate the histogram arrays properly
     // depending on analysis settings
@@ -115,8 +119,7 @@ namespace corrAnalysis {
     
     
     // Fill histogram functions
-    bool CountEvent( int centrality, int vzbin, double aj = 1.0 ); 	// Used to count AuAu events
-    bool CountEvent( int vzbin, double aj = 1.0 );										// Used to count PP events
+    bool CountEvent( int vzBin, int centrality = 0, double aj = 0.01 ); 	// Used to count events
     
     bool FillGRefMult( int gRefMult );							// For AuAu events, records gRefMult
     bool FillVz( double vz );												// Records Vz distribution
@@ -129,7 +132,7 @@ namespace corrAnalysis {
     bool FillJetPt( double pt );										// For Jet-hadron: records accepted trigger jet pt
     bool FillJetEtaPhi( double eta, double phi );		// Records accepted trigger jet eta-phi
     // records trigger-associated correlations
-    bool FillCorrelation( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
+    bool FillCorrelation( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = 0 );
     
     // For dijet-hadron
     bool FillLeadJetPt( double pt );								// For dijet-hadron: records lead jet pt
@@ -137,15 +140,15 @@ namespace corrAnalysis {
     bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
     bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
     // Records trigger-associated correlations with trigger = leading/subleading
-    bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = -1 );
-    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = -1 );
+    bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = 0 );
+    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = 0 );
     
     // Associated track info
     bool FillAssocPt( double pt );
     bool FillAssocEtaPhi( double eta, double phi );
     
     // Looking for correlations between Aj, Cent, and Pt
-    bool FillAjStruct( double aj, int centrality, double pt );
+    bool FillAjStruct( double aj, double pt, int centrality );
     
   };
 
