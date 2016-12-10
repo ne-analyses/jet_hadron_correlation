@@ -106,7 +106,7 @@ namespace corrAnalysis {
             // make each histogram
             tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-            std::cout<<"got here"<<std::endl;
+            
             // add to the correct bin
             leadingArrays[i][j]->AddLast( tmpHistLead );
             subleadingArrays[i][j]->AddLast( tmpHistSub );
