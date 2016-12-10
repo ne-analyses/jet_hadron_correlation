@@ -112,6 +112,7 @@ namespace corrAnalysis {
             subleadingArrays[i][j]->AddLast( tmpHistSub );
           }
         }
+        std::cout<<"finished i: "<<i<<std::endl;
       }
     }
     
