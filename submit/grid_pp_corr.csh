@@ -56,8 +56,8 @@ if ( $2 == 'default' ) then
 set useEfficiency = 'true'
 set triggerCoincidence = 'true'
 if ( $analysis == 'ppdijet' ) then
-set subLeadPtMin = 10.0
-set leadPtMin = 20.0
+set subLeadPtMin = 8.0
+set leadPtMin = 16.0
 set jetPtMax = 100.0
 else if ( $analysis == 'ppjet' ) then
 set subLeadPtMin = 0.0
@@ -65,7 +65,7 @@ set leadPtMin = 20.0
 set jetPtMax = 100.0
 endif
 endif
-set jetRadius = 0.4
+set jetRadius = 0.2
 set constPtCut = 2.0
 set binsEta = 22
 set binsPhi = 22
