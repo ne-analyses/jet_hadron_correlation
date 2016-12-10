@@ -412,7 +412,7 @@ namespace jetHadron {
         // check to make sure the matched jets are within the
         // accepted eta range
         for ( int i = 0; i < matchedToDijet.size(); ++i )
-          if ( fabs( matchedToDijet[i].eta() ) > corrAnalysis::maxTrackRap - jetRadius )
+          if ( fabs( matchedToDijet[i].eta() ) > jetHadron::maxTrackRap - jetRadius )
             return std::vector<fastjet::PseudoJet>();
         
         // now return in proper order
@@ -715,8 +715,8 @@ namespace jetHadron {
       int refCentrality = GetReferenceCentrality( refMult );
       // Check to see if we use those centralities
       if ( refCentrality < 0 )                      								 	{ return false; }
-      if ( refCentrality < corrAnalysis::y7EfficiencyRefCentLower )   { return false; }
-      if ( refCentrality > corrAnalysis::y7EfficiencyRefCentUpper )   { return false; }
+      if ( refCentrality < jetHadron::y7EfficiencyRefCentLower )   { return false; }
+      if ( refCentrality > jetHadron::y7EfficiencyRefCentUpper )   { return false; }
     }
     
     // Make sure Vz bin is accepted
