@@ -23,7 +23,7 @@
 # first make sure program is updated and exists
  make bin/auau_correlation || exit
 
-if ( $2 == '-h') then
+if ( $1 == '-h') then
 echo 'parameters:'
 echo 'for defaults use "(di)/jet default"'
 echo '1: analysis type [dijet/jet] (default: dijet)'
