@@ -412,9 +412,9 @@ namespace corrAnalysis {
         if ( !leadingArrays[i][j] ) {
           continue;
         for ( int k = 0; k < binsVz; ++k ) {
-          leadingArrays[i][j][k].Write();
+          leadingArrays[i][j]->Write();
           if ( IsDijet() )
-            subleadingArrays[i][j][k].Write();
+            subleadingArrays[i][j]->Write();
         }
       }
     }
