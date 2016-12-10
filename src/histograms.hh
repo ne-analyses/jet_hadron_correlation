@@ -148,7 +148,7 @@ namespace corrAnalysis {
     bool FillAssocEtaPhi( double eta, double phi );
     
     // Looking for correlations between Aj, Cent, and Pt
-    bool FillAjStruct( double aj, double pt, int centrality );
+    bool FillAjStruct( double aj, double pt, int centrality = 0 );
     
   };
 
