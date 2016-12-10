@@ -23,13 +23,27 @@
 # first make sure program is updated and exists
  make bin/auau_correlation || exit
 
+if ( $2 == '-h') then
+echo 'parameters:'
+echo 'for defaults use "(di)/jet default"'
+echo '1: analysis type [dijet/jet] (default: dijet)'
+echo '2: use tracking efficiency corrections [true/false] (default: false)'
+echo '3: require trigger in leading jet [true/false] (default: true)'
+echo '4: subleading jet min pt (default: 10)'
+echo '5: leading jet min pt (default: 20)'
+echo '6: jet pt max (default: 100)'
+echo '7: jet resolution parameter (default: 0.4'
+echo '8: bins in correlation histograms in eta (default: 22)'
+echo '9: bins in correlation histograms in phi (default: 22)'
+endif
+
 set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/auau_correlation'
 set base = /nfs/rhi/STAR/Data/HaddedAuAu14Mid/AuAu14Pico
 
 if ( $# != "10" && !( $2 == 'default' ) ) then
-	echo 'Error: illegal number of parameters'
+	echo 'Error: illegal number of parameters (-h for help)'
 	exit
 endif
 

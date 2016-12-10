@@ -24,6 +24,20 @@
 # first make sure program is updated and exists
 make bin/pp_correlation || exit
 
+if ( $2 == '-h') then
+echo 'parameters:'
+echo 'for defaults use "(di)/jet default"'
+echo '1: analysis type [dijet/jet] (default: dijet)'
+echo '2: use tracking efficiency corrections [true/false] (default: true)'
+echo '3: require trigger in leading jet [true/false] (default: true)'
+echo '4: subleading jet min pt (default: 10)'
+echo '5: leading jet min pt (default: 20)'
+echo '6: jet pt max (default: 100)'
+echo '7: jet resolution parameter (default: 0.4'
+echo '8: bins in correlation histograms in eta (default: 22)'
+echo '9: bins in correlation histograms in phi (default: 22)'
+endif
+
 set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/pp_correlation'
@@ -31,7 +45,7 @@ set base = pp_list/grid/pp
 set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/picoMB_0_20.root
 
 if ( $# != "10" && !( $2 == 'default' ) ) then
-echo 'Error: illegal number of parameters'
+echo 'Error: illegal number of parameters (-h for help)'
 exit
 endif
 
