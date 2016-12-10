@@ -32,9 +32,10 @@ echo '3: require trigger in leading jet [true/false] (default: true)'
 echo '4: subleading jet min pt (default: 10)'
 echo '5: leading jet min pt (default: 20)'
 echo '6: jet pt max (default: 100)'
-echo '7: jet resolution parameter (default: 0.4'
-echo '8: bins in correlation histograms in eta (default: 22)'
-echo '9: bins in correlation histograms in phi (default: 22)'
+echo '7: jet resolution parameter (default: 0.4)'
+echo '8: hard constituent pt cut (default: 2.0)'
+echo '9: bins in correlation histograms in eta (default: 22)'
+echo '10: bins in correlation histograms in phi (default: 22)'
 exit
 endif
 
