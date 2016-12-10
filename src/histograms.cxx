@@ -72,7 +72,7 @@ namespace corrAnalysis {
     if ( analysisType == "dijet" || analysisType == "ppdijet" || analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
       
       //now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistLead, * tmpHistSub;
+      THFD* tmpHistLead, * tmpHistSub;
       
       leadingArrays = new TObjArray**[binsAj];
       subleadingArrays = new TObjArray**[binsAj];
@@ -104,8 +104,8 @@ namespace corrAnalysis {
             subName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
             
             // make each histogram
-            tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-            tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistLead = new TH3F(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistSub = new TH3F(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
             leadingArrays[i][j]->AddLast( tmpHistLead );
@@ -119,7 +119,7 @@ namespace corrAnalysis {
     if ( analysisType == "jet" || analysisType == "ppjet" || analysisType == "jetmix" || analysisType == "ppjetmix" ) {
       
       
-      TH3D* tmpHistTrig;
+      TH3F* tmpHistTrig;
       leadingArrays = new TObjArray**[binsAj];
       
       for ( int i = 0; i < binsAj; ++i ) {
@@ -141,7 +141,7 @@ namespace corrAnalysis {
             
             leadName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
             
-            tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+            tmpHistTrig = new TH3F(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
             
             // add to the correct bin
             leadingArrays[i][j]->AddLast( tmpHistTrig );
@@ -339,7 +339,7 @@ namespace corrAnalysis {
     // now set up the phi and eta bin shifts
     FindBinShift();
     
-    hCentVz 		= new TH3D( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
+    hCentVz 		= new TH3F( "nevents","Event Count;aj;Centrality;VzBin", binsAj, ajLowEdge, ajHighEdge, binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
     hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
     hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
     
@@ -354,11 +354,11 @@ namespace corrAnalysis {
     if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
       hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
       hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-      hAjDif      = new TH3D( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
-      hAjStruct = new TH3D("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
+      hAjDif      = new TH3F( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
+      hAjStruct = new TH3F("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
     }
-    h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
-    h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    h3DimCorrLead		= new TH3F("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    h3DimCorrSub		= new TH3F("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     
     BuildArrays();
     
@@ -488,7 +488,7 @@ namespace corrAnalysis {
     h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
       
     // now do the bin-divided fill
-    TH3D* tmpHist = (TH3D*) leadingArrays[0][centBin]->At(vzBin);
+    TH3F* tmpHist = (TH3F*) leadingArrays[0][centBin]->At(vzBin);
     tmpHist->Fill( dEta, dPhi, assocPt, weight );
     return true;
   }
@@ -534,7 +534,7 @@ namespace corrAnalysis {
     h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
     
     // now do the bin-divided fill
-    TH3D* tmpHist = (TH3D*) leadingArrays[binAj][centBin]->At(vzBin);
+    TH3F* tmpHist = (TH3F*) leadingArrays[binAj][centBin]->At(vzBin);
     tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
     return true;
@@ -552,7 +552,7 @@ namespace corrAnalysis {
     h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
       
     // now do the bin-divided fill
-    TH3D* tmpHist = (TH3D*) subleadingArrays[binAj][centBin]->At(vzBin);
+    TH3F* tmpHist = (TH3F*) subleadingArrays[binAj][centBin]->At(vzBin);
     tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
     return true;

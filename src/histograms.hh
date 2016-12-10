@@ -26,7 +26,7 @@ namespace corrAnalysis {
     float etaBinShift;            // value for shifting histogram edges to force a bin centered at zero
     
     // Event statistics
-    TH3D* hCentVz;
+    TH3F* hCentVz;
     TH2D* hBinVz;
     TH1D* hGRefMult;
     TH1D* hVz;
@@ -44,11 +44,11 @@ namespace corrAnalysis {
     // A_j if doing dijets
     TH1D* hAjHigh;
     TH1D* hAjLow;
-    TH3D* hAjDif;
+    TH3F* hAjDif;
     
     // Correlations that are not differentiated by Vz and Centrality
-    TH3D* h3DimCorrLead;
-    TH3D* h3DimCorrSub;
+    TH3F* h3DimCorrLead;
+    TH3F* h3DimCorrSub;
     
     // Holders for the vz/cent binned histograms
     TObjArray*** leadingArrays;
@@ -56,7 +56,7 @@ namespace corrAnalysis {
     
     // a histogram to see if there is some event or jet structure
     // relating to Aj
-    TH3D* hAjStruct;
+    TH3F* hAjStruct;
     
     // Used internally when filling histograms
     bool IsPP();
@@ -104,7 +104,7 @@ namespace corrAnalysis {
     void Write();
     
     // Get Histograms
-    TH3D* GetCentVz()				{ return hCentVz; }
+    TH3F* GetCentVz()				{ return hCentVz; }
     TH2D* GetBinVz()				{ return hBinVz; }
     TH1D*	GetGRefMult()			{ return hGRefMult; }
     TH1D* GetVz()						{ return hVz; }
@@ -114,8 +114,8 @@ namespace corrAnalysis {
     TH2D* GetSubEtaPhi()		{ return hSubEtaPhi; }
     TH1D* GetAjHigh()				{ return hAjHigh; }
     TH1D* GetAjLow()				{ return hAjLow; }
-    TH3D* Get3DLeadCorr()		{ return h3DimCorrLead; }
-    TH3D* Get3DSubCorr()		{ return h3DimCorrSub; }
+    TH3F* Get3DLeadCorr()		{ return h3DimCorrLead; }
+    TH3F* Get3DSubCorr()		{ return h3DimCorrSub; }
     
     
     // Fill histogram functions
