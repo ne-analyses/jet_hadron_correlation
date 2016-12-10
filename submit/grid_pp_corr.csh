@@ -67,8 +67,8 @@ endif
 endif
 set jetRadius = 0.4
 set constPtCut = 2.0
-set binsEta = 24
-set binsPhi = 24
+set binsEta = 22
+set binsPhi = 22
 endif
 
 # Create the folder name for output
