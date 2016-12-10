@@ -35,6 +35,7 @@ echo '6: jet pt max (default: 100)'
 echo '7: jet resolution parameter (default: 0.4'
 echo '8: bins in correlation histograms in eta (default: 22)'
 echo '9: bins in correlation histograms in phi (default: 22)'
+exit
 endif
 
 set ExecPath = `pwd`
