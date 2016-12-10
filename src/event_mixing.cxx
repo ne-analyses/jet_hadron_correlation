@@ -548,10 +548,12 @@ int main ( int argc, const char** argv) {
       reader.ReadEvent( randomizedEventID[i] );
       
       // count event
+      // first set any dummy variables necessary
       if ( corrAnalysis::BeginsWith( analysisType, "pp") )
-        histograms->CountEvent( vzBranch );
-      else
-        histograms->CountEvent( centBranch, vzBranch );
+        centBranch = 0;
+      if ( !requireDijets )
+        ajBranch = 0.01;
+      histograms->CountEvent( vzBranch, centBranch, ajBranch );
       
       // get the reference centrality definition used by
       // the track efficiency class
