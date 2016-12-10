@@ -66,7 +66,7 @@
 #define CORRFUNCTIONS_HH
 
 
-namespace corrAnalysis {
+namespace jetHadron {
   
   // Declare ahead of time
   // For correlation functions

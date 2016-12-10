@@ -11,7 +11,7 @@
 #define __ERR(message) {std::cerr << "[" << __FILE__ << "::" << __func__ << "()] -- ERR: " << message << std::endl;}
 #define __OUT(message) {std::cout << "[" << __FILE__ << "::" << __func__ << "()] -- OUT: " << message << std::endl;}
 
-namespace corrAnalysis {
+namespace jetHadron {
 	
 	// Math
 	// ----------------------------

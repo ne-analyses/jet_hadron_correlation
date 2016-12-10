@@ -7,7 +7,7 @@
 #include "corrFunctions.hh"
 #include "histograms.hh"
 
-namespace corrAnalysis {
+namespace jetHadron {
   
   // These are used by fill functions
   // to check for consistency

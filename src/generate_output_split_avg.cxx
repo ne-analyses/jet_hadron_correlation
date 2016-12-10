@@ -142,10 +142,10 @@ int main( int argc, const char** argv) {
   
   
   // First check to make sure we're located properly
-  std::string currentDirectory = corrAnalysis::getPWD( );
+  std::string currentDirectory = jetHadron::getPWD( );
   
   // If we arent in the analysis directory, exit
-  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
+  if ( !(jetHadron::HasEnding ( currentDirectory, "jet_hadron_corr" ) || jetHadron::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
     std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
     return -1;
   }
@@ -227,27 +227,27 @@ int main( int argc, const char** argv) {
   
   // while resizing the 3dim arrays we can also set up the pt spectra histograms
   for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVzLarge[i].resize( corrAnalysis::binsCentrality );
-    corrCentVzSmall[i].resize( corrAnalysis::binsCentrality );
-    mixCentVz[i].resize( corrAnalysis::binsCentrality );
-    subCentVzLarge[i].resize( corrAnalysis::binsCentrality );
-    subCentVzSmall[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVz[i].resize( corrAnalysis::binsCentrality );
+    corrCentVzLarge[i].resize( jetHadron::binsCentrality );
+    corrCentVzSmall[i].resize( jetHadron::binsCentrality );
+    mixCentVz[i].resize( jetHadron::binsCentrality );
+    subCentVzLarge[i].resize( jetHadron::binsCentrality );
+    subCentVzSmall[i].resize( jetHadron::binsCentrality );
+    mixSubCentVz[i].resize( jetHadron::binsCentrality );
     
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
     std::string ptSubName = analysisNames[i] + "_pt_sub";
     
-    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
-    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
+    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
+    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
 
     
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVzLarge[i][j].resize( corrAnalysis::binsVz );
-      corrCentVzSmall[i][j].resize( corrAnalysis::binsVz );
-      mixCentVz[i][j].resize( corrAnalysis::binsVz );
-      subCentVzLarge[i][j].resize( corrAnalysis::binsVz );
-      subCentVzSmall[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVz[i][j].resize( corrAnalysis::binsVz );
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      corrCentVzLarge[i][j].resize( jetHadron::binsVz );
+      corrCentVzSmall[i][j].resize( jetHadron::binsVz );
+      mixCentVz[i][j].resize( jetHadron::binsVz );
+      subCentVzLarge[i][j].resize( jetHadron::binsVz );
+      subCentVzSmall[i][j].resize( jetHadron::binsVz );
+      mixSubCentVz[i][j].resize( jetHadron::binsVz );
     }
   }
   
@@ -269,8 +269,8 @@ int main( int argc, const char** argv) {
     mixHist[i]->SetName( mixhistBaseName.c_str() );
     
     // pull in the cent/vz diffentiated histograms
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j )
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
 
         // make the initial name
         // assuming it is a non-split file
@@ -401,21 +401,21 @@ int main( int argc, const char** argv) {
   subCentVzPtSmall.resize( nFiles );
   mixSubCentVzPt.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVzPtLarge[i].resize( corrAnalysis::binsCentrality );
-    corrCentVzPtSmall[i].resize( corrAnalysis::binsCentrality );
-    mixCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    subCentVzPtLarge[i].resize( corrAnalysis::binsCentrality );
-    subCentVzPtSmall[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    corrCentVzPtLarge[i].resize( jetHadron::binsCentrality );
+    corrCentVzPtSmall[i].resize( jetHadron::binsCentrality );
+    mixCentVzPt[i].resize( jetHadron::binsCentrality );
+    subCentVzPtLarge[i].resize( jetHadron::binsCentrality );
+    subCentVzPtSmall[i].resize( jetHadron::binsCentrality );
+    mixSubCentVzPt[i].resize( jetHadron::binsCentrality );
     
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVzPtLarge[i][j].resize( corrAnalysis::binsVz );
-      corrCentVzPtSmall[i][j].resize( corrAnalysis::binsVz );
-      mixCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      subCentVzPtLarge[i][j].resize( corrAnalysis::binsVz );
-      subCentVzPtSmall[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      corrCentVzPtLarge[i][j].resize( jetHadron::binsVz );
+      corrCentVzPtSmall[i][j].resize( jetHadron::binsVz );
+      mixCentVzPt[i][j].resize( jetHadron::binsVz );
+      subCentVzPtLarge[i][j].resize( jetHadron::binsVz );
+      subCentVzPtSmall[i][j].resize( jetHadron::binsVz );
+      mixSubCentVzPt[i][j].resize( jetHadron::binsVz );
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         corrCentVzPtLarge[i][j][k].resize( nPtBins );
         corrCentVzPtSmall[i][j][k].resize( nPtBins );
         mixCentVzPt[i][j][k].resize( nPtBins );
@@ -428,8 +428,8 @@ int main( int argc, const char** argv) {
 
   // now get the pt projections
   for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      for ( int k = 0; k < corrAnalysis::binsVz; ++ k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++ k ) {
         for ( int l = 0; l < nPtBins; ++l ) {
           
           corrCentVzLarge[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
@@ -479,8 +479,8 @@ int main( int argc, const char** argv) {
       weightedMix[i][l] = new TH2D( weightedMixName.c_str(), weightedMixName.c_str(), binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge );
       weightedSub[i][l] = new TH2D( weightedSubName.c_str(), weightedSubName.c_str(), binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge );
       
-      for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-        for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+      for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+        for ( int k = 0; k < jetHadron::binsVz; ++k ) {
           
           if ( l <= 2 ) {
             weightedMix[i][l]->Add( mixCentVzPt[i][j][k][l] );
@@ -578,8 +578,8 @@ int main( int argc, const char** argv) {
       
       if ( l <= 2 ) {
       
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( weightedMix[i][l]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPreLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
@@ -618,8 +618,8 @@ int main( int argc, const char** argv) {
       }
       
       else {
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( weightedMix[i][2]->GetEntries() != 0 && corrCentVzPtLarge[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPreLarge[i][l]->Add( corrCentVzPtLarge[i][j][k][l] );
@@ -821,8 +821,8 @@ int main( int argc, const char** argv) {
     
     if ( ajSplit[i] ) {
       // for normalization
-      double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
-      double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
+      double ajHighCount = nEvents[i]->Integral( 1, 1, 1, jetHadron::binsCentrality, 1, jetHadron::binsVz );
+      double ajLowCount = nEvents[i]->Integral( 2, 2, 1, jetHadron::binsCentrality, 1, jetHadron::binsVz );
       
       for ( int j = 0; j < nPtBins; ++j ) {
         
@@ -863,39 +863,39 @@ int main( int argc, const char** argv) {
         std::string recoilRatioFitName = "tmp_recoil_ratio_" + patch::to_string(i) + patch::to_string(j);
         
         std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
-        double phiMin = -corrAnalysis::pi/2.0;
-        double phiMax = 3.0*corrAnalysis::pi/2.0;
+        double phiMin = -jetHadron::pi/2.0;
+        double phiMax = 3.0*jetHadron::pi/2.0;
 
         TF1* triggerLargeTmpFit = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerLargeTmpFit->FixParameter( 2, 0 );
-        triggerLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerLargeTmpFit->FixParameter( 5, jetHadron::pi );
         triggerLargeTmpFit->SetParameter( 3, 0.2 );
         triggerLargeTmpFit->SetParameter( 6, 0.2 );
         TF1* triggerSmallTmpFit = new TF1(triggerSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerSmallTmpFit->FixParameter( 2, 0 );
-        triggerSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerSmallTmpFit->FixParameter( 5, jetHadron::pi );
         triggerSmallTmpFit->SetParameter( 3, 0.2 );
         triggerSmallTmpFit->SetParameter( 6, 0.2 );
         TF1* recoilLargeTmpFit = new TF1(recoilLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilLargeTmpFit->FixParameter( 2, 0 );
-        recoilLargeTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilLargeTmpFit->FixParameter( 5, jetHadron::pi );
         recoilLargeTmpFit->SetParameter( 3, 0.2 );
         recoilLargeTmpFit->SetParameter( 6, 0.2 );
         TF1* recoilSmallTmpFit = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSmallTmpFit->FixParameter( 2, 0 );
-        recoilSmallTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilSmallTmpFit->FixParameter( 5, jetHadron::pi );
         recoilSmallTmpFit->SetParameter( 3, 0.2 );
         recoilSmallTmpFit->SetParameter( 6, 0.2 );
         
         //for the ratios as well
         TF1* triggerRatioTmpFit = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerRatioTmpFit->FixParameter( 2, 0 );
-        triggerRatioTmpFit->FixParameter( 5, corrAnalysis::pi );
+        triggerRatioTmpFit->FixParameter( 5, jetHadron::pi );
         triggerRatioTmpFit->SetParameter( 3, 0.2 );
         triggerRatioTmpFit->SetParameter( 6, 0.2 );
         TF1* recoilRatioTmpFit = new TF1(recoilRatioName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilRatioTmpFit->FixParameter( 2, 0 );
-        recoilRatioTmpFit->FixParameter( 5, corrAnalysis::pi );
+        recoilRatioTmpFit->FixParameter( 5, jetHadron::pi );
         recoilRatioTmpFit->SetParameter( 3, 0.2 );
         recoilRatioTmpFit->SetParameter( 6, 0.2 );
         
@@ -939,7 +939,7 @@ int main( int argc, const char** argv) {
         triggerLargeAjdPhiFit[i][j] = new TF1(triggerLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerLargeAjdPhiFit[i][j]->FixParameter( 0, 0 );
         triggerLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        triggerLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerLargeAjdPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
         triggerLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         triggerLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         triggerLargeAjdPhiFit[i][j]->SetLineColor( kBlack );
@@ -947,7 +947,7 @@ int main( int argc, const char** argv) {
         triggerSmallAjdPhiFit[i][j] = new TF1(triggerSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerSmallAjdPhiFit[i][j]->FixParameter( 0, 0 );
         triggerSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        triggerSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerSmallAjdPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
         triggerSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         triggerSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         triggerSmallAjdPhiFit[i][j]->SetLineColor( kRed );
@@ -955,7 +955,7 @@ int main( int argc, const char** argv) {
         recoilLargeAjdPhiFit[i][j] = new TF1(recoilLargeName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilLargeAjdPhiFit[i][j]->FixParameter( 0, 0 );
         recoilLargeAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        recoilLargeAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilLargeAjdPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         recoilLargeAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         recoilLargeAjdPhiFit[i][j]->SetLineColor( kBlack );
@@ -963,7 +963,7 @@ int main( int argc, const char** argv) {
         recoilSmallAjdPhiFit[i][j] = new TF1(recoilSmallName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSmallAjdPhiFit[i][j]->FixParameter( 0, 0 );
         recoilSmallAjdPhiFit[i][j]->FixParameter( 2, 0 );
-        recoilSmallAjdPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilSmallAjdPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
         recoilSmallAjdPhiFit[i][j]->SetParameter( 3, 0.2 );
         recoilSmallAjdPhiFit[i][j]->SetParameter( 6, 0.2 );
         recoilSmallAjdPhiFit[i][j]->SetLineColor( kRed );
@@ -971,7 +971,7 @@ int main( int argc, const char** argv) {
         triggerRatioFit[i][j] = new TF1(triggerRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerRatioFit[i][j]->FixParameter( 0, 0 );
         triggerRatioFit[i][j]->FixParameter( 2, 0 );
-        triggerRatioFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerRatioFit[i][j]->FixParameter( 5, jetHadron::pi );
         triggerRatioFit[i][j]->SetParameter( 3, 0.2 );
         triggerRatioFit[i][j]->SetParameter( 6, 0.2 );
         triggerRatioFit[i][j]->SetLineColor( kBlack );
@@ -979,7 +979,7 @@ int main( int argc, const char** argv) {
         recoilRatioFit[i][j] = new TF1(recoilRatioFitName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilRatioFit[i][j]->FixParameter( 0, 0 );
         recoilRatioFit[i][j]->FixParameter( 2, 0 );
-        recoilRatioFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilRatioFit[i][j]->FixParameter( 5, jetHadron::pi );
         recoilRatioFit[i][j]->SetParameter( 3, 0.2 );
         recoilRatioFit[i][j]->SetParameter( 6, 0.2 );
         recoilRatioFit[i][j]->SetLineColor( kBlack );
@@ -1013,7 +1013,7 @@ int main( int argc, const char** argv) {
         triggerSubFit[i][j] = new TF1(subTriggerName.c_str(), phiForm.c_str(), phiMin, phiMax);
         triggerSubFit[i][j]->FixParameter( 0, 0 );
         triggerSubFit[i][j]->FixParameter( 2, 0 );
-        triggerSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        triggerSubFit[i][j]->FixParameter( 5, jetHadron::pi );
         triggerSubFit[i][j]->SetParameter( 3, 0.2 );
         triggerSubFit[i][j]->SetParameter( 6, 0.2 );
         triggerSubFit[i][j]->SetLineColor( i+1 );
@@ -1021,7 +1021,7 @@ int main( int argc, const char** argv) {
         recoilSubFit[i][j] = new TF1(subRecoilName.c_str(), phiForm.c_str(), phiMin, phiMax);
         recoilSubFit[i][j]->FixParameter( 0, 0 );
         recoilSubFit[i][j]->FixParameter( 2, 0 );
-        recoilSubFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+        recoilSubFit[i][j]->FixParameter( 5, jetHadron::pi );
         recoilSubFit[i][j]->SetParameter( 3, 0.2 );
         recoilSubFit[i][j]->SetParameter( 6, 0.2 );
         recoilSubFit[i][j]->SetLineColor( i+1 );
@@ -1030,62 +1030,62 @@ int main( int argc, const char** argv) {
         triggerSubtracted[i][j]->Fit( subTriggerName.c_str(), "RMI" );
         recoilSubtracted[i][j]->Fit( subRecoilName.c_str(), "RMI" );
         
-        triggerLargeYieldNear[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerLargeYieldNear[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerLargeYieldNearErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(1);
         triggerLargeWidthNear[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(3);
         triggerLargeWidthNearErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(3);
         
-        triggerSmallYieldNear[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerSmallYieldNear[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerSmallYieldNearErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(1);
         triggerSmallWidthNear[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(3);
         triggerSmallWidthNearErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(3);
         
-        recoilLargeYieldNear[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilLargeYieldNear[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilLargeYieldNearErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(1);
         recoilLargeWidthNear[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(3);
         recoilLargeWidthNearErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(3);
         
-        recoilSmallYieldNear[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilSmallYieldNear[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilSmallYieldNearErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(1);
         recoilSmallWidthNear[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(3);
         recoilSmallWidthNearErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(3);
         
-        triggerLargeYieldAway[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        triggerLargeYieldAway[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(triggerLargeAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
         triggerLargeYieldAwayErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(4);
         triggerLargeWidthAway[i][j] = triggerLargeAjdPhiFit[i][j]->GetParameter(6);
         triggerLargeWidthAwayErr[i][j] = triggerLargeAjdPhiFit[i][j]->GetParError(6);
         
-        triggerSmallYieldAway[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        triggerSmallYieldAway[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(triggerSmallAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
         triggerSmallYieldAwayErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(4);
         triggerSmallWidthAway[i][j] = triggerSmallAjdPhiFit[i][j]->GetParameter(6);
         triggerSmallWidthAwayErr[i][j] = triggerSmallAjdPhiFit[i][j]->GetParError(6);
         
-        recoilLargeYieldAway[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        recoilLargeYieldAway[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(recoilLargeAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
         recoilLargeYieldAwayErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(4);
         recoilLargeWidthAway[i][j] = recoilLargeAjdPhiFit[i][j]->GetParameter(6);
         recoilLargeWidthAwayErr[i][j] = recoilLargeAjdPhiFit[i][j]->GetParError(6);
         
-        recoilSmallYieldAway[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        recoilSmallYieldAway[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(recoilSmallAjdPhiFit[i][j]->GetParameter(6))/ptBinWidth[j];
         recoilSmallYieldAwayErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(4);
         recoilSmallWidthAway[i][j] = recoilSmallAjdPhiFit[i][j]->GetParameter(6);
         recoilSmallWidthAwayErr[i][j] = recoilSmallAjdPhiFit[i][j]->GetParError(6);
         
-        triggerSubYieldNear[i][j] = triggerSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(triggerSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        triggerSubYieldNear[i][j] = triggerSubFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(triggerSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
         triggerSubYieldNearErr[i][j] = triggerSubFit[i][j]->GetParError(1);
         triggerSubWidthNear[i][j] = triggerSubFit[i][j]->GetParameter(3);
         triggerSubWidthNearErr[i][j] = triggerSubFit[i][j]->GetParError(3);
         
-        triggerSubYieldAway[i][j] = triggerSubFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(triggerSubFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        triggerSubYieldAway[i][j] = triggerSubFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(triggerSubFit[i][j]->GetParameter(6))/ptBinWidth[j];
         triggerSubYieldAwayErr[i][j] = triggerSubFit[i][j]->GetParError(4);
         triggerSubWidthAway[i][j] = triggerSubFit[i][j]->GetParameter(6);
         triggerSubWidthAwayErr[i][j] = triggerSubFit[i][j]->GetParError(6);
 
-        recoilSubYieldNear[i][j] = recoilSubFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(recoilSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
+        recoilSubYieldNear[i][j] = recoilSubFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(recoilSubFit[i][j]->GetParameter(3))/ptBinWidth[j];
         recoilSubYieldNearErr[i][j] = recoilSubFit[i][j]->GetParError(1);
         recoilSubWidthNear[i][j] = recoilSubFit[i][j]->GetParameter(3);
         recoilSubWidthNearErr[i][j] = recoilSubFit[i][j]->GetParError(3);
         
-        recoilSubYieldAway[i][j] = recoilSubFit[i][j]->GetParameter(4)*sqrt(2*corrAnalysis::pi)*fabs(recoilSubFit[i][j]->GetParameter(6))/ptBinWidth[j];
+        recoilSubYieldAway[i][j] = recoilSubFit[i][j]->GetParameter(4)*sqrt(2*jetHadron::pi)*fabs(recoilSubFit[i][j]->GetParameter(6))/ptBinWidth[j];
         recoilSubYieldAwayErr[i][j] = recoilSubFit[i][j]->GetParError(4);
         recoilSubWidthAway[i][j] = recoilSubFit[i][j]->GetParameter(6);
         recoilSubWidthAwayErr[i][j] = recoilSubFit[i][j]->GetParError(6);
@@ -1415,12 +1415,12 @@ int main( int argc, const char** argv) {
   int etaNearMaxBin = etaNearMinBin + 7;
   int etaFarMinBin = etaNearMaxBin + 1;
   int etaFarMaxBin = etaFarMinBin + 3;
-  double phiMin = -corrAnalysis::pi/2.0;
+  double phiMin = -jetHadron::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
-  double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
-  double phiMax = 3.0*corrAnalysis::pi/2.0;
-  double phiDifMax = corrAnalysis::pi/2.0;
+  double phiMaxFar = 3.0*jetHadron::pi/2.0;
+  double phiMax = 3.0*jetHadron::pi/2.0;
+  double phiDifMax = jetHadron::pi/2.0;
   
   
   // going to get the 1D projections
@@ -1701,13 +1701,13 @@ int main( int argc, const char** argv) {
       
       TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiInitFit->FixParameter( 2, 0 );
-      leadPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      leadPhiInitFit->FixParameter( 5, jetHadron::pi );
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
       TF1* leadPhiSmallInitFit = new TF1( dPhiLeadNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiSmallInitFit->FixParameter( 2, 0 );
-      leadPhiSmallInitFit->FixParameter( 5, corrAnalysis::pi );
+      leadPhiSmallInitFit->FixParameter( 5, jetHadron::pi );
       leadPhiSmallInitFit->SetParameter( 3, 0.2 );
       leadPhiSmallInitFit->SetParameter( 6, 0.2 );
       
@@ -1721,13 +1721,13 @@ int main( int argc, const char** argv) {
       
       TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
-      subPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      subPhiInitFit->FixParameter( 5, jetHadron::pi );
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
       TF1* subPhiSmallInitFit = new TF1( dPhiSubNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiSmallInitFit->FixParameter( 2, 0 );
-      subPhiSmallInitFit->FixParameter( 5, corrAnalysis::pi );
+      subPhiSmallInitFit->FixParameter( 5, jetHadron::pi );
       subPhiSmallInitFit->SetParameter( 3, 0.2 );
       subPhiSmallInitFit->SetParameter( 6, 0.2 );
       
@@ -1822,8 +1822,8 @@ int main( int argc, const char** argv) {
       else {
         
         // we have to find the integral depending on small or large aj
-        double ajHighCount = nEvents[i]->Integral( 1, 1, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
-        double ajLowCount = nEvents[i]->Integral( 2, 2, 1, corrAnalysis::binsCentrality, 1, corrAnalysis::binsVz );
+        double ajHighCount = nEvents[i]->Integral( 1, 1, 1, jetHadron::binsCentrality, 1, jetHadron::binsVz );
+        double ajLowCount = nEvents[i]->Integral( 2, 2, 1, jetHadron::binsCentrality, 1, jetHadron::binsVz );
         
         dPhiLeadLarge[i][j]->Scale( 1.0 / dPhiLeadSmall[i][j]->GetXaxis()->GetBinWidth(1) );
         dPhiLeadLarge[i][j]->Scale( 1.0 / ajHighCount );
@@ -1912,14 +1912,14 @@ int main( int argc, const char** argv) {
       
       leadPhiFitLarge[i][j] = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiFitLarge[i][j]->FixParameter( 2, 0 );
-      leadPhiFitLarge[i][j]->FixParameter( 5, corrAnalysis::pi );
+      leadPhiFitLarge[i][j]->FixParameter( 5, jetHadron::pi );
       leadPhiFitLarge[i][j]->SetParameter( 3, 0.2 );
       leadPhiFitLarge[i][j]->SetParameter( 6, 0.2 );
       leadPhiFitLarge[i][j]->SetLineColor( i + 1 );
       
       leadPhiFitSmall[i][j] = new TF1( dPhiLeadNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiFitSmall[i][j]->FixParameter( 2, 0 );
-      leadPhiFitSmall[i][j]->FixParameter( 5, corrAnalysis::pi );
+      leadPhiFitSmall[i][j]->FixParameter( 5, jetHadron::pi );
       leadPhiFitSmall[i][j]->SetParameter( 3, 0.2 );
       leadPhiFitSmall[i][j]->SetParameter( 6, 0.2 );
       leadPhiFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
@@ -1936,14 +1936,14 @@ int main( int argc, const char** argv) {
       
       subPhiFitLarge[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiFitLarge[i][j]->FixParameter( 2, 0 );
-      subPhiFitLarge[i][j]->FixParameter( 5, corrAnalysis::pi );
+      subPhiFitLarge[i][j]->FixParameter( 5, jetHadron::pi );
       subPhiFitLarge[i][j]->SetParameter( 3, 0.2 );
       subPhiFitLarge[i][j]->SetParameter( 6, 0.2 );
       subPhiFitLarge[i][j]->SetLineColor( i + 1 );
       
       subPhiFitSmall[i][j] = new TF1( dPhiSubNameSmall.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiFitSmall[i][j]->FixParameter( 2, 0 );
-      subPhiFitSmall[i][j]->FixParameter( 5, corrAnalysis::pi );
+      subPhiFitSmall[i][j]->FixParameter( 5, jetHadron::pi );
       subPhiFitSmall[i][j]->SetParameter( 3, 0.2 );
       subPhiFitSmall[i][j]->SetParameter( 6, 0.2 );
       subPhiFitSmall[i][j]->SetLineColor( i + 1 + nFiles );
@@ -2066,7 +2066,7 @@ int main( int argc, const char** argv) {
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiLeadNearLarge[j][i]->SetTitle( outTitle.c_str() );
-        dPhiLeadNearLarge[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
+        dPhiLeadNearLarge[j][i]->GetXaxis()->SetRangeUser(-jetHadron::pi/2.0, jetHadron::pi/2.0);
         dPhiLeadNearLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNearLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiLeadNearLarge[j][i]->Draw();
@@ -2160,7 +2160,7 @@ int main( int argc, const char** argv) {
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNearLarge[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSubNearLarge[j][i]->GetXaxis()->SetRangeUser(-corrAnalysis::pi/2.0, corrAnalysis::pi/2.0);
+        dPhiSubNearLarge[j][i]->GetXaxis()->SetRangeUser(-jetHadron::pi/2.0, jetHadron::pi/2.0);
         dPhiSubNearLarge[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNearLarge[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSubNearLarge[j][i]->Draw();
@@ -2316,54 +2316,54 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < nPtBins; ++j ) {
       
       // for default
-      leadPhiYieldLarge[i][j] = leadPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiYieldLarge[i][j] = leadPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiErrorLarge[i][j] = leadPhiFitLarge[i][j]->GetParError(1);
       leadPhiWidthLarge[i][j] = fabs(leadPhiFitLarge[i][j]->GetParameter(3));
       leadPhiWidthErrorLarge[i][j] = leadPhiFitLarge[i][j]->GetParError(3);
-      leadPhiDifYieldLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiDifYieldLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiDifErrorLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParError(1);
       leadPhiDifWidthLarge[i][j] = fabs(leadPhiDifFitLarge[i][j]->GetParameter(3));
       leadPhiDifWidthErrorLarge[i][j] = leadPhiDifFitLarge[i][j]->GetParError(3);
-      leadEtaYieldLarge[i][j] = leadEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadEtaYieldLarge[i][j] = leadEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       leadEtaErrorLarge[i][j] = leadEtaFitLarge[i][j]->GetParError(1);
       leadEtaWidthLarge[i][j] = fabs(leadEtaFitLarge[i][j]->GetParameter(3));
       leadEtaWidthErrorLarge[i][j] = leadEtaFitLarge[i][j]->GetParError(3);
-      subPhiYieldLarge[i][j] = subPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiYieldLarge[i][j] = subPhiFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiErrorLarge[i][j] = subPhiFitLarge[i][j]->GetParError(1);
       subPhiWidthLarge[i][j] = fabs(subPhiFitLarge[i][j]->GetParameter(3));
       subPhiWidthErrorLarge[i][j] = subPhiFitLarge[i][j]->GetParError(3);
-      subPhiDifYieldLarge[i][j] = subPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiDifYieldLarge[i][j] = subPhiDifFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiDifFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiDifErrorLarge[i][j] = subPhiDifFitLarge[i][j]->GetParError(1);
       subPhiDifWidthLarge[i][j] = fabs(subPhiDifFitLarge[i][j]->GetParameter(3));
       subPhiDifWidthErrorLarge[i][j] = subPhiDifFitLarge[i][j]->GetParError(3);
-      subEtaYieldLarge[i][j] = subEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
+      subEtaYieldLarge[i][j] = subEtaFitLarge[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subEtaFitLarge[i][j]->GetParameter(3))/ptBinWidth[j];
       subEtaErrorLarge[i][j] = subEtaFitLarge[i][j]->GetParError(1);
       subEtaWidthLarge[i][j] = fabs(subEtaFitLarge[i][j]->GetParameter(3));
       subEtaWidthErrorLarge[i][j] = subEtaFitLarge[i][j]->GetParError(3);
       
       // if we split on aj we have this as well....
       if ( ajSplit[i] ) {
-        leadPhiYieldSmall[i][j] = leadPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadPhiYieldSmall[i][j] = leadPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         leadPhiErrorSmall[i][j] = leadPhiFitSmall[i][j]->GetParError(1);
         leadPhiWidthSmall[i][j] = fabs(leadPhiFitSmall[i][j]->GetParameter(3));
         leadPhiWidthErrorSmall[i][j] = leadPhiFitSmall[i][j]->GetParError(3);
-        leadPhiDifYieldSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadPhiDifYieldSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         leadPhiDifErrorSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParError(1);
         leadPhiDifWidthSmall[i][j] = fabs(leadPhiDifFitSmall[i][j]->GetParameter(3));
         leadPhiDifWidthErrorSmall[i][j] = leadPhiDifFitSmall[i][j]->GetParError(3);
-        leadEtaYieldSmall[i][j] = leadEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        leadEtaYieldSmall[i][j] = leadEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         leadEtaErrorSmall[i][j] = leadEtaFitSmall[i][j]->GetParError(1);
         leadEtaWidthSmall[i][j] = fabs(leadEtaFitSmall[i][j]->GetParameter(3));
         leadEtaWidthErrorSmall[i][j] = leadEtaFitSmall[i][j]->GetParError(3);
-        subPhiYieldSmall[i][j] = subPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subPhiYieldSmall[i][j] = subPhiFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         subPhiErrorSmall[i][j] = subPhiFitSmall[i][j]->GetParError(1);
         subPhiWidthSmall[i][j] = fabs(subPhiFitSmall[i][j]->GetParameter(3));
         subPhiWidthErrorSmall[i][j] = subPhiFitSmall[i][j]->GetParError(3);
-        subPhiDifYieldSmall[i][j] = subPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subPhiDifYieldSmall[i][j] = subPhiDifFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiDifFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         subPhiDifErrorSmall[i][j] = subPhiDifFitSmall[i][j]->GetParError(1);
         subPhiDifWidthSmall[i][j] = fabs(subPhiDifFitSmall[i][j]->GetParameter(3));
         subPhiDifWidthErrorSmall[i][j] = subPhiDifFitSmall[i][j]->GetParError(3);
-        subEtaYieldSmall[i][j] = subEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
+        subEtaYieldSmall[i][j] = subEtaFitSmall[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subEtaFitSmall[i][j]->GetParameter(3))/ptBinWidth[j];
         subEtaErrorSmall[i][j] = subEtaFitSmall[i][j]->GetParError(1);
         subEtaWidthSmall[i][j] = fabs(subEtaFitSmall[i][j]->GetParameter(3));
         subEtaWidthErrorSmall[i][j] = subEtaFitSmall[i][j]->GetParError(3);

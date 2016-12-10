@@ -8,7 +8,7 @@
 #ifndef HISTOGRAMS_HH
 #define HISTOGRAMS_HH
 
-namespace corrAnalysis {
+namespace jetHadron {
  
   // Histogram holder
   // ----------------

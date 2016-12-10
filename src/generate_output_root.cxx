@@ -102,10 +102,10 @@ int generate_output_root() {
   
   
   // First check to make sure we're located properly
-  //std::string currentDirectory = corrAnalysis::getPWD( );
+  //std::string currentDirectory = jetHadron::getPWD( );
   
   // If we arent in the analysis directory, exit
-//  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
+//  if ( !(jetHadron::HasEnding ( currentDirectory, "jet_hadron_corr" ) || jetHadron::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
 //    std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
 //    return -1;
 //  }
@@ -165,10 +165,10 @@ int generate_output_root() {
   TH1D* hVz[ nFiles ];
   TH3D* corrHist[ nFiles ];
   TH3D* mixHist[ nFiles ];
-  TH3D* corrCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
-  TH3D* subCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
-  TH3D* mixCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
-  TH3D* mixSubCentVz[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz];
+  TH3D* corrCentVz[nFiles][jetHadron::binsCentrality][jetHadron::binsVz];
+  TH3D* subCentVz[nFiles][jetHadron::binsCentrality][jetHadron::binsVz];
+  TH3D* mixCentVz[nFiles][jetHadron::binsCentrality][jetHadron::binsVz];
+  TH3D* mixSubCentVz[nFiles][jetHadron::binsCentrality][jetHadron::binsVz];
   TH1D* recombinedPtLead[nFiles];
   TH1D* recombinedPtSub[nFiles];
   for ( int i = 0; i < nFiles; ++i ) {
@@ -176,8 +176,8 @@ int generate_output_root() {
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
     std::string ptSubName = analysisNames[i] + "_pt_sub";
     
-    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
-    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
+    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
+    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
     
   }
   
@@ -198,8 +198,8 @@ int generate_output_root() {
     mixHist[i]->SetName( mixhistBaseName.c_str() );
 
     // pull in the cent/vz diffentiated histograms
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j )
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         // make the initial name
         TString corrDifInitName = "lead_cent_"; corrDifInitName += j;
         TString subDifInitName = "sub_cent_"; subDifInitName += j;
@@ -251,15 +251,15 @@ int generate_output_root() {
   
   
   // setup for 2d projections along pt axis
-  TH2D* corrCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
-  TH2D* subCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
-  TH2D* mixCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
-  TH2D* mixSubCentVzPt[nFiles][corrAnalysis::binsCentrality][corrAnalysis::binsVz][nPtBins];
+  TH2D* corrCentVzPt[nFiles][jetHadron::binsCentrality][jetHadron::binsVz][nPtBins];
+  TH2D* subCentVzPt[nFiles][jetHadron::binsCentrality][jetHadron::binsVz][nPtBins];
+  TH2D* mixCentVzPt[nFiles][jetHadron::binsCentrality][jetHadron::binsVz][nPtBins];
+  TH2D* mixSubCentVzPt[nFiles][jetHadron::binsCentrality][jetHadron::binsVz][nPtBins];
   
   // now get the pt projections
   for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      for ( int k = 0; k < corrAnalysis::binsVz; ++ k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++ k ) {
         for ( int l = 0; l < nPtBins; ++l ) {
           
           corrCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
@@ -279,8 +279,8 @@ int generate_output_root() {
   
   // scale the mixing histograms
   for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         for ( int l = 0; l < nPtBins; ++l ) {
           mixCentVzPt[i][j][k][l]->Scale( 1.0/mixCentVzPt[i][j][k][l]->GetMaximum() );
           mixSubCentVzPt[i][j][k][l]->Scale( 1.0/mixSubCentVzPt[i][j][k][l]->GetMaximum() );
@@ -311,18 +311,18 @@ int generate_output_root() {
       TString preName = "pre_" + analysisNames[i] + " " + ptBinString[l];
       TString subPreName = "pre_" + analysisNames[i] + "_sub " + ptBinString[l];
       
-      recombinedCorr[i][l] = new TH2D( corrName, corrName, corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedCorr[i][l] = new TH2D( corrName, corrName, jetHadron::binsEta, jetHadron::dEtaLowEdge, jetHadron::dEtaHighEdge, jetHadron::binsPhi, jetHadron::phiLowEdge, jetHadron::phiHighEdge );
       
-      recombinedSub[i][l] = new TH2D( subName, subName, corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedSub[i][l] = new TH2D( subName, subName, jetHadron::binsEta, jetHadron::dEtaLowEdge, jetHadron::dEtaHighEdge, jetHadron::binsPhi, jetHadron::phiLowEdge, jetHadron::phiHighEdge );
       
-      recombinedPre[i][l] = new TH2D( preName, preName, corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedPre[i][l] = new TH2D( preName, preName, jetHadron::binsEta, jetHadron::dEtaLowEdge, jetHadron::dEtaHighEdge, jetHadron::binsPhi, jetHadron::phiLowEdge, jetHadron::phiHighEdge );
       
-      recombinedSubPre[i][l] = new TH2D( subPreName, subPreName, corrAnalysis::binsEta, corrAnalysis::dEtaLowEdge, corrAnalysis::dEtaHighEdge, corrAnalysis::binsPhi, corrAnalysis::phiLowEdge, corrAnalysis::phiHighEdge );
+      recombinedSubPre[i][l] = new TH2D( subPreName, subPreName, jetHadron::binsEta, jetHadron::dEtaLowEdge, jetHadron::dEtaHighEdge, jetHadron::binsPhi, jetHadron::phiLowEdge, jetHadron::phiHighEdge );
       
       if ( l <= 2 ) {
       
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( mixCentVzPt[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -345,8 +345,8 @@ int generate_output_root() {
       }
       
       else {
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( mixCentVzPt[i][j][k][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -382,12 +382,12 @@ int generate_output_root() {
   int etaNearMaxBin = etaNearMinBin + 7;
   int etaFarMinBin = etaNearMaxBin + 1;
   int etaFarMaxBin = etaFarMinBin + 3;
-  double phiMin = -corrAnalysis::pi/2.0;
+  double phiMin = -jetHadron::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
-  double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
-  double phiMax = 3.0*corrAnalysis::pi/2.0;
-  double phiDifMax = corrAnalysis::pi/2.0;
+  double phiMaxFar = 3.0*jetHadron::pi/2.0;
+  double phiMax = 3.0*jetHadron::pi/2.0;
+  double phiDifMax = jetHadron::pi/2.0;
   
   
   // going to get the 1D projections
@@ -510,7 +510,7 @@ int generate_output_root() {
       
       TF1* leadPhiInitFit = new TF1( dPhiLeadName, phiForm, phiMin, phiDifMax );
       leadPhiInitFit->FixParameter( 2, 0 );
-      leadPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      leadPhiInitFit->FixParameter( 5, jetHadron::pi );
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
@@ -520,7 +520,7 @@ int generate_output_root() {
       
       TF1* subPhiInitFit = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
-      subPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      subPhiInitFit->FixParameter( 5, jetHadron::pi );
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
@@ -596,7 +596,7 @@ int generate_output_root() {
     
       leadPhiFit[i][j] = new TF1( dPhiLeadName, phiForm, phiMin, phiMax );
       leadPhiFit[i][j]->FixParameter( 2, 0 );
-      leadPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+      leadPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
       leadPhiFit[i][j]->SetParameter( 3, 0.2 );
       leadPhiFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiFit[i][j]->SetLineColor( i + 1 );
@@ -608,7 +608,7 @@ int generate_output_root() {
       
       subPhiFit[i][j] = new TF1( dPhiSubName, phiForm, phiMin, phiMax );
       subPhiFit[i][j]->FixParameter( 2, 0 );
-      subPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+      subPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
       subPhiFit[i][j]->SetParameter( 3, 0.2 );
       subPhiFit[i][j]->SetParameter( 6, 0.2 );
       subPhiFit[i][j]->SetLineColor( i + 1 );
@@ -692,7 +692,7 @@ int generate_output_root() {
       if ( j == 0 ) {
         TString outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiLeadNear[j][i]->SetTitle( outTitle );
-        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
+        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -jetHadron::pi/2.0, jetHadron::pi/2.0 );
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiLeadNear[j][i]->DrawCopy();
@@ -768,7 +768,7 @@ int generate_output_root() {
       if ( j == 0 ) {
         TString outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNear[j][i]->SetTitle( outTitle );
-        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
+        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -jetHadron::pi/2.0, jetHadron::pi/2.0 );
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSubNear[j][i]->DrawCopy();
@@ -832,27 +832,27 @@ int generate_output_root() {
   double subEtaWidthError[nFiles][nPtBins];
   for ( int i = 0; i < nFiles; ++i ) {
     for ( int j = 0; j < nPtBins; ++j ) {
-      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiWidth[i][j] = fabs(leadPhiFit[i][j]->GetParameter(3));
       leadPhiWidthError[i][j] = leadPhiFit[i][j]->GetParError(3);
-      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiDifError[i][j] = leadPhiDifFit[i][j]->GetParError(1);
       leadPhiDifWidth[i][j] = fabs(leadPhiDifFit[i][j]->GetParameter(3));
       leadPhiDifWidthError[i][j] = leadPhiDifFit[i][j]->GetParError(3);
-      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
       leadEtaWidth[i][j] = fabs(leadEtaFit[i][j]->GetParameter(3));
       leadEtaWidthError[i][j] = leadEtaFit[i][j]->GetParError(3);
-      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
       subPhiWidth[i][j] = fabs(subPhiFit[i][j]->GetParameter(3));
       subPhiWidthError[i][j] = subPhiFit[i][j]->GetParError(3);
-      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
       subPhiDifWidth[i][j] = fabs(subPhiDifFit[i][j]->GetParameter(3));
       subPhiDifWidthError[i][j] = subPhiDifFit[i][j]->GetParError(3);
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
       subEtaWidth[i][j] = fabs(subEtaFit[i][j]->GetParameter(3));
       subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);

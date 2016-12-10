@@ -7,7 +7,7 @@
 #include "corrParameters.hh"
 #include "histograms.hh"
 
-namespace corrAnalysis {
+namespace jetHadron {
 	
 	// -------------------------
 	// IO/OS Manip functionality

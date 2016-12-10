@@ -123,10 +123,10 @@ namespace patch {
 int main ( int argc, const char** argv) {
   
   // First check to make sure we're located properly
-  std::string currentDirectory = corrAnalysis::getPWD( );
+  std::string currentDirectory = jetHadron::getPWD( );
   
   // If we arent in the analysis directory, exit
-  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
+  if ( !(jetHadron::HasEnding ( currentDirectory, "jet_hadron_corr" ) || jetHadron::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
     std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
     return -1;
   }
@@ -219,7 +219,7 @@ int main ( int argc, const char** argv) {
   
   // Now we'll get the analysis variables from the directory name
   // ( if its in the proper format )
-  std::string analysisString = corrAnalysis::GetDirFromPath( inputDir );
+  std::string analysisString = jetHadron::GetDirFromPath( inputDir );
 
   // set kinematic variables the analysis
   // ----------------------------------
@@ -230,7 +230,7 @@ int main ( int argc, const char** argv) {
   bool useEfficiency, matchTrigger;
   
   // set the variables
-  int extractResult = corrAnalysis::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, hardConstPt, useEfficiency, matchTrigger, binsEta, binsPhi );
+  int extractResult = jetHadron::GetVarsFromString( analysisType, analysisString, leadJetPtMin, subJetPtMin, jetPtMax, jetRadius, hardConstPt, useEfficiency, matchTrigger, binsEta, binsPhi );
   if (  extractResult == 1 )
     __OUT("Successfully parsed analysis variables")
   else if ( extractResult == 0 )
@@ -262,12 +262,12 @@ int main ( int argc, const char** argv) {
     }
   
   // initialize histogram container
-  corrAnalysis::histograms* histograms = new corrAnalysis::histograms( analysisType, binsEta, binsPhi );
+  jetHadron::histograms* histograms = new jetHadron::histograms( analysisType, binsEta, binsPhi );
   histograms->Init();
   
   // we need to pick a minimum jet pt in case
   // we use HT events
-  double mixingJetPtMax = corrAnalysis::GetMixEventJetPtMax( isMixMB, analysisType, leadJetPtMin );
+  double mixingJetPtMax = jetHadron::GetMixEventJetPtMax( isMixMB, analysisType, leadJetPtMin );
   
   // Initialize the chain
   // Build our input now
@@ -275,9 +275,9 @@ int main ( int argc, const char** argv) {
   
   // check to see if the input is in .root or .list
   // Check to see if the input is a .root file or a .txt
-  bool inputIsRoot = corrAnalysis::HasEnding( mixEventsFile.c_str(), ".root" );
-  bool inputIsTxt  = corrAnalysis::HasEnding( mixEventsFile.c_str(), ".txt"  );
-  bool inputIsList = corrAnalysis::HasEnding( mixEventsFile.c_str(), ".list" );
+  bool inputIsRoot = jetHadron::HasEnding( mixEventsFile.c_str(), ".root" );
+  bool inputIsTxt  = jetHadron::HasEnding( mixEventsFile.c_str(), ".txt"  );
+  bool inputIsList = jetHadron::HasEnding( mixEventsFile.c_str(), ".list" );
   
   // If its a recognized file type, build the chain
   // If its not recognized, exit
@@ -293,10 +293,10 @@ int main ( int argc, const char** argv) {
   // --------------------------------------
   TStarJetPicoReader reader;
   
-  if ( corrAnalysis::BeginsWith( analysisType, "pp"  ) )
-    corrAnalysis::InitReader( reader, chain, "pp", corrAnalysis::triggerAll, nMixTotal );
+  if ( jetHadron::BeginsWith( analysisType, "pp"  ) )
+    jetHadron::InitReader( reader, chain, "pp", jetHadron::triggerAll, nMixTotal );
   else
-    corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, nMixTotal );
+    jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, nMixTotal );
   
   
   // Data classes
@@ -310,9 +310,9 @@ int main ( int argc, const char** argv) {
   // Inner vector = centrality bins -
   // Outer vector = vz bins -
   std::vector<std::vector<std::vector<unsigned> > > mixing_events;
-  for (int i = 0; i < corrAnalysis::binsVz; ++i ) {
+  for (int i = 0; i < jetHadron::binsVz; ++i ) {
     std::vector<std::vector<unsigned> > tmp_vec;
-    for (int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
+    for (int j = 0; j < jetHadron::binsCentrality; ++j ) {
       std::vector<unsigned> tmp_set;
       tmp_vec.push_back(tmp_set);
     }
@@ -329,24 +329,24 @@ int main ( int argc, const char** argv) {
   
   // clustering definitions
   // First: used for the analysis - anti-kt with radius jetRadius
-  fastjet::JetDefinition 	analysisDefinition = corrAnalysis::AnalysisJetDefinition( jetRadius );
+  fastjet::JetDefinition 	analysisDefinition = jetHadron::AnalysisJetDefinition( jetRadius );
   
   // Build Selectors for the jet finding
   // -----------------------------------
   // Constituent selectors
-  fastjet::Selector selectorLowPtCons  = corrAnalysis::SelectLowPtConstituents( corrAnalysis::maxTrackRap, corrAnalysis::trackMinPt );
-  fastjet::Selector selectorHighPtCons = corrAnalysis::SelectHighPtConstituents( corrAnalysis::maxTrackRap, hardConstPt );
+  fastjet::Selector selectorLowPtCons  = jetHadron::SelectLowPtConstituents( jetHadron::maxTrackRap, jetHadron::trackMinPt );
+  fastjet::Selector selectorHighPtCons = jetHadron::SelectHighPtConstituents( jetHadron::maxTrackRap, hardConstPt );
   
   // initial jet selector to find if there is a high momentum jet
   // only used if the data is HT triggered
   // looks for jets with pt > 0.8*jetPtMin from the analysis
-  fastjet::Selector selectorFindHTJet = corrAnalysis::SelectJetCandidates( corrAnalysis::maxTrackRap, jetRadius, mixingJetPtMax, jetPtMax );
+  fastjet::Selector selectorFindHTJet = jetHadron::SelectJetCandidates( jetHadron::maxTrackRap, jetRadius, mixingJetPtMax, jetPtMax );
   
   // make ktEfficiency obj for pt-eta
   // Efficiency corrections
   // Only used if efficiency corrections were
   // used in the correlation analysis
-  ktTrackEff efficiencyCorrection( corrAnalysis::y7EfficiencyFile );
+  ktTrackEff efficiencyCorrection( jetHadron::y7EfficiencyFile );
   
   // Now we need to load the dijet trees
   // -----------------------------------
@@ -411,7 +411,7 @@ int main ( int argc, const char** argv) {
   
   
   // collect info on how many events there are to mix with
-  TH2D* hCentVz = new TH2D( "cent_vz", "Mixing Event Count;centrality;vz", corrAnalysis::binsCentrality, -0.5, corrAnalysis::binsCentrality-0.5, corrAnalysis::binsVz, -0.5, corrAnalysis::binsVz-0.5 );
+  TH2D* hCentVz = new TH2D( "cent_vz", "Mixing Event Count;centrality;vz", jetHadron::binsCentrality, -0.5, jetHadron::binsCentrality-0.5, jetHadron::binsVz, -0.5, jetHadron::binsVz-0.5 );
 
   
   // Now loop over events and store their IDs in the proper
@@ -436,14 +436,14 @@ int main ( int argc, const char** argv) {
       
       // Vz position and corresponding bin
       double vertexZ = header->GetPrimaryVertexZ();
-      int vzBin = corrAnalysis::GetVzBin( vertexZ );
+      int vzBin = jetHadron::GetVzBin( vertexZ );
       
       // Get the centrality information
       // Find the reference centrality
       // (for pp, set to zero by default )
       int gRefMult = header->GetGReferenceMultiplicity();
-      int refCentrality = corrAnalysis::GetReferenceCentrality( gRefMult );
-      if ( corrAnalysis::BeginsWith( analysisType, "pp") )
+      int refCentrality = jetHadron::GetReferenceCentrality( gRefMult );
+      if ( jetHadron::BeginsWith( analysisType, "pp") )
         refCentrality = 0;
       
       // Now we need to check if it has a hard jet in it
@@ -476,7 +476,7 @@ int main ( int argc, const char** argv) {
       std::vector<fastjet::PseudoJet> HiResult = fastjet::sorted_by_pt( selectorFindHTJet ( csaHi.inclusive_jets() ) );
       
       // check to see if the event needs to be discarded
-      if ( !corrAnalysis::UseEventInMixing( analysisType, isMixMB, HiResult, gRefMult, vzBin ) )
+      if ( !jetHadron::UseEventInMixing( analysisType, isMixMB, HiResult, gRefMult, vzBin ) )
         continue;
      
       // Now, we know its an event we will use, so fill it in
@@ -496,8 +496,8 @@ int main ( int argc, const char** argv) {
   // Quick check for the size of these arrays
   // Remove cent/vz bins that have too few events
   __OUT("Checking each Vz/centrality bin for the minimum number of entries")
-  for ( int i = 0; i < corrAnalysis::binsVz; ++i )
-    for ( int j = 6; j < corrAnalysis::binsCentrality; ++j ) {
+  for ( int i = 0; i < jetHadron::binsVz; ++i )
+    for ( int j = 6; j < jetHadron::binsCentrality; ++j ) {
       if ( mixing_events[i][j].size() < nEventsToMix*1.2 ) {
         std::string outMessage = "Removing bin ";
         outMessage += patch::to_string(i);
@@ -530,7 +530,7 @@ int main ( int argc, const char** argv) {
     
     // get the proper cent/vz bin
     std::vector< unsigned > randomizedEventID;
-    if ( corrAnalysis::BeginsWith( analysisType, "pp") )
+    if ( jetHadron::BeginsWith( analysisType, "pp") )
       randomizedEventID = mixing_events[vzBranch][0];
     else
       randomizedEventID = mixing_events[vzBranch][centBranch];
@@ -549,7 +549,7 @@ int main ( int argc, const char** argv) {
       
       // count event
       // first set any dummy variables necessary
-      if ( corrAnalysis::BeginsWith( analysisType, "pp") )
+      if ( jetHadron::BeginsWith( analysisType, "pp") )
         centBranch = 0;
       if ( !requireDijets )
         ajBranch = 0.01;
@@ -557,7 +557,7 @@ int main ( int argc, const char** argv) {
       
       // get the reference centrality definition used by
       // the track efficiency class
-      int refCentAlt = corrAnalysis::GetReferenceCentralityAlt( centBranch );
+      int refCentAlt = jetHadron::GetReferenceCentralityAlt( centBranch );
       
       // get event headers
       event = reader.GetEvent();
@@ -566,7 +566,7 @@ int main ( int argc, const char** argv) {
       
       // first convert to pseudojets
       particles.clear();
-      corrAnalysis::ConvertTStarJetVector( container, particles );
+      jetHadron::ConvertTStarJetVector( container, particles );
       
       // now do the correlation
       if ( requireDijets ) {
@@ -584,13 +584,13 @@ int main ( int argc, const char** argv) {
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
           double assocEfficiency = 1.0;
-          if ( useEfficiency && !corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          if ( useEfficiency && !jetHadron::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
           }
-          else if ( useEfficiency && corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
+          else if ( useEfficiency && jetHadron::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
           }
           
-          corrAnalysis::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency, ajBranch );
-          corrAnalysis::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency, ajBranch );
+          jetHadron::correlateLeading( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency, ajBranch );
+          jetHadron::correlateSubleading( analysisType, vzBranch, centBranch, histograms, subTrigger, assocParticle, assocEfficiency, ajBranch );
         }
         
       }
@@ -607,12 +607,12 @@ int main ( int argc, const char** argv) {
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
           double assocEfficiency = 1.0;
-          if ( useEfficiency && !corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
+          if ( useEfficiency && !jetHadron::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), refCentAlt );
           }
-          else if ( useEfficiency && corrAnalysis::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
+          else if ( useEfficiency && jetHadron::BeginsWith(analysisType, "pp") ) { assocEfficiency = efficiencyCorrection.EffPPY06( assocParticle.eta(), assocParticle.pt() );
           }
           
-          corrAnalysis::correlateTrigger( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
+          jetHadron::correlateTrigger( analysisType, vzBranch, centBranch, histograms, leadTrigger, assocParticle, assocEfficiency );
 
         }
       }

@@ -142,10 +142,10 @@ int main( int argc, const char** argv) {
   
   
   // First check to make sure we're located properly
-  std::string currentDirectory = corrAnalysis::getPWD( );
+  std::string currentDirectory = jetHadron::getPWD( );
   
   // If we arent in the analysis directory, exit
-  if ( !(corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_corr" ) || corrAnalysis::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
+  if ( !(jetHadron::HasEnding ( currentDirectory, "jet_hadron_corr" ) || jetHadron::HasEnding ( currentDirectory, "jet_hadron_correlation" )) ) {
     std::cerr << "Error: Need to be in jet_hadron_corr directory" << std::endl;
     return -1;
   }
@@ -218,22 +218,22 @@ int main( int argc, const char** argv) {
   recombinedPtLead.resize( nFiles );
   recombinedPtSub.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVz[i].resize( corrAnalysis::binsCentrality );
-    subCentVz[i].resize( corrAnalysis::binsCentrality );
-    mixCentVz[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVz[i].resize( corrAnalysis::binsCentrality );
+    corrCentVz[i].resize( jetHadron::binsCentrality );
+    subCentVz[i].resize( jetHadron::binsCentrality );
+    mixCentVz[i].resize( jetHadron::binsCentrality );
+    mixSubCentVz[i].resize( jetHadron::binsCentrality );
     
     std::string ptLeadName = analysisNames[i] + "_pt_lead";
     std::string ptSubName = analysisNames[i] + "_pt_sub";
     
-    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
-    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", corrAnalysis::binsPt, corrAnalysis::ptLowEdge, corrAnalysis::ptHighEdge );
+    recombinedPtLead[i] = new TH1D( ptLeadName.c_str(), "p_{T} Spectrum Trigger Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
+    recombinedPtSub[i] = new TH1D( ptSubName.c_str(), "p_{T} Spectrum Recoil Jet", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge );
     
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVz[i][j].resize( corrAnalysis::binsVz );
-      subCentVz[i][j].resize( corrAnalysis::binsVz );
-      mixCentVz[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVz[i][j].resize( corrAnalysis::binsVz );
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      corrCentVz[i][j].resize( jetHadron::binsVz );
+      subCentVz[i][j].resize( jetHadron::binsVz );
+      mixCentVz[i][j].resize( jetHadron::binsVz );
+      mixSubCentVz[i][j].resize( jetHadron::binsVz );
     }
   }
   
@@ -254,8 +254,8 @@ int main( int argc, const char** argv) {
     mixHist[i]->SetName( mixhistBaseName.c_str() );
 
     // pull in the cent/vz diffentiated histograms
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j )
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j )
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         
         // make the initial name
         std::string corrDifInitName = "lead_cent_"; corrDifInitName += patch::to_string(j);
@@ -340,18 +340,18 @@ int main( int argc, const char** argv) {
   mixCentVzPt.resize( nFiles );
   mixSubCentVzPt.resize( nFiles );
   for ( int i = 0; i < nFiles; ++i ) {
-    corrCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    subCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    mixCentVzPt[i].resize( corrAnalysis::binsCentrality );
-    mixSubCentVzPt[i].resize( corrAnalysis::binsCentrality );
+    corrCentVzPt[i].resize( jetHadron::binsCentrality );
+    subCentVzPt[i].resize( jetHadron::binsCentrality );
+    mixCentVzPt[i].resize( jetHadron::binsCentrality );
+    mixSubCentVzPt[i].resize( jetHadron::binsCentrality );
     
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      corrCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      subCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      mixCentVzPt[i][j].resize( corrAnalysis::binsVz );
-      mixSubCentVzPt[i][j].resize( corrAnalysis::binsVz );
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      corrCentVzPt[i][j].resize( jetHadron::binsVz );
+      subCentVzPt[i][j].resize( jetHadron::binsVz );
+      mixCentVzPt[i][j].resize( jetHadron::binsVz );
+      mixSubCentVzPt[i][j].resize( jetHadron::binsVz );
       
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         corrCentVzPt[i][j][k].resize( nPtBins );
         subCentVzPt[i][j][k].resize( nPtBins );
         mixCentVzPt[i][j][k].resize( nPtBins );
@@ -362,8 +362,8 @@ int main( int argc, const char** argv) {
   
   // now get the pt projections
   for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      for ( int k = 0; k < corrAnalysis::binsVz; ++ k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++ k ) {
         for ( int l = 0; l < nPtBins; ++l ) {
           
           corrCentVz[i][j][k]->GetZaxis()->SetRange( ptBinLo[l], ptBinHi[l] );
@@ -383,8 +383,8 @@ int main( int argc, const char** argv) {
   
   // scale the mixing histograms
   for ( int i = 0; i < nFiles; ++i ) {
-    for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-      for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+    for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+      for ( int k = 0; k < jetHadron::binsVz; ++k ) {
         for ( int l = 0; l < nPtBins; ++l ) {
           mixCentVzPt[i][j][k][l]->Scale( 1.0/mixCentVzPt[i][j][k][l]->GetMaximum() );
           mixSubCentVzPt[i][j][k][l]->Scale( 1.0/mixSubCentVzPt[i][j][k][l]->GetMaximum() );
@@ -431,8 +431,8 @@ int main( int argc, const char** argv) {
       
       if ( l <= 2 ) {
       
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( mixCentVzPt[i][j][k][l]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -455,8 +455,8 @@ int main( int argc, const char** argv) {
       }
       
       else {
-        for ( int j = 0; j < corrAnalysis::binsCentrality; ++j ) {
-          for ( int k = 0; k < corrAnalysis::binsVz; ++k ) {
+        for ( int j = 0; j < jetHadron::binsCentrality; ++j ) {
+          for ( int k = 0; k < jetHadron::binsVz; ++k ) {
             if ( mixCentVzPt[i][j][k][2]->GetEntries() != 0 && corrCentVzPt[i][j][k][l]->GetEntries() != 0 ) {
               
               recombinedPre[i][l]->Add( corrCentVzPt[i][j][k][l] );
@@ -491,12 +491,12 @@ int main( int argc, const char** argv) {
   int etaNearMaxBin = etaNearMinBin + 7;
   int etaFarMinBin = etaNearMaxBin + 1;
   int etaFarMaxBin = etaFarMinBin + 3;
-  double phiMin = -corrAnalysis::pi/2.0;
+  double phiMin = -jetHadron::pi/2.0;
   double phiMinClose = -0.6;
   double phiMaxClose = 0.6;
-  double phiMaxFar = 3.0*corrAnalysis::pi/2.0;
-  double phiMax = 3.0*corrAnalysis::pi/2.0;
-  double phiDifMax = corrAnalysis::pi/2.0;
+  double phiMaxFar = 3.0*jetHadron::pi/2.0;
+  double phiMax = 3.0*jetHadron::pi/2.0;
+  double phiDifMax = jetHadron::pi/2.0;
   
   
   // going to get the 1D projections
@@ -633,7 +633,7 @@ int main( int argc, const char** argv) {
       
       TF1* leadPhiInitFit = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiDifMax );
       leadPhiInitFit->FixParameter( 2, 0 );
-      leadPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      leadPhiInitFit->FixParameter( 5, jetHadron::pi );
       leadPhiInitFit->SetParameter( 3, 0.2 );
       leadPhiInitFit->SetParameter( 6, 0.2 );
       
@@ -643,7 +643,7 @@ int main( int argc, const char** argv) {
       
       TF1* subPhiInitFit = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiInitFit->FixParameter( 2, 0 );
-      subPhiInitFit->FixParameter( 5, corrAnalysis::pi );
+      subPhiInitFit->FixParameter( 5, jetHadron::pi );
       subPhiInitFit->SetParameter( 3, 0.2 );
       subPhiInitFit->SetParameter( 6, 0.2 );
       
@@ -731,7 +731,7 @@ int main( int argc, const char** argv) {
     
       leadPhiFit[i][j] = new TF1( dPhiLeadName.c_str(), phiForm.c_str(), phiMin, phiMax );
       leadPhiFit[i][j]->FixParameter( 2, 0 );
-      leadPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+      leadPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
       leadPhiFit[i][j]->SetParameter( 3, 0.2 );
       leadPhiFit[i][j]->SetParameter( 6, 0.2 );
       leadPhiFit[i][j]->SetLineColor( i + 1 );
@@ -743,7 +743,7 @@ int main( int argc, const char** argv) {
       
       subPhiFit[i][j] = new TF1( dPhiSubName.c_str(), phiForm.c_str(), phiMin, phiMax );
       subPhiFit[i][j]->FixParameter( 2, 0 );
-      subPhiFit[i][j]->FixParameter( 5, corrAnalysis::pi );
+      subPhiFit[i][j]->FixParameter( 5, jetHadron::pi );
       subPhiFit[i][j]->SetParameter( 3, 0.2 );
       subPhiFit[i][j]->SetParameter( 6, 0.2 );
       subPhiFit[i][j]->SetLineColor( i + 1 );
@@ -826,7 +826,7 @@ int main( int argc, const char** argv) {
       if ( j == 0 ) {
         std::string outTitle = "Trigger Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiLeadNear[j][i]->SetTitle( outTitle.c_str() );
-        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
+        dPhiLeadNear[j][i]->GetXaxis()->SetRangeUser( -jetHadron::pi/2.0, jetHadron::pi/2.0 );
         dPhiLeadNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiLeadNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiLeadNear[j][i]->Draw();
@@ -896,7 +896,7 @@ int main( int argc, const char** argv) {
       if ( j == 0 ) {
         std::string outTitle = "Recoil Jet #Delta#eta subtracted #Delta#phi " + ptBinString[i];
         dPhiSubNear[j][i]->SetTitle( outTitle.c_str() );
-        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -corrAnalysis::pi/2.0, corrAnalysis::pi/2.0 );
+        dPhiSubNear[j][i]->GetXaxis()->SetRangeUser( -jetHadron::pi/2.0, jetHadron::pi/2.0 );
         dPhiSubNear[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         dPhiSubNear[j][i]->GetYaxis()->SetTitle("1/N_{dijet}dN/d#phi");
         dPhiSubNear[j][i]->Draw();
@@ -982,27 +982,27 @@ int main( int argc, const char** argv) {
     subEtaError[i].resize( nPtBins );
     subEtaWidthError[i].resize( nPtBins );
     for ( int j = 0; j < nPtBins; ++j ) {
-      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiYield[i][j] = leadPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiError[i][j] = leadPhiFit[i][j]->GetParError(1);
       leadPhiWidth[i][j] = fabs(leadPhiFit[i][j]->GetParameter(3));
       leadPhiWidthError[i][j] = leadPhiFit[i][j]->GetParError(3);
-      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadPhiDifYield[i][j] = leadPhiDifFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadPhiDifError[i][j] = leadPhiDifFit[i][j]->GetParError(1);
       leadPhiDifWidth[i][j] = fabs(leadPhiDifFit[i][j]->GetParameter(3));
       leadPhiDifWidthError[i][j] = leadPhiDifFit[i][j]->GetParError(3);
-      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      leadEtaYield[i][j] = leadEtaFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(leadEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       leadEtaError[i][j] = leadEtaFit[i][j]->GetParError(1);
       leadEtaWidth[i][j] = fabs(leadEtaFit[i][j]->GetParameter(3));
       leadEtaWidthError[i][j] = leadEtaFit[i][j]->GetParError(3);
-      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiYield[i][j] = subPhiFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiError[i][j] = subPhiFit[i][j]->GetParError(1);
       subPhiWidth[i][j] = fabs(subPhiFit[i][j]->GetParameter(3));
       subPhiWidthError[i][j] = subPhiFit[i][j]->GetParError(3);
-      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subPhiDifYield[i][j] = subPhiDifFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subPhiDifFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subPhiDifError[i][j] = subPhiDifFit[i][j]->GetParError(1);
       subPhiDifWidth[i][j] = fabs(subPhiDifFit[i][j]->GetParameter(3));
       subPhiDifWidthError[i][j] = subPhiDifFit[i][j]->GetParError(3);
-      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*corrAnalysis::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
+      subEtaYield[i][j] = subEtaFit[i][j]->GetParameter(1)*sqrt(2*jetHadron::pi)*fabs(subEtaFit[i][j]->GetParameter(3))/ptBinWidth[j];
       subEtaError[i][j] = subEtaFit[i][j]->GetParError(1);
       subEtaWidth[i][j] = fabs(subEtaFit[i][j]->GetParameter(3));
       subEtaWidthError[i][j] = subEtaFit[i][j]->GetParError(3);
