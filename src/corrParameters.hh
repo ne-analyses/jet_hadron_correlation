@@ -95,9 +95,9 @@ namespace corrAnalysis {
 	const int 		y7RefMultCent[9] = { 10, 21, 39, 69, 114, 178, 269, 399, 485 };
 	
 	// Pt binning
-	const int 	 	binsPt = 60;							// number of pt bins
+	const int 	 	binsPt = 40;							// number of pt bins
 	const double 	ptLowEdge = 0.0;					// lower edge for accepted pt range
-	const double 	ptHighEdge = 30.0;				// upper edge for accepted pt range
+	const double 	ptHighEdge = 20.0;				// upper edge for accepted pt range
 	
 	// Phi binning ( full 2*pi coverage, from -pi/4 to 7*pi/4 )
 	const int 	 	binsPhiDefault = 24;			// number of phi bins
