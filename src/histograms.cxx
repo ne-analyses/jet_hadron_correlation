@@ -406,16 +406,13 @@ namespace jetHadron {
     hAjStruct->Write();
     
     for ( int i = 0; i < binsAj; ++i ) {
-      if (!leadingArrays || !leadingArrays[i])
-        continue;
-      for ( int j = 0; j < binsCentrality; ++j )
-        if ( !leadingArrays[i][j] ) {
-          continue;
-        for ( int k = 0; k < binsVz; ++k ) {
+      for ( int j = 0; j < binsCentrality; ++j ) {
+        if ( leadingArrays && leadingArrays[i] && leadingArrays[i][j] ) {
           leadingArrays[i][j]->Write();
-          if ( IsDijet() )
-            subleadingArrays[i][j]->Write();
+          std::cout<<"writing"<<std::endl;
         }
+        if ( subleadingArrays && subleadingArrays[i] && subleadingArrays[i][j] )
+          subleadingArrays[i][j]->Write();
       }
     }
   }
