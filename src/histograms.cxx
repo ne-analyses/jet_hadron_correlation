@@ -72,7 +72,7 @@ namespace corrAnalysis {
     if ( analysisType == "dijet" || analysisType == "ppdijet" || analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
       
       //now build the full 3D vz/centrality binned histograms
-      THFD* tmpHistLead, * tmpHistSub;
+      TH3F* tmpHistLead, * tmpHistSub;
       
       leadingArrays = new TObjArray**[binsAj];
       subleadingArrays = new TObjArray**[binsAj];
