@@ -80,7 +80,6 @@ set subLeadPtMin = 0.0
 set leadPtMin = 20.0
 set jetPtMax = 100.0
 endif
-endif
 set jetRadius = 0.4
 set constPtCut = 2.0
 set binsEta = 22
