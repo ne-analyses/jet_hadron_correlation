@@ -49,7 +49,8 @@ int main() {
   
   // test read in
   std::vector<TFile> inFile;
-  inFile.push_back( TFile("out/tmp/dijet_20_10.root") );
+  inFile.resize(1);
+  inFile[0] = new TFile("out/tmp/dijet_20_10.root");
   
   // testing
   jetHadron::binSelector selector;
