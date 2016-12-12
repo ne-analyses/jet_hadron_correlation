@@ -475,7 +475,7 @@ int main ( int argc, const char** argv) {
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-
+      std::cout<<"got here"<<std::endl;
       // now we have analysis jets, write the trees
       // for future event mixing
       vertexZBin = VzBin;
