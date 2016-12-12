@@ -57,7 +57,7 @@ namespace jetHadron {
     unsigned centLow = 6;
     unsigned centHigh = 8;
     unsigned vzLow = 0;
-    unsigned vzHigh = 59
+    unsigned vzHigh = 59;
   };
   
   // Function used to read in histograms from
