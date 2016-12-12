@@ -405,10 +405,10 @@ int main ( int argc, const char** argv) {
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
       int VzBin = jetHadron::GetVzBin( vertexZ );
-      std::cout<<"vz... ";
+
       // Check to see if Vz is in the accepted range; if not, discard
       if ( VzBin == -1 )																				{ continue; }
-      std::cout<<"success"<<std::endl;
+
       // Convert TStarJetVector to PseudoJet
       jetHadron::ConvertTStarJetVector( container, particles, true );
       jetHadron::ConvertTStarJetVector( container, ppParticles, true );
@@ -418,10 +418,10 @@ int main ( int argc, const char** argv) {
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
       jetHadron::GetTriggersPP( requireTrigger, ppParticles, triggers );
-      std::cout<<"triggers... ";
+
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
-      std::cout<<"found triggers"<<std::endl;
+
       // Start FastJet analysis
       // ----------------------
       
@@ -438,11 +438,11 @@ int main ( int argc, const char** argv) {
       fastjet::ClusterSequence clusterSequenceHigh ( highPtCons, analysisDefinition );
       // Now first apply global jet selector to inclusive jets, then sort by pt
       std::vector<fastjet::PseudoJet> HiResult = fastjet::sorted_by_pt( selectorJetCandidate ( clusterSequenceHigh.inclusive_jets() ) );
-      std::cout<<"hard jets... ";
+
       // Check to see if there are enough jets,
       // and if they meet the momentum cuts - if dijet, checks if they are back to back
       if ( !jetHadron::CheckHardCandidateJets( analysisType, HiResult, leadJetPtMin, subJetPtMin ) ) 	{ continue; }
-      std::cout<<"success "<<std::endl;
+
       // count "dijets" ( monojet if doing jet analysis )
       nHardDijets++;
       
