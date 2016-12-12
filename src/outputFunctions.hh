@@ -102,7 +102,7 @@ namespace jetHadron {
   // Function used to find the weighted center
   // for each pt bin for each file - vector<vector<double> >
   // and also creates pt spectra for each file
-  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<TH1F*> ptSpectra );
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<TH1F*> ptSpectra, binSelector selector );
   
 } // end namespace
 
