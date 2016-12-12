@@ -37,23 +37,23 @@ namespace jetHadron {
       // rename because root can't handle simple crap
       std::string tmpName = "nevents_" + patch::to_string(i);
       nEvents[i]->SetName( tmpName.c_str() );
-      
+      std::cout<<"got nevents"<<std::endl;
       // push back the vectors
       leadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
       subLeadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
-      
+      std::cout<<"pushing back first"<<std::endl;
       for ( int j = selector.ajLow; j <= selector.ajHigh; ++j ) {
         
         // push back the vectors
         leadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
         subLeadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
-        
+        std::cout<<"pushing back second"<<std::endl;
         for ( int k = selector.centLow; k <= selector.centHigh; ++k ) {
           
           // push back the vectors
           leadingCorrelations[i][j].push_back( std::vector<TH3F*>() );
           subLeadingCorrelations[i][j].push_back( std::vector<TH3F*>() );
-          
+          std::cout<<"pushing back third"<<std::endl;
           for ( int l = selector.vzLow; l <= selector.vzHigh; ++l ) {
             
             // build the in-file histogram names
