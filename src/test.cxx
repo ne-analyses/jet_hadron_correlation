@@ -58,7 +58,7 @@ int main() {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leading;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > sub;
   
-  jetHadron::ReadInFiles( inFile, leading, sub, selector );
+  jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
 	return 0;
 }
