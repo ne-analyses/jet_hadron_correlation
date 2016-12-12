@@ -72,6 +72,7 @@ $(ODIR)/dict.o                  : $(SDIR)/dict.cxx
 $(ODIR)/ktTrackEff.o            : $(SDIR)/ktTrackEff.cxx $(SDIR)/ktTrackEff.hh
 $(ODIR)/corrFunctions.o					: $(SDIR)/corrFunctions.cxx $(SDIR)/corrFunctions.hh
 $(ODIR)/histograms.o            : $(SDIR)/histograms.cxx $(SDIR)/histograms.hh
+$(ODIR)/outputFunctions.o       : $(SDIR)/outputFunctions.cxx $(SDIR)/outputFunctions.hh
 
 #$(ODIR)/qa_v1.o 		: $(SDIR)/qa_v1.cxx
 $(ODIR)/test.o			: $(SDIR)/test.cxx
@@ -85,7 +86,7 @@ $(ODIR)/generate_output_split_avg.o : $(SDIR)/generate_output_split_avg.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
-$(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
+$(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o
 $(BDIR)/globvprim : $(ODIR)/globvprim.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
