@@ -438,11 +438,11 @@ int main ( int argc, const char** argv) {
       fastjet::ClusterSequence clusterSequenceHigh ( highPtCons, analysisDefinition );
       // Now first apply global jet selector to inclusive jets, then sort by pt
       std::vector<fastjet::PseudoJet> HiResult = fastjet::sorted_by_pt( selectorJetCandidate ( clusterSequenceHigh.inclusive_jets() ) );
-      
+ 
       // Check to see if there are enough jets,
       // and if they meet the momentum cuts - if dijet, checks if they are back to back
       if ( !jetHadron::CheckHardCandidateJets( analysisType, HiResult, leadJetPtMin, subJetPtMin ) ) 	{ continue; }
-
+      std::cout<<"success checking hard jets"<<std::endl;
       // count "dijets" ( monojet if doing jet analysis )
       nHardDijets++;
       
@@ -471,11 +471,12 @@ int main ( int argc, const char** argv) {
       // Returns hardJets if doing jet analysis
       // it will match to triggers if necessary - if so, trigger jet is at index 0
       std::vector<fastjet::PseudoJet> analysisJets = jetHadron::BuildMatchedJets( analysisType, hardJets, LoResult, requireTrigger, triggers, jetRadius );
-      
+      std::cout<<"checking for matched jets"<<std::endl;
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-      std::cout<<"got here"<<std::endl;
+      std::cout<<"success"<<std::endl;
+      
       // now we have analysis jets, write the trees
       // for future event mixing
       vertexZBin = VzBin;
