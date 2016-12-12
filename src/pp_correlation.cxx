@@ -400,7 +400,7 @@ int main ( int argc, const char** argv) {
       
       // We don't use reference centrality
       // so set a dummy
-      int refCent = -1;
+      int refCent = 0;
       
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
