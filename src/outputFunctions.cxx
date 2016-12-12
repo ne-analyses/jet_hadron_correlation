@@ -112,11 +112,49 @@ namespace jetHadron {
   }
   
   // Function used to find the weighted center
-  //for each pt bin for each file
-  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations ) {
+  // for each pt bin for each file - vector<vector<double> >
+  // and also creates pt spectra for each file
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector ) {
     
-    // first create a structure to hold the pt histograms
+    // make the returned object 
+    std::vector<std::vector<double> ptBinCenters;
+    ptBinCenters.resize( correlations.size() );
+
+    // first we loop over all histograms, project 
+    // down to 1D and add together
+    ptSpectra.resize( correlations.size() );
+    std::vector<std::vector<TH1F*> ptBinHolder;
+    ptBinHolder.resize( correlations.size() );
+
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      for  ( int j = 0; j < correlations[i].size(); ++j ) {
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          for ( int l = 0; l < correlations[i][j][k][l].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ) {
+              if ( j == 0 && k == 0 && l == 0 ) {
+                std::string tmp = "pt_file_" + patch::to_string(i);
+                if ( m == 0 )
+                  ptSpectra[i] = new TH1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
+                tmp += "_pt_" + patch::to_string(m);
+                ptBinHolder[i][m] = new TF1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
+              } 
+              correlations[i][j][k][l]->GetZaxis()->SetRange();
+              ptSpectra[i]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
+
+              correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(i) );
+              ptBinHolder[i][m]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
+            }
+          }
+        }
+      }
+      // now extract the mean values
+      ptBinCenters[i].resize(selector.nPtBins);
+      for ( int j = 0; j < selector.nPtBins; ++j ) {
+        ptBinCenters[i][j] = ptBinHolder[i][j]->GetMean();
+      }
+    }
     
+    return ptBinCenters;
   }
   
 
