@@ -136,15 +136,20 @@ namespace jetHadron {
                 std::string tmp = "pt_file_" + patch::to_string(i);
                 if ( m == 0 )
                   ptSpectra[i] = new TH1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
-                tmp += "_pt_" + patch::to_string(m);
-                ptBinHolder[i][m] = new TH1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
               }
 
               correlations[i][j][k][l]->GetZaxis()->SetRange();
               ptSpectra[i]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
 
               correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(i) );
-              ptBinHolder[i][m]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
+              if ( !ptBinHolder[i][m] ) {
+                ptBinHolder[i][m] = ((TH1F*) ((TH1F*) correlations[i][j][k][l]->ProjectionZ())->Clone());
+                std::string tmp = "pt_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                ptBinHolder[i][m]->SetName( tmp.c_str() );
+              }
+              else {
+                ptBinHolder[i][m]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
+              }
             }
           }
         }
