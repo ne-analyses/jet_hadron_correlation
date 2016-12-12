@@ -70,7 +70,7 @@ int main() {
   
   std::vector<TH1F*> ptSpectra;
 
-  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra );
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
 
   for ( int j = 0; j < 5; ++j ) {
     std::cout<<"pt bin center: bin "<<j << " " <<ptBinCenters[0][j]<<std::endl;
