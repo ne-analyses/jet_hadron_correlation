@@ -67,12 +67,14 @@ namespace jetHadron {
     unsigned vzHigh = binsVz-1;
     
     // histogram bins
+    double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
+    double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
     const int nPtBins = 5;
-    double histogramPtLo[nPtBins] = { (0.5/ptBinWidth)+1, (1.0/ptBinWidth)+1, (2.0/ptBinWidth)+1, (3.0/ptBinWidth)+1, (4.0/ptBinWidth)+1 };
-    double histogramPtHi[nPtBins] = { (1.0/ptBinWidth), (2.0/ptBinWidth), (3.0/ptBinWidth), (4.0/ptBinWidth), (6.0/ptBinWidth) };
     
-
+    double ptBinLowEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeLo[i]/ptBinWidth ) + 1; else __ERR("bad pt bin index") return 0;  }
+    double ptBinHighEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeHi[i]/ptBinWidth ); else __ERR("bad pt bin index") return 0;  }
+    
   };
   
   // Function used to read in histograms from
