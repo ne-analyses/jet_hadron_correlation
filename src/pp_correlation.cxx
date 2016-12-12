@@ -471,11 +471,11 @@ int main ( int argc, const char** argv) {
       // Returns hardJets if doing jet analysis
       // it will match to triggers if necessary - if so, trigger jet is at index 0
       std::vector<fastjet::PseudoJet> analysisJets = jetHadron::BuildMatchedJets( analysisType, hardJets, LoResult, requireTrigger, triggers, jetRadius );
-      std::cout<<"checking for matched jets"<<std::endl;
+
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-      std::cout<<"success"<<std::endl;
+
       
       // now we have analysis jets, write the trees
       // for future event mixing
