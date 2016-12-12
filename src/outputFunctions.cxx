@@ -141,7 +141,7 @@ namespace jetHadron {
               correlations[i][j][k][l]->GetZaxis()->SetRange();
               ptSpectra[i]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
 
-              correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(i) );
+              correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               if ( !ptBinHolder[i][m] ) {
                 ptBinHolder[i][m] = ((TH1F*) ((TH1F*) correlations[i][j][k][l]->ProjectionZ())->Clone());
                 std::string tmp = "pt_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
