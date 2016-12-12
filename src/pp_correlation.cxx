@@ -405,10 +405,10 @@ int main ( int argc, const char** argv) {
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
       int VzBin = jetHadron::GetVzBin( vertexZ );
-      
+      std::cout<<"vz... ";
       // Check to see if Vz is in the accepted range; if not, discard
       if ( VzBin == -1 )																				{ continue; }
-      
+      std::cout<<"success"<<std::endl;
       // Convert TStarJetVector to PseudoJet
       jetHadron::ConvertTStarJetVector( container, particles, true );
       jetHadron::ConvertTStarJetVector( container, ppParticles, true );
@@ -418,10 +418,10 @@ int main ( int argc, const char** argv) {
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
       jetHadron::GetTriggersPP( requireTrigger, ppParticles, triggers );
-      
+      std::cout<<"triggers... ";
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
-      
+      std::cout<<"found triggers"<<std::endl;
       // Start FastJet analysis
       // ----------------------
       
