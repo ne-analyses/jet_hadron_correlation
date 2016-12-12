@@ -159,8 +159,13 @@ namespace jetHadron {
       ptBinCenters[i].resize(selector.nPtBins);
       for ( int j = 0; j < selector.nPtBins; ++j ) {
         ptBinCenters[i][j] = ptBinHolder[i][j]->GetMean();
+        
       }
     }
+    
+    TCanvas c1;
+    ptBinCenters[0][0]->Draw();
+    c1.SaveAs("test.pdf");
     
     return ptBinCenters;
   }
