@@ -50,14 +50,21 @@
 
 namespace jetHadron {
   
-  // Used for reading in histograms, makes things a little simpler...
+  // setting up current pt bins being used
+  double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
+  const int nPtBins = 5;
+  int ptBinLo[nPtBins] = { (0.5/ptBinWidth)+1, (1.0/ptBinWidth)+1, (2.0/ptBinWidth)+1, (3.0/ptBinWidth)+1, (4.0/ptBinWidth)+1 };
+  int ptBinHi[nPtBins] = { (1.0/ptBinWidth), (2.0/ptBinWidth), (3.0/ptBinWidth), (4.0/ptBinWidth), (6.0/ptBinWidth) };
+  
+  // Used for reading in histograms, makes things a little simpler
+  // Default settings are for all Aj bins, 0-20% centrality, and all Vz bins
   struct binSelector {
     unsigned ajLow = 0;
-    unsigned ajHigh = 19;
+    unsigned ajHigh = binsAj-1;
     unsigned centLow = 6;
     unsigned centHigh = 8;
     unsigned vzLow = 0;
-    unsigned vzHigh = 59;
+    unsigned vzHigh = binsVz-1;
   };
   
   // Function used to read in histograms from
@@ -65,8 +72,6 @@ namespace jetHadron {
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
   void ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector );
-  
-  
   
   
 } // end namespace
