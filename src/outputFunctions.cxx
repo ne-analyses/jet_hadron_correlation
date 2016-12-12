@@ -37,11 +37,11 @@ namespace jetHadron {
       // rename because root can't handle simple crap
       std::string tmpName = "nevents_" + patch::to_string(i);
       nEvents[i]->SetName( tmpName.c_str() );
-      std::cout<<"got nevents"<<std::endl;
+      
       // push back the vectors
       leadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
       subLeadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
-      std::cout<<"pushing back first"<<std::endl;
+      
       for ( int j = selector.ajLow; j <= selector.ajHigh; ++j ) {
         
         int aj_index = j - selector.ajLow;
@@ -49,7 +49,7 @@ namespace jetHadron {
         // push back the vectors
         leadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
         subLeadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
-        std::cout<<"pushing back second"<<std::endl;
+        
         for ( int k = selector.centLow; k <= selector.centHigh; ++k ) {
           
           int cent_index = k - selector.centLow;
@@ -57,7 +57,7 @@ namespace jetHadron {
           // push back the vectors
           leadingCorrelations[i][aj_index].push_back( std::vector<TH3F*>() );
           subLeadingCorrelations[i][aj_index].push_back( std::vector<TH3F*>() );
-          std::cout<<"pushing back third"<<std::endl;
+          
           for ( int l = selector.vzLow; l <= selector.vzHigh; ++l ) {
             
             int vz_index = l - selector.vzLow;
@@ -65,13 +65,13 @@ namespace jetHadron {
             // build the in-file histogram names
             std::string leadName = "lead_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             std::string subLeadName = "sub_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
-            std::cout<<"getting histograms"<<std::endl;
+            
             
             // get the correlation histograms
             leadingCorrelations[i][aj_index][cent_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
-            std::cout<<"got lead"<<std::endl;
+            
             subLeadingCorrelations[i][aj_index][cent_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
-            std::cout<<"got sub"<<std::endl;
+            
             // check to make sure it was successful
             if ( !leadingCorrelations[i][aj_index][cent_index][vz_index] ) {
               std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
