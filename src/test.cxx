@@ -64,8 +64,8 @@ int main() {
   std::cout<<"testing binning"<<std::endl;
   for ( int i = 0; i < 5; ++i ) {
     std::cout<<"bin "<<i<<std::endl;
-    std::cout<<"low edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinLowEdge(selector.ptBinLowEdge(i))<<std::endl;
-    std::cout<<"high edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinUpEdge(selector.ptBinHighEdge(i))<<std::endl;
+    std::cout<<"low edge: "<< leading[0][0][0][0]->GetZaxis()->GetBinLowEdge(selector.ptBinLowEdge(i))<<std::endl;
+    std::cout<<"high edge: "<< leading[0][0][0][0]->GetZaxis()->GetBinUpEdge(selector.ptBinHighEdge(i))<<std::endl;
   }
   
   
