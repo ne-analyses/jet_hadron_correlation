@@ -117,7 +117,7 @@ namespace jetHadron {
   std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector ) {
     
     // make the returned object 
-    std::vector<std::vector<double> ptBinCenters;
+    std::vector<std::vector<double> > ptBinCenters;
     ptBinCenters.resize( correlations.size() );
 
     // first we loop over all histograms, project 
