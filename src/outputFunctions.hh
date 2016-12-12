@@ -57,8 +57,8 @@ namespace jetHadron {
   // setting up current pt bins being used
   double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
   const int nPtBins = 5;
-  double ptBinLoEdge[nPtBins] = { (0.5/ptBinWidth)+1, (1.0/ptBinWidth)+1, (2.0/ptBinWidth)+1, (3.0/ptBinWidth)+1, (4.0/ptBinWidth)+1 };
-  double ptBinHiEdge[nPtBins] = { (1.0/ptBinWidth), (2.0/ptBinWidth), (3.0/ptBinWidth), (4.0/ptBinWidth), (6.0/ptBinWidth) };
+  double histogramPtLo[nPtBins] = { (0.5/ptBinWidth)+1, (1.0/ptBinWidth)+1, (2.0/ptBinWidth)+1, (3.0/ptBinWidth)+1, (4.0/ptBinWidth)+1 };
+  double histogramPtHi[nPtBins] = { (1.0/ptBinWidth), (2.0/ptBinWidth), (3.0/ptBinWidth), (4.0/ptBinWidth), (6.0/ptBinWidth) };
   
   // Used for reading in histograms, makes things a little simpler
   // Default settings are for all Aj bins, 0-20% centrality, and all Vz bins
