@@ -60,6 +60,7 @@ namespace jetHadron {
             std::string leadName = "lead_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             std::string subLeadName = "sub_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             std::cout<<"getting histograms"<<std::endl;
+            std::cout<<filesIn[i]->Get( leadName.c_str() )<<std::endl;
             // get the correlation histograms
             leadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
             std::cout<<"got lead"<<std::endl;
