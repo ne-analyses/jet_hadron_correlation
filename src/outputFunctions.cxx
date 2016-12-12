@@ -137,7 +137,8 @@ namespace jetHadron {
                   ptSpectra[i] = new TH1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
                 tmp += "_pt_" + patch::to_string(m);
                 ptBinHolder[i][m] = new TH1F( tmp.c_str(), tmp.c_str(), binsPt, ptLowEdge, ptHighEdge );
-              } 
+              }
+              std::cout<<"got here"<<std::endl;
               correlations[i][j][k][l]->GetZaxis()->SetRange();
               ptSpectra[i]->Add( (TH1F*) correlations[i][j][k][l]->ProjectionZ() );
 
@@ -147,6 +148,7 @@ namespace jetHadron {
           }
         }
       }
+      
       // now extract the mean values
       ptBinCenters[i].resize(selector.nPtBins);
       for ( int j = 0; j < selector.nPtBins; ++j ) {
