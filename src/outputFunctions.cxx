@@ -74,7 +74,7 @@ namespace jetHadron {
           
           for ( int l = selector.ajLow; l <= selector.ajHigh; ++l ) {
             
-            int aj_index = l - selector.ajLow
+            int aj_index = l - selector.ajLow;
             
             // build the in-file histogram names
             std::string leadName = "lead_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
