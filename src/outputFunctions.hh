@@ -5,6 +5,10 @@
 
 // Nick Elsey
 
+// include the constants from the
+// correlation analysis
+#include "corrParameters.hh"
+
 // Make use of std::vector,
 // std::string, IO and algorithm
 // STL Headers
@@ -60,11 +64,11 @@ namespace jetHadron {
   // Default settings are for all Aj bins, 0-20% centrality, and all Vz bins
   struct binSelector {
     unsigned ajLow = 0;
-    unsigned ajHigh = jetHadron::binsAj-1;
+    unsigned ajHigh = binsAj-1;
     unsigned centLow = 6;
     unsigned centHigh = 8;
     unsigned vzLow = 0;
-    unsigned vzHigh = jetHadron::binsVz-1;
+    unsigned vzHigh = binsVz-1;
   };
   
   // Function used to read in histograms from
