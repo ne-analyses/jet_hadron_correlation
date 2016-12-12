@@ -352,14 +352,17 @@ int main ( int argc, const char** argv ) {
       // and trigger objects
       triggerObjs = event->GetTrigObjs();
       
-      // testing to see how to redo the centrality to
-      // seamlessly switch between y7 and y14
-      std::cout<<"grefcentrality: "<<header->GetGReferenceCentrality()<<std::endl;
-      std::cout<<"grefmultiplicitycorr: "<< header->GetCorrectedGReferenceMultiplicity()<<std::endl;
-      
       // Find the reference centrality
-      int gRefMult = header->GetGReferenceMultiplicity();
-      int refCent  = jetHadron::GetReferenceCentrality( gRefMult );
+      int gRefMult = 0;
+      int refCent  = 0;
+      if ( header->GetCorrectedGReferenceMultiplicity() ) {
+        gRefMult = header->GetCorrectedGReferenceMultiplicity();
+        refCent = header->GetGReferenceCentrality();
+      }
+      else {
+        gRefMult = header->GetGReferenceMultiplicity();
+        refCent  = jetHadron::GetReferenceCentrality( gRefMult );
+      }
       // Define the opposite centrality index: 0->8, 1->7, 2->6...
       // Used for the histogram arrays, etc
       int refCentAlt = jetHadron::GetReferenceCentralityAlt( refCent );
