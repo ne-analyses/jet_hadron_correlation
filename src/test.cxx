@@ -61,5 +61,7 @@ int main() {
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
+  std::cout<<nEvents[0]->GetEntries()<<std::endl;
+  
 	return 0;
 }
