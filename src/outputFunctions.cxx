@@ -164,7 +164,7 @@ namespace jetHadron {
     }
     
     TCanvas c1;
-    ptBinCenters[0][0]->Draw();
+    ptBinHolder[0][0]->Draw();
     c1.SaveAs("test.pdf");
     
     return ptBinCenters;
