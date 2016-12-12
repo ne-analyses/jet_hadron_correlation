@@ -219,8 +219,8 @@ int main ( int argc, const char** argv ) {
   
   
   // Announce our settings
-  if ( requireDijets ) { jetHadron::BeginSummaryDijet ( jetRadius, leadJetPtMin, subJetPtMin, jetPtMax, jetHadron::hardTrackMinPt, jetHadron::trackMinPt, jetHadron::binsVz, jetHadron::vzRange, treeOutFile, corrOutFile ); }
-  else { jetHadron::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, jetHadron::hardTrackMinPt, jetHadron::binsVz, jetHadron::vzRange, treeOutFile, corrOutFile ); }
+  if ( requireDijets ) { jetHadron::BeginSummaryDijet ( jetRadius, leadJetPtMin, subJetPtMin, jetPtMax, hardPtCut, jetHadron::trackMinPt, jetHadron::binsVz, jetHadron::vzRange, treeOutFile, corrOutFile ); }
+  else { jetHadron::BeginSummaryJet ( jetRadius, leadJetPtMin, jetPtMax, hardPtCut, jetHadron::binsVz, jetHadron::vzRange, treeOutFile, corrOutFile ); }
   
   // We know what analysis we are doing now, so build our output histograms
   jetHadron::histograms* histograms = new jetHadron::histograms( analysisType, binsEta, binsPhi );
