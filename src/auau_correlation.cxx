@@ -352,6 +352,10 @@ int main ( int argc, const char** argv ) {
       // and trigger objects
       triggerObjs = event->GetTrigObjs();
       
+      // testing to see how to redo the centrality to
+      // seamlessly switch between y7 and y14
+      std::cout<<"grefcentrality: "<<header->GetGReferenceCentrality()<<std::endl;
+      std::cout<<"grefmultiplicitycorr: "<< header->GetCorrectedGReferenceMultiplicity()<<std::endl;
       
       // Find the reference centrality
       int gRefMult = header->GetGReferenceMultiplicity();
