@@ -123,7 +123,7 @@ namespace jetHadron {
     // first we loop over all histograms, project 
     // down to 1D and add together
     ptSpectra.resize( correlations.size() );
-    std::vector<std::vector<TH1F*> ptBinHolder;
+    std::vector<std::vector<TH1F*> > ptBinHolder;
     ptBinHolder.resize( correlations.size() );
 
     for ( int i = 0; i < correlations.size(); ++i ) {
