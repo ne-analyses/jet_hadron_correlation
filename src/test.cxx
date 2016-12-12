@@ -64,8 +64,8 @@ int main() {
   std::cout<<"testing binning"<<std::endl;
   for ( int i = 0; i < 5; ++i ) {
     std::cout<<"bin "<<i<<std::endl;
-    std::cout<<"low edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinLowEdge(jetHadron::ptBinLo[i])<<std::endl;
-    std::cout<<"high edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinUpEdge(jetHadron::ptBinHi[i])<<std::endl;
+    std::cout<<"low edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinLowEdge(jetHadron::ptBinLoEdge[i])<<std::endl;
+    std::cout<<"high edge: "<< leading[0][0][0][0]->GetXaxis()->GetBinUpEdge(jetHadron::ptBinHiEdge[i])<<std::endl;
   }
   
   
