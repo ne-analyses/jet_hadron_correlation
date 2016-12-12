@@ -21,7 +21,7 @@ namespace jetHadron {
   
   // binSelector functionality to set bin information to match
   // current correlations
-  binSelector::SetHistogramBins( TH3F* h ) {
+  void binSelector::SetHistogramBins( TH3F* h ) {
     
     bindEta = h->GetXaxis()->GetNbins();
     dEtaLow = h->GetXaxis()->GetBinLowEdge(1);
