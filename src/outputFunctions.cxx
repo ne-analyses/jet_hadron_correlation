@@ -28,7 +28,7 @@ namespace jetHadron {
     dEtaHigh = h->GetXaxis()->GetBinUpEdge( h->GetXaxis()->GetNbins() );
     bindPhi = h->GetYaxis()->GetNbins();
     dPhiLow = h->GetYaxis()->GetBinLowEdge(1);
-    dPhiHigh = h->GetYaxis()->GetBinUpEdge( h->GetYAxis()->GetNbins() );
+    dPhiHigh = h->GetYaxis()->GetBinUpEdge( h->GetYaxis()->GetNbins() );
     
   }
   
