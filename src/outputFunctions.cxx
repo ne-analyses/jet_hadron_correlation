@@ -60,11 +60,11 @@ namespace jetHadron {
             std::string leadName = "lead_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             std::string subLeadName = "sub_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             std::cout<<"getting histograms"<<std::endl;
-            std::cout<<filesIn[i]->Get( leadName.c_str() )<<std::endl;
+            leadingCorrelations[i][j][k][l].push_back( new TH3F() );
             // get the correlation histograms
-            leadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
+            //leadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
             std::cout<<"got lead"<<std::endl;
-            subLeadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
+            //subLeadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
             std::cout<<"got sub"<<std::endl;
             // check to make sure it was successful
             if ( !leadingCorrelations[i][j][k][l] ) {
