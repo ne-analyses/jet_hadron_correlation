@@ -23,7 +23,7 @@ namespace jetHadron {
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
-  void ReadInFiles(std::vector<TFile>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
+  void ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
     
     // loop over all files and all aj, centrality, and vz bins
     // to return a 4D vector of histograms
@@ -33,7 +33,7 @@ namespace jetHadron {
       __OUT(outMsg.c_str() )
       
       // for each file, get the number of events
-      nEvents.push_back( (TH3F*) filesIn[i].Get("nevents") );
+      nEvents.push_back( (TH3F*) filesIn[i]->Get("nevents") );
       // rename because root can't handle simple crap
       std::string tmpName = "nevents_" + patch::to_string(i);
       nEvents[i]->SetName( tmpName.c_str() );
@@ -61,8 +61,8 @@ namespace jetHadron {
             std::string subLeadName = "sub_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
             
             // get the correlation histograms
-            leadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i].Get( leadName.c_str() ) );
-            subLeadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i].Get( subLeadName.c_str() ) );
+            leadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
+            subLeadingCorrelations[i][j][k].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
             
             // check to make sure it was successful
             if ( !leadingCorrelations[i][j][k][l] ) {

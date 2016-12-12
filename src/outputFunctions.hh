@@ -64,7 +64,7 @@ namespace jetHadron {
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
-  void ReadInFiles(std::vector<TFile>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector );
+  void ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector );
   
   
   
