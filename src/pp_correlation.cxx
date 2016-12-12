@@ -442,7 +442,7 @@ int main ( int argc, const char** argv) {
       // Check to see if there are enough jets,
       // and if they meet the momentum cuts - if dijet, checks if they are back to back
       if ( !jetHadron::CheckHardCandidateJets( analysisType, HiResult, leadJetPtMin, subJetPtMin ) ) 	{ continue; }
-      std::cout<<"found jet candidates"<<std::endl;
+
       // count "dijets" ( monojet if doing jet analysis )
       nHardDijets++;
       
@@ -475,7 +475,7 @@ int main ( int argc, const char** argv) {
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-      std::cout<<"found matched"<<std::endl;
+
       // now we have analysis jets, write the trees
       // for future event mixing
       vertexZBin = VzBin;
