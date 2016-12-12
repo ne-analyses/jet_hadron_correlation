@@ -438,11 +438,11 @@ int main ( int argc, const char** argv) {
       fastjet::ClusterSequence clusterSequenceHigh ( highPtCons, analysisDefinition );
       // Now first apply global jet selector to inclusive jets, then sort by pt
       std::vector<fastjet::PseudoJet> HiResult = fastjet::sorted_by_pt( selectorJetCandidate ( clusterSequenceHigh.inclusive_jets() ) );
- 
+      std::cout<<"hard jets... ";
       // Check to see if there are enough jets,
       // and if they meet the momentum cuts - if dijet, checks if they are back to back
       if ( !jetHadron::CheckHardCandidateJets( analysisType, HiResult, leadJetPtMin, subJetPtMin ) ) 	{ continue; }
-      std::cout<<"success checking hard jets"<<std::endl;
+      std::cout<<"success "<<std::endl;
       // count "dijets" ( monojet if doing jet analysis )
       nHardDijets++;
       
