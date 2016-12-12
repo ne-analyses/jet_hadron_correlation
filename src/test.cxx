@@ -68,6 +68,13 @@ int main() {
     std::cout<<"high edge: "<< leading[0][0][0][0]->GetZaxis()->GetBinUpEdge(selector.ptBinHighEdge(i))<<std::endl;
   }
   
+  std::vector<std::vector<TH1F*> > ptBins;
+
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptBins );
+
+  for ( int j = 0; j < 5; ++j ) {
+    std::cout<<"pt bin center: bin "<<j << " " <<ptBinCenters[0][j]<<std::endl;
+  }
   
 	return 0;
 }
