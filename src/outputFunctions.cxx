@@ -129,7 +129,7 @@ namespace jetHadron {
     for ( int i = 0; i < correlations.size(); ++i ) {
       for  ( int j = 0; j < correlations[i].size(); ++j ) {
         for ( int k = 0; k < correlations[i][j].size(); ++k ) {
-          for ( int l = 0; l < correlations[i][j][k][l].size(); ++l ) {
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
             for ( int m = 0; m < selector.nPtBins; ++m ) {
               if ( j == 0 && k == 0 && l == 0 ) {
                 std::string tmp = "pt_file_" + patch::to_string(i);
