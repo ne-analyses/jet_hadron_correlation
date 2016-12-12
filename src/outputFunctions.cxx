@@ -51,8 +51,8 @@ namespace jetHadron {
         for ( int k = selector.centLow; k <= selector.centHigh; ++k ) {
           
           // push back the vectors
-          leadingCorrelations[i][j].push_back( std::vector<TH3F*> );
-          subLeadingCorrelations[i][j].push_back( std::vector<TH3F*> );
+          leadingCorrelations[i][j].push_back( std::vector<TH3F*>() );
+          subLeadingCorrelations[i][j].push_back( std::vector<TH3F*>() );
           
           for ( int l = selector.vzLow; l <= selector.vzHigh; ++l ) {
             
