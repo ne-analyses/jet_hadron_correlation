@@ -19,6 +19,20 @@ namespace patch {
 
 namespace jetHadron {
   
+  // binSelector functionality to set bin information to match
+  // current correlations
+  binSelector::SetHistogramBins( TH3F* h ) {
+    
+    bindEta = h->GetXaxis()->GetNbins();
+    dEtaLow = h->GetXaxis()->GetBinLowEdge(1);
+    dEtaHigh = h->GetXaxis()->GetBinUpEdge( h->GetXaxis()->GetNbins() );
+    bindPhi = h->GetYAxis()->GetNbins();
+    dPhiLow = h->GetYAxis()->GetBinLowEdge(1);
+    dPhiHigh = h->GetYAxis()->GetBinUpEdge( h->GetYAxis()->GetNbins() );
+    
+  }
+  
+  
   // Function used to read in histograms from
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
@@ -42,43 +56,43 @@ namespace jetHadron {
       leadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
       subLeadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
       
-      for ( int j = selector.ajLow; j <= selector.ajHigh; ++j ) {
+      for ( int j = selector.centLow; j <= selector.centHigh; ++j ) {
         
-        int aj_index = j - selector.ajLow;
+        int cent_index = j - selector.centLow;
         
         // push back the vectors
         leadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
         subLeadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
         
-        for ( int k = selector.centLow; k <= selector.centHigh; ++k ) {
+        for ( int k = selector.vzLow; k <= selector.vzHigh; ++k ) {
           
-          int cent_index = k - selector.centLow;
+          int vz_index = k - selector.vzLow;
           
           // push back the vectors
           leadingCorrelations[i][aj_index].push_back( std::vector<TH3F*>() );
           subLeadingCorrelations[i][aj_index].push_back( std::vector<TH3F*>() );
           
-          for ( int l = selector.vzLow; l <= selector.vzHigh; ++l ) {
+          for ( int l = selector.ajLow; l <= selector.ajHigh; ++l ) {
             
-            int vz_index = l - selector.vzLow;
+            int aj_index = l - selector.ajLow
             
             // build the in-file histogram names
-            std::string leadName = "lead_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
-            std::string subLeadName = "sub_aj_" + patch::to_string(j) + "_cent_" + patch::to_string(k) + "_vz_" + patch::to_string(l);
+            std::string leadName = "lead_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+            std::string subLeadName = "sub_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
             
             // get the correlation histograms
-            leadingCorrelations[i][aj_index][cent_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
+            leadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
             
-            subLeadingCorrelations[i][aj_index][cent_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
+            subLeadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
             
             // check to make sure it was successful
-            if ( !leadingCorrelations[i][aj_index][cent_index][vz_index] ) {
+            if ( !leadingCorrelations[i][cent_index][vz_index][aj_index] ) {
               std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
               __ERR( errorMsg.c_str() )
               continue;
             }
-            if ( !subLeadingCorrelations[i][aj_index][cent_index][vz_index] ) {
+            if ( !subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
               std::string errorMsg = "Couldn't read in subleading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
               __ERR( errorMsg.c_str() )
               continue;
@@ -88,13 +102,21 @@ namespace jetHadron {
             leadName = "file_" + patch::to_string(i) + leadName;
             subLeadName = "file_" + patch::to_string(i) + subLeadName;
             
-            leadingCorrelations[i][aj_index][cent_index][vz_index]->SetName( leadName.c_str() );
-            subLeadingCorrelations[i][aj_index][cent_index][vz_index]->SetName( subLeadName.c_str() );
+            leadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( leadName.c_str() );
+            subLeadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( subLeadName.c_str() );
             
           }
         }
       }
     }
+  }
+  
+  // Function used to find the weighted center
+  //for each pt bin for each file
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations ) {
+    
+    // first create a structure to hold the pt histograms
+    
   }
   
 

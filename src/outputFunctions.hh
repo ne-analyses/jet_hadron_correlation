@@ -59,14 +59,18 @@ namespace jetHadron {
   // Default settings are for all Aj bins, 0-20% centrality, and all Vz bins
   // also builds the proper variables for histogram pt projections
   struct binSelector {
-    unsigned ajLow = 0;
-    unsigned ajHigh = binsAj-1;
+    
+    // used to select which histograms to read in
     unsigned centLow = 6;
     unsigned centHigh = 8;
     unsigned vzLow = 0;
     unsigned vzHigh = binsVz-1;
+    unsigned ajLow = 0;
+    unsigned ajHigh = binsAj-1;
     
     // histogram bins
+    
+    // pt
     double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
     double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
@@ -74,6 +78,17 @@ namespace jetHadron {
     
     double ptBinLowEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeLo[i]/ptBinWidth ) + 1; else __ERR("bad pt bin index") return 0;  }
     double ptBinHighEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeHi[i]/ptBinWidth ); else __ERR("bad pt bin index") return 0;  }
+    
+    // these can be used to help with deta and dphi binning
+    unsigned bindEta = 22;
+    double dEtaLow = -2.0;
+    double dEtaHigh = 2.0;
+    unsigned bindPhi = 22;
+    double dPhiLow = -pi/2.0;
+    double dPhiHigh = 3.0*pi/2.0;
+    
+    void SetHistogramBins( TH3F* h );
+    
     
   };
   
@@ -83,6 +98,10 @@ namespace jetHadron {
   // vz bin range, and aj ranges passed in via binSelector
   void ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector );
   
+  
+  // Function used to find the weighted center
+  //for each pt bin for each file
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations );
   
 } // end namespace
 
