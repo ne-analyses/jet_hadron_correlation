@@ -97,7 +97,7 @@ namespace jetHadron {
 	// Pt binning
 	const int 	 	binsPt = 24;							// number of pt bins
 	const double 	ptLowEdge = 0.0;					// lower edge for accepted pt range
-	const double 	ptHighEdge = 12.0;				// upper edge for accepted pt range
+	const double 	ptHighEdge = 6.0;				// upper edge for accepted pt range
 	
 	// Phi binning ( full 2*pi coverage, from -pi/4 to 7*pi/4 )
 	const int 	 	binsPhiDefault = 24;			// number of phi bins
