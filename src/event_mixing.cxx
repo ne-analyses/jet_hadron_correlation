@@ -488,6 +488,7 @@ int main ( int argc, const char** argv) {
     }
   }catch ( std::exception& e) {
     std::cerr << "Caught " << e.what() << std::endl;
+    std::cout<<"error"<<std::endl;
     return -1;
   }
   __OUT("Finished inital event binning in Vz-centrality")
