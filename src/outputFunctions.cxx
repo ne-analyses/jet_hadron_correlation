@@ -272,7 +272,7 @@ namespace jetHadron {
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
         for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
-          for ( int l = 0; l < mixedEvents[i][j][k][l].size(); ++l ) {
+          for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
             if ( mixedEvents[i][j][k][l]->GetEntries() ) {
               mixedEvents[i][j][k][l]->Scale( 1.0 / mixedEvents[i][j][k][l]->GetMaximum() );
             }
