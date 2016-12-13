@@ -158,10 +158,10 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
   
   // Now build the correlation histograms, both the total and the aj split
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelation;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelation;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > correlationAjLow;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > correlationAjHigh;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorrelation;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingCorrelation;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjLow;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjHigh;
   
   jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
   jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
