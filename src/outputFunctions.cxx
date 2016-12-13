@@ -259,6 +259,7 @@ namespace jetHadron {
     
     // build the initial holder
     std::vector<std::vector<TH2F*> > averagedCorrelations;
+    averagedCorrelations.resize( correlations.size() );
     
     for ( int i = 0; i < correlations.size(); ++i ) {
       averagedCorrelations[i].resize(selector.nPtBins);
