@@ -399,13 +399,13 @@ namespace jetHadron {
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
-                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][j][k][l] );
+                correctedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][j][k][l] );
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
             }
             else {
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
-                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][j][k][l] ) );
+                correctedCorrelations[i][l]->Add( ((TH2F*) correlations[i][j][k][l])->Clone())->Divide( mixedEvents[i][j][k][l] ) );
               }
             }
           }
@@ -437,13 +437,13 @@ namespace jetHadron {
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] );
+                correctedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][l] );
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
             }
             else {
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] ) );
+                correctedCorrelations[i][l]->Add( ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][l] ) );
               }
             }
           }
