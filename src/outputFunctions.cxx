@@ -391,10 +391,10 @@ namespace jetHadron {
             
             if ( !correctedCorrelations[i][l] ) {
               std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
-              if ( correlations[i][j][k][l]->GetName().Contains("low") ) {
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
                 tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
-              if ( correlations[i][j][k][l]->GetName().Contains("high") ) {
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
                 tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               
