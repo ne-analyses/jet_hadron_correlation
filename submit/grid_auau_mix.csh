@@ -74,6 +74,6 @@ echo "Logging errors to " $ErrFile
 
 set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTrigger $mixEvents"
 
-qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -V -q erhiq -l mem=5GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
