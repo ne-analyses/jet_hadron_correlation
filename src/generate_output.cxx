@@ -155,8 +155,12 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMixIn;
   // reading in the histograms
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
-  jetHadron::ReadInFiles( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
+  jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
   
+  std::cout<<"signal "<<nEvents[0]->GetEntries()<<std::endl;
+  std::cout<<"mixing "<<nEventsMixing[0]->GetEntries()<<std::endl;
+  
+  return 0;
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
