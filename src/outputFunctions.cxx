@@ -130,16 +130,16 @@ namespace jetHadron {
       nEvents[i]->SetName( tmpName.c_str() );
       
       // push back the vectors
-      leadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
-      subLeadingCorrelations.push_back( std::vector<std::vector<std::vector<TH3F*> > >() );
+      leadingCorrelations.push_back( std::vector<std::vector<TH3F*> >() );
+      subLeadingCorrelations.push_back( std::vector<std::vector<TH3F*> >() );
       
       for ( int j = selector.centLow; j <= selector.centHigh; ++j ) {
         
         int cent_index = j - selector.centLow;
         
         // push back the vectors
-        leadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
-        subLeadingCorrelations[i].push_back( std::vector<std::vector<TH3F*> >() );
+        leadingCorrelations[i].push_back( std::vector<TH3F*>() );
+        subLeadingCorrelations[i].push_back( std::vector<TH3F*>() );
         
         for ( int k = selector.vzLow; k <= selector.vzHigh; ++k ) {
           
