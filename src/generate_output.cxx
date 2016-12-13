@@ -177,15 +177,15 @@ int main( int argc, const char** argv) {
   // Now build and scale the event mixing histograms.
   // we will use the averaged event mixing for now
   // First average over all centrality/vz/aj, project into pt
-  std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector );
-  std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector );
+  //std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector );
+  //std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector );
   
   // And Scale so that MaxBinContent = 1
-  jetHadron::ScaleMixedEvents( leadingMix );
-  jetHadron::ScaleMixedEvents( subleadingMix );
+  //jetHadron::ScaleMixedEvents( leadingMix );
+  //jetHadron::ScaleMixedEvents( subleadingMix );
   
   for ( int i = 0; i < nFiles; ++ i ) {
-    jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing"+analysisNames[i], analysisNames[i], selector );
+    //jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/uncorr"+analysisNames[i], analysisNames[i], selector );
   }
   
