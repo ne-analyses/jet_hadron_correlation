@@ -132,6 +132,11 @@ int main( int argc, const char** argv) {
   
   int nFiles = analysisNames.size();
   
+  // TESTING
+  std::vector<TFile*> inFile;
+  inFile.resize(1);
+  inFile[0] = new TFile("out/tmp/dijet_20_10.root", "READ");
+  
   // Build our bin selector with default settings
   jetHadron::binSelector selector;
   
@@ -144,7 +149,7 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMix;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMix;
   // reading in the histograms
-  jetHadron::ReadInFiles( corrFiles, leadingCorrelation, subleadingCorrelation, nEvents, selector );
+  jetHadron::ReadInFiles( inFile, leadingCorrelation, subleadingCorrelation, nEvents, selector );
   //jetHadron::ReadInFiles( mixFiles, leadingMix, subleadingMix, nEventsMixing, selector );
   
   // Find the pt bin center for future use
