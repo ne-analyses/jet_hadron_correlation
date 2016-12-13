@@ -222,7 +222,7 @@ namespace jetHadron {
               
               // select proper pt range
               correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
-              if ( m <= ajBinSplit ) {
+              if ( l <= ajBinSplit ) {
                 if ( !reducedCorrelationsHigh[i][j][k][m] ) {
                   std::string tmp = "corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
                   reducedCorrelationsHigh[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();

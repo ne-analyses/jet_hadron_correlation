@@ -92,6 +92,9 @@ int main( int argc, const char** argv) {
   std::vector<TFile*> mixFiles;
   std::vector<std::string> analysisNames;
   
+  // bin to split Aj on
+  int ajSplitBin = 0;
+  
   switch ( argc ) {
     case 1: { // Default case
       __OUT( "Using Default Settings" )
@@ -102,6 +105,7 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
 
+      ajSplitBin = 5;
       analysisNames = defaultCorrNames;
       
       break;
@@ -114,18 +118,20 @@ int main( int argc, const char** argv) {
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = ( argc - 1 )/3;
+      int nCorrFiles = ( argc - 2 )/3;
       
       analysisNames.resize( nCorrFiles );
       
+      ajSplitBin = atoi ( arguments [ 1 ] );
+      
       for ( int i = 0; i < nCorrFiles; ++i ) {
         
-        TFile* tmp = new TFile( arguments[ 3*i ].c_str(), "READ" );
-        TFile* tmpMix =  new TFile( arguments[ (3*i)+1 ].c_str(), "READ" );
+        TFile* tmp = new TFile( arguments[ 3*i+1 ].c_str(), "READ" );
+        TFile* tmpMix =  new TFile( arguments[ (3*i)+2 ].c_str(), "READ" );
         
         corrFiles.push_back( tmp );
         mixFiles.push_back( tmp );
-        analysisNames[i] = arguments[ (3*i)+2 ];
+        analysisNames[i] = arguments[ (3*i)+3 ];
       }
     }
   }
@@ -149,7 +155,7 @@ int main( int argc, const char** argv) {
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
-  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelation, ptSpectra, selector );
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
   
   // Now build the correlation histograms, both the total and the aj split
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelation;
@@ -159,7 +165,7 @@ int main( int argc, const char** argv) {
   
   jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
   jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
-  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector );
+  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector, ajSplitBin );
   
   
   return 0;
