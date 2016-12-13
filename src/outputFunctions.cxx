@@ -254,7 +254,7 @@ namespace jetHadron {
   // Used to normalize mixed event histograms so
   // that the maximum bin content = 1
   // version for both the independent mixed events and the weighed averages
-  void ScaleMixedEvents( std::vector<std::vector<TH3F*> >& mixedEvents ) {
+  void ScaleMixedEvents( std::vector<std::vector<TH2F*> >& mixedEvents ) {
     
     // scale each histogram
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
@@ -266,7 +266,7 @@ namespace jetHadron {
     }
   }
   
-  void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents ) {
+  void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents ) {
     
     // scale each histogram
     for ( int i = 0; i < mixedEvents.size(); ++i ) {

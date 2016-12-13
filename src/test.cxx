@@ -61,20 +61,8 @@ int main() {
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
-  std::cout<<"testing binning"<<std::endl;
-  for ( int i = 0; i < 5; ++i ) {
-    std::cout<<"bin "<<i<<std::endl;
-    std::cout<<"low edge: "<< leading[0][0][0][0]->GetZaxis()->GetBinLowEdge(selector.ptBinLowEdge(i))<<std::endl;
-    std::cout<<"high edge: "<< leading[0][0][0][0]->GetZaxis()->GetBinUpEdge(selector.ptBinHighEdge(i))<<std::endl;
-  }
-  
-  std::vector<TH1F*> ptSpectra;
-
-  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
-
-  for ( int j = 0; j < 5; ++j ) {
-    std::cout<<"pt bin center: bin "<<j << " " <<ptBinCenters[0][j]<<std::endl;
-  }
+  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( lead, selector );
+  jetHadron::ScaleMixedEvents( mixedEvents );
   
 	return 0;
 }
