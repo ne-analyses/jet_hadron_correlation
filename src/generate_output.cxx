@@ -134,7 +134,7 @@ int main( int argc, const char** argv) {
         TFile* tmpMix =  new TFile( arguments[ (3*i)+3 ].c_str(), "READ" );
         
         corrFiles.push_back( tmp );
-        mixFiles.push_back( tmp );
+        mixFiles.push_back( tmpMix );
         analysisNames[i] = arguments[ (3*i)+4 ];
       }
     }
@@ -157,10 +157,6 @@ int main( int argc, const char** argv) {
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
   
-  std::cout<<"signal "<<nEvents[0]->GetEntries()<<std::endl;
-  std::cout<<"mixing "<<nEventsMixing[0]->GetEntries()<<std::endl;
-  
-  return 0;
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
