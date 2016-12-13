@@ -399,13 +399,17 @@ namespace jetHadron {
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
-                correctedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][j][k][l] );
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                hTmp->Divide( mixedEvents[i][j][k][l] );
+                correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
             }
             else {
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
-                correctedCorrelations[i][l]->Add( ((TH2F*) correlations[i][j][k][l])->Clone())->Divide( mixedEvents[i][j][k][l] ) );
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                hTmp->Divide( mixedEvents[i][j][k][l] );
+                correctedCorrelations[i][l]->Add( hTmp );
               }
             }
           }
@@ -437,13 +441,17 @@ namespace jetHadron {
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][l] );
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                hTmp->Divide( mixedEvents[i][l] );
+                correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
             }
             else {
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l]->Add( ((TH2F*) correlations[i][j][k][l]->Clone())->Divide( mixedEvents[i][l] ) );
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                hTmp->Divide( mixedEvents[i][l] );
+                correctedCorrelations[i][l]->Add( hTmp );
               }
             }
           }
