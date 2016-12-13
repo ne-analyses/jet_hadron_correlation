@@ -64,5 +64,10 @@ int main() {
   std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leading, selector );
   jetHadron::ScaleMixedEvents( mixedEvents );
   
+  TCanvas c1;
+  mixedEvents[0][0]->Draw("surf1");
+  c1.SaveAs("test.pdf");
+  
+  
 	return 0;
 }
