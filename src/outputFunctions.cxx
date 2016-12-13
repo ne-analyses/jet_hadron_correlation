@@ -415,43 +415,43 @@ namespace jetHadron {
     return correctedCorrelations;
   }
   
-  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector) {
-    
-    // create holder for the output
-    std::vector<std::vector<TH2F*> > correctedCorrelations;
-    correctedCorrelations.resize(correlations.size() );
-    
-    for ( int i = 0; i < correlations.size(); ++i ) {
-      correctedCorrelations[i].resize( selector.nPtBins );
-      for ( int j = 0; j < correlations[i].size(); ++j ) {
-        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
-          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
-            
-            if ( !correctedCorrelations[i][l] ) {
-              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
-              if ( correlations[i][j][k][l]->GetName().Contains("low") ) {
-                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
-              }
-              if ( correlations[i][j][k][l]->GetName().Contains("high") ) {
-                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
-              }
-              
-              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] );
-                correctedCorrelations[i][l]->SetName( tmp.c_str() );
-              }
-            }
-            else {
-              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
-                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] ) );
-              }
-            }
-          }
-        }
-      }
-    }
-    return correctedCorrelations;
-  }
+//  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector ) {
+//    
+//    // create holder for the output
+//    std::vector<std::vector<TH2F*> > correctedCorrelations;
+//    correctedCorrelations.resize(correlations.size() );
+//    
+//    for ( int i = 0; i < correlations.size(); ++i ) {
+//      correctedCorrelations[i].resize( selector.nPtBins );
+//      for ( int j = 0; j < correlations[i].size(); ++j ) {
+//        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+//          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+//            
+//            if ( !correctedCorrelations[i][l] ) {
+//              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+//              if ( correlations[i][j][k][l]->GetName().Contains("low") ) {
+//                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+//              }
+//              if ( correlations[i][j][k][l]->GetName().Contains("high") ) {
+//                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+//              }
+//              
+//              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
+//                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] );
+//                correctedCorrelations[i][l]->SetName( tmp.c_str() );
+//              }
+//            }
+//            else {
+//              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
+//                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] ) );
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//    return correctedCorrelations;
+//  }
   
 
   
