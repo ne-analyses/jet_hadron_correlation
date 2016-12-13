@@ -482,7 +482,7 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
-      histograms[i]->SetTitle( selector.ptBinString[i] );
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
