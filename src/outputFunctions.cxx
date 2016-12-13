@@ -169,7 +169,7 @@ namespace jetHadron {
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector ) {
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector ) {
     
     std::vector<std::vector<std::vector<std::vector<TH2F*> > > > finalMixedEvents;
     finalMixedEvents.resize( mixedEvents.size() );
@@ -206,7 +206,7 @@ namespace jetHadron {
   
   // Used to average the mixed event data to help
   // with the lower statistics
-  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector ) {
+  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector ) {
     
     // create the return object
     std::vector<std::vector<TH2F*> > combinedMixedEvents;
@@ -251,7 +251,36 @@ namespace jetHadron {
     return combinedMixedEvents;
   }
   
+  // Used to normalize mixed event histograms so
+  // that the maximum bin content = 1
+  // version for both the independent mixed events and the weighed averages
+  void ScaleMixedEvents( std::vector<std::vector<TH3F*> >& mixedEvents ) {
+    
+    // scale each histogram
+    for ( int i = 0; i < mixedEvents.size(); ++i ) {
+      for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        if ( mixedEvents[i][j]->GetEntries() ) {
+          mixedEvents[i][j]->Scale( 1.0 / mixedEvents->GetMaximum() );
+        }
+      }
+    }
+  }
   
+  void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents ) {
+    
+    // scale each histogram
+    for ( int i = 0; i < mixedEvents.size(); ++i ) {
+      for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
+          for ( int l = 0; l < mixedEvents[i][j][k][l].size(); ++l ) {
+            if ( mixedEvents[i][j][k][l]->GetEntries() ) {
+              mixedEvents[i][j][k][l]->Scale( 1.0 / mixedEvents[i][j][k][l]->GetMaximum() );
+            }
+          }
+        }
+      }
+    }
+  }
   
   
 } // end namespace

@@ -107,17 +107,17 @@ namespace jetHadron {
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector );
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector );
   
   // Used to average the mixed event data to help
   // with the lower statistics
-  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector );
+  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector );
   
   // Used to normalize mixed event histograms so
   // that the maximum bin content = 1
   // version for both the independent mixed events and the weighed averages
-  void ScaleMixedEvents( std::vector<std::vector<TH3F*> > mixedEvents );
-  void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents );
+  void ScaleMixedEvents( std::vector<std::vector<TH3F*> >& mixedEvents );
+  void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents );
   
   
   
