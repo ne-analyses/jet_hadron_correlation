@@ -181,7 +181,9 @@ int main( int argc, const char** argv) {
   jetHadron::ScaleMixedEvents( leadingMix );
   jetHadron::ScaleMixedEvents( subleadingMix );
   
-  //
+  for ( int i = 0; i < nFiles; ++ i ) {
+    Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing", analysisNames[i], selector );
+  }
   
   
   
