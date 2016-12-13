@@ -184,7 +184,7 @@ namespace jetHadron {
             for ( int m = 0; m < selector.nPtBins; ++m ){
               
               // select the proper pt range for each histogram
-              mixedEvents[i][j][k][l]-GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              mixedEvents[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               
               if ( !finalMixedEvents[i][j][k][m] ) {
                 finalMixedEvents[i][j][k][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
