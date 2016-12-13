@@ -136,12 +136,17 @@ int main( int argc, const char** argv) {
   std::vector<TFile*> inFile;
   inFile.resize(1);
   inFile[0] = new TFile("out/tmp/dijet_20_10.root", "READ");
+  std::vector<TH3F*> nEvents;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leading;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > sub;
   
   // Build our bin selector with default settings
   jetHadron::binSelector selector;
   
+  jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
+  
   // Build our initial histogram holders
-  std::vector<TH3F*> nEvents;
+  //std::vector<TH3F*> nEvents;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelation;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelation;
   // and event mixing
@@ -149,7 +154,7 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMix;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMix;
   // reading in the histograms
-  jetHadron::ReadInFiles( inFile, leadingCorrelation, subleadingCorrelation, nEvents, selector );
+  //jetHadron::ReadInFiles( inFile, leadingCorrelation, subleadingCorrelation, nEvents, selector );
   //jetHadron::ReadInFiles( mixFiles, leadingMix, subleadingMix, nEventsMixing, selector );
   
   // Find the pt bin center for future use
