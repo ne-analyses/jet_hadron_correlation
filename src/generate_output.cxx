@@ -114,14 +114,14 @@ int main( int argc, const char** argv) {
       break;
     }
     default: {
-      if ( (argc-2)%3 != 0 ) {
+      if ( (argc-3)%3 != 0 ) {
         __ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = ( argc - 2 )/3;
+      int nCorrFiles = ( argc - 3 )/3;
       
       analysisNames.resize( nCorrFiles );
       
