@@ -122,7 +122,7 @@ int main( int argc, const char** argv) {
       
       analysisNames.resize( nCorrFiles );
       
-      ajSplitBin = atoi ( arguments [ 1 ] );
+      ajSplitBin = atoi ( arguments[ 0 ].c_str() );
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
         
