@@ -137,22 +137,29 @@ int main( int argc, const char** argv) {
   
   // Build our initial histogram holders
   std::vector<TH3F*> nEvents;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelation;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelation;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelationIn;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelationIn;
   // and event mixing
   std::vector<TH3F*> nEventsMixing;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMix;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMix;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMixIn;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMixIn;
   // reading in the histograms
-  jetHadron::ReadInFiles( corrFiles, leadingCorrelation, subleadingCorrelation, nEvents, selector );
-  jetHadron::ReadInFiles( mixFiles, leadingMix, subleadingMix, nEventsMixing, selector );
+  jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
+  jetHadron::ReadInFiles( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelation, ptSpectra, selector );
   
   // Now build the correlation histograms, both the total and the aj split
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelation;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelation;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > correlationAjLow;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > correlationAjHigh;
   
+  jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
+  jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
+  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector );
   
   
   return 0;
