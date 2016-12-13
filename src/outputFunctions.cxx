@@ -479,6 +479,17 @@ namespace jetHadron {
       std::cout << "Success" << "\n";
     }
     
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->SetTitle( selector.ptBinString[i] );
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw("surf1");
+      c1.SaveAs( tmp.c_str() );
+    }
     
   }
   
