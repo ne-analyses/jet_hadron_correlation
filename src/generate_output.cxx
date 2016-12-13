@@ -151,8 +151,8 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingCorrelationIn;
   // and event mixing
   std::vector<TH3F*> nEventsMixing;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMixIn;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMixIn;
+  std::vector<std::vector<std::vector<TH3F*> > > leadingMixIn;
+  std::vector<std::vector<std::vector<TH3F*> > > subleadingMixIn;
   // reading in the histograms
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
