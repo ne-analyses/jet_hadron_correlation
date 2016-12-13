@@ -98,7 +98,7 @@ int main( int argc, const char** argv) {
       
       // default files
       TFile* tmp =  = new TFile( "out/tmp/dijet_corr.root", "READ" );
-      TFile* tmpMix = = new TFile( "out/tmp/dijet_mix.root", "READ" );
+      TFile* tmpMix = new TFile( "out/tmp/dijet_mix.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
 
