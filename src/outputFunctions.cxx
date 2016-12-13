@@ -163,14 +163,94 @@ namespace jetHadron {
       }
     }
     
-    TCanvas c1;
-    ptBinHolder[0][0]->Draw();
-    c1.SaveAs("test.pdf");
-    
     return ptBinCenters;
   }
   
+  // Used to recombine Aj and split in pt
+  // to give 2D projections we can turn use
+  // to correct the correlations
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector ) {
+    
+    std::vector<std::vector<std::vector<std::vector<TH2F*> > > > finalMixedEvents;
+    finalMixedEvents.resize( mixedEvents.size() );
+    
+    for ( int i = 0; i < mixedEvents.size(); ++i ) {
+      finalMixedEvents[i].resize( mixedEvents[i].size() );
+      for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        finalMixedEvents[i][j].resize( mixedEvents[i][j].size() );
+        for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
+          finalMixedEvents[i][j][k].resize( selector.nPtBins );
+          for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ){
+              
+              // select the proper pt range for each histogram
+              mixedEvents[i][j][k][l]-GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              
+              if ( !finalMixedEvents[i][j][k][m] ) {
+                finalMixedEvents[i][j][k][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
+                std::string tmp = "mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k) + "_pt_" + patch::to_string(m);
+                finalMixedEvents[i][j][k][m]->SetName( tmp.c_str() );
+              }
+              else {
+                finalMixedEvents[i][j][k][m]->Add( (TH2F*) mixedEvents[i][j][k][l]->Project3D("YX") );
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    return finalMixedEvents;
+  }
 
+  
+  // Used to average the mixed event data to help
+  // with the lower statistics
+  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixedEvents, binSelector selector ) {
+    
+    // create the return object
+    std::vector<std::vector<TH2F*> > combinedMixedEvents;
+    combinedMixedEvents.resize( mixedEvents.size() );
+    
+    for ( int i = 0; i < mixedEvents.size(); ++i ) {
+      combinedMixedEvents[i].resize( 3 );
+      
+      for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
+          for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ) {
+              
+              mixedEvents[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              
+              if ( m <= 2 ) {
+                if ( !combinedMixedEvents[i][m] ) {
+                  combinedMixedEvents[i][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
+                  std::string tmp = "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                  combinedMixedEvents[i][m]->SetName( tmp.c_str() );
+                }
+                else {
+                  combinedMixedEvents[i][m]->Add( (TH2F*) mixedEvents[i][j][k][l]->Project3D("YX") );
+                }
+              }
+              else {
+                if ( !combinedMixedEvents[i][2] ) {
+                  combinedMixedEvents[i][2] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
+                  std::string tmp = "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                  combinedMixedEvents[i][2]->SetName( tmp.c_str() );
+                }
+                else {
+                  combinedMixedEvents[i][2]->Add( (TH2F*) mixedEvents[i][j][k][l]->Project3D("YX") );
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    return combinedMixedEvents;
+  }
+  
   
   
   
