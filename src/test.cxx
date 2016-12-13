@@ -65,7 +65,7 @@ int main() {
   jetHadron::ScaleMixedEvents( mixedEvents );
   
   TCanvas c1;
-  mixedEvents[0][0][0][0]->Draw("surf1");
+  mixedEvents[0][0][0][2]->Draw("surf1");
   c1.SaveAs("test.pdf");
   
   
