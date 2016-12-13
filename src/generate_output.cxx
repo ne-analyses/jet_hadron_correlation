@@ -94,6 +94,8 @@ int main( int argc, const char** argv) {
   
   // bin to split Aj on
   int ajSplitBin = 0;
+  // and the output location
+  std::string outputDirBase;
   
   switch ( argc ) {
     case 1: { // Default case
@@ -107,27 +109,29 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
+      outputDirBase = "/output";
       
       break;
     }
     default: {
-      if ( (argc-1)%3 != 0 ) {
+      if ( (argc-2)%3 != 0 ) {
         __ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = ( argc - 2 )/3;
+      int nCorrFiles = ( argc - 3 )/3;
       
       analysisNames.resize( nCorrFiles );
       
       ajSplitBin = atoi ( arguments[ 0 ].c_str() );
+      outputDirBase = arguments[ 1 ];
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
         
-        TFile* tmp = new TFile( arguments[ 3*i+1 ].c_str(), "READ" );
-        TFile* tmpMix =  new TFile( arguments[ (3*i)+2 ].c_str(), "READ" );
+        TFile* tmp = new TFile( arguments[ 3*i+2 ].c_str(), "READ" );
+        TFile* tmpMix =  new TFile( arguments[ (3*i)+3 ].c_str(), "READ" );
         
         corrFiles.push_back( tmp );
         mixFiles.push_back( tmp );
@@ -136,6 +140,7 @@ int main( int argc, const char** argv) {
     }
   }
   
+  return 0;
   int nFiles = analysisNames.size();
   
   // Build our bin selector with default settings
@@ -166,6 +171,19 @@ int main( int argc, const char** argv) {
   jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
   jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
   jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector, ajSplitBin );
+  
+  // Now build and scale the event mixing histograms.
+  // we will use the averaged event mixing for now
+  // First average over all centrality/vz/aj, project into pt
+  std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector );
+  std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector );
+  
+  // And Scale so that MaxBinContent = 1
+  jetHadron::ScaleMixedEvents( leadingMix );
+  jetHadron::ScaleMixedEvents( subleadingMix );
+  
+  //
+  
   
   
   return 0;

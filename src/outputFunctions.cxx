@@ -6,6 +6,9 @@
 #include "corrParameters.hh"
 #include "histograms.hh"
 
+// to build directories we use boost
+#include "boost/filesystem.hpp"
+
 // the grid does not have std::to_string() for some ungodly reason
 // replacing it here. Simply ostringstream
 namespace patch {
@@ -234,7 +237,7 @@ namespace jetHadron {
               }
               else {
                 if ( !reducedCorrelationsLow[i][j][k][m] ) {
-                  std::string tmp = "corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                  std::string tmp = "corr_aj_high_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
                   reducedCorrelationsLow[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
                   reducedCorrelationsLow[i][j][k][m]->SetName( tmp.c_str() );
                 }
@@ -367,6 +370,108 @@ namespace jetHadron {
         }
       }
     }
+  }
+  
+  // Used to perform the mixed event division
+  // And add up everything into a 2D structure
+  // only keeping differntial in file and Pt
+  // Has a version for both the averaged and non
+  // averaged event mixing
+  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents, binSelector selector) {
+    
+    // create holder for the output
+    std::vector<std::vector<TH2F*> > correctedCorrelations;
+    correctedCorrelations.resize(correlations.size() );
+    
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      correctedCorrelations[i].resize( selector.nPtBins );
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            
+            if ( !correctedCorrelations[i][l] ) {
+              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              if ( correlations[i][j][k][l]->GetName().Contains("low") ) {
+                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              if ( correlations[i][j][k][l]->GetName().Contains("high") ) {
+                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              
+              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
+                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][j][k][l] );
+                correctedCorrelations[i][l]->SetName( tmp.c_str() );
+              }
+            }
+            else {
+              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
+                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][j][k][l] ) );
+              }
+            }
+          }
+        }
+      }
+    }
+    return correctedCorrelations;
+  }
+  
+  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector) {
+    
+    // create holder for the output
+    std::vector<std::vector<TH2F*> > correctedCorrelations;
+    correctedCorrelations.resize(correlations.size() );
+    
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      correctedCorrelations[i].resize( selector.nPtBins );
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            
+            if ( !correctedCorrelations[i][l] ) {
+              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              if ( correlations[i][j][k][l]->GetName().Contains("low") ) {
+                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              if ( correlations[i][j][k][l]->GetName().Contains("high") ) {
+                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              
+              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
+                correctedCorrelations[i][l] = ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] );
+                correctedCorrelations[i][l]->SetName( tmp.c_str() );
+              }
+            }
+            else {
+              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
+                correctedCorrelations[i][l]->Add( ((TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone())->Divide( mixedEvents[i][l] ) );
+              }
+            }
+          }
+        }
+      }
+    }
+    return correctedCorrelations;
+  }
+  
+
+  
+  
+  
+  
+  // *****************************
+  // HISTOGRAM PRINTING AND SAVING
+  // *****************************
+  
+  // Used to print out 2D plots ( correlations, mixed events )
+  void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    if ( !boost::filesystem::create_directories( dir ) ) {
+      std::cout << "Success" << "\n";
+    }
+    
+    
   }
   
   

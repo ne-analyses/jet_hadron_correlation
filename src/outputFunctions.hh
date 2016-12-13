@@ -74,6 +74,7 @@ namespace jetHadron {
     double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
     double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
+    double ptBinString = std::string ptBinString[nPtBins] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
     const int nPtBins = 5;
     
     double ptBinLowEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeLo[i]/ptBinWidth ) + 1; else __ERR("bad pt bin index") return 0;  }
@@ -124,6 +125,25 @@ namespace jetHadron {
   // version for both the independent mixed events and the weighed averages
   void ScaleMixedEvents( std::vector<std::vector<TH2F*> >& mixedEvents );
   void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents );
+  
+  // Used to perform the mixed event division
+  // And add up everything into a 2D structure
+  // only keeping differntial in file and Pt
+  // Has a version for both the averaged and non
+  // averaged event mixing
+  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents);
+  std::vector<std::vector<TH2F*> EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents);
+  
+  
+  
+  
+  
+  
+  // Methods for Printing out and Saving
+  // ***********************************
+  
+  // Used to print out and save the 2D prots ( correlations, mixed events )
+  void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   
   
 } // end namespace
