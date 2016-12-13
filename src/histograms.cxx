@@ -96,8 +96,8 @@ namespace jetHadron {
             TString leadName = "lead_aj_";
             TString subName = "sub_aj_";
             if ( analysisType == "dijetmix" || analysisType == "ppdijetmix" ) {
-              leadName = "mix_lead_cent_";
-              subName = "mix_sub_cent_";
+              leadName = "mix_lead_aj_";
+              subName = "mix_sub_aj_";
             }
             
             leadName += s1.str() + "_cent_" + s2.str() + "_vz_" + s3.str();
