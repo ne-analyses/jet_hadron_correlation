@@ -61,11 +61,11 @@ int main() {
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > mixedEvents = jetHadron::BuildMixedEvents( leading, selector );
+  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leading, selector );
   jetHadron::ScaleMixedEvents( mixedEvents );
   
   TCanvas c1;
-  mixedEvents[0][0][0][2]->Draw("surf1");
+  mixedEvents[0][0]->Draw("surf1");
   c1.SaveAs("test.pdf");
   
   

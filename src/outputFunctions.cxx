@@ -260,6 +260,7 @@ namespace jetHadron {
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
         if ( mixedEvents[i][j]->GetEntries() ) {
+          std::cout<<"max: "<< mixedEvents[i][j]->GetMaximum() << std::endl;
           mixedEvents[i][j]->Scale( 1.0 / mixedEvents[i][j]->GetMaximum() );
         }
       }
