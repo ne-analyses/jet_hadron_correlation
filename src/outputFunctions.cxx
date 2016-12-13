@@ -147,8 +147,8 @@ namespace jetHadron {
           
             
           // build the in-file histogram names
-          std::string leadName = "mix_lead" + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
-          std::string subLeadName = "mix_sub" + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+          std::string leadName = "mix_lead_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+          std::string subLeadName = "mix_sub_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
             
           // get the correlation histograms
@@ -158,12 +158,12 @@ namespace jetHadron {
           
           // check to make sure it was successful
           if ( !leadingCorrelations[i][cent_index][vz_index] ) {
-            std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
+            std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k);
             __ERR( errorMsg.c_str() )
             continue;
           }
           if ( !subLeadingCorrelations[i][cent_index][vz_index] ) {
-            std::string errorMsg = "Couldn't read in subleading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
+            std::string errorMsg = "Couldn't read in subleading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k);
             __ERR( errorMsg.c_str() )
               continue;
           }
