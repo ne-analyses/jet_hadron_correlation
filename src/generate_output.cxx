@@ -121,7 +121,7 @@ int main( int argc, const char** argv) {
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = ( argc - 3 )/3;
+      int nCorrFiles = ( argc - 2 )/3;
       
       analysisNames.resize( nCorrFiles );
       
