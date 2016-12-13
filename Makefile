@@ -1,7 +1,7 @@
 os = $(shell uname -s)
 
 #INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICOPATH)
-INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include
+INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include -I(BOOSTDIR)/include
 
 
 ifeq ($(os),Linux)
@@ -33,7 +33,7 @@ FJLIBS        = $(shell fastjet-config --libs)
 
 #LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
 #LIBS          = -lTStarJetPico -lfastjet -lfastjettools
-LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS)
+LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS) -L$(BOOSTDIR)/lib -lboost_filesystem
 
 # for cleanup
 SDIR          = src
