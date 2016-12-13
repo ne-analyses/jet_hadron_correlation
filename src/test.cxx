@@ -61,7 +61,7 @@ int main() {
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
-  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( lead, selector );
+  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leading, selector );
   jetHadron::ScaleMixedEvents( mixedEvents );
   
 	return 0;
