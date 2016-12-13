@@ -33,7 +33,7 @@ FJLIBS        = $(shell fastjet-config --libs)
 
 #LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
 #LIBS          = -lTStarJetPico -lfastjet -lfastjettools
-LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS) -L$(BOOSTDIR)/lib -lboost_filesystem
+LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS) -L$(BOOSTDIR)/lib -lboost_filesystem -lboost_system
 
 # for cleanup
 SDIR          = src
