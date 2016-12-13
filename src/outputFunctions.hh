@@ -104,6 +104,12 @@ namespace jetHadron {
   // and also creates pt spectra for each file
   std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector );
   
+  // Functions to project out the Aj dependence -
+  // can either produce a single, Aj independent bin
+  // or splits on an ajbin
+  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& reducedCorrelations, binSelector selector );
+  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit );
+  
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
@@ -118,7 +124,6 @@ namespace jetHadron {
   // version for both the independent mixed events and the weighed averages
   void ScaleMixedEvents( std::vector<std::vector<TH2F*> >& mixedEvents );
   void ScaleMixedEvents( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents );
-  
   
   
 } // end namespace

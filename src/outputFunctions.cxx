@@ -166,6 +166,90 @@ namespace jetHadron {
     return ptBinCenters;
   }
   
+  // For Correlations
+  // Functions to project out the Aj dependence -
+  // can either produce a single, Aj independent bin
+  // or splits on an ajbin
+  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelations, binSelector selector ) {
+    
+    // expand the holder
+    reducedCorrelations.resize( correlations.size() );
+    
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      reducedCorrelations[i].resize(correlations[i].size() );
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        reducedCorrelations[i][j].resize(correlations[i][j].size() );
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          reducedCorrelations[i][j][k].resize( selector.nPtBins );
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ) {
+              
+              // select proper pt range
+              correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              
+              if ( !reducedCorrelations[i][j][k][m] ) {
+                std::string tmp = "corr_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                reducedCorrelations[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
+                reducedCorrelations[i][j][k][m]->SetName( tmp.c_str() );
+              }
+              else {
+                reducedCorrelations[i][j][k][m]->Add( (TH2F*) correlations[i][j][k][l]->Project3D("YX") );
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit ) {
+    
+    // expand the holder
+    reducedCorrelationsHigh.resize( correlations.size() );
+    reducedCorrelationsLow.resize( correlations.size() );
+
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      reducedCorrelationsHigh[i].resize( correlations[i].size() );
+      reducedCorrelationsLow[i].resize( correlations[i].size() );
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        reducedCorrelationsHigh[i][j].resize( correlations[i][j].size() );
+        reducedCorrelationsLow[i][j].resize( correlations[i][j].size() );
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          reducedCorrelationsHigh[i][j][k].resize( selector.nPtBins );
+          reducedCorrelationsLow[i][j][k].resize( selector.nPtBins );
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ) {
+              
+              // select proper pt range
+              correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              
+              if ( !reducedCorrelationsHigh[i][j][k][m] ) {
+                std::string tmp = "corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                reducedCorrelationsHigh[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
+                reducedCorrelationsHigh[i][j][k][m]->SetName( tmp.c_str() );
+              }
+              else {
+                reducedCorrelationsHigh[i][j][k][m]->Add( (TH2F*) correlations[i][j][k][l]->Project3D("YX") );
+              }
+              
+              if ( !reducedCorrelationsLow[i][j][k][m] ) {
+                std::string tmp = "corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                reducedCorrelationsLow[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
+                reducedCorrelationsLow[i][j][k][m]->SetName( tmp.c_str() );
+              }
+              else {
+                reducedCorrelationsLow[i][j][k][m]->Add( (TH2F*) correlations[i][j][k][l]->Project3D("YX") );
+              }
+              
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  
+  // For Mixed Events
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
