@@ -5,7 +5,7 @@ INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I
 
 
 ifeq ($(os),Linux)
-CXXFLAGS      = -std=c++11
+CXXFLAGS      = -std=c++11 -DBOOST_SYSTEM_NO_DEPRECATED
 else
 CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init -std=c++11
 ## for debugging:
