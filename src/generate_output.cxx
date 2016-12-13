@@ -135,7 +135,7 @@ int main( int argc, const char** argv) {
         
         corrFiles.push_back( tmp );
         mixFiles.push_back( tmp );
-        analysisNames[i] = arguments[ (3*i)+3 ];
+        analysisNames[i] = arguments[ (3*i)+4 ];
       }
     }
   }
