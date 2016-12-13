@@ -139,7 +139,8 @@ int main( int argc, const char** argv) {
       }
     }
   }
-  
+  std::cout<<"aj: "<<ajSplitBin<<std::endl;
+  std::cout<<"name: "<<analysisNames[0]<<std::endl;
   return 0;
   int nFiles = analysisNames.size();
   
