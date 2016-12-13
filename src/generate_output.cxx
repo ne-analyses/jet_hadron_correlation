@@ -149,7 +149,7 @@ int main( int argc, const char** argv) {
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
-  std::vector<std::vector<double> > = jetHadron::FindPtBinCenter( leadingCorrelation, ptSpectra, selector );
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelation, ptSpectra, selector );
   
   // Now build the correlation histograms, both the total and the aj split
   
