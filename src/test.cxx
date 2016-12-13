@@ -61,8 +61,17 @@ int main() {
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   
+  
+  
   std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leading, selector );
   jetHadron::ScaleMixedEvents( mixedEvents );
+  
+  // Find the pt bin center for future use
+  std::vector<TH1F*> ptSpectra;
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
+  
+
+  
   
   TCanvas c1;
   mixedEvents[0][0]->Draw("surf1");
