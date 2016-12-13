@@ -171,6 +171,9 @@ int main( int argc, const char** argv) {
   jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
   jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector, ajSplitBin );
   
+  // get averaged correlations
+  std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector );
+  
   // Now build and scale the event mixing histograms.
   // we will use the averaged event mixing for now
   // First average over all centrality/vz/aj, project into pt
@@ -182,7 +185,8 @@ int main( int argc, const char** argv) {
   jetHadron::ScaleMixedEvents( subleadingMix );
   
   for ( int i = 0; i < nFiles; ++ i ) {
-    Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing", analysisNames[i], selector );
+    jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/uncorr"+analysisNames[i], analysisNames[i], selector );
   }
   
   

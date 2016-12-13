@@ -253,6 +253,42 @@ namespace jetHadron {
     }
   }
   
+  // Averages over all vz and centralities
+  // to show uncorrected signals
+  std::vector<std::vector<TH2F*> > AverageCorrelations( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, binSelector selector ) {
+    
+    // build the initial holder
+    std::vector<std::vector<TH2F*> averagedCorrelations;
+    
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      averagedCorrelations[i].resize(selector.nPtBins);
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            
+            if ( !averagedCorrelations[i][l] ) {
+              std::string tmp = "averaged_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
+                tmp = "averaged_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
+                tmp = "averaged_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              
+              averagedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone());
+              averagedCorrelations[i][l]->SetName( tmp.c_str() );
+            }
+            else {
+              averagedCorrelations[i][j]->Add( correlations[i][j][k][l] );
+            }
+          }
+        }
+      }
+    }
+    
+    return averagedCorrelations;
+  }
+  
   
   // For Mixed Events
   // Used to recombine Aj and split in pt
@@ -441,7 +477,12 @@ namespace jetHadron {
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
                 TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
-                hTmp->Divide( mixedEvents[i][l] );
+                if ( l <= 2 ) {
+                  hTmp->Divide( mixedEvents[i][l] );
+                }
+                else {
+                  hTmp->Divide( mixedEvents[i][2] );
+                }
                 correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
@@ -449,7 +490,13 @@ namespace jetHadron {
             else {
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
                 TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
-                hTmp->Divide( mixedEvents[i][l] );
+                if ( l <= 2 ) {
+                  hTmp->Divide( mixedEvents[i][l] );
+                }
+                else {
+                  hTmp->Divide( mixedEvents[i][2] );
+                }
+
                 correctedCorrelations[i][l]->Add( hTmp );
               }
             }
