@@ -353,6 +353,8 @@ int main ( int argc, const char** argv ) {
       triggerObjs = event->GetTrigObjs();
       
       // Find the reference centrality
+      // for y14 it takes the corrected gRefMult and
+      // corresponding reference centrality
       int gRefMult = 0;
       int refCent  = 0;
       if ( header->GetCorrectedGReferenceMultiplicity() ) {
