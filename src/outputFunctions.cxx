@@ -40,7 +40,7 @@ namespace jetHadron {
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
-  void ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
+  int ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
     
     // loop over all files and all aj, centrality, and vz bins
     // to return a 4D vector of histograms
@@ -83,6 +83,11 @@ namespace jetHadron {
             std::string leadName = "lead_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             std::string subLeadName = "sub_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
+            // check to make sure the file is properly formatted
+            if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
+              __ERR("Can't find histograms - maybe it has mixing correlations not signal?"))
+              return -1;
+            }
             
             // get the correlation histograms
             leadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
@@ -112,9 +117,10 @@ namespace jetHadron {
         }
       }
     }
+    return 1;
   }
   
-  void ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
+  int ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
     
     // loop over all files and all aj, centrality, and vz bins
     // to return a 4D vector of histograms
@@ -157,6 +163,11 @@ namespace jetHadron {
             std::string leadName = "mix_lead_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             std::string subLeadName = "mix_sub_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
+            // check to make sure the file is properly formatted
+            if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
+              __ERR("Can't find histograms - maybe it has signal correlations not event mixing?"))
+              return -1;
+            }
             
             // get the correlation histograms
             leadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
@@ -186,6 +197,7 @@ namespace jetHadron {
         }
       }
     }
+    return 1;
   }
 
   
