@@ -76,7 +76,7 @@ int main() {
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
   
-  jetHadron::Print2DHistograms( leadingMix[0], "tmp/test", "mixing", selector );
+  jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
   
   
   
