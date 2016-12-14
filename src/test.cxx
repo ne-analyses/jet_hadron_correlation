@@ -49,8 +49,11 @@ int main() {
   
   // test read in
   std::vector<TFile*> inFile;
+  std::vector<TFile*> inFileMix;
   inFile.resize(1);
-  inFile[0] = new TFile("out/tmp/dijet_20_10.root", "READ");
+  inFile[0] = new TFile("out/tmp/dijet_corr_20_10.root", "READ");
+  inFileMix.resize(1);
+  inFile[0] = new TFile("out/tmp/dijet_mix_20_10.root", "READ");
   
   // testing
   jetHadron::binSelector selector;
@@ -58,26 +61,23 @@ int main() {
   std::vector<TH3F*> nEvents;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leading;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > sub;
+  std::vector<TH3F*> nEventsMix;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMix;
+  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subMix;
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
+  jetHadron::ReadInFiles( inFileMix, leadingMix, subMix, nEventsMix, selector );
   
   
-  
-  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leading, selector );
+  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leadingMix, selector );
   jetHadron::ScaleMixedEvents( mixedEvents );
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
   
-  for ( int i = 0; i < 5; ++i ) {
-    std::cout<<"pt bin: "<<i << " " <<ptBinCenters[0][i]<<std::endl;
-  }
+  jetHadron::Print2DHistograms( leadingMix[0], "tmp/test", analysisNames[i], selector );
   
-  
-  TCanvas c1;
-  mixedEvents[0][0]->Draw("surf1");
-  c1.SaveAs("test.pdf");
   
   
 	return 0;
