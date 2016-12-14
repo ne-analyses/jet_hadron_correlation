@@ -51,9 +51,9 @@ int main() {
   std::vector<TFile*> inFile;
   std::vector<TFile*> inFileMix;
   inFile.resize(1);
-  inFile[0] = new TFile("out/tmp/dijet_corr_20_10.root", "READ");
+  inFile[0] = new TFile("out/tmp/auau_corr_20_10.root", "READ");
   inFileMix.resize(1);
-  inFileMix[0] = new TFile("out/tmp/dijet_mix_20_10.root", "READ");
+  inFileMix[0] = new TFile("out/tmp/auau_mix_20_10.root", "READ");
   
   // testing
   jetHadron::binSelector selector;

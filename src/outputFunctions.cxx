@@ -92,18 +92,20 @@ namespace jetHadron {
             // get the correlation histograms
             leadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
             
-            subLeadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
-            
             // check to make sure it was successful
             if ( !leadingCorrelations[i][cent_index][vz_index][aj_index] ) {
               std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
               __ERR( errorMsg.c_str() )
               continue;
             }
-            if ( !subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
-              std::string errorMsg = "Couldn't read in subleading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
-              __ERR( errorMsg.c_str() )
-              continue;
+            
+            
+            // if subleading correlations are there, load them in
+            if ( filesIn[i]->Get( subLeadName.c_str() ) ) {
+              subLeadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
+            }
+            else {
+              subLeadingCorrelations[i][cent_index][vz_index].push_back(0x0);
             }
             
             //now differentiate the names by file
@@ -111,8 +113,9 @@ namespace jetHadron {
             subLeadName = "corr_file_" + patch::to_string(i) + subLeadName;
             
             leadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( leadName.c_str() );
-            subLeadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( subLeadName.c_str() );
-            
+            if ( subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
+              subLeadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( subLeadName.c_str() );
+            }
           }
         }
       }
@@ -164,7 +167,7 @@ namespace jetHadron {
             std::string subLeadName = "mix_sub_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
             // check to make sure the file is properly formatted
-            if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
+            if ( !filesIn[i]->Get( leadName.c_str() ) ) {
               __ERR("Can't find histograms - maybe it has signal correlations not event mixing?")
               return -1;
             }
@@ -172,18 +175,19 @@ namespace jetHadron {
             // get the correlation histograms
             leadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( leadName.c_str() ) );
             
-            subLeadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
-            
             // check to make sure it was successful
             if ( !leadingCorrelations[i][cent_index][vz_index][aj_index] ) {
               std::string errorMsg = "Couldn't read in leading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
               __ERR( errorMsg.c_str() )
               continue;
             }
-            if ( !subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
-              std::string errorMsg = "Couldn't read in subleading correlation: " + patch::to_string(i) + " " + patch::to_string(j) + " " + patch::to_string(k) + " " + patch::to_string(l);
-              __ERR( errorMsg.c_str() )
-              continue;
+            
+            // if this is a dijet analysis, get the subleading correlations
+            if ( filesIn[i]->Get( subLeadName.c_str() ) ) {
+              subLeadingCorrelations[i][cent_index][vz_index].push_back( (TH3F*) filesIn[i]->Get( subLeadName.c_str() ) );
+            }
+            else {
+              subLeadingCorrelations[i][cent_index][vz_index].push_back(0x0);
             }
             
             //now differentiate the names by file
@@ -191,8 +195,9 @@ namespace jetHadron {
             subLeadName = "mix_corr_file_" + patch::to_string(i) + subLeadName;
             
             leadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( leadName.c_str() );
-            subLeadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( subLeadName.c_str() );
-            
+            if ( subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
+              subLeadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( subLeadName.c_str() );
+            }
           }
         }
       }
