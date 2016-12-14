@@ -53,7 +53,7 @@ int main() {
   inFile.resize(1);
   inFile[0] = new TFile("out/tmp/dijet_corr_20_10.root", "READ");
   inFileMix.resize(1);
-  inFile[0] = new TFile("out/tmp/dijet_mix_20_10.root", "READ");
+  inFileMix[0] = new TFile("out/tmp/dijet_mix_20_10.root", "READ");
   
   // testing
   jetHadron::binSelector selector;
