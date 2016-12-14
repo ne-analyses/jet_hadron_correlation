@@ -85,7 +85,7 @@ namespace jetHadron {
             
             // check to make sure the file is properly formatted
             if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
-              __ERR("Can't find histograms - maybe it has mixing correlations not signal?"))
+              __ERR("Can't find histograms - maybe it has mixing correlations not signal?")
               return -1;
             }
             
@@ -165,7 +165,7 @@ namespace jetHadron {
             
             // check to make sure the file is properly formatted
             if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
-              __ERR("Can't find histograms - maybe it has signal correlations not event mixing?"))
+              __ERR("Can't find histograms - maybe it has signal correlations not event mixing?")
               return -1;
             }
             
