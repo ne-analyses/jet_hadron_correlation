@@ -66,7 +66,7 @@ int main() {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subMix;
   
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
-  jetHadron::ReadInFiles( inFileMix, leadingMix, subMix, nEventsMix, selector );
+  jetHadron::ReadInFilesMix( inFileMix, leadingMix, subMix, nEventsMix, selector );
   
   
   std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leadingMix, selector );
