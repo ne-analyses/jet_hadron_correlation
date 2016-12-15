@@ -569,15 +569,18 @@ namespace jetHadron {
                 tmp = uniqueID + "_corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               
-              if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
+              if ( correlations[i][j][k][l]->GetEntries() ) {
                 TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
-                if ( l <= 2 ) {
+                if ( l <= 2 && mixedEvents[i][l]->GetEntries() ) {
                   hTmp->Divide( mixedEvents[i][l] );
                 }
-                else {
+                else if ( mixedEvents[i][2]->GetEntries() )  {
                   hTmp->Divide( mixedEvents[i][2] );
                 }
-                std::cout<<"and here"<<std::endl;
+                else {
+                  __ERR("Did not have any mixed event data to correct with")
+                  continue;
+                }
                 correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
@@ -591,7 +594,6 @@ namespace jetHadron {
                 else {
                   hTmp->Divide( mixedEvents[i][2] );
                 }
-                std::cout<<"got here"<<std::endl;
                 correctedCorrelations[i][l]->Add( hTmp );
               }
             }
