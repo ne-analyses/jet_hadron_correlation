@@ -548,7 +548,7 @@ namespace jetHadron {
     return correctedCorrelations;
   }
   
-  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, uniqueID ) {
+  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, std::string uniqueID ) {
     
     // create holder for the output
     std::vector<std::vector<TH2F*> > correctedCorrelations;
