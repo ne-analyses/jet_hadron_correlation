@@ -164,12 +164,12 @@ int main( int argc, const char** argv) {
   // Now build the correlation histograms, both the total and the aj split
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorrelation;
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingCorrelation;
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjLow;
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjHigh;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjBalanced;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjUnbalanced;
   
   jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
   jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
-  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjHigh, correlationAjLow, selector, ajSplitBin );
+  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjUnbalanced, correlationAjBalanced, selector, ajSplitBin );
   
   // get averaged correlations
   std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector );
@@ -177,16 +177,29 @@ int main( int argc, const char** argv) {
   // Now build and scale the event mixing histograms.
   // we will use the averaged event mixing for now
   // First average over all centrality/vz/aj, project into pt
-  std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector );
-  std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector );
+  std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector, "avg_mix_" );
+  std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector, "avg_mix_sub" );
+  
+  // Build mixed events that are still not averaged as well
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
   
   // And Scale so that MaxBinContent = 1
   jetHadron::ScaleMixedEvents( leadingMix );
   jetHadron::ScaleMixedEvents( subleadingMix );
+  jetHadron::ScaleMixedEvents( leadingMixNotAveraged );
+  jetHadron::ScaleMixedEvents( subleadingMixNotAveraged );
+  
+  // And get the event mixing corrected both averaged or not
+  std::vector<std::vector<TH2F*> > averagedMixedEventCorrected = jetHadron::EventMixingCorrection( leadingCorrelation, leadingMix, selector, "leading_avg"  );
+  std::vector<std::vector<TH2F*> > notAveragedMixedEventCorrected = jetHadron::EventMixingCorrection( leadingCorrelation, leadingMixNotAveraged, selector, "leading_not_avg" );
+  std::vector<std::vector<TH2F*> > averagedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMix, selector, "subleading_avg"  );
+  std::vector<std::vector<TH2F*> > notAveragedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMixNotAveraged, selector, "subleading_not_avg" );
   
   for ( int i = 0; i < nFiles; ++ i ) {
-    jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing"+analysisNames[i], analysisNames[i], selector );
-    jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/uncorr"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/mixing_uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsEtaRestricted( );
   }
   
   
