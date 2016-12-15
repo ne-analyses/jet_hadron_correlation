@@ -737,7 +737,7 @@ namespace jetHadron {
             range2Low = i;
           }
           if ( bound3 >= binLowEdge && bound3 < binUpEdge ) {
-            range2Low = i;
+            range2High = i;
             range3Low = i+1;
           }
           if ( bound4 >= binLowEdge && bound4 < binUpEdge ) {
