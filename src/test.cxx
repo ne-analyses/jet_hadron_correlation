@@ -83,14 +83,9 @@ int main() {
   
   jetHadron::BuildSingleCorrelation( leading, leadingCorr, selector );
   
-  
-  // testing
-  std::cout<<"nfiles: "<<leadingCorr.size()<<std::endl;
-  std::cout<<"cent: "<<leadingCorr[0].size()<<std::endl;
-  std::cout<<"vz: "<<leadingCorr[0][0].size()<<std::endl;
-  std::cout<<"pt: "<<leadingCorr[0][0][0].size()<<std::endl;
-  
   std::vector<std::vector<TH2F*> > reducedCorr = jetHadron::AverageCorrelations( leadingCorr, selector );
+  
+  std::vector<std::vector<TH2F*> > correctedCorr = jetHadron::EventMixingCorrection( leadingCorr, mixedEvents, selector );
   
   jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
   jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
