@@ -712,10 +712,10 @@ namespace jetHadron {
         double bound3 = acceptEtaMin + 3*etaRange;
         double bound4 = acceptEtaMax;
         
-        std::cout<<"bound1 : "<< bound1 <<std::end;
-        std::cout<<"bound2 : "<< bound2 <<std::end;
-        std::cout<<"bound3 : "<< bound3 <<std::end;
-        std::cout<<"bound4 : "<< bound4 <<std::end;
+        std::cout<<"bound1 : "<< bound1 <<std::endl;
+        std::cout<<"bound2 : "<< bound2 <<std::endl;
+        std::cout<<"bound3 : "<< bound3 <<std::endl;
+        std::cout<<"bound4 : "<< bound4 <<std::endl;
         
         int range1Low = 0;
         int range1High = 0;
