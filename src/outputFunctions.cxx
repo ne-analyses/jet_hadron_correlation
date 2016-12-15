@@ -748,7 +748,7 @@ namespace jetHadron {
         std::cout<<"range1 low : "<< range1Low<<std::endl;
         std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1Low) <<std::endl;
         std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1Low) <<std::endl;
-        std::cout<<"range1 high : "<< range1Low<<std::endl;
+        std::cout<<"range1 high : "<< range1High<<std::endl;
         std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1High) <<std::endl;
         std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1High) <<std::endl;
         std::cout<<"range2 low : "<< range2Low<<std::endl;
