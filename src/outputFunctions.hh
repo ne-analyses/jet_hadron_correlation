@@ -88,7 +88,23 @@ namespace jetHadron {
     double dPhiLow = -pi/2.0;
     double dPhiHigh = 3.0*pi/2.0;
     
+    // if not using the defaults, this can set them all
+    // from one of the initial histograms
     void SetHistogramBins( TH3F* h );
+    
+    // setting ranges for the histogram
+    
+    // used to select the near size correlation for dEta
+    double eta_projection_phi_bound_low = -1.0;
+    double eta_projection_phi_bound_high = 1.0;
+    
+    // used when projecting the mixed events to get  dPhi
+    double phi_projection_eta_bound_low = -1.2;
+    double phi_projection_eta_bound_high = 1.2;
+    
+    // used when doing near - far subtraction for flow in dPhi
+    double near_phi_projection_eta_bound_low = phi_projection_eta_bound_low / 2.0;
+    double near_phi_projection_eta_bound_high = phi_projection_eta_bound_high / 2.0;
     
     
   };
@@ -109,21 +125,21 @@ namespace jetHadron {
   // Functions to project out the Aj dependence -
   // can either produce a single, Aj independent bin
   // or splits on an ajbin
-  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelations, binSelector selector );
-  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit );
+  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelations, binSelector selector, std::string uniqueID = "" );
+  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit, std::string uniqueID = "" );
   
   // Averages over all vz and centralities
   // to show uncorrected signals
-  std::vector<std::vector<TH2F*> > AverageCorrelations( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, binSelector selector );
+  std::vector<std::vector<TH2F*> > AverageCorrelations( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, binSelector selector, std::string uniqueID = "" );
   
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector );
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   
   // Used to average the mixed event data to help
   // with the lower statistics
-  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector );
+  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   
   // Used to normalize mixed event histograms so
   // that the maximum bin content = 1

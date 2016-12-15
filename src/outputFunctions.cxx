@@ -265,7 +265,7 @@ namespace jetHadron {
   // Functions to project out the Aj dependence -
   // can either produce a single, Aj independent bin
   // or splits on an ajbin
-  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelations, binSelector selector ) {
+  void BuildSingleCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelations, binSelector selector, std::string uniqueID ) {
     
     // expand the holder
     reducedCorrelations.resize( correlations.size() );
@@ -283,7 +283,7 @@ namespace jetHadron {
               correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               
               if ( !reducedCorrelations[i][j][k][m] ) {
-                std::string tmp = "corr_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                std::string tmp = uniqueID + "_corr_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
                 reducedCorrelations[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
                 reducedCorrelations[i][j][k][m]->SetName( tmp.c_str() );
               }
@@ -297,7 +297,7 @@ namespace jetHadron {
     }
   }
   
-  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit ) {
+  void BuildAjSplitCorrelation( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsHigh, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& reducedCorrelationsLow, binSelector selector, int ajBinSplit, std::string uniqueID ) {
     
     // expand the holder
     reducedCorrelationsHigh.resize( correlations.size() );
@@ -319,7 +319,7 @@ namespace jetHadron {
               correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               if ( l >= ajBinSplit ) {
                 if ( !reducedCorrelationsHigh[i][j][k][m] ) {
-                  std::string tmp = "corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                  std::string tmp = uniqueID +"_corr_aj_low_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
                   reducedCorrelationsHigh[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
                   reducedCorrelationsHigh[i][j][k][m]->SetName( tmp.c_str() );
                 }
@@ -329,7 +329,7 @@ namespace jetHadron {
               }
               else {
                 if ( !reducedCorrelationsLow[i][j][k][m] ) {
-                  std::string tmp = "corr_aj_high_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
+                  std::string tmp = uniqueID + "_corr_aj_high_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
                   reducedCorrelationsLow[i][j][k][m] = (TH2F*) ((TH2F*) correlations[i][j][k][l]->Project3D("YX"))->Clone();
                   reducedCorrelationsLow[i][j][k][m]->SetName( tmp.c_str() );
                 }
@@ -347,7 +347,7 @@ namespace jetHadron {
   
   // Averages over all vz and centralities
   // to show uncorrected signals
-  std::vector<std::vector<TH2F*> > AverageCorrelations( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, binSelector selector ) {
+  std::vector<std::vector<TH2F*> > AverageCorrelations( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, binSelector selector, std::string uniqueID ) {
     
     // build the initial holder
     std::vector<std::vector<TH2F*> > averagedCorrelations;
@@ -360,12 +360,12 @@ namespace jetHadron {
           for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
             
             if ( !averagedCorrelations[i][l] ) {
-              std::string tmp = "averaged_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              std::string tmp = uniqueID + "_averaged_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
-                tmp = "averaged_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_averaged_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
-                tmp = "averaged_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_averaged_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               
               averagedCorrelations[i][l] = ((TH2F*) correlations[i][j][k][l]->Clone());
@@ -388,7 +388,7 @@ namespace jetHadron {
   // Used to recombine Aj and split in pt
   // to give 2D projections we can turn use
   // to correct the correlations
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector ) {
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > BuildMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID ) {
     
     std::vector<std::vector<std::vector<std::vector<TH2F*> > > > finalMixedEvents;
     finalMixedEvents.resize( mixedEvents.size() );
@@ -407,7 +407,7 @@ namespace jetHadron {
               
               if ( !finalMixedEvents[i][j][k][m] ) {
                 finalMixedEvents[i][j][k][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
-                std::string tmp = "mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k) + "_pt_" + patch::to_string(m);
+                std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k) + "_pt_" + patch::to_string(m);
                 finalMixedEvents[i][j][k][m]->SetName( tmp.c_str() );
               }
               else {
@@ -425,7 +425,7 @@ namespace jetHadron {
   
   // Used to average the mixed event data to help
   // with the lower statistics
-  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector ) {
+  std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID ) {
     
     // create the return object
     std::vector<std::vector<TH2F*> > combinedMixedEvents;
@@ -444,7 +444,7 @@ namespace jetHadron {
               if ( m <= 2 ) {
                 if ( !combinedMixedEvents[i][m] ) {
                   combinedMixedEvents[i][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
-                  std::string tmp = "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                  std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
                   combinedMixedEvents[i][m]->SetName( tmp.c_str() );
                 }
                 else {
@@ -454,7 +454,7 @@ namespace jetHadron {
               else {
                 if ( !combinedMixedEvents[i][2] ) {
                   combinedMixedEvents[i][2] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
-                  std::string tmp = "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                  std::string tmp = uniqueID + "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
                   combinedMixedEvents[i][2]->SetName( tmp.c_str() );
                 }
                 else {
@@ -506,7 +506,7 @@ namespace jetHadron {
   // only keeping differntial in file and Pt
   // Has a version for both the averaged and non
   // averaged event mixing
-  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents, binSelector selector) {
+  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents, binSelector selector, std::string uniqueID ) {
     
     // create holder for the output
     std::vector<std::vector<TH2F*> > correctedCorrelations;
@@ -519,12 +519,12 @@ namespace jetHadron {
           for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
             
             if ( !correctedCorrelations[i][l] ) {
-              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              std::string tmp = uniqueID + "_corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
-                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
-                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][j][k][l]->GetEntries() ) {
@@ -548,7 +548,7 @@ namespace jetHadron {
     return correctedCorrelations;
   }
   
-  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector ) {
+  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, uniqueID ) {
     
     // create holder for the output
     std::vector<std::vector<TH2F*> > correctedCorrelations;
@@ -561,12 +561,12 @@ namespace jetHadron {
           for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
             
             if ( !correctedCorrelations[i][l] ) {
-              std::string tmp = "corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              std::string tmp = uniqueID + "_corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
-                tmp = "corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
-                tmp = "corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+                tmp = uniqueID + "_corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
               }
               
               if ( correlations[i][j][k][l]->GetEntries() && mixedEvents[i][l]->GetEntries() ) {
