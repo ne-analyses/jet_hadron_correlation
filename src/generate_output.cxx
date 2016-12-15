@@ -198,8 +198,9 @@ int main( int argc, const char** argv) {
   
   for ( int i = 0; i < nFiles; ++ i ) {
     jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
-    jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/mixing_uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
-    jetHadron::Print2DHistogramsEtaRestricted( );
+    jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsEtaRestricted( averagedMixedEventCorrected[i], currentDirectory+"/"+outputDirBase+"/avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], currentDirectory+"/"+outputDirBase+"/not_avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
   
