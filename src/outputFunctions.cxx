@@ -681,12 +681,12 @@ namespace jetHadron {
         double acceptEtaMin;
         double acceptEtaMax;
         if ( restrictDeta ) {
-          acceptEtaMin = selector.restricted_near_phi_projection_eta_bound_low();
-          acceptEtaMax = selector.restricted_near_phi_projection_eta_bound_high();
+          acceptEtaMin = selector.dEtaAcceptanceLow-0.4;
+          acceptEtaMax = selector.dEtaAcceptanceLow-0.4;
         }
         else { // if not restricted, the bounds are set by the kinematics of the jet
-          acceptEtaMin = selector.near_phi_projection_eta_bound_low();
-          acceptEtaMax = selector.near_phi_projection_eta_bound_high();
+          acceptEtaMin = selector.dEtaAcceptanceLow;
+          acceptEtaMax = selector.dEtaAcceptanceLow;
         }
         
         // and define our working range between eta min and eta max
