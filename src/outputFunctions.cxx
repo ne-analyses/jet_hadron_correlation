@@ -634,7 +634,7 @@ namespace jetHadron {
         projections[i][j]->SetName( tmp.c_str() );
         
         if ( restrictDeta ) {
-          correlation2d[i][j]->SetRange();
+          correlation2d[i][j]->GetXaxis()->SetRange();
         }
         
       }
@@ -664,7 +664,7 @@ namespace jetHadron {
         projections[i][j]->SetName( tmp.c_str() );
         
         if ( restrictDeta ) {
-          correlation2d[i][j]->SetRange();
+          correlation2d[i][j]->GetYaxis()->SetRange();
         }
         
       }
