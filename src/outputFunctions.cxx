@@ -719,26 +719,26 @@ namespace jetHadron {
         
         
         
-        // fist - get the near side
-        if ( restrictDeta ) {
-          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.restricted_near_phi_projection_eta_bound_low, selector.restricted_near_phi_projection_eta_bound_high );
-        }
-        else {
-          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.near_phi_projection_eta_bound_low, selector.near_phi_projection_eta_bound_high );
-        }
-        
-        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
-        projections[i][j]->SetName( tmp.c_str() );
-        
-        // now subtract the rest of the correlation from that
-        
-        if ( restrictDeta ) {
-          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
-        }
-        
-        if ( restrictDeta ) {
-          correlation2d[i][j]->GetXaxis()->SetRange();
-        }
+//        // fist - get the near side
+//        if ( restrictDeta ) {
+//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.restricted_near_phi_projection_eta_bound_low, selector.restricted_near_phi_projection_eta_bound_high );
+//        }
+//        else {
+//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.near_phi_projection_eta_bound_low, selector.near_phi_projection_eta_bound_high );
+//        }
+//        
+//        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+//        projections[i][j]->SetName( tmp.c_str() );
+//        
+//        // now subtract the rest of the correlation from that
+//        
+//        if ( restrictDeta ) {
+//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+//        }
+//        
+//        if ( restrictDeta ) {
+//          correlation2d[i][j]->GetXaxis()->SetRange();
+//        }
         
       }
     }
