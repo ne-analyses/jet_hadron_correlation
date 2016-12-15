@@ -682,7 +682,7 @@ namespace jetHadron {
         double acceptEtaMax;
         if ( restrictDeta ) {
           acceptEtaMin = selector.dEtaAcceptanceLow+0.4;
-          acceptEtaMax = selector.dEtaAcceptancehigh-0.4;
+          acceptEtaMax = selector.dEtaAcceptanceHigh-0.4;
         }
         else { // if not restricted, the bounds are set by the kinematics of the jet
           acceptEtaMin = selector.dEtaAcceptanceLow;
