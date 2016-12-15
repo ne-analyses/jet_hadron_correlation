@@ -96,5 +96,23 @@ int main() {
   ((TH2F*)leadingTmp->Project3D("YX"))->Draw("surf1");
   c1.SaveAs("tmp/leading.pdf");
   
+  TH2F* test = 0;
+  
+  for ( int i = 0; i < leadingCorr.size(); ++i ) {
+    for ( int j = 0; j < leadingCorr[i].size(); ++j ) {
+      for ( int k = 0; k < leadingCorr[j].size(); ++k ) {
+        if ( test == 0 ) {
+          test = (TH2D*) leadingCorr[i][j][k][4]->Clone();
+        }
+        else {
+          test->Add( leadingCorr[i][j][k][4] );
+        }
+      }
+    }
+  }
+  
+  test->Draw("surf1");
+  c1.SaveAs("tmp/compare.pdf");
+  
 	return 0;
 }
