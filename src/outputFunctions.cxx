@@ -679,7 +679,7 @@ namespace jetHadron {
         // now we set the actual range of interest
         // but we can restrict the region of interest if restrictDeta is
         double acceptEtaMin;
-        double acceptEtaMax
+        double acceptEtaMax;
         if ( restrictDeta ) {
           acceptEtaMin = selector.restricted_near_phi_projection_eta_bound_low();
           acceptEtaMax = selector.restricted_near_phi_projection_eta_bound_high();
