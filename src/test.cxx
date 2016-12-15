@@ -68,51 +68,32 @@ int main() {
   jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
   jetHadron::ReadInFilesMix( inFileMix, leadingMix, subMix, nEventsMix, selector );
   
-  
-  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leadingMix, selector );
-  jetHadron::ScaleMixedEvents( mixedEvents );
-  
-  // Find the pt bin center for future use
-  std::vector<TH1F*> ptSpectra;
-  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
+  // testing
+  std::cout<<"nfiles: "<<leading.size()<<std::endl;
+  std::cout<<"cent: "<<leading[0].size()<<std::endl;
+  std::cout<<"vz: "<<leading[0][0].size()<<std::endl;
+  std::cout<<"aj: "<<leading[0][0][0].size()<<std::endl;
   
   
-  // Now testing redoing the correlations to 2d in pt
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorr;
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subCorr;
-  
-  jetHadron::BuildSingleCorrelation( leading, leadingCorr, selector );
-  
-  std::vector<std::vector<TH2F*> > reducedCorr = jetHadron::AverageCorrelations( leadingCorr, selector );
-  
-  jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
-  jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
-  
-  TH3F* leadingTmp = (TH3F*) inFile[0]->Get("leadjetcorr");
-  
-  leadingTmp->GetZaxis()->SetRange( selector.ptBinLowEdge(4), selector.ptBinHighEdge(4) );
-  
-  TCanvas c1;
-  ((TH2F*)leadingTmp->Project3D("YX"))->Draw("surf1");
-  c1.SaveAs("tmp/leading.pdf");
-  
-  TH2F* test = 0;
-  
-  for ( int i = 0; i < leadingCorr.size(); ++i ) {
-    for ( int j = 0; j < leadingCorr[i].size(); ++j ) {
-      for ( int k = 0; k < leadingCorr[i][j].size(); ++k ) {
-        if ( test == 0 ) {
-          test = (TH2F*) leadingCorr[i][j][k][4]->Clone();
-        }
-        else {
-          test->Add( leadingCorr[i][j][k][4] );
-        }
-      }
-    }
-  }
-  
-  test->Draw("surf1");
-  c1.SaveAs("tmp/compare.pdf");
+//  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leadingMix, selector );
+//  jetHadron::ScaleMixedEvents( mixedEvents );
+//  
+//  // Find the pt bin center for future use
+//  std::vector<TH1F*> ptSpectra;
+//  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
+//  
+//  
+//  // Now testing redoing the correlations to 2d in pt
+//  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorr;
+//  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subCorr;
+//  
+//  jetHadron::BuildSingleCorrelation( leading, leadingCorr, selector );
+//  
+//  std::vector<std::vector<TH2F*> > reducedCorr = jetHadron::AverageCorrelations( leadingCorr, selector );
+//  
+//  jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
+//  jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
+//  
   
 	return 0;
 }
