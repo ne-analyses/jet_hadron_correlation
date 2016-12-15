@@ -84,6 +84,8 @@ namespace jetHadron {
     unsigned bindEta = 22;
     double dEtaLow = -2.0;
     double dEtaHigh = 2.0;
+    double dEtaAcceptanceLow = -1.6;
+    double dEtaAcceptanceHigh = 1.6;
     unsigned bindPhi = 22;
     double dPhiLow = -pi/2.0;
     double dPhiHigh = 3.0*pi/2.0;
@@ -93,6 +95,8 @@ namespace jetHadron {
     void SetHistogramBins( TH3F* h );
     
     // setting ranges for the histogram
+    // if the radius is NOT 0.4, this needs to be used...
+    void ChangeRadius( double R = 0.4);
     
     // used to select the near size correlation for dEta
     double eta_projection_phi_bound_low = -1.0;
@@ -103,8 +107,12 @@ namespace jetHadron {
     double phi_projection_eta_bound_high = 1.2;
     
     // used when doing near - far subtraction for flow in dPhi
-    double near_phi_projection_eta_bound_low = phi_projection_eta_bound_low / 2.0;
-    double near_phi_projection_eta_bound_high = phi_projection_eta_bound_high / 2.0;
+    double restricted_near_phi_projection_eta_bound_low() { return phi_projection_eta_bound_low / 2.0; }
+    double restricted_near_phi_projection_eta_bound_high() { return phi_projection_eta_bound_high / 2.0; }
+    
+    // This takes the entire acceptance instead of the event mixing accepted region
+    double near_phi_projection_eta_bound_low() { return dEtaAcceptanceLow / 2.0; }
+    double near_phi_projection_eta_bound_high() { return dEtaAcceptanceHigh / 2.0; }
     
     
   };
@@ -161,8 +169,8 @@ namespace jetHadron {
   // only the near side of the dPhi range in a dEta
   // projection )
   std::vector<std::vector<TH1F*> > ProjectDphi( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false );
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", restrictDeta = false);
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDphi = false );
-  
   
   
   // Methods for Printing out and Saving

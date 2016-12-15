@@ -35,6 +35,13 @@ namespace jetHadron {
     
   }
   
+  // setting ranges for the histogram
+  // if the radius is NOT 0.4, this needs to be used...
+  void ChangeRadius( double R = 0.4) {
+    dEtaAcceptanceLow = R - 2.0;
+    dEtaAcceptanceHigh = 2.0 - R;
+  }
+  
   
   // Function used to read in histograms from
   // the files passed in - it returns the correlations,
@@ -641,6 +648,103 @@ namespace jetHadron {
     }
     
     return projections;
+  }
+  
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", restrictDeta = false) {
+    
+    // build the return vector
+    std::vector<std::vector<TH1F*> > projections;
+    projections.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      projections[i].resize( correlation2d[i].size() );
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        // new name for the projection
+        std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        
+        // now find the bins for the subtraction
+        selector.SetHistogramBins( correlation2d[i][j] );
+        double etaMin = selector.dEtaLow;
+        double etaMax = selector.dEtaHigh;
+        double etaBins = selector.bindEta;
+        double etaBinWidth = ( etaMax - etaMin ) / etaBins;
+        
+        std::cout<<"eta min: "<<etaMin<<std::endl;
+        std::cout<<"eta max: "<<etaMax<<std::endl;
+        std::cout<<"eta bin Width: "<<etaBinWidth<<std::endl;
+        std::cout<<"eta number of bins: "<< etaBins<<std::endl;
+        
+        // now we set the actual range of interest
+        // but we can restrict the region of interest if restrictDeta is
+        if ( restrictDeta ) {
+          etaMin = selector.restricted_near_phi_projection_eta_bound_low();
+          etaMax = selector.restricted_near_phi_projection_eta_bound_high();
+        }
+        else { // if not restricted, the bounds are set by the kinematics of the jet
+          etaMin = selector.near_phi_projection_eta_bound_low();
+          etaMax = selector.near_phi_projection_eta_bound_high();
+        }
+        
+        std::cout<<"new eta min: "<< etaMin<<std::endl;
+        std::cout<<"new eta max: "<< etaMax<<std::endl;
+        
+        // now we define three ranges -
+        // range 2 - inner range - the "near side"
+        // range 1 & 3 - two outer ranges - the remainder
+        // of the histogram on either side
+        // here we find the bin numbers corresponding
+        // to these ranges
+        int range1Low = 0;
+        int range1High = 0;
+        int range2Low = 0;
+        int range2High = 0;
+        int range3Low = 0;
+        int range3High = 0;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // fist - get the near side
+        if ( restrictDeta ) {
+          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.restricted_near_phi_projection_eta_bound_low, selector.restricted_near_phi_projection_eta_bound_high );
+        }
+        else {
+          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.near_phi_projection_eta_bound_low, selector.near_phi_projection_eta_bound_high );
+        }
+        
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        projections[i][j]->SetName( tmp.c_str() );
+        
+        // now subtract the rest of the correlation from that
+        
+        if ( restrictDeta ) {
+          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+        }
+        
+        if ( restrictDeta ) {
+          correlation2d[i][j]->GetXaxis()->SetRange();
+        }
+        
+      }
+    }
+    
+    return projections;
+    
   }
   
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID, bool restrictDphi ) {

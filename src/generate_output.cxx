@@ -94,6 +94,8 @@ int main( int argc, const char** argv) {
   
   // bin to split Aj on
   int ajSplitBin = 0;
+  // jet radius
+  double R = 0.4
   // and the output location
   std::string outputDirBase;
   
@@ -114,7 +116,7 @@ int main( int argc, const char** argv) {
       break;
     }
     default: {
-      if ( (argc-3)%3 != 0 ) {
+      if ( (argc-4)%3 != 0 ) {
         __ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
@@ -127,15 +129,16 @@ int main( int argc, const char** argv) {
       
       ajSplitBin = atoi ( arguments[ 0 ].c_str() );
       outputDirBase = arguments[ 1 ];
+      R = atof( arguments[ 2 ].c_str() );
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
         
-        TFile* tmp = new TFile( arguments[ 3*i+2 ].c_str(), "READ" );
-        TFile* tmpMix =  new TFile( arguments[ (3*i)+3 ].c_str(), "READ" );
+        TFile* tmp = new TFile( arguments[ 3*i+3 ].c_str(), "READ" );
+        TFile* tmpMix =  new TFile( arguments[ (3*i)+4 ].c_str(), "READ" );
         
         corrFiles.push_back( tmp );
         mixFiles.push_back( tmpMix );
-        analysisNames[i] = arguments[ (3*i)+4 ];
+        analysisNames[i] = arguments[ (3*i)+5 ];
       }
     }
   }
@@ -144,6 +147,7 @@ int main( int argc, const char** argv) {
   
   // Build our bin selector with default settings
   jetHadron::binSelector selector;
+  selector.ChangeRadius( R );
   
   // Build our initial histogram holders
   std::vector<TH3F*> nEvents;
@@ -196,6 +200,9 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH2F*> > averagedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMix, selector, "subleading_avg"  );
   std::vector<std::vector<TH2F*> > notAveragedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMixNotAveraged, selector, "subleading_not_avg" );
   
+  // ***************************
+  // print out the 2d histograms
+  // ***************************
   for ( int i = 0; i < nFiles; ++ i ) {
     jetHadron::Print2DHistograms( leadingMix[i], currentDirectory+"/"+outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistograms( averagedSignal[i], currentDirectory+"/"+outputDirBase+"/uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
@@ -203,7 +210,9 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], currentDirectory+"/"+outputDirBase+"/not_avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
-  
+  // **********************
+  // get the 1D projections
+  // **********************
   
   return 0;
 }
