@@ -210,15 +210,15 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistograms( leadingMix[i], outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistograms( averagedSignal[i], outputDirBase+"/uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistogramsEtaRestricted( averagedMixedEventCorrected[i], outputDirBase+"/avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
-    jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/not_avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
   // **********************
   // get the 1D projections
   // **********************
   
-  // temp - testing the one for subtracted ranges
-  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "testing", false );
+  std::vector<std::vector<TH1F*> > uncorrected_dphi = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected", false );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "mixing_corrected_near_far_sub_dphi", true );
   
   
   return 0;
