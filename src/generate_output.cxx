@@ -218,7 +218,7 @@ int main( int argc, const char** argv) {
   // **********************
   
   // temp - testing the one for subtracted ranges
-  std::vector<std::vector<TH1F*> > testing = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "testing", false; );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "testing", false );
   
   
   return 0;
