@@ -704,12 +704,12 @@ namespace jetHadron {
         // here we find the bin numbers corresponding
         // to these ranges
         
-        // region one will be from [etaMin -> etaMin + etaRange )
-        // region two will be from [etaMin + etaRange -> etaMin + 3*etaRange]
-        // region three will be from ( etaMin + 3*etaRange -> etaMax]
+        // region one will be from [etaMin -> etaMin + etaRange/4.0 )
+        // region two will be from [etaMin + etaRange -> etaMin + 3.0*etaRange/4.0]
+        // region three will be from ( etaMin + 3.0*etaRange/4.0 -> etaMax]
         double bound1 = acceptEtaMin;
-        double bound2 = acceptEtaMin + etaRange;
-        double bound3 = acceptEtaMin + 3*etaRange;
+        double bound2 = acceptEtaMin + etaRange/4.0;
+        double bound3 = acceptEtaMin + 3.0*etaRange/4.0;
         double bound4 = acceptEtaMax;
         
         std::cout<<"bound1 : "<< bound1 <<std::endl;
