@@ -743,6 +743,12 @@ namespace jetHadron {
         correlation2d[i][j]->SetRange( range3Low, range3High );
         sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
+        // scale the subtraction histogram by the relative number of bins
+        sub_tmp->Scale( (range2High-range2Low)/( (range1High-range1Low) + (range3High - range3Low) ) );
+        
+        // subtract
+        projection[i][j]->Add( sub_tmp, -1 );
+        
       }
     }
     
