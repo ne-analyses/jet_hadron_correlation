@@ -577,6 +577,7 @@ namespace jetHadron {
                 else {
                   hTmp->Divide( mixedEvents[i][2] );
                 }
+                std::cout<<"and here"<<std::endl;
                 correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
                 correctedCorrelations[i][l]->SetName( tmp.c_str() );
               }
@@ -590,7 +591,7 @@ namespace jetHadron {
                 else {
                   hTmp->Divide( mixedEvents[i][2] );
                 }
-
+                std::cout<<"got here"<<std::endl;
                 correctedCorrelations[i][l]->Add( hTmp );
               }
             }
