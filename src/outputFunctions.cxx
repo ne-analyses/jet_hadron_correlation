@@ -37,7 +37,7 @@ namespace jetHadron {
   
   // setting ranges for the histogram
   // if the radius is NOT 0.4, this needs to be used...
-  void binSelector::ChangeRadius( double R = 0.4) {
+  void binSelector::ChangeRadius( double R ) {
     dEtaAcceptanceLow = R - 2.0;
     dEtaAcceptanceHigh = 2.0 - R;
   }
