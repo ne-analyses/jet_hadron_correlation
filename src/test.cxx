@@ -89,7 +89,7 @@ int main() {
   
   jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
   jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
-  jetHadron::Print2DHistograms( correctedCorr[0], "tmp/corrected", "corrected", selector );
+  jetHadron::Print2DHistogramsEtaRestricted( correctedCorr[0], "tmp/corrected", "corrected", selector );
   
   
 	return 0;
