@@ -84,7 +84,7 @@ namespace jetHadron {
             std::string subLeadName = "sub_aj_" + patch::to_string(l) + "_cent_" + patch::to_string(j) + "_vz_" + patch::to_string(k);
             
             // check to make sure the file is properly formatted
-            if ( !filesIn[i]->Get( leadName.c_str() ) || !filesIn[i]->Get( subLeadName.c_str() ) ) {
+            if ( !filesIn[i]->Get( leadName.c_str() ) )  {
               __ERR("Can't find histograms - maybe it has mixing correlations not signal?")
               return -1;
             }
