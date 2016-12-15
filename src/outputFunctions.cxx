@@ -738,9 +738,9 @@ namespace jetHadron {
         projections[i][j]->SetName( tmp.c_str() );
         
         // build the subtraction histogram
-        correlation2d[i][j]->SetRange( range1Low, range1High );
+        correlation2d[i][j]->GetXaxis()->SetRange( range1Low, range1High );
         TH1F* sub_tmp = (TH1F*) ((TH1F*)  correlation2d[i][j]->ProjectionY())->Clone();
-        correlation2d[i][j]->SetRange( range3Low, range3High );
+        correlation2d[i][j]->GetXaxis()->SetRange( range3Low, range3High );
         sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
