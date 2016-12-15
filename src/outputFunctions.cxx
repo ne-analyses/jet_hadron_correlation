@@ -652,7 +652,7 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
-      histograms[i]->GetXaxis()->SetRange(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+      histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       
