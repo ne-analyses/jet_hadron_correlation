@@ -380,6 +380,9 @@ namespace jetHadron {
       }
     }
     
+    std::cout<<"N PT BINS : "<< selector.nPtBins<<std::endl;
+    std::cout<<" L  MAX : "<< averagedCorrelations[0].size()<<std::endl;
+    
     return averagedCorrelations;
   }
   
