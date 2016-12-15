@@ -88,7 +88,7 @@ int main() {
   jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
   jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
   
-  TH3F* leadingTmp = inFile[0]->Get("leadjetcorr");
+  TH3F* leadingTmp = (TH3F*) inFile[0]->Get("leadjetcorr");
   
   leadingTmp->GetZaxis()->SetRange( selector.ptBinLowEdge(4), selector.ptBinHighEdge(4) );
   
