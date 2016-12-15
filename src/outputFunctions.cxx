@@ -656,14 +656,14 @@ namespace jetHadron {
         // new name for the projection
         std::string tmp = uniqueID + "_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         
-        if ( restrictDeta ) {
+        if ( restrictDphi ) {
           correlation2d[i][j]->GetYaxis()->SetRangeUser( selector.eta_projection_phi_bound_low, selector.eta_projection_phi_bound_high );
         }
         
         projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionX();
         projections[i][j]->SetName( tmp.c_str() );
         
-        if ( restrictDeta ) {
+        if ( restrictDphi ) {
           correlation2d[i][j]->GetYaxis()->SetRange();
         }
         
