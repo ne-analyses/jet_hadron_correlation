@@ -671,11 +671,6 @@ namespace jetHadron {
         double etaBins = selector.bindEta;
         double etaBinWidth = ( etaMax - etaMin ) / etaBins;
         
-        std::cout<<"eta min: "<<etaMin<<std::endl;
-        std::cout<<"eta max: "<<etaMax<<std::endl;
-        std::cout<<"eta bin Width: "<<etaBinWidth<<std::endl;
-        std::cout<<"eta number of bins: "<< etaBins<<std::endl;
-        
         // now we set the actual range of interest
         // but we can restrict the region of interest if restrictDeta is
         double acceptEtaMin;
@@ -691,10 +686,6 @@ namespace jetHadron {
         
         // and define our working range between eta min and eta max
         double etaRange = ( acceptEtaMax - acceptEtaMin );
-        
-        std::cout<<"new eta min: "<< acceptEtaMin<<std::endl;
-        std::cout<<"new eta max: "<< acceptEtaMax<<std::endl;
-        std::cout<<"eta range: "<< etaRange<<std::endl;
         
         // now we define three regions -
         // region 2 - inner range - the "near side"
@@ -712,10 +703,6 @@ namespace jetHadron {
         double bound3 = acceptEtaMin + 3.0*etaRange/4.0;
         double bound4 = acceptEtaMax;
         
-        std::cout<<"bound1 : "<< bound1 <<std::endl;
-        std::cout<<"bound2 : "<< bound2 <<std::endl;
-        std::cout<<"bound3 : "<< bound3 <<std::endl;
-        std::cout<<"bound4 : "<< bound4 <<std::endl;
         
         int range1Low = 0;
         int range1High = 0;
@@ -745,47 +732,16 @@ namespace jetHadron {
           }
         }
         
-        std::cout<<"range1 low : "<< range1Low<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1Low) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1Low) <<std::endl;
-        std::cout<<"range1 high : "<< range1High<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1High) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1High) <<std::endl;
-        std::cout<<"range2 low : "<< range2Low<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range2Low) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range2Low) <<std::endl;
-        std::cout<<"range2 high : "<< range2High<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range2High) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range2High) <<std::endl;
-        std::cout<<"range3 low : "<< range3Low<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range3Low) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range3Low) <<std::endl;
-        std::cout<<"range3 high : "<< range3High<<std::endl;
-        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range3High) <<std::endl;
-        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range3High) <<std::endl;
+        // now do the projections
+        correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        projections[i][j]->SetName( tmp.c_str() );
         
-        
-        
-//        // fist - get the near side
-//        if ( restrictDeta ) {
-//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.restricted_near_phi_projection_eta_bound_low, selector.restricted_near_phi_projection_eta_bound_high );
-//        }
-//        else {
-//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.near_phi_projection_eta_bound_low, selector.near_phi_projection_eta_bound_high );
-//        }
-//        
-//        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
-//        projections[i][j]->SetName( tmp.c_str() );
-//        
-//        // now subtract the rest of the correlation from that
-//        
-//        if ( restrictDeta ) {
-//          correlation2d[i][j]->GetXaxis()->SetRangeUser( selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
-//        }
-//        
-//        if ( restrictDeta ) {
-//          correlation2d[i][j]->GetXaxis()->SetRange();
-//        }
+        // build the subtraction histogram
+        correlation2d[i][j]->SetRange( range1Low, range1High );
+        TH1F* sub_tmp = (TH1F*) ((TH1F*)  correlation2d[i][j]->ProjectionY())->Clone();
+        correlation2d[i][j]->SetRange( range3Low, range3High );
+        sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
       }
     }
