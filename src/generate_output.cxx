@@ -95,7 +95,7 @@ int main( int argc, const char** argv) {
   // bin to split Aj on
   int ajSplitBin = 0;
   // jet radius
-  double R = 0.4
+  double R = 0.4;
   // and the output location
   std::string outputDirBase;
   
