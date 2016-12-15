@@ -800,9 +800,7 @@ namespace jetHadron {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
-    if ( !boost::filesystem::create_directories( dir ) ) {
-      std::cout << "Success" << "\n";
-    }
+    boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
@@ -825,9 +823,7 @@ namespace jetHadron {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
-    if ( !boost::filesystem::create_directories( dir ) ) {
-      std::cout << "success" << "\n";
-    }
+    boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
