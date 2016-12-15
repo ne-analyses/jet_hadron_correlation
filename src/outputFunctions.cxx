@@ -650,7 +650,7 @@ namespace jetHadron {
     return projections;
   }
   
-  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", restrictDeta = false) {
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false) {
     
     // build the return vector
     std::vector<std::vector<TH1F*> > projections;
