@@ -747,7 +747,7 @@ namespace jetHadron {
         sub_tmp->Scale( (range2High-range2Low)/( (range1High-range1Low) + (range3High - range3Low) ) );
         
         // subtract
-        projection[i][j]->Add( sub_tmp, -1 );
+        projections[i][j]->Add( sub_tmp, -1 );
         
       }
     }
