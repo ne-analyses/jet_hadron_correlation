@@ -372,7 +372,8 @@ namespace jetHadron {
               averagedCorrelations[i][l]->SetName( tmp.c_str() );
             }
             else {
-              averagedCorrelations[i][j]->Add( correlations[i][j][k][l] );
+              
+              averagedCorrelations[i][l]->Add( correlations[i][j][k][l] );
             }
           }
         }
