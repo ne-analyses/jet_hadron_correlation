@@ -92,7 +92,7 @@ namespace jetHadron {
     
     // if not using the defaults, this can set them all
     // from one of the initial histograms
-    void SetHistogramBins( TH3F* h );
+    void SetHistogramBins( TH2F* h );
     
     // setting ranges for the histogram
     // if the radius is NOT 0.4, this needs to be used...
