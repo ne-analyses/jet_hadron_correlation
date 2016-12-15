@@ -678,24 +678,45 @@ namespace jetHadron {
         
         // now we set the actual range of interest
         // but we can restrict the region of interest if restrictDeta is
+        double acceptEtaMin;
+        double acceptEtaMax
         if ( restrictDeta ) {
-          etaMin = selector.restricted_near_phi_projection_eta_bound_low();
-          etaMax = selector.restricted_near_phi_projection_eta_bound_high();
+          acceptEtaMin = selector.restricted_near_phi_projection_eta_bound_low();
+          acceptEtaMax = selector.restricted_near_phi_projection_eta_bound_high();
         }
         else { // if not restricted, the bounds are set by the kinematics of the jet
-          etaMin = selector.near_phi_projection_eta_bound_low();
-          etaMax = selector.near_phi_projection_eta_bound_high();
+          acceptEtaMin = selector.near_phi_projection_eta_bound_low();
+          acceptEtaMax = selector.near_phi_projection_eta_bound_high();
         }
         
-        std::cout<<"new eta min: "<< etaMin<<std::endl;
-        std::cout<<"new eta max: "<< etaMax<<std::endl;
+        // and define our working range between eta min and eta max
+        double etaRange = ( acceptEtaMax - acceptEtaMin );
         
-        // now we define three ranges -
-        // range 2 - inner range - the "near side"
-        // range 1 & 3 - two outer ranges - the remainder
+        std::cout<<"new eta min: "<< acceptEtaMin<<std::endl;
+        std::cout<<"new eta max: "<< acceptEtaMax<<std::endl;
+        std::cout<<"eta range: "<< etaRange<<std::endl;
+        
+        // now we define three regions -
+        // region 2 - inner range - the "near side"
+        // region 2 has twice the width of range 1 or 3
+        // region 1 & 3 - two outer regions - the remainder
         // of the histogram on either side
         // here we find the bin numbers corresponding
         // to these ranges
+        
+        // region one will be from [etaMin -> etaMin + etaRange )
+        // region two will be from [etaMin + etaRange -> etaMin + 3*etaRange]
+        // region three will be from ( etaMin + 3*etaRange -> etaMax]
+        double bound1 = acceptEtaMin;
+        double bound2 = acceptEtaMin + etaRange;
+        double bound3 = acceptEtaMin + 3*etaRange;
+        double bound4 = acceptEtaMax;
+        
+        std::cout<<"bound1 : "<< bound1 <<std::end;
+        std::cout<<"bound2 : "<< bound2 <<std::end;
+        std::cout<<"bound3 : "<< bound3 <<std::end;
+        std::cout<<"bound4 : "<< bound4 <<std::end;
+        
         int range1Low = 0;
         int range1High = 0;
         int range2Low = 0;
@@ -703,19 +724,45 @@ namespace jetHadron {
         int range3Low = 0;
         int range3High = 0;
         
+        // now we will search for each bin
+        for ( int i = 1; i <= etaBins; ++i ) {
+          double binLowEdge = etaMin + ( i - 1 )*etaBinWidth;
+          double binUpEdge = etaMin + ( i )*etaBinWidth;
+          
+          if ( bound1 >= binLowEdge && bound1 < binUpEdge ) {
+            range1Low = i;
+          }
+          if ( bound2 >= binLowEdge && bound2 < binUpEdge ) {
+            range1High = i-1;
+            range2Low = i;
+          }
+          if ( bound3 >= binLowEdge && bound3 < binUpEdge ) {
+            range2Low = i;
+            range3Low = i+1;
+          }
+          if ( bound4 >= binLowEdge && bound4 < binUpEdge ) {
+            range3High = i;
+          }
+        }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        std::cout<<"range1 low : "<< range1Low<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1Low) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1Low) <<std::endl;
+        std::cout<<"range1 high : "<< range1Low<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range1High) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range1High) <<std::endl;
+        std::cout<<"range2 low : "<< range2Low<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range2Low) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range2Low) <<std::endl;
+        std::cout<<"range2 high : "<< range2High<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range2High) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range2High) <<std::endl;
+        std::cout<<"range3 low : "<< range3Low<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range3Low) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range3Low) <<std::endl;
+        std::cout<<"range3 high : "<< range3High<<std::endl;
+        std::cout<<"bin low edge: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(range3High) <<std::endl;
+        std::cout<<"bin Upper edge: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge(range3High) <<std::endl;
         
         
         
