@@ -165,6 +165,7 @@ namespace jetHadron {
   
   // Used to print out and save the 2D prots ( correlations, mixed events )
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
+  void Print2DHistogramsEtaRestricted( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   
   
 } // end namespace

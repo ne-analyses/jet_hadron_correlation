@@ -639,5 +639,31 @@ namespace jetHadron {
     
   }
   
+  // Used to print out 2D plots ( correlations, mixed events )
+  // However, this one restricts the eta range shown to what
+  // is set in selector
+  void Print2DHistogramsEtaRestricted( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    if ( !boost::filesystem::create_directories( dir ) ) {
+      std::cout << "success" << "\n";
+    }
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetRange(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+      histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw("surf1");
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+
   
 } // end namespace
