@@ -76,6 +76,13 @@ int main() {
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
   
+  
+  // Now testing redoing the correlations to 2d in pt
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorr;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subCorr;
+  
+  jetHadron::BuildSingleCorrelation( leading, leadingCorr, selector );
+  
   jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
   
   
