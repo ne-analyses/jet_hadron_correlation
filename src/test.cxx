@@ -102,7 +102,7 @@ int main() {
     for ( int j = 0; j < leadingCorr[i].size(); ++j ) {
       for ( int k = 0; k < leadingCorr[j].size(); ++k ) {
         if ( test == 0 ) {
-          test = (TH2D*) leadingCorr[i][j][k][4]->Clone();
+          test = (TH2F*) leadingCorr[i][j][k][4]->Clone();
         }
         else {
           test->Add( leadingCorr[i][j][k][4] );
