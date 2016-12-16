@@ -226,8 +226,8 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > aj_balanced_dphi = jetHadron::ProjectDphi( correlationAjBalanced, selector, "aj_balanced_", false );
   std::vector<std::vector<TH1F*> > aj_unbalanced_dphi = jetHadron::ProjectDphi( correlationAjUnbalanced, selector, "aj_unbalanced_", false );
   
-  jetHadron::Normalize1DSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
-  jetHadron::Normalize1DSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
+  jetHadron::Normalize1DAjSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
+  jetHadron::Normalize1DAjSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
   
   return 0;
 }
