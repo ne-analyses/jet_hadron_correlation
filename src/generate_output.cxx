@@ -241,7 +241,7 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDphi( aj_subtracted, outputDirBase+"/aj_subtracted_dif", analysisNames, selector );
   // also print out the overlayed
   for ( int i = 0; i < nFiles; ++i ) {
-    jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi, aj_unbalanced_dphi, outputDirBase+"/aj_dif_dphi"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi[i], aj_unbalanced_dphi[i], outputDirBase+"/aj_dif_dphi"+analysisNames[i], analysisNames[i], selector );
   }
   
   
