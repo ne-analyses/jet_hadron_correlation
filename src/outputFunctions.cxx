@@ -839,6 +839,114 @@ namespace jetHadron {
     }
     
   }
+  
+  // Print out individual dPhi histograms
+  void Print1DHistogramsDphi( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+  
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw();
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+  
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      for ( int j = 0; j < histograms.size(); ++j ) {
+      
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( i+1 );
+        histograms[j][i]->SetMarkerStyle( i+20 );
+        histograms[j][i]->SetMarkerColor( i+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+      
+        if ( j == 0 ) {
+        histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+      }
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+  
+  // Print out individual dEta histograms
+  void Print1DHistogramsDeta( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw();
+      c1.SaveAs( tmp.c_str() );
+    }
+
+    
+  }
+  
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  void Print1DHistogramsOverlayedDeta( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( i+1 );
+        histograms[j][i]->SetMarkerStyle( i+20 );
+        histograms[j][i]->SetMarkerColor( i+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+        
+        if ( j == 0 ) {
+          histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+      }
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+
+    
+  }
 
   
 } // end namespace
