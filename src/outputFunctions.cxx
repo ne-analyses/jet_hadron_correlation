@@ -789,7 +789,7 @@ namespace jetHadron {
   
   // Normalizes 1D histograms based on what
   // type of analysis they are
-  void Normalize1D( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents ) {
+  void Normalize1D( std::vector<std::vector<TH1F*> >& histograms, std::vector<TH3F*>& nEvents ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
@@ -801,7 +801,7 @@ namespace jetHadron {
   }
   
   // need to know what
-  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents, int ajBinLow, int ajBinHigh ) {
+  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> >& histograms, std::vector<TH3F*>& nEvents, int ajBinLow, int ajBinHigh ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       nEvents[i]->GetXaxis()->SetRange( ajBinLow, ajBinHigh );
@@ -819,7 +819,7 @@ namespace jetHadron {
   // Used to subtract one set of 1D histograms
   // from another - does not do background sub
   // or anything like that
-  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> > base, std::vector<std::vector<TH1F*> > subtraction, std::string uniqueID ) {
+  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> >& base, std::vector<std::vector<TH1F*> >& subtraction, std::string uniqueID ) {
     
     // new return object
     std::vector<std::vector<TH1F*> > subtracted;
@@ -837,6 +837,63 @@ namespace jetHadron {
     }
     return subtracted;
   }
+  
+  void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    std::string subForm = "[0]";
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        TF1* tmpFit = new TF1( tmp.c_str(), phiForm, phi_min, phi_max );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        
+        std::string tmpSubName = "sub_" + tmp;
+        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm, phi_min, phi_max );
+        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
+        
+        histograms[i][j]->Add( tmpSub, -1 );
+        
+        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
+        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
+      }
+    }
+
+  }
+
+  
+  // Used to subtract background from each histogram
+  void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    std::string subForm = "[0]";
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
+        std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        TF1* tmpFit = new TF1( tmp.c_str(), etaForm, eta_min, eta_max );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        
+        std::string tmpSubName = "sub_" + tmp;
+        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm, eta_min, eta_max );
+        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
+        
+        histograms[i][j]->Add( tmpSub, -1 );
+        
+        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
+        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
+      }
+    }
+    
+  }
+  
   
   
   

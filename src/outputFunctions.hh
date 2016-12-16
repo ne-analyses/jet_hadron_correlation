@@ -174,13 +174,18 @@ namespace jetHadron {
   
   // Normalizes 1D histograms based on what
   // type of analysis they are
-  void Normalize1D( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents );
-  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents, int ajBinLow, int ajBinHigh );
+  void Normalize1D( std::vector<std::vector<TH1F*> >& histograms, std::vector<TH3F*>& nEvents );
+  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> >& histograms, std::vector<TH3F*>& nEvents, int ajBinLow, int ajBinHigh );
   
   // Used to subtract one set of 1D histograms
   // from another - does not do background sub
   // or anything like that
-  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> > base, std::vector<std::vector<TH1F*> > subtraction, std::string = "" );
+  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> >& base, std::vector<std::vector<TH1F*> >& subtraction, std::string = "" );
+  
+  // Used to subtract background from each histogram
+  void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
+  void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
+  
   
   // Methods for Printing out and Saving
   // ***********************************
