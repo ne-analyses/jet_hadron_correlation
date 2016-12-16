@@ -231,6 +231,9 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1DAjSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
   jetHadron::Normalize1DAjSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
   
+  // now do the subtraction
+  std::vector<std::vector<TH1F*> > aj_subtracted = ( aj_balanced_dphi, aj_unbalanced_dphi, "aj_split" );
+  
   return 0;
 }
 

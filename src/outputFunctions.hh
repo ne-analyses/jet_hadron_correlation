@@ -180,7 +180,7 @@ namespace jetHadron {
   // Used to subtract one set of 1D histograms
   // from another - does not do background sub
   // or anything like that
-  
+  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> > base, std::vector<std::vector<TH1F*> > subtraction, std::string = "" );
   
   // Methods for Printing out and Saving
   // ***********************************

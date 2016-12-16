@@ -816,6 +816,27 @@ namespace jetHadron {
     
   }
   
+  // Used to subtract one set of 1D histograms
+  // from another - does not do background sub
+  // or anything like that
+  std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> > base, std::vector<std::vector<TH1F*> > subtraction, std::string uniqueID ) {
+    
+    // new return object
+    std::vector<std::vector<TH1F*> > subtracted;
+    subtracted.resize(  base.size() );
+    
+    for ( int i = 0; i < base.size(); ++i ) {
+      subtracted[i].resize( base[i].size() );
+      for ( int j = 0; j < base[i].size(); ++j ) {
+        std::string tmp = uniqueID + "_subtracted_"+base[i][j]->GetName();
+        subtracted[i][j] = (TH1F*) base[i][j]->Clone();
+        subtracted[i][j]->SetName( tmp.c_str() );
+        subtracted[i][j]->Add( subtraction[i][j], -1 );
+        
+      }
+    }
+    return subtracted;
+  }
   
   
   
