@@ -792,7 +792,7 @@ namespace jetHadron {
   void Normalize1D( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
-      for ( int j = 0; j < histograms[i].size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
         histograms[i][j]->Scale( histograms[i][j]->GetXaxis()->GetBinWidth(1) );
         histograms[i][j]->Scale( (double) nEvents[i]->GetEntries() );
       }
@@ -805,13 +805,12 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       nEvents[i]->GetXaxis()->SetRange( ajBinLow, ajBinHigh );
-      for ( int j = 0; j < histograms[i].size(); ++i ) {
-        std::cout<<"got here..."<<std::endl;
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        
         std::cout<<histograms[i][j]<<std::endl;
         histograms[i][j]->Scale( 1.0 /histograms[i][j]->GetXaxis()->GetBinWidth(1) );
-        std::cout<<"and here"<<std::endl;
         histograms[i][j]->Scale( 1.0 /(double) nEvents[i]->Integral() );
-        std::cout<<"and finally here"<<std::endl;
+        
       }
       nEvents[i]->GetXaxis()->SetRange();
     }
