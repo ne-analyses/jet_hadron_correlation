@@ -220,6 +220,14 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > uncorrected_dphi = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected", false );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "mixing_corrected_near_far_sub_dphi", true );
   
+  // *******************************
+  // get 1D projections for Aj split
+  // *******************************
+  std::vector<std::vector<TH1F*> aj_balanced_dphi = jetHadron::ProjectDphi( correlationAjBalanced, selector, "aj_balanced_", false )
+  std::vector<std::vector<TH1F*> aj_unbalanced_dphi = jetHadron::ProjectDphi( correlationAjUnbalanced, selector, "aj_unbalanced_", false );
+  
+  jetHadron::Normalize1DSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
+  jetHadron::Normalize1DSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
   
   return 0;
 }
