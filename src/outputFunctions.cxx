@@ -1030,7 +1030,7 @@ namespace jetHadron {
   
   // Print out dPhi histograms, each pt bin
   // Seperately, but each file overlaid
-  void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+  void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -1055,7 +1055,7 @@ namespace jetHadron {
         }
         
       }
-      std::string tmp = outputDir + "/" + analysisName[i] + "_" + patch::to_string(i) + ".pdf";
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -1084,7 +1084,7 @@ namespace jetHadron {
   
   // Print out dPhi histograms, each pt bin
   // Seperately, but each file overlaid
-  void Print1DHistogramsOverlayedDeta( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+  void Print1DHistogramsOverlayedDeta( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -1109,7 +1109,7 @@ namespace jetHadron {
         }
         
       }
-      std::string tmp = outputDir + "/" + analysisName[i] + "_" + patch::to_string(i) + ".pdf";
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
 
