@@ -999,6 +999,7 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       std::cout<<"got here"<<std::endl;
+      std::cout<<histograms[i]<<std::endl;
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       std::cout<<"got here too"<<std::endl;
       histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
