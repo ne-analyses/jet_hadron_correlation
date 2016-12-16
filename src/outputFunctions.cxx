@@ -998,16 +998,22 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
+      std::cout<<"got here"<<std::endl;
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      std::cout<<"got here too"<<std::endl;
       histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+      std::cout<<"AND HERE"<<std::endl;
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
-      
+      std::cout<<"and here as well"<<std::endl;
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
-
+      std::cout<<"and got here"<<std::endl;
       TCanvas c1;
+      std::cout<<"drawing"<<std::endl;
       histograms[i]->Draw("surf1");
+      std::cout<<"test"<<std::endl;
       c1.SaveAs( tmp.c_str() );
+      std::cout<<"saving"<<std::endl;
     }
     
   }
