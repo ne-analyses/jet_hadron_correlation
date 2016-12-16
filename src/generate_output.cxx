@@ -231,10 +231,16 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1DAjSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
   jetHadron::Normalize1DAjSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
   
+  // now we need to do background subtraction
+  jetHadron::SubtractBackgroundDphi( aj_balanced_dphi, selector );
+  jetHadron::SubtractBackgroundDphi( aj_unbalanced_dphi, selector );
   // now do the subtraction
   std::vector<std::vector<TH1F*> > aj_subtracted = jetHadron::Subtract1D( aj_balanced_dphi, aj_unbalanced_dphi, "aj_split" );
   
-  
+  // and print it out
+  jetHadron::Print1DHistogramsOverlayedDphi( aj_subtracted, outputDirBase+"/aj_subtracted_dif", analysisNames, selector );
+  // also print out the overlayed
+  jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi, aj_unbalanced_dphi, outputDirBase+"/aj_dif_dphi"+analysisNames[i], analysisNames[i], selector );
   
   return 0;
 }

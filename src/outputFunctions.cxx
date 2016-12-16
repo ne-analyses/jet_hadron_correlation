@@ -1119,6 +1119,39 @@ namespace jetHadron {
 
     
   }
+  
+  void Print1DHistogramsOverlayedDphiOther( std::vector<TH1F*>& histograms, std::vector<TH1F*>& histograms2, std::string outputDir, std::string analysisName, binSelector selector ) {
+   
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->SetLineColor( 1 );
+      histograms[i]->SetMarkerStyle( 20 );
+      histograms[i]->SetMarkerStyle( 2 );
+      histograms[i]->SetMarkerColor( 1 );
+      
+      histograms2[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms2[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms2[i]->SetLineColor( 2 );
+      histograms2[i]->SetMarkerStyle( 21 );
+      histograms2[i]->SetMarkerStyle( 2 );
+      histograms2[i]->SetMarkerColor( 2 );
+
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw();
+      histograms2[i]->Draw("same");
+      c1.SaveAs( tmp.c_str() );
+    }
+
+    
+  }
 
   
 } // end namespace
