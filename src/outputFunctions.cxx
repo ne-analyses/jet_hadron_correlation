@@ -997,8 +997,6 @@ namespace jetHadron {
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
     
-    for ( int i = 0; i < histograms.size(); ++i ) { std::cout<<histograms[i]<<std::endl; }
-    
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
