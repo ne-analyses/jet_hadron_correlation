@@ -84,8 +84,9 @@ int main( int argc, const char** argv) {
   }
   
   std::vector<std::string> defaultCorrNames;
-  defaultCorrNames.resize(1);
+  defaultCorrNames.resize(2);
   defaultCorrNames[0] = "Dijet";
+  defaultCorrNames[1] = "ppDijet";
   
   // files and naming
   std::vector<TFile*> corrFiles;
@@ -108,6 +109,9 @@ int main( int argc, const char** argv) {
       TFile* tmpMix = new TFile( "out/tmp/auau_mix_20_10.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
+      
+      tmp = new TFile( "out/tmp/pp_corr_20_10.root", "READ" );
+      tmpMix = new TFile( "out/tmp/pp_mix_20_10.root", "READ");
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
