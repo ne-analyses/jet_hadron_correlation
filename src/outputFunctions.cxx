@@ -819,6 +819,7 @@ namespace jetHadron {
   // Used to subtract one set of 1D histograms
   // from another - does not do background sub
   // or anything like that
+  
   std::vector<std::vector<TH1F*> > Subtract1D( std::vector<std::vector<TH1F*> >& base, std::vector<std::vector<TH1F*> >& subtraction, std::string uniqueID ) {
     
     // new return object
@@ -838,6 +839,37 @@ namespace jetHadron {
     return subtracted;
   }
   
+  // Used to subtract background from each histogram
+  void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    std::string subForm = "[0]";
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
+        std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        TF1* tmpFit = new TF1( tmp.c_str(), etaForm, eta_min, eta_max );
+        tmpFit->FixParameter( 2, 0 );
+        tmpFit->SetParameter( 3, 0.2 );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        
+        std::string tmpSubName = "sub_" + tmp;
+        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm, eta_min, eta_max );
+        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
+        
+        histograms[i][j]->Add( tmpSub, -1 );
+        
+        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
+        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
+      }
+    }
+    
+  }
+
+  // same thing but with a different fit function for dphi
   void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     
     std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
@@ -849,6 +881,10 @@ namespace jetHadron {
         double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         TF1* tmpFit = new TF1( tmp.c_str(), phiForm, phi_min, phi_max );
+        tmpFit->FixParameter( 2, 0 );
+        tmpFit->FixParameter( 5, jetHadron::pi );
+        tmpFit->SetParameter( 3, 0.2 );
+        tmpFit->SetParameter( 6, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
@@ -866,32 +902,61 @@ namespace jetHadron {
   }
 
   
-  // Used to subtract background from each histogram
-  void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+  // Used to fit each histogram
+  std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     
     std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
     std::string subForm = "[0]";
     
+    // return value
+    std::vector<std::vector<TF1*> > fits;
+    fits.resize( histograms.size() );
+    
     for ( int i = 0; i < histograms.size(); ++i ) {
+      fits[i].resize( histograms[i].size() );
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
-        std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
-        TF1* tmpFit = new TF1( tmp.c_str(), etaForm, eta_min, eta_max );
+        std::string tmp = "fit_" + histograms[i][j]->GetName();
+        fits[i][j] = new TF1( tmp.c_str(), etaForm, eta_min, eta_max );
+        fits[i][j]->FixParameter( 2, 0 );
+        fits[i][j]->SetParameter( 3, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
-        std::string tmpSubName = "sub_" + tmp;
-        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm, eta_min, eta_max );
-        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
-        
-        histograms[i][j]->Add( tmpSub, -1 );
-        
-        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
-        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
       }
     }
     
+    return fits;
+  }
+  
+  // same for dphi
+  std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    std::string subForm = "[0]";
+    
+    // return value
+    std::vector<std::vector<TF1*> > fits;
+    fits.resize( histograms.size() );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      fits.resize(histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        std::string tmp = "fit_" + histograms[i][j]->GetName();
+        fits[i][j] = new TF1( tmp.c_str(), phiForm, phi_min, phi_max );
+        fits[i][j]->FixParameter( 2, 0 );
+        fits[i][j]->FixParameter( 5, jetHadron::pi );
+        fits[i][j]->SetParameter( 3, 0.2 );
+        fits[i][j]->SetParameter( 6, 0.2 );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+      }
+    }
+    return fits;
   }
   
   
