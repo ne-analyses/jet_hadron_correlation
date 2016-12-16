@@ -787,6 +787,35 @@ namespace jetHadron {
 
   }
   
+  // Normalizes 1D histograms based on what
+  // type of analysis they are
+  void Normalize1D( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++i ) {
+        histograms[i][j]->Scale( histograms[i][j]->GetXaxis()->GetBinWidth(1) );
+        histograms[i][j]->Scale( (double) nEvents[i]->GetEntries() );
+      }
+    }
+    
+  }
+  
+  // need to know what
+  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents, int ajBinLow, int ajBinHigh ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      nEvents[i]->GetXaxis()->SetRange( ajBinLow, ajBinHigh );
+      std::cout<<"integral before setting back: "<< nEvents[i]->GetEntries()<<std::endl;
+      for ( int j = 0; j < histograms[i].size(); ++i ) {
+        histograms[i][j]->Scale( histograms[i][j]->GetXaxis()->GetBinWidth(1) );
+        histograms[i][j]->Scale( (double) nEvents[i]->GetEntries() );
+      }
+      nEvents[i]->GetXaxis()->SetRange();
+      std::cout<<"integral before setting back: "<< nEvents[i]->GetEntries()<<std::endl;
+    }
+    
+  }
+  
   
   
   

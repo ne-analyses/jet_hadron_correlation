@@ -172,6 +172,15 @@ namespace jetHadron {
   std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDphi = false );
   
+  // Normalizes 1D histograms based on what
+  // type of analysis they are
+  void Normalize1D( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents );
+  void Normalize1DAjSplit( std::vector<std::vector<TH1F*> > histograms, std::vector<TH3F*> nEvents, int ajBinLow, int ajBinHigh );
+  
+  // Used to subtract one set of 1D histograms
+  // from another - does not do background sub
+  // or anything like that
+  
   
   // Methods for Printing out and Saving
   // ***********************************
