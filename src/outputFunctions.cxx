@@ -917,7 +917,7 @@ namespace jetHadron {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
-        std::string tmp = "fit_" + histograms[i][j]->GetName();
+        std::string tmp = "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
@@ -946,7 +946,7 @@ namespace jetHadron {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
-        std::string tmp = "fit_" + histograms[i][j]->GetName();
+        std::string tmp = "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->FixParameter( 5, jetHadron::pi );
