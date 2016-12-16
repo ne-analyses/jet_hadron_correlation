@@ -887,7 +887,7 @@ namespace jetHadron {
         }
         
       }
-      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      std::string tmp = outputDir + "/" + analysisName[i] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -941,7 +941,7 @@ namespace jetHadron {
         }
         
       }
-      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      std::string tmp = outputDir + "/" + analysisName[i] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
 
