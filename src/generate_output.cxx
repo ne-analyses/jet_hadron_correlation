@@ -180,6 +180,8 @@ int main( int argc, const char** argv) {
   
   // get averaged correlations
   std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector );
+  std::vector<std::vector<TH2F*> > averagedSignalBalanced = jetHadron::AverageCorrelations( correlationAjBalanced, selector, "balanced" );
+  std::vector<std::vector<TH2F*> > averagedSignalUnbalanced = jetHadron::AverageCorrelations( correlationAjUnbalanced, selector, "unbalanced" );
   
   // Now build and scale the event mixing histograms.
   // we will use the averaged event mixing for now
@@ -223,8 +225,8 @@ int main( int argc, const char** argv) {
   // *******************************
   // get 1D projections for Aj split
   // *******************************
-  std::vector<std::vector<TH1F*> > aj_balanced_dphi = jetHadron::ProjectDphi( correlationAjBalanced, selector, "aj_balanced_", false );
-  std::vector<std::vector<TH1F*> > aj_unbalanced_dphi = jetHadron::ProjectDphi( correlationAjUnbalanced, selector, "aj_unbalanced_", false );
+  std::vector<std::vector<TH1F*> > aj_balanced_dphi = jetHadron::ProjectDphi( averagedSignalBalanced, selector, "aj_balanced_", false );
+  std::vector<std::vector<TH1F*> > aj_unbalanced_dphi = jetHadron::ProjectDphi( averagedSignalUnbalanced, selector, "aj_unbalanced_", false );
   
   jetHadron::Normalize1DAjSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
   jetHadron::Normalize1DAjSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
