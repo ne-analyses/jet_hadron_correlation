@@ -805,13 +805,12 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       nEvents[i]->GetXaxis()->SetRange( ajBinLow, ajBinHigh );
-      std::cout<<"integral before setting back: "<< nEvents[i]->Integral()<<std::endl;
       for ( int j = 0; j < histograms[i].size(); ++i ) {
+        std::cout<<"got here..."<<std::endl;
         histograms[i][j]->Scale( histograms[i][j]->GetXaxis()->GetBinWidth(1) );
-        histograms[i][j]->Scale( (double) nEvents[i]->GetEntries() );
+        histograms[i][j]->Scale( (double) nEvents[i]->Integral() );
       }
       nEvents[i]->GetXaxis()->SetRange();
-      std::cout<<"integral before setting back: "<< nEvents[i]->GetEntries()<<std::endl;
     }
     
   }
