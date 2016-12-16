@@ -862,8 +862,6 @@ namespace jetHadron {
         
         histograms[i][j]->Add( tmpSub, -1 );
         
-        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
-        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
       }
     }
     
@@ -893,9 +891,7 @@ namespace jetHadron {
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
         
         histograms[i][j]->Add( tmpSub, -1 );
-        
-        histograms[i][j]->GetFunction( tmp.c_str() )->SetBit(TF1::kNotDraw);
-        histograms[i][j]->GetFunction( tmpSubName.c_str() )->SetBit(TF1::kNotDraw);
+
       }
     }
 
