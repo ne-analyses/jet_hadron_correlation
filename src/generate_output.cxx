@@ -223,8 +223,8 @@ int main( int argc, const char** argv) {
   // *******************************
   // get 1D projections for Aj split
   // *******************************
-  std::vector<std::vector<TH1F*> aj_balanced_dphi = jetHadron::ProjectDphi( correlationAjBalanced, selector, "aj_balanced_", false )
-  std::vector<std::vector<TH1F*> aj_unbalanced_dphi = jetHadron::ProjectDphi( correlationAjUnbalanced, selector, "aj_unbalanced_", false );
+  std::vector<std::vector<TH1F*> > aj_balanced_dphi = jetHadron::ProjectDphi( correlationAjBalanced, selector, "aj_balanced_", false )
+  std::vector<std::vector<TH1F*> > aj_unbalanced_dphi = jetHadron::ProjectDphi( correlationAjUnbalanced, selector, "aj_unbalanced_", false );
   
   jetHadron::Normalize1DSplit( aj_balanced_dphi, nEvents, 1, ajSplitBin );
   jetHadron::Normalize1DSplit( aj_unbalanced_dphi, nEvents, ajSplitBin+1, 20 );
