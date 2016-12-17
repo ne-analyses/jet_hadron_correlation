@@ -442,9 +442,12 @@ int main ( int argc, const char** argv) {
       // Find the reference centrality
       // (for pp, set to zero by default )
       int gRefMult = header->GetGReferenceMultiplicity();
-      int refCentrality = jetHadron::GetReferenceCentrality( gRefMult );
+      int refCentrality = 0;
       if ( jetHadron::BeginsWith( analysisType, "pp") )
         refCentrality = 8;
+      else {
+        refCentrality = jetHadron::GetReferenceCentrality( gRefMult );
+      }
       
       // Now we need to check if it has a hard jet in it
       // Get the output container from the reader
