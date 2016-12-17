@@ -171,6 +171,20 @@ int main( int argc, const char** argv) {
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
 
+  for ( int i = 0; i < leadingMixIn.size(); ++i ){
+    for ( int j = 0; j < leadingMixIn[i].size(); ++j ) {
+      for ( int k = 0; k < leadingMixIn[i][j].size(); ++k ) {
+        for ( int l = 0; l < leadingMixIn[i][j][k].size(); ++l ) {
+          if ( i == 1 && leadingMixIn[i][j][k][l]->GetEntries() ) {
+            std::cout<<"mixing data foudn in i: "<<i << " j: "<< " k: "<< k << " l: "<<l<<std::endl;
+          }
+        }
+      }
+    }
+    
+  }
+  return 0;
+  
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
@@ -196,12 +210,6 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector, "avg_mix_" );
   std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector, "avg_mix_sub" );
   
-  for ( int i = 0; i < leadingMix[1].size(); ++i ){
-    if ( leadingMix[1][i]->GetEntries() ) {
-      std::cout<<"found mixing data pt bin: "<<i<<std::endl;
-    }
-  }
-  return 0;
   // Build mixed events that are still not averaged as well
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
