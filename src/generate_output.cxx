@@ -201,7 +201,7 @@ int main( int argc, const char** argv) {
       std::cout<<"found mixing data pt bin: "<<i<<std::endl;
     }
   }
-
+  return 0;
   // Build mixed events that are still not averaged as well
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
