@@ -171,6 +171,28 @@ int main( int argc, const char** argv) {
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
   
+    // for mixed events
+   for ( int i = 0; i < leadingMixIn.size(); ++i ) {
+    for ( int j = 0; j < leadingMixIn[i].size(); ++j ) {
+      for ( int k = 0; k < leadingMixIn[i][j].size(); ++k ) {
+        for ( int l = 0; l < leadingMixIn[i][j][k].size(); ++l ) {
+          if ( i == 1 && j == 0 && l == 0 ) {
+            std::cout<<"FILE: "<<i<<" CENT: "<<j<< " VZ: " <<k << " PT: " << l << " POINTER: "<<leadingMixIn[i][j][k][l]<<std::endl;
+            std::cout<<"entries: "<< leadingMixIn[i][j][k][l]->Integral()<<std::endl;
+            std::cout<<"name: "<< leadingMixIn[i][j][k][l]->GetName()<<std::endl;
+            std::string name = "tmp/mix_vz_" + patch::to_string(k) + ".pdf";
+            TCanvas c1;
+            leadingMixIn[i][j][k][l]->Draw();
+            c1.SaveAs( name.c_str() );
+        }
+        }
+      }
+    }
+  }
+
+  // testing after this 
+  return 1;
+
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leadingCorrelationIn, ptSpectra, selector );
@@ -195,11 +217,11 @@ int main( int argc, const char** argv) {
   // First average over all centrality/vz/aj, project into pt
   std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector, "avg_mix_" );
   std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector, "avg_mix_sub" );
-  
+
   // Build mixed events that are still not averaged as well
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
-  
+
   // And Scale so that MaxBinContent = 1
   jetHadron::ScaleMixedEvents( leadingMix );
   jetHadron::ScaleMixedEvents( subleadingMix );
@@ -211,7 +233,7 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH2F*> > notAveragedMixedEventCorrected = jetHadron::EventMixingCorrection( leadingCorrelation, leadingMixNotAveraged, selector, "leading_not_avg" );
   std::vector<std::vector<TH2F*> > averagedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMix, selector, "subleading_avg"  );
   std::vector<std::vector<TH2F*> > notAveragedMixedEventCorrectedSub = jetHadron::EventMixingCorrection( subleadingCorrelation, subleadingMixNotAveraged, selector, "subleading_not_avg" );
-  
+
   // ***************************
   // print out the 2d histograms
   // ***************************
