@@ -444,7 +444,7 @@ int main ( int argc, const char** argv) {
       int gRefMult = header->GetGReferenceMultiplicity();
       int refCentrality = jetHadron::GetReferenceCentrality( gRefMult );
       if ( jetHadron::BeginsWith( analysisType, "pp") )
-        refCentrality = 0;
+        refCentrality = 8;
       
       // Now we need to check if it has a hard jet in it
       // Get the output container from the reader
@@ -532,13 +532,13 @@ int main ( int argc, const char** argv) {
     // get the proper cent/vz bin
     std::vector< unsigned > randomizedEventID;
     if ( jetHadron::BeginsWith( analysisType, "pp") )
-      randomizedEventID = mixing_events[vzBranch][0];
+      randomizedEventID = mixing_events[vzBranch][8];
     else
       randomizedEventID = mixing_events[vzBranch][centBranch];
     
     // If the event list was set to zero earlier,
     // Then we will not be using that bin
-    if ( randomizedEventID.size() == 0 )  { continue;}
+    if ( randomizedEventID.size() == 0 )  { __ERR("No mixing data") continue;}
     
     // then randomize the list
     std::shuffle( randomizedEventID.begin(), randomizedEventID.end(), g );
@@ -551,7 +551,7 @@ int main ( int argc, const char** argv) {
       // count event
       // first set any dummy variables necessary
       if ( jetHadron::BeginsWith( analysisType, "pp") )
-        centBranch = 0;
+        centBranch = 8;
       if ( !requireDijets )
         ajBranch = 0.01;
       histograms->CountEvent( vzBranch, centBranch, ajBranch );
