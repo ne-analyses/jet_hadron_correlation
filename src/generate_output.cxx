@@ -195,6 +195,12 @@ int main( int argc, const char** argv) {
   // First average over all centrality/vz/aj, project into pt
   std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( leadingMixIn, selector, "avg_mix_" );
   std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( subleadingMixIn, selector, "avg_mix_sub" );
+  
+  for ( int i = 0; i < leadingMix[1].size(); ++i ){
+    if ( leadingMix[1][i]->GetEntries() ) {
+      std::cout<<"found mixing data pt bin: "<<i<<std::endl;
+    }
+  }
 
   // Build mixed events that are still not averaged as well
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
