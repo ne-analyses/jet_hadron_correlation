@@ -1046,9 +1046,9 @@ namespace jetHadron {
       
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
-        histograms[j][i]->SetLineColor( i+1 );
-        histograms[j][i]->SetMarkerStyle( i+20 );
-        histograms[j][i]->SetMarkerColor( i+1 );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
       
         if ( j == 0 ) {
@@ -1100,9 +1100,9 @@ namespace jetHadron {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
-        histograms[j][i]->SetLineColor( i+1 );
-        histograms[j][i]->SetMarkerStyle( i+20 );
-        histograms[j][i]->SetMarkerColor( i+1 );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         
         if ( j == 0 ) {
