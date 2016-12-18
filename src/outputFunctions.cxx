@@ -998,9 +998,11 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->GetYaxis()->SetRangeUser( min, max );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1045,9 +1047,9 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       double min, max;
-      std::vector<TH1F*> tmp;
-      tmp.push_back( histograms[i] );
-      FindGood1DUserRange( tmp, max, min );
+      std::vector<TH1F*> tmpvec;
+      tmpvec.push_back( histograms[i] );
+      FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
@@ -1074,11 +1076,11 @@ namespace jetHadron {
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
-      std::vector<TH1F*> tmp;
+      std::vector<TH1F*> tmpvec;
       for ( int j = 0; j < histograms.size(); ++j ) {
-        tmp.push_back( histograms[j][i] );
+        tmpvec.push_back( histograms[j][i] );
       }
-      FindGood1DUserRange( tmp, max, min );
+      FindGood1DUserRange( tmpvec, max, min );
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1115,9 +1117,9 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       double min, max;
-      std::vector<TH1F*> tmp;
-      tmp.push_back( histograms[i] );
-      FindGood1DUserRange( tmp, max, ,min );
+      std::vector<TH1F*> tmpvec;
+      tmpvec.push_back( histograms[i] );
+      FindGood1DUserRange( tmpvec, max, ,min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
@@ -1145,11 +1147,11 @@ namespace jetHadron {
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
-      std::vector<TH1F*> tmp;
+      std::vector<TH1F*> tmpvec;
       for ( int j = 0; j < histograms.size(); ++j ) {
-        tmp.push_back( histograms[j][i] );
+        tmpvec.push_back( histograms[j][i] );
       }
-      FindGood1DUserRange( tmp, max, min );
+      FindGood1DUserRange( tmpvec, max, min );
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1185,10 +1187,10 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       double min, max;
-      std::vector<TH1F*> tmp;
-      tmp.push_back( histograms[i] );
-      tmp.push_back( histograms2[i] );
-      FindGood1DUserRange( tmp, max, ,min );
+      std::vector<TH1F*> tmpvec;
+      tmpvec.push_back( histograms[i] );
+      tmpvec.push_back( histograms2[i] );
+      FindGood1DUserRange( tmpvec, max, ,min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
