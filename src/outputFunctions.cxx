@@ -967,6 +967,29 @@ namespace jetHadron {
   // HISTOGRAM PRINTING AND SAVING
   // *****************************
   
+  // Used internally to find good ranges for histograms
+  void FindGood1DUserRange( std::vector<TH1F*> histograms, double& max, double& min ) {
+    
+    double tmpMin = 0;
+    double tmpMax = 0;
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      if ( i == 0 ) {
+        tmpMax = histograms[i]->GetMaximum();
+        tmpMin = histograms[i]->GetMinimum();
+      }
+      else {
+        if ( histograms[i]->GetMaximum() > tmpMax ) { tmpMax = histograms[i]->GetMaximum(); }
+        if ( histograms[i]->GetMinimum() < tmpMin ) { tmpMin = histograms[i]->GetMinimum(); }
+      }
+    }
+    max = 1.2*tmpMax;
+    min = 0.8*fabs(tmpMin);
+    if ( min > -0.1 )
+      min = -0.1;
+         
+  }
+  
   // Used to print out 2D plots ( correlations, mixed events )
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
     
@@ -1020,9 +1043,15 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmp;
+      tmp.push_back( histograms[i] );
+      FindGood1DUserRange( tmp, max, min );
+      
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
-      histograms[i]->GetYaxis()->SetRangeUser(-1.0, 3.0 );
+      histograms[i]->GetYaxis()->SetRangeUser(min , max );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1043,7 +1072,16 @@ namespace jetHadron {
     
     TCanvas c1;
     for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmp;
       for ( int j = 0; j < histograms.size(); ++j ) {
+        tmp.push_back( histograms[j][i] );
+      }
+      FindGood1DUserRange( tmp, max, min );
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
       
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
@@ -1051,7 +1089,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
-        histograms[j][i]->GetYaxis()->SetRangeUser( -1.0, 3.0);
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
       
         if ( j == 0 ) {
         histograms[j][i]->Draw();
@@ -1075,9 +1113,15 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmp;
+      tmp.push_back( histograms[i] );
+      FindGood1DUserRange( tmp, max, ,min );
+      
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
-      histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
+      histograms[i]->GetYaxis()->SetRangeUser( min, max );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1099,6 +1143,14 @@ namespace jetHadron {
     
     TCanvas c1;
     for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmp;
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        tmp.push_back( histograms[j][i] );
+      }
+      FindGood1DUserRange( tmp, max, min );
+      
       for ( int j = 0; j < histograms.size(); ++j ) {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -1107,7 +1159,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
-        histograms[j][i]->GetYaxis()->SetRangeUser(-1.0, 3.0);
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max );
         
         if ( j == 0 ) {
           histograms[j][i]->Draw();
@@ -1131,6 +1183,13 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmp;
+      tmp.push_back( histograms[i] );
+      tmp.push_back( histograms2[i] );
+      FindGood1DUserRange( tmp, max, ,min );
+      
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->SetLineColor( 1 );
