@@ -1051,7 +1051,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
-        histograms[j][i]->SetRangeUser( -1.0, 3.0);
+        histograms[j][i]->GetYaxis()->SetRangeUser( -1.0, 3.0);
       
         if ( j == 0 ) {
         histograms[j][i]->Draw();
