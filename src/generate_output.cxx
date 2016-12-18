@@ -170,20 +170,6 @@ int main( int argc, const char** argv) {
   // reading in the histograms
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
-
-  for ( int i = 0; i < leadingMixIn.size(); ++i ){
-    for ( int j = 0; j < leadingMixIn[i].size(); ++j ) {
-      for ( int k = 0; k < leadingMixIn[i][j].size(); ++k ) {
-        for ( int l = 0; l < leadingMixIn[i][j][k].size(); ++l ) {
-          if ( i == 1 && leadingMixIn[i][j][k][l]->GetEntries() ) {
-            std::cout<<"mixing data foudn in i: "<<i << " j: "<< " k: "<< k << " l: "<<l<<std::endl;
-          }
-        }
-      }
-    }
-    
-  }
-  return 0;
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
