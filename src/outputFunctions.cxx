@@ -1119,7 +1119,7 @@ namespace jetHadron {
       double min, max;
       std::vector<TH1F*> tmpvec;
       tmpvec.push_back( histograms[i] );
-      FindGood1DUserRange( tmpvec, max, ,min );
+      FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
@@ -1190,7 +1190,7 @@ namespace jetHadron {
       std::vector<TH1F*> tmpvec;
       tmpvec.push_back( histograms[i] );
       tmpvec.push_back( histograms2[i] );
-      FindGood1DUserRange( tmpvec, max, ,min );
+      FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
