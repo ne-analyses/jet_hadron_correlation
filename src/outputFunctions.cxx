@@ -1022,6 +1022,7 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->GetYaxis()->SetRangeUser(-1.0, 3.0 );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1050,6 +1051,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->SetRangeUser( -1.0, 3.0);
       
         if ( j == 0 ) {
         histograms[j][i]->Draw();
@@ -1075,6 +1077,7 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1104,6 +1107,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->GetYaxis()->SetRangeUser(-1.0, 3.0);
         
         if ( j == 0 ) {
           histograms[j][i]->Draw();
@@ -1133,6 +1137,7 @@ namespace jetHadron {
       histograms[i]->SetMarkerStyle( 20 );
       histograms[i]->SetMarkerStyle( 2 );
       histograms[i]->SetMarkerColor( 1 );
+      histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
       
       histograms2[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms2[i]->SetTitle( selector.ptBinString[i].c_str() );
