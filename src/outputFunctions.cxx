@@ -1102,7 +1102,7 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1157,7 +1157,7 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1235,7 +1235,7 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1291,7 +1291,7 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
