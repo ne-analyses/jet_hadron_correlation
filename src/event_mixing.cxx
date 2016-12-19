@@ -481,7 +481,7 @@ int main ( int argc, const char** argv) {
       // check to see if the event needs to be discarded
       if ( !jetHadron::UseEventInMixing( analysisType, isMixMB, HiResult, gRefMult, vzBin ) )
         continue;
-     
+      std::cout<<"found an event"<<std::endl;
       // Now, we know its an event we will use, so fill it in
       useable_events++;
       unsigned tmp_event_id = reader.GetNOfCurrentEvent();
@@ -494,6 +494,7 @@ int main ( int argc, const char** argv) {
     std::cout<<"error"<<std::endl;
     return -1;
   }
+  std::cout<<"wut"<<std::endl;
   __OUT("Finished inital event binning in Vz-centrality")
   std::string finishEventCheck = "Out of " + patch::to_string(total_events) + ", " + patch::to_string(useable_events) + " will be used";
   __OUT( finishEventCheck.c_str() )
