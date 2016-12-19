@@ -910,7 +910,7 @@ namespace jetHadron {
     
     // return value
     std::vector<std::vector<TF1*> > fits;
-    fits[i].resize( histograms.size() );
+    fits.resize( histograms.size() );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       fits[i].resize( histograms[i].size() );
