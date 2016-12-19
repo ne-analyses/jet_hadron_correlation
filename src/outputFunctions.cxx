@@ -961,6 +961,35 @@ namespace jetHadron {
   
   
   
+  // Extracts the yield and errors from the fits
+  // only extracts for near side so can be used
+  // for both dphi and deta
+  void ExtractFitVals( std::vector<std::vector<TF1*> >& fits, std::vector<std::vector<double> >& yields, std::vector<std::vector<double> >& widths, std::vector<std::vector<double> >& normError, std::vector<std::vector<double> >& widthError, binSelector selector ) {
+    
+    // first expand the structures
+    yields.resize( fits.size() );
+    widths.resize( fits.size() );
+    normError.resize( fits.size() );
+    widthError.resize( fits.size() );
+    
+    for ( int i = 0; i < fits.size(); ++i ) {
+      yields[i].resize( fits[i].size() );
+      widths[i].resize( fits[i].size() );
+      normError[i].resize( fits[i].size() );
+      widthError[i].resize( fits[i].size() );
+      
+      for ( int j = 0; j < fits[i].size(); ++j ) {
+        
+        yields[i][j] = fits[i][j]->GetParameter(1)*sqrt(2*pi)*fabs(fits[i][j]->GetParameter(3))/selector.ptBinWidth( j );
+        widths[i][j] = fabs(fits[i][j]->GetParameter(3));
+        normError[i][j] = fits[i][j]->GetParError( 1 );
+        widthError[i][j] = fits[i][j]->GetParError( 3 );
+        
+      }
+    }
+  }
+  
+  
   
   
   // *****************************

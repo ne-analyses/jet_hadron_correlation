@@ -78,7 +78,7 @@ namespace jetHadron {
     // pt
     double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
     double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
-    double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
+    double ptBinWidth( int i ) { return (ptBinEdgeHi[i] - ptBinEdgeLo[i]); }
     std::string ptBinString[5] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
     const int nPtBins = 5;
     
@@ -194,6 +194,11 @@ namespace jetHadron {
   // Used to fit each histogram
   std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
   std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
+  
+  // Extracts the yield and errors from the fits
+  // only extracts for near side so can be used
+  // for both dphi and deta
+  void ExtractFitVals( std::vector<std::vector<TF1*> > fits, std::vector<std::vector<double> > yields, std::vector<std::vector<double> > width, std::vector<std::vector<double> > normError, std::vector<std::vector<double> > widthError, binSelector selector );
   
   // Methods for Printing out and Saving
   // ***********************************
