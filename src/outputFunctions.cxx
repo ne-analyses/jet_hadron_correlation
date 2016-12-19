@@ -1110,7 +1110,7 @@ namespace jetHadron {
       }
       FindGood1DUserRange( tmpvec, max, min );
       
-      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1159,7 +1159,7 @@ namespace jetHadron {
       }
       FindGood1DUserRange( tmpvec, max, min );
       
-      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1243,7 +1243,7 @@ namespace jetHadron {
       }
       FindGood1DUserRange( tmpvec, max, min );
       
-      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1294,7 +1294,7 @@ namespace jetHadron {
       
       FindGood1DUserRange( tmpvec, max, min );
       
-      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1361,7 +1361,7 @@ namespace jetHadron {
       histograms2[i]->SetMarkerStyle( 2 );
       histograms2[i]->SetMarkerColor( 2 );
       
-      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       leg->AddEntry( histograms[i], analysisName1.c_str(), "lep" );
       leg->AddEntry( histograms2[i], analysisName2.c_str(), "lep" );
 
