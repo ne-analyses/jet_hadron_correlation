@@ -48,6 +48,7 @@
 #include "TCanvas.h"
 #include "TStopwatch.h"
 #include "TSystem.h"
+#include "TLegend.h"
 
 #ifndef OUTPUTFUNCTIONS_HH
 #define OUTPUTFUNCTIONS_HH
