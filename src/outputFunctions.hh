@@ -201,7 +201,7 @@ namespace jetHadron {
   // Extracts the yield and errors from the fits
   // only extracts for near side so can be used
   // for both dphi and deta
-  void ExtractFitVals( std::vector<std::vector<TF1*> >& fits, std::vector<std::vector<double> >& yields, std::vector<std::vector<double> >& width, std::vector<std::vector<double> >& normError, std::vector<std::vector<double> >& widthError, binSelector selector );
+  void ExtractFitVals( std::vector<std::vector<TF1*> >& fits, std::vector<std::vector<double> >& yields, std::vector<std::vector<double> >& widths, std::vector<std::vector<double> >& normError, std::vector<std::vector<double> >& widthError, binSelector selector );
   
   // Methods for Printing out and Saving
   // ***********************************
