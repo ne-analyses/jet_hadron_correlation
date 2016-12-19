@@ -1387,7 +1387,7 @@ namespace jetHadron {
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
     
-    int ptBins = pt_max - pt_min;
+    int ptBins = pt_max - pt_min + 1 ;
     
     std::vector<TGraphErrors*> graphs;
     graphs.resize( x.size() );
