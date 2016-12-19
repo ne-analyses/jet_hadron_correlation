@@ -910,7 +910,7 @@ namespace jetHadron {
     
     // return value
     std::vector<std::vector<TF1*> > fits;
-    fits.resize( histograms.size() );
+    fits[i].resize( histograms.size() );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       fits[i].resize( histograms[i].size() );
@@ -941,7 +941,7 @@ namespace jetHadron {
     fits.resize( histograms.size() );
     
     for ( int i = 0; i < histograms.size(); ++i ) {
-      fits.resize(histograms[i].size() );
+      fits[i].resize(histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
