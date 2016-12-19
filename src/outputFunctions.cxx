@@ -793,8 +793,8 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        histograms[i][j]->Scale( histograms[i][j]->GetXaxis()->GetBinWidth(1) );
-        histograms[i][j]->Scale( (double) nEvents[i]->GetEntries() );
+        histograms[i][j]->Scale( 1.0 / histograms[i][j]->GetXaxis()->GetBinWidth(1) );
+        histograms[i][j]->Scale( 1.0 / (double) nEvents[i]->GetEntries() );
       }
     }
     
@@ -813,7 +813,6 @@ namespace jetHadron {
       }
       nEvents[i]->GetXaxis()->SetRange();
     }
-    
   }
   
   // Used to subtract one set of 1D histograms
@@ -1015,7 +1014,9 @@ namespace jetHadron {
     max = 1.2*tmpMax;
     min = 0.8*fabs(tmpMin);
     if ( min > -0.1 )
-      min = -0.1;
+      min = -1.0;
+    if ( max < 1.0 )
+      max = 1.0;
          
   }
   
@@ -1377,6 +1378,13 @@ namespace jetHadron {
 
     
   }
+  
+  // Used to print widths or yields
+  // x = pt, y = yield/width
+  void PrintGraphWithErrors( std::vector<std::vector<double> > x, std::vector<std::vector<double> > y, std::vector<std::vector<double> > x_err, std::vector<std::vector<double> > y_err, std::string outputDir, std::string title, int pt_min, int pt_max ) {
+    std::cout<<"not here yet"<<std::endl;
+  }
+  
 
   
 } // end namespace

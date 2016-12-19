@@ -221,7 +221,7 @@ namespace jetHadron {
   
   void Print1DHistogramsOverlayedDphiOther( std::vector<TH1F*>& histograms, std::vector<TH1F*>& histograms2, std::string outputDir, std::string analysisName1, std::string analysisName2, binSelector selector );
   
-  void PrintGraphWithErrors(  );
+  void PrintGraphWithErrors( std::vector<std::vector<double> > x, std::vector<std::vector<double> > y, std::vector<std::vector<double> > x_err, std::vector<std::vector<double> > y_err, std::string outputDir, std::string title, int pt_min, int pt_max );
   
 } // end namespace
 
