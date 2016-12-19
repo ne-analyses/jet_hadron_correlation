@@ -118,7 +118,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/dijet_20_10";
+      outputDirBase = "/dijet_16_8";
       
       break;
     }
