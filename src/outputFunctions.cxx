@@ -1412,10 +1412,10 @@ namespace jetHadron {
     }
     
     TCanvas c1;
-    TLegend leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
     for ( int i = 0; i < x.size(); ++i ) {
       
-      leg->AddEntry( graphs[i], analysisName[i], "lep" );
+      leg->AddEntry( graphs[i], analysisNames[i], "lep" );
       if ( i == 0 )
         graphs[i]->Draw();
       else
