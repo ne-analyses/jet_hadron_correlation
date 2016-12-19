@@ -105,16 +105,16 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/tmp/auau_corr_14_7.root", "READ" );
-      TFile* tmpMix = new TFile( "out/tmp/auau_mix_14_7.root", "READ" );
+      TFile* tmp = new TFile( "out/tmp/auau_corr_20_10.root", "READ" );
+      TFile* tmpMix = new TFile( "out/tmp/auau_mix_20_10.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      //tmp = new TFile( "out/tmp/pp_corr_16_8.root", "READ" );
-      //tmpMix = new TFile( "out/tmp/pp_mix_16_8.root", "READ");
+      tmp = new TFile( "out/tmp/pp_corr_16_8.root", "READ" );
+      tmpMix = new TFile( "out/tmp/pp_mix_16_8.root", "READ");
       
-      //corrFiles.push_back( tmp );
-      //mixFiles.push_back( tmpMix );
+      corrFiles.push_back( tmp );
+      mixFiles.push_back( tmpMix );
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
@@ -275,7 +275,7 @@ int main( int argc, const char** argv) {
   
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
-  jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_subtracted_sub, nEvents );
 
   // do final fitting
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit = jetHadron::FitDphi( corrected_dphi_subtracted, selector );
