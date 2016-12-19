@@ -182,11 +182,12 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjUnbalanced;
   
   jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
-  jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector );
+  jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector, "sublead_uncorrsplit" );
   jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjUnbalanced, correlationAjBalanced, selector, ajSplitBin );
   
   // get averaged correlations
   std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector );
+  std::vector<std::vector<TH2F*> > averagedSignalSub = jetHadron::AverageCorrelations( subleadingCorrelation, selector, "uncorr_sub" );
   std::vector<std::vector<TH2F*> > averagedSignalBalanced = jetHadron::AverageCorrelations( correlationAjBalanced, selector, "balanced" );
   std::vector<std::vector<TH2F*> > averagedSignalUnbalanced = jetHadron::AverageCorrelations( correlationAjUnbalanced, selector, "unbalanced" );
   
@@ -222,12 +223,85 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
-  // **********************
-  // get the 1D projections
-  // **********************
+  // *************************************
+  // get the 1D projection for uncorrected
+  // (no mixing) for dPhi
+  // *************************************
   
-  std::vector<std::vector<TH1F*> > uncorrected_dphi = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected", false );
+  std::vector<std::vector<TH1F*> > uncorrected_dphi_lead = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected", false );
+  std::vector<std::vector<TH1F*> > uncorrected_dphi_sub = jetHadron::ProjectDphi( averagedSignalSub, selector, "not_mixing_corrected_sub", false );
+  
+  // do background subtraction
+  jetHadron::SubtractBackgroundDphi( uncorrected_dphi_lead, selector );
+  jetHadron::SubtractBackgroundDphi( uncorrected_dphi_sub, selector );
+  
+  // normalize with 1/dijets 1/bin width
+  jetHadron::Normalize1D( uncorrected_dphi_lead, nEvents );
+  jetHadron::Normalize1D( uncorrected_dphi_sub, nEvents );
+  
+  // do final fitting
+  std::vector<std::vector<TF1*> > uncorrected_dphi_lead_fit = jetHadron::FitDphi( uncorrected_dphi_lead, selector );
+  std::vevtor<std::vector<TF1*> > uncorrected_dphi_sub_fit = jetHadron::FitDphi( uncorrected_dphi_sub, selector );
+  
+  // now overlay and save
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( uncorrected_dphi_lead, uncorrected_dphi_lead_fit, outputDirBase+"/uncorrected_dphi_lead"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( uncorrected_dphi_sub, uncorrected_dphi_sub_fit, outputDirBase+"/uncorrected_dphi_sub"+analysisNames[0], analysisNames, selector );
+  
+  // *************************************
+  // Mixing corrected stuff -
+  // first Subtracted DPhi
+  // *************************************
+
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "mixing_corrected_near_far_sub_dphi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, "mixing_corrected_near_far_sub_dphi_sub", true  );
+ 
+  // do background subtraction
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted_sub, selector );
+  
+  // normalize with 1/dijets 1/bin width
+  jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
+
+  // do final fitting
+  std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit = jetHadron::FitDphi( corrected_dphi_subtracted, selector );
+  std::vevtor<std::vector<TF1*> > corrected_dphi_subtracted_sub_fit = jetHadron::FitDphi( corrected_dphi_subtracted_sub, selector );
+  
+  // now overlay and save
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_subtracted, corrected_dphi_subtracted_fit, outputDirBase+"/corrected_dphi_subtracted_lead"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_subtracted_sub, corrected_dphi_subtracted_sub_fit, outputDirBase+"/corrected_dphi_subtracted_sub"+analysisNames[0], analysisNames, selector );
+  
+  // Now we will do not subtracted projections
+  // and dEta
+  std::vector<std::vector<TH1F*> > corrected_dphi_lead = jetHadron::ProjectDphi( averagedMixedEventCorrected, selector, "mixing_corrected_dphi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_sub = jetHadron::ProjectDphi( averagedMixedEventCorrectedSub, selector, "mixing_corrected_dphi_sub", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_lead = jetHadron::ProjectDeta( averagedMixedEventCorrected, selector, "mixing_corrected_deta", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_sub = jetHadron::ProjectDeta( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub", true );
+  
+  // do background subtraction
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_lead, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_sub, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_deta_lead, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_deta_sub, selector );
+  
+  // normalize with 1/dijets 1/bin width
+  jetHadron::Normalize1D( corrected_dphi_lead, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_sub, nEvents );
+  jetHadron::Normalize1D( corrected_deta_lead, nEvents );
+  jetHadron::Normalize1D( corrected_deta_sub, nEvents );
+  
+  // do final fitting
+  std::vector<std::vector<TF1*> > corrected_dphi_lead_fit = jetHadron::FitDphi( corrected_dphi_lead, selector );
+  std::vevtor<std::vector<TF1*> > corrected_dphi_sub_fit = jetHadron::FitDphi( corrected_dphi_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_deta_lead_fit = jetHadron::FitDphi( corrected_deta_lead, selector );
+  std::vevtor<std::vector<TF1*> > corrected_deta_sub_fit = jetHadron::FitDphi( corrected_deta_sub, selector );
+  
+  // now overlay and save
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_lead, corrected_dphi_lead_fit, outputDirBase+"/corrected_dphi_lead"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_sub, corrected_dphi_sub_fit, outputDirBase+"/corrected_dphi_sub"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_deta_lead, corrected_deta_lead_fit, outputDirBase+"/corrected_deta_lead"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_deta_sub, corrected_deta_sub_fit, outputDirBase+"/corrected_deta_sub"+analysisNames[0], analysisNames, selector );
+  
   
   // *******************************
   // get 1D projections for Aj split
@@ -248,7 +322,7 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDphi( aj_subtracted, outputDirBase+"/aj_subtracted_dif", "aj_subtracted_", selector );
   // also print out the overlayed
   for ( int i = 0; i < nFiles; ++i ) {
-    jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi[i], aj_unbalanced_dphi[i], outputDirBase+"/aj_dif_dphi"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi[i], aj_unbalanced_dphi[i], outputDirBase+"/aj_dif_dphi"+analysisNames[i], analysisNames, selector );
   }
   
   
