@@ -84,7 +84,7 @@ int main( int argc, const char** argv) {
   }
   
   std::vector<std::string> defaultCorrNames;
-  defaultCorrNames.resize(1);
+  defaultCorrNames.resize(2);
   defaultCorrNames[0] = "Dijet";
   defaultCorrNames[1] = "ppDijet";
   
