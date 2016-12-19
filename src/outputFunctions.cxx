@@ -903,7 +903,7 @@ namespace jetHadron {
 
   
   // Used to fit each histogram
-  std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+  std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID ) {
     
     std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
     std::string subForm = "[0]";
@@ -917,7 +917,7 @@ namespace jetHadron {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
-        std::string tmp = "fit_"; tmp += histograms[i][j]->GetName();
+        std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
@@ -931,7 +931,7 @@ namespace jetHadron {
   }
   
   // same for dphi
-  std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+  std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID ) {
     
     std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
     std::string subForm = "[0]";
@@ -946,7 +946,7 @@ namespace jetHadron {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
-        std::string tmp = "fit_"; tmp += histograms[i][j]->GetName();
+        std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->FixParameter( 5, jetHadron::pi );
@@ -1065,7 +1065,7 @@ namespace jetHadron {
   
   // Print out dPhi histograms, each pt bin
   // Seperately, but each file overlaid
-  void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+  void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -1080,6 +1080,8 @@ namespace jetHadron {
         tmpvec.push_back( histograms[j][i] );
       }
       FindGood1DUserRange( tmpvec, max, min );
+      
+      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1099,12 +1101,72 @@ namespace jetHadron {
           histograms[j][i]->Draw("same");
         }
         
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        
       }
-      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
     
   }
+  
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  void Print1DHistogramsOverlayedDphiWFit( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TF1*> >& fits, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        tmpvec.push_back( histograms[j][i] );
+      }
+      FindGood1DUserRange( tmpvec, max, min );
+      
+      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
+        
+        // try to set a fit function if it exists
+        if ( histograms[j][i]->GetObject( fits[j][i]->GetName() ) ) {
+          TF1* tmp = histograms[j][i]->GetObject( fits[j][i]->GetName() );
+          tmp->SetLineColor(j+1);
+        }
+        
+        if ( j == 0 ) {
+          histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        
+      }
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+
   
   // Print out individual dEta histograms
   void Print1DHistogramsDeta( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
@@ -1136,7 +1198,7 @@ namespace jetHadron {
   
   // Print out dPhi histograms, each pt bin
   // Seperately, but each file overlaid
-  void Print1DHistogramsOverlayedDeta( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+  void Print1DHistogramsOverlayedDeta( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -1152,6 +1214,8 @@ namespace jetHadron {
       }
       FindGood1DUserRange( tmpvec, max, min );
       
+      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      
       for ( int j = 0; j < histograms.size(); ++j ) {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
@@ -1161,6 +1225,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         histograms[j][i]->GetYaxis()->SetRangeUser( min, max );
+
         
         if ( j == 0 ) {
           histograms[j][i]->Draw();
@@ -1169,15 +1234,76 @@ namespace jetHadron {
           histograms[j][i]->Draw("same");
         }
         
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        
       }
-      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
 
     
   }
   
-  void Print1DHistogramsOverlayedDphiOther( std::vector<TH1F*>& histograms, std::vector<TH1F*>& histograms2, std::string outputDir, std::string analysisName, binSelector selector ) {
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  void Print1DHistogramsOverlayedDetaWFit( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TF1*> >& fits, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        tmpvec.push_back( histograms[j][i] );
+      }
+      
+      FindGood1DUserRange( tmpvec, max, min );
+      
+      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max );
+        
+        // try to set a fit function if it exists
+        if ( histograms[j][i]->GetObject( fits[j][i]->GetName() ) ) {
+          TF1* tmp = histograms[j][i]->GetObject( fits[j][i]->GetName() );
+          tmp->SetLineColor(j+1);
+        }
+        
+        if ( j == 0 ) {
+          histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j], "lep" );
+        
+      }
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+    
+  }
+
+  
+  void Print1DHistogramsOverlayedDphiOther( std::vector<TH1F*>& histograms, std::vector<TH1F*>& histograms2, std::string outputDir, std::string analysisName1, std::string analysisName2, binSelector selector ) {
    
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -1205,13 +1331,18 @@ namespace jetHadron {
       histograms2[i]->SetMarkerStyle( 21 );
       histograms2[i]->SetMarkerStyle( 2 );
       histograms2[i]->SetMarkerColor( 2 );
+      
+      TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
+      leg->AddEntry( histograms[i], analysisName1.c_str(), "lep" );
+      leg->AddEntry( histograms2[i], analysisName2, c_str(), "lep" );
 
       
-      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      std::string tmp = outputDir + "/" + analysisName1 + "_" + patch::to_string(i) + ".pdf";
       
       TCanvas c1;
       histograms[i]->Draw();
       histograms2[i]->Draw("same");
+      leg->Draw();
       c1.SaveAs( tmp.c_str() );
     }
 
