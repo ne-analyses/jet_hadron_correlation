@@ -241,7 +241,7 @@ int main( int argc, const char** argv) {
   
   // do final fitting
   std::vector<std::vector<TF1*> > uncorrected_dphi_lead_fit = jetHadron::FitDphi( uncorrected_dphi_lead, selector );
-  std::vevtor<std::vector<TF1*> > uncorrected_dphi_sub_fit = jetHadron::FitDphi( uncorrected_dphi_sub, selector );
+  std::vector<std::vector<TF1*> > uncorrected_dphi_sub_fit = jetHadron::FitDphi( uncorrected_dphi_sub, selector );
   
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFit( uncorrected_dphi_lead, uncorrected_dphi_lead_fit, outputDirBase+"/uncorrected_dphi_lead"+analysisNames[0], analysisNames, selector );
@@ -265,7 +265,7 @@ int main( int argc, const char** argv) {
 
   // do final fitting
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit = jetHadron::FitDphi( corrected_dphi_subtracted, selector );
-  std::vevtor<std::vector<TF1*> > corrected_dphi_subtracted_sub_fit = jetHadron::FitDphi( corrected_dphi_subtracted_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_dphi_subtracted_sub_fit = jetHadron::FitDphi( corrected_dphi_subtracted_sub, selector );
   
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_subtracted, corrected_dphi_subtracted_fit, outputDirBase+"/corrected_dphi_subtracted_lead"+analysisNames[0], analysisNames, selector );
@@ -292,9 +292,9 @@ int main( int argc, const char** argv) {
   
   // do final fitting
   std::vector<std::vector<TF1*> > corrected_dphi_lead_fit = jetHadron::FitDphi( corrected_dphi_lead, selector );
-  std::vevtor<std::vector<TF1*> > corrected_dphi_sub_fit = jetHadron::FitDphi( corrected_dphi_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_dphi_sub_fit = jetHadron::FitDphi( corrected_dphi_sub, selector );
   std::vector<std::vector<TF1*> > corrected_deta_lead_fit = jetHadron::FitDphi( corrected_deta_lead, selector );
-  std::vevtor<std::vector<TF1*> > corrected_deta_sub_fit = jetHadron::FitDphi( corrected_deta_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_deta_sub_fit = jetHadron::FitDphi( corrected_deta_sub, selector );
   
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_lead, corrected_dphi_lead_fit, outputDirBase+"/corrected_dphi_lead"+analysisNames[0], analysisNames, selector );
