@@ -49,6 +49,7 @@
 #include "TStopwatch.h"
 #include "TSystem.h"
 #include "TLegend.h"
+#include "TGraphErrors.h"
 
 #ifndef OUTPUTFUNCTIONS_HH
 #define OUTPUTFUNCTIONS_HH
