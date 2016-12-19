@@ -1334,7 +1334,7 @@ namespace jetHadron {
       
       TLegend* leg = new TLegend(0.2, 0.2, .8, .8);
       leg->AddEntry( histograms[i], analysisName1.c_str(), "lep" );
-      leg->AddEntry( histograms2[i], analysisName2, c_str(), "lep" );
+      leg->AddEntry( histograms2[i], analysisName2.c_str(), "lep" );
 
       
       std::string tmp = outputDir + "/" + analysisName1 + "_" + patch::to_string(i) + ".pdf";
