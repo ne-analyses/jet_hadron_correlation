@@ -481,7 +481,7 @@ int main ( int argc, const char** argv) {
       // check to see if the event needs to be discarded
       if ( !jetHadron::UseEventInMixing( analysisType, isMixMB, HiResult, gRefMult, vzBin ) )
         continue;
-      std::cout<<"found an event"<<std::endl;
+      
       // Now, we know its an event we will use, so fill it in
       useable_events++;
       unsigned tmp_event_id = reader.GetNOfCurrentEvent();
