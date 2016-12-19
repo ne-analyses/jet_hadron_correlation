@@ -1145,7 +1145,7 @@ namespace jetHadron {
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
-          TF1* tmp = histograms[j][i]->FindObject( fits[j][i]->GetName() );
+          TF1* tmp = (TF1*) histograms[j][i]->FindObject( fits[j][i]->GetName() );
           tmp->SetLineColor(j+1);
         }
         
@@ -1279,7 +1279,7 @@ namespace jetHadron {
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
-          TF1* tmp = histograms[j][i]->FindObject( fits[j][i]->GetName() );
+          TF1* tmp = (TF1*) histograms[j][i]->FindObject( fits[j][i]->GetName() );
           tmp->SetLineColor(j+1);
         }
         
