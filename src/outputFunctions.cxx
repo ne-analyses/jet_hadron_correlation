@@ -1381,8 +1381,48 @@ namespace jetHadron {
   
   // Used to print widths or yields
   // x = pt, y = yield/width
-  void PrintGraphWithErrors( std::vector<std::vector<double> > x, std::vector<std::vector<double> > y, std::vector<std::vector<double> > x_err, std::vector<std::vector<double> > y_err, std::string outputDir, std::string title, int pt_min, int pt_max ) {
-    std::cout<<"not here yet"<<std::endl;
+  void PrintGraphWithErrors( std::vector<std::vector<double> > x, std::vector<std::vector<double> > y, std::vector<std::vector<double> > x_err, std::vector<std::vector<double> > y_err, std::string outputDir, std::vector<std::string> analysisNames, std::string title, const int pt_min, const int pt_max ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    int ptBins = pt_max - pt_min;
+    
+    std::vector<TGraphErrors*> graphs;
+    graphs.resize( x.size() );
+    for ( int i = 0; i < x.size(); ++i ) {
+      double xGraph[ptBins];
+      double yGraph[ptBins];
+      double xGraphErr[ptBins];
+      double yGraphErr[ptBins];
+  
+      for ( int j = pt_min; j <= pt_max; ++j ) {
+        xGraph[j-pt_min] = x[i][j];
+        yGraph[j-pt_min] = y[i][j];
+        xGraphErr[j-pt_min] = x_err[i][j];
+        yGraphErr[j-pt_min] = y_err[i][j];
+      }
+      graphs[i] = new TGraphErrors( ptBins, xGraph, yGraph, xGraphErr, yGraphErr );
+      graphs[i]->SetTitle( title.c_str() );
+      graphs[i]->SetLineColor( i+1 );
+      graphs[i]->SetMarkerColor( i+1 );
+      graphs[i]->SetMarkerStyle( i+20 );
+      graphs[i]->SetMarkerSize( 2 );
+    }
+    
+    TCanvas c1;
+    TLegend leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    for ( int i = 0; i < x.size(); ++i ) {
+      
+      leg->AddEntry( graphs[i], analysisName[i], "lep" );
+      if ( i == 0 )
+        graphs[i]->Draw();
+      else
+        graphs[i]->Draw("P");
+      
+    }
+    
   }
   
 
