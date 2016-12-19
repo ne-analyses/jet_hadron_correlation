@@ -1411,6 +1411,9 @@ namespace jetHadron {
       graphs[i]->SetMarkerSize( 2 );
     }
     
+    std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
+    
+    
     TCanvas c1;
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
     for ( int i = 0; i < x.size(); ++i ) {
@@ -1422,6 +1425,8 @@ namespace jetHadron {
         graphs[i]->Draw("P");
       
     }
+    leg->Draw();
+    c1.SaveAs( tmp.c_str() );
     
   }
   
