@@ -105,8 +105,8 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/tmp/auau_corr_16_8.root", "READ" );
-      TFile* tmpMix = new TFile( "out/tmp/auau_mix_16_8.root", "READ" );
+      TFile* tmp = new TFile( "out/tmp/auau_corr_14_7.root", "READ" );
+      TFile* tmpMix = new TFile( "out/tmp/auau_mix_14_7.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
@@ -118,7 +118,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/dijet_16_8";
+      outputDirBase = "/dijet_14_7";
       
       break;
     }
