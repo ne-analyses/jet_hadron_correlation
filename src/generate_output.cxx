@@ -322,7 +322,7 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDphi( aj_subtracted, outputDirBase+"/aj_subtracted_dif", analysisNames, selector );
   // also print out the overlayed
   for ( int i = 0; i < nFiles; ++i ) {
-    std::vector<std::string> > tmpVec;
+    std::vector<std::string> tmpVec;
     tmpVec.push_back("balanced");
     tmpVec.push_back("unbalanced");
     jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi[i], aj_unbalanced_dphi[i], outputDirBase+"/aj_dif_dphi"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
