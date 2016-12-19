@@ -980,7 +980,7 @@ namespace jetHadron {
       
       for ( int j = 0; j < fits[i].size(); ++j ) {
         
-        yields[i][j] = fits[i][j]->GetParameter(1)*sqrt(2*pi)*fabs(fits[i][j]->GetParameter(3))/selector.ptBinWidth( j );
+        yields[i][j] = fits[i][j]->GetParameter(1)*sqrt(2*pi)*fabs(fits[i][j]->GetParameter(3))/selector.GetPtBinWidth( j );
         widths[i][j] = fabs(fits[i][j]->GetParameter(3));
         normError[i][j] = fits[i][j]->GetParError( 1 );
         widthError[i][j] = fits[i][j]->GetParError( 3 );
