@@ -110,11 +110,11 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/tmp/pp_corr_16_8.root", "READ" );
-      tmpMix = new TFile( "out/tmp/pp_mix_16_8.root", "READ");
+      //tmp = new TFile( "out/tmp/pp_corr_16_8.root", "READ" );
+      //tmpMix = new TFile( "out/tmp/pp_mix_16_8.root", "READ");
       
-      corrFiles.push_back( tmp );
-      mixFiles.push_back( tmpMix );
+      //corrFiles.push_back( tmp );
+      //mixFiles.push_back( tmpMix );
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
