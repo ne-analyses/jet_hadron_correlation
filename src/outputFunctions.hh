@@ -192,8 +192,8 @@ namespace jetHadron {
   void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
   
   // Used to fit each histogram
-  std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID );
-  std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID );
+  std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
   
   // Methods for Printing out and Saving
   // ***********************************
