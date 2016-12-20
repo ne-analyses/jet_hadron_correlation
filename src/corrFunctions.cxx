@@ -248,7 +248,7 @@ namespace jetHadron {
   // Used to initialized the reader - will set the event cuts,
   // Tower cuts, track cuts and hadronic correction
   // ---------------------------------------------------------------------
-  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, int nEvents ) {
+  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, bool softwareTrigger, int nEvents ) {
     
     // First tolower() on the analysisType
     // shouldnt be necessary....
@@ -269,6 +269,10 @@ namespace jetHadron {
     evCuts->SetVertexZCut ( vertexZCut );
     evCuts->SetMaxEventPtCut( eventPtCut );
     evCuts->SetMaxEventEtCut( eventEtCut );
+    
+    if( softwareTrigger )
+      evCuts->SetMinEventEtCut( 6.0 );
+    
     evCuts->SetVertexZDiffCut( vertexZDiffCut );
     if ( collisionType == "auau" ) {
     	evCuts->SetRefMultCut ( y7RefMultCut );

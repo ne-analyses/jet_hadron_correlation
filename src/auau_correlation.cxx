@@ -99,17 +99,18 @@
 //      choices: dijet || jet
 // [1]:	Choose to use particle efficiency corrections or not: true/false
 // [2]: trigger coincidence: require a trigger with the leading jet
-// [3]: subleading jet pt min ( not used if doing jet-hadron correlations )
-// [4]: leading jet pt min
-// [5]: jet pt max
-// [6]: jet radius, used in the jet definition
-// [7]: hard pt cut
-// [8]: number of bins for eta in correlation histograms
-// [9]: number of bins for phi in correlation histograms
-// [10]: output directory
-// [11]: name for the correlation histogram file
-// [12]: name for the dijet TTree file
-// [13]: input file: can be a single .root or a .txt or .list of root files
+// [3]: software trigger: requires 6 GeV trigger ( true or false)
+// [4]: subleading jet pt min ( not used if doing jet-hadron correlations )
+// [5]: leading jet pt min
+// [6]: jet pt max
+// [7]: jet radius, used in the jet definition
+// [8]: hard pt cut
+// [9]: number of bins for eta in correlation histograms
+// [10]: number of bins for phi in correlation histograms
+// [11]: output directory
+// [12]: name for the correlation histogram file
+// [13]: name for the dijet TTree file
+// [14]: input file: can be a single .root or a .txt or .list of root files
 
 // DEF MAIN()
 int main ( int argc, const char** argv ) {
@@ -142,6 +143,7 @@ int main ( int argc, const char** argv ) {
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
+  bool          softwareTrig  = true;                     // require there to be a 6 GeV trigger offline
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
@@ -160,7 +162,7 @@ int main ( int argc, const char** argv ) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 15: { // Custom case
+    case 16: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       // Set non-default values
@@ -191,22 +193,28 @@ int main ( int argc, const char** argv ) {
       else if ( arguments[2] == "false" ) 	{ requireTrigger = false; }
       else { __ERR( "useEfficiency must be true or false" ) return -1; }
       
+      // Choose if we require further high tower offline
+      // trigger of 6 GeV
+      if ( arguments[3] == "true" )        { softwareTrig = true; }
+      else if ( arguments[3] == "false" )  { softwareTrig = false; }
+      else { __ERR("software trigger must be true or false") return -1; }
+      
       // jet kinematics
-      subJetPtMin 	= atof ( arguments[3].c_str() );
-      leadJetPtMin 	= atof ( arguments[4].c_str() );
-      jetPtMax 			= atof ( arguments[5].c_str() );
-      jetRadius 		= atof ( arguments[6].c_str() );
-      hardPtCut     = atof ( arguments[7].c_str() );
+      subJetPtMin 	= atof ( arguments[4].c_str() );
+      leadJetPtMin 	= atof ( arguments[5].c_str() );
+      jetPtMax 			= atof ( arguments[6].c_str() );
+      jetRadius 		= atof ( arguments[7].c_str() );
+      hardPtCut     = atof ( arguments[8].c_str() );
       
       // bins in eta and phi
-      binsEta = atoi ( arguments[8].c_str() );
-      binsPhi = atoi ( arguments[9].c_str() );
+      binsEta = atoi ( arguments[9].c_str() );
+      binsPhi = atoi ( arguments[10].c_str() );
       
       // output and file names
-      outputDir 		= arguments[10];
-      corrOutFile		= arguments[11];
-      treeOutFile		= arguments[12];
-      inputFile 		= arguments[13];
+      outputDir 		= arguments[11];
+      corrOutFile		= arguments[12];
+      treeOutFile		= arguments[13];
+      inputFile 		= arguments[14];
       
       break;
     }
@@ -247,7 +255,7 @@ int main ( int argc, const char** argv ) {
   // corrParameters.hh
   // --------------------------------------
   TStarJetPicoReader reader;
-  jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, jetHadron::allEvents );
+  jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, softwareTrig, jetHadron::allEvents );
   
   // Data classes
   TStarJetVectorContainer<TStarJetVector>* container;
