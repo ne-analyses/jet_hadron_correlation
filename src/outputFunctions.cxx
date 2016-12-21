@@ -486,7 +486,11 @@ namespace jetHadron {
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
         if ( mixedEvents[i][j]->GetEntries() ) {
-          mixedEvents[i][j]->Scale( 1.0 / mixedEvents[i][j]->GetMaximum() );
+          
+          TH1F* tmp = (TH1F*) mixedEvents[i][j]->ProjectionX();
+          tmp->Scale( 1.0 / (double) mixedEvents[i][j]->GetYaxis()->GetNbins() );
+          
+          mixedEvents[i][j]->Scale( 1.0 / tmp->GetMaximum() );
         }
       }
     }
@@ -500,7 +504,11 @@ namespace jetHadron {
         for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
           for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
             if ( mixedEvents[i][j][k][l]->GetEntries() ) {
-              mixedEvents[i][j][k][l]->Scale( 1.0 / mixedEvents[i][j][k][l]->GetMaximum() );
+              
+              TH1F* tmp = (TH1F*) mixedEvents[i][j][k][l]->ProjectionX();
+              tmp->Scale( 1.0 / (double) mixedEvents[i][j][k][l]->GetYaxis()->GetNbins() );
+              
+              mixedEvents[i][j][k][l]->Scale( 1.0 / tmp->GetMaximum() );
             }
           }
         }
