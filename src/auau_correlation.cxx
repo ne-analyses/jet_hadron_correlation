@@ -185,19 +185,19 @@ int main ( int argc, const char** argv ) {
       // Choose if we use particle-by-particle efficiency
       if ( arguments[1] == "true" ) 			{ useEfficiency = true; }
       else if ( arguments[1] == "false" ) 	{ useEfficiency = false; }
-      else { __ERR( "useEfficiency must be true or false" ) return -1; }
+      else { __ERR( "argument 1 must be true or false" ) return -1; }
       
       // Choose if we require a trigger tower to be within
       // jetRadius of the leading jet
       if ( arguments[2] == "true" ) 				{ requireTrigger = true; }
       else if ( arguments[2] == "false" ) 	{ requireTrigger = false; }
-      else { __ERR( "useEfficiency must be true or false" ) return -1; }
+      else { __ERR( "argument 2 must be true or false" ) return -1; }
       
       // Choose if we require further high tower offline
       // trigger of 6 GeV
       if ( arguments[3] == "true" )        { softwareTrig = true; }
       else if ( arguments[3] == "false" )  { softwareTrig = false; }
-      else { __ERR("software trigger must be true or false") return -1; }
+      else { __ERR("argument 3 must be true or false") return -1; }
       
       // jet kinematics
       subJetPtMin 	= atof ( arguments[4].c_str() );

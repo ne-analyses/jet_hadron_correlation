@@ -100,18 +100,20 @@
 // [1]:	Choose to use particle efficiency corrections or not: true/false
 // [2]: trigger coincidence: require a trigger with the leading jet
 // [3]: software trigger: requires 6 GeV trigger ( true or false)
-// [4]: subleading jet pt min ( not used if doing jet-hadron correlations )
-// [5]: leading jet pt min
-// [6]: jet pt max
-// [7]: jet radius, used in the jet definition
-// [8]: hard constituent pt cut
-// [9]: number of bins for eta in correlation histograms
-// [10]: number of bins for phi in correlation histograms
-// [11]: output directory
-// [12]: name for the correlation histogram file
-// [13]: name for the dijet TTree file
-// [14]: input data: can be a single .root or a .txt or .list of root files
-// [15]: MB AuAu event file for embedding, can be .root, .txt, .list
+// [4]: add all auau tracks with greater than 2 GeV to the correlations ( true or false )
+// [5]: correlate all auau tracks with pp ( supercedes above option, doesnt cause any problems ( true or false )
+// [6]: subleading jet pt min ( not used if doing jet-hadron correlations )
+// [7]: leading jet pt min
+// [8]: jet pt max
+// [9]: jet radius, used in the jet definition
+// [10]: hard constituent pt cut
+// [11]: number of bins for eta in correlation histograms
+// [12]: number of bins for phi in correlation histograms
+// [13]: output directory
+// [14]: name for the correlation histogram file
+// [15]: name for the dijet TTree file
+// [16]: input data: can be a single .root or a .txt or .list of root files
+// [17]: MB AuAu event file for embedding, can be .root, .txt, .list
 
 // DEF MAIN()
 int main ( int argc, const char** argv) {
@@ -144,6 +146,8 @@ int main ( int argc, const char** argv) {
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
   bool          softwareTrig  = true;                     // require there to be a 6 GeV trigger offline
+  bool          addAuAuHard   = true;                     // add all pt > 2 GeV tracks from AuAu to correlations
+  bool          correlateAll  = true;                     // correlates all pp & auau tracks
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
@@ -163,7 +167,7 @@ int main ( int argc, const char** argv) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 17: { // Custom case
+    case 19: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       
@@ -187,37 +191,49 @@ int main ( int argc, const char** argv) {
       // Choose if we use particle-by-particle efficiency
       if ( arguments[1] == "true" ) 			{ useEfficiency = true; }
       else if ( arguments[1] == "false" ) 	{ useEfficiency = false; }
-      else { __ERR( "useEfficiency must be true or false" ) return -1; }
+      else { __ERR( "argument 2 must be true or false" ) return -1; }
       
       // Choose if we require a trigger tower to be within
       // jetRadius of the leading jet
       if ( arguments[2] == "true" ) 				{ requireTrigger = true; }
       else if ( arguments[2] == "false" ) 	{ requireTrigger = false; }
-      else { __ERR( "useEfficiency must be true or false" ) return -1; }
+      else { __ERR( "argument 3 must be true or false" ) return -1; }
       
       // Choose if we require further high tower offline
       // trigger of 6 GeV
       if ( arguments[3] == "true" )        { softwareTrig = true; }
       else if ( arguments[3] == "false" )  { softwareTrig = false; }
-      else { __ERR("software trigger must be true or false") return -1; }
+      else { __ERR("argument 4 must be true or false") return -1; }
+      
+      // Choose if we correlate all 2 GeV tracks from AuAu
+      // With the pp
+      if ( arguments[4] == "true" )       { addAuAuHard = true; }
+      else if ( arguments[4] = "false" )  { addAuAuHard = false; }
+      else { __ERR("argument 5 must be true or false") return -1; }
+      
+      // Choose if we correlate all AuAu tracks with
+      // pp
+      if ( arguments[5] == "true" )       { correlateAll = true; }
+      else if ( arguments[5] = "false" )  { correlateAll = false; }
+      else { __ERR("argument 4 must be true or false") return -1; }
       
       // jet kinematics
-      subJetPtMin 	= atof ( arguments[4].c_str() );
-      leadJetPtMin 	= atof ( arguments[5].c_str() );
-      jetPtMax 			= atof ( arguments[6].c_str() );
-      jetRadius 		= atof ( arguments[7].c_str() );
-      hardPtCut     = atof ( arguments[8].c_str() );
+      subJetPtMin 	= atof ( arguments[6].c_str() );
+      leadJetPtMin 	= atof ( arguments[7].c_str() );
+      jetPtMax 			= atof ( arguments[8].c_str() );
+      jetRadius 		= atof ( arguments[9].c_str() );
+      hardPtCut     = atof ( arguments[10].c_str() );
 
       // bins in eta and phi
-      binsEta = atoi ( arguments[9].c_str() );
-      binsPhi = atoi ( arguments[10].c_str() );
+      binsEta = atoi ( arguments[11].c_str() );
+      binsPhi = atoi ( arguments[12].c_str() );
 
       // output and file names
-      outputDir 		= arguments[11];
-      corrOutFile		= arguments[12];
-      treeOutFile		= arguments[13];
-      inputFile 		= arguments[14];
-      mbInputFile		= arguments[15];
+      outputDir 		= arguments[13];
+      corrOutFile		= arguments[14];
+      treeOutFile		= arguments[15];
+      inputFile 		= arguments[16];
+      mbInputFile		= arguments[17];
       
       break;
     }
@@ -426,6 +442,11 @@ int main ( int argc, const char** argv) {
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
       jetHadron::GetTriggersPP( requireTrigger, ppParticles, triggers );
+      
+      // and if its being used, convert all or only hard auau embedding
+      // to be used into the pp event as well
+      if ( correlateAll || addAuAuHard )
+        jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, ppParticles, correlateAll );
 
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
