@@ -477,6 +477,55 @@ namespace jetHadron {
     return combinedMixedEvents;
   }
   
+  // Used to partially recomine over Vz bins
+  // but leaves centrality untouched
+  std::vector<std::vector<std::vector<TH2F*> > > PartialRecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID  ) {
+    
+    // create return object
+    std::vector<std::vector<std::vector<TH2F*> > > combinedMixedEvents;
+    combinedMixedEvents.resize( mixedEvents.size() );
+    
+    for ( int i = 0; i < mixedEvents.size(); ++i ) {
+      combinedMixedEvents[i].resize( mixedEvents[i].size() );
+      
+      for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        combinedMixedEvents[i][j].resize( 3 )
+        
+        for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
+          for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
+            for ( int m = 0; m < selector.nPtBins; ++m ) {
+              
+              mixedEvents[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
+              
+              if ( m <= 2 ) {
+                if ( !combinedMixedEvents[i][m] ) {
+                  combinedMixedEvents[i][j][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
+                  std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_pt_" + patch::to_string(m);
+                  combinedMixedEvents[i][j][m]->SetName( tmp.c_str() );
+                }
+                else {
+                  combinedMixedEvents[i][j][m]->Add( (TH2F*) mixedEvents[i][j][k][l]->Project3D("YX") );
+                }
+              }
+              else {
+                if ( !combinedMixedEvents[i][j][2] ) {
+                  combinedMixedEvents[i][j][2] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
+                  std::string tmp = uniqueID + "mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_pt_" + patch::to_string(m);
+                  combinedMixedEvents[i][j][2]->SetName( tmp.c_str() );
+                }
+                else {
+                  combinedMixedEvents[i][j][2]->Add( (TH2F*) mixedEvents[i][j][k][l]->Project3D("YX") );
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return combinedMixedEvents;
+  }
+  
   // Used to normalize mixed event histograms so
   // that the maximum bin content = 1
   // version for both the independent mixed events and the weighed averages
@@ -563,6 +612,71 @@ namespace jetHadron {
     return correctedCorrelations;
   }
   
+  // performs event mixing w/ mixed events
+  // differential in pt & centrality
+  // averaged over vz
+  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<TH2F*> > >& mixedEvents, binSelector selector, std::string uniqueID ) {
+    
+    // create holder for the output
+    std::vector<std::vector<TH2F*> > correctedCorrelations;
+    correctedCorrelations.resize(correlations.size() );
+    
+    for ( int i = 0; i < correlations.size(); ++i ) {
+      correctedCorrelations[i].resize( selector.nPtBins );
+      for ( int j = 0; j < correlations[i].size(); ++j ) {
+        for ( int k = 0; k < correlations[i][j].size(); ++k ) {
+          for ( int l = 0; l < correlations[i][j][k].size(); ++l ) {
+            if ( !correctedCorrelations[i][l] ) {
+              std::string tmp = uniqueID + "_corrected_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("low") ) {
+                tmp = uniqueID + "_corrected_aj_low_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              if ( TString(correlations[i][j][k][l]->GetName()).Contains("high") ) {
+                tmp = uniqueID + "_corrected_aj_high_file_" + patch::to_string(i) + "_pt_" + patch::to_string(l);
+              }
+              
+              if ( correlations[i][j][k][l]->GetEntries() ) {
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                if ( l <= 2 && mixedEvents[i][j][l]->GetEntries() ) {
+                  hTmp->Divide( mixedEvents[i][j][l] );
+                }
+                else if ( mixedEvents[i][2]->GetEntries() )  {
+                  hTmp->Divide( mixedEvents[i][j][2] );
+                }
+                else {
+                  __ERR("Did not have any mixed event data to correct with")
+                  continue;
+                }
+                correctedCorrelations[i][l] = (TH2F*) hTmp->Clone();
+                correctedCorrelations[i][l]->SetName( tmp.c_str() );
+              }
+            }
+            else {
+              if ( correlations[i][j][k][l]->GetEntries() ) {
+                TH2F* hTmp = ((TH2F*) correlations[i][j][k][l]->Clone());
+                if ( l <= 2 && mixedEvents[i][j][l]->GetEntries() ) {
+                  hTmp->Divide( mixedEvents[i][j][l] );
+                }
+                else if ( mixedEvents[i][2]->GetEntries() )  {
+                  hTmp->Divide( mixedEvents[i][j][2] );
+                }
+                else {
+                  __ERR("Did not have any mixed event data to correct with")
+                  continue;
+                }
+                correctedCorrelations[i][l]->Add( hTmp );
+              }
+            }
+          }
+        }
+      }
+    }
+    return correctedCorrelations;
+  }
+
+  // performs event mixing with mixed events
+  // only differentiated w/ pt
+  // averaged over centrality & vz
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, std::string uniqueID ) {
     
     // create holder for the output

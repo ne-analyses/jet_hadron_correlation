@@ -157,6 +157,10 @@ namespace jetHadron {
   // with the lower statistics
   std::vector<std::vector<TH2F*> > RecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   
+  // Used to partially recomine over Vz bins
+  // but leaves centrality untouched
+  std::vector<std::vector<std::vector<TH2F*> > > PartialRecombineMixedEvents( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
+  
   // Used to normalize mixed event histograms so
   // that the maximum bin content = 1
   // version for both the independent mixed events and the weighed averages
@@ -169,6 +173,7 @@ namespace jetHadron {
   // Has a version for both the averaged and non
   // averaged event mixing
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<TH2F*> > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   
   // Used to extract 1D projections from
