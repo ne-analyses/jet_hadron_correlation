@@ -657,7 +657,7 @@ namespace jetHadron {
                 if ( l <= 2 && mixedEvents[i][j][l]->GetEntries() ) {
                   hTmp->Divide( mixedEvents[i][j][l] );
                 }
-                else if ( mixedEvents[i][2]->GetEntries() )  {
+                else if ( mixedEvents[i][j][2]->GetEntries() )  {
                   hTmp->Divide( mixedEvents[i][j][2] );
                 }
                 else {
