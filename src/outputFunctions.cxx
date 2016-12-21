@@ -841,7 +841,8 @@ namespace jetHadron {
   // Used to subtract background from each histogram
   void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     
-    std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    //std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    std::string phiForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
     
     for ( int i = 0; i < histograms.size(); ++i ) {
@@ -871,7 +872,8 @@ namespace jetHadron {
   // same thing but with a different fit function for dphi
   void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     
-    std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    //std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    std::string phiForm = "[0] + gausn(1) + gausn(4)";
     std::string subForm = "[0]";
     
     for ( int i = 0; i < histograms.size(); ++i ) {
@@ -904,7 +906,8 @@ namespace jetHadron {
   // Used to fit each histogram
   std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID ) {
     
-    std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    //std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    std::string etaForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
     
     // return value
@@ -932,7 +935,8 @@ namespace jetHadron {
   // same for dphi
   std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID ) {
     
-    std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    //std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    std::string phiForm = "[0] + gausn(1) + gausn(4)";
     std::string subForm = "[0]";
     
     // return value
@@ -951,6 +955,34 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 5, jetHadron::pi );
         fits[i][j]->SetParameter( 3, 0.2 );
         fits[i][j]->SetParameter( 6, 0.2 );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+      }
+    }
+    return fits;
+  }
+  
+  // fits dPhi with only a single gaussian on the
+  // near side for subtracted results
+  std::vector<std::vector<TF1*> > FitDphiRestrict( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" ) {
+    //std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
+    std::string phiForm = "[0] + gausn(1)";
+    std::string subForm = "[0]";
+    
+    // return value
+    std::vector<std::vector<TF1*> > fits;
+    fits.resize( histograms.size() );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      fits[i].resize(histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
+        fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max-pi );
+        fits[i][j]->FixParameter( 2, 0 );
+        fits[i][j]->SetParameter( 3, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
       }
@@ -979,7 +1011,8 @@ namespace jetHadron {
       
       for ( int j = 0; j < fits[i].size(); ++j ) {
         
-        yields[i][j] = fits[i][j]->GetParameter(1)*sqrt(2*pi)*fabs(fits[i][j]->GetParameter(3))/selector.GetPtBinWidth( j );
+        //yields[i][j] = fits[i][j]->GetParameter(1)*sqrt(2*pi)*fabs(fits[i][j]->GetParameter(3))/selector.GetPtBinWidth( j );
+        yields[i][j] = fits[i][j]->GetParameter(1);
         widths[i][j] = fabs(fits[i][j]->GetParameter(3));
         normError[i][j] = fits[i][j]->GetParError( 1 );
         widthError[i][j] = fits[i][j]->GetParError( 3 );
@@ -1030,7 +1063,9 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -1054,8 +1089,10 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       TCanvas c1;
@@ -1081,6 +1118,9 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetYaxis()->SetRangeUser(min , max );
       
@@ -1117,6 +1157,9 @@ namespace jetHadron {
         
       
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1166,12 +1209,75 @@ namespace jetHadron {
         
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
+        
+        // try to set a fit function if it exists
+        if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
+          TF1* tmp = (TF1*) histograms[j][i]->FindObject( fits[j][i]->GetName() );
+          tmp->SetLineColor(j+1);
+        }
+        
+        if ( j == 0 ) {
+          histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        
+      }
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+  
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  // But restricts the range to the near side only
+  void Print1DHistogramsOverlayedDphiWFitRestricted( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TF1*> >& fits, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        tmpvec.push_back( histograms[j][i] );
+      }
+      FindGood1DUserRange( tmpvec, max, min );
+      
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
+        histograms[j][i]->GetXaxis()->SetRangeUser( -pi/2/0, pi/2.0 );
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
@@ -1213,6 +1319,9 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetYaxis()->SetRangeUser( min, max );
       
@@ -1248,7 +1357,10 @@ namespace jetHadron {
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
-        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1300,6 +1412,9 @@ namespace jetHadron {
       for ( int j = 0; j < histograms.size(); ++j ) {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1331,6 +1446,67 @@ namespace jetHadron {
     
     
   }
+  
+  // Print out dPhi histograms, each pt bin
+  // Seperately, but each file overlaid
+  void Print1DHistogramsOverlayedDetaWFitRestricted( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TF1*> >& fits, std::string outputDir, std::vector<std::string> analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        tmpvec.push_back( histograms[j][i] );
+      }
+      
+      FindGood1DUserRange( tmpvec, max, min );
+      
+      TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->SetLineColor( j+1 );
+        histograms[j][i]->SetMarkerStyle( j+20 );
+        histograms[j][i]->SetMarkerColor( j+1 );
+        histograms[j][i]->SetMarkerSize( 2 );
+        histograms[j][i]->GetYaxis()->SetRangeUser( min, max );
+        histograms[j][i]->GetXaxis()->SetRangeUser( -1.5, 1.5 );
+        
+        // try to set a fit function if it exists
+        if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
+          TF1* tmp = (TF1*) histograms[j][i]->FindObject( fits[j][i]->GetName() );
+          tmp->SetLineColor(j+1);
+        }
+        
+        if ( j == 0 ) {
+          histograms[j][i]->Draw();
+        }
+        else {
+          histograms[j][i]->Draw("same");
+        }
+        
+        // add to legend
+        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        
+      }
+      leg->Draw();
+      std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+    
+  }
+
 
   
   void Print1DHistogramsOverlayedDphiOther( std::vector<TH1F*>& histograms, std::vector<TH1F*>& histograms2, std::string outputDir, std::string analysisName1, std::string analysisName2, binSelector selector ) {
@@ -1348,6 +1524,9 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->SetLineColor( 1 );
       histograms[i]->SetMarkerStyle( 20 );
@@ -1356,6 +1535,9 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
       
       histograms2[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms2[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      histograms2[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms2[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms2[i]->SetLineColor( 2 );
       histograms2[i]->SetMarkerStyle( 21 );
