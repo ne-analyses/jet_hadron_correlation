@@ -842,7 +842,7 @@ namespace jetHadron {
   void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     
     //std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
-    std::string phiForm = "[0] + gausn(1)";
+    std::string etaForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
     
     for ( int i = 0; i < histograms.size(); ++i ) {
@@ -1277,7 +1277,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
-        histograms[j][i]->GetXaxis()->SetRangeUser( -pi/2/0, pi/2.0 );
+        histograms[j][i]->GetXaxis()->SetRangeUser( -pi/2.0, pi/2.0 );
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
