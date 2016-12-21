@@ -214,7 +214,7 @@ int main ( int argc, const char** argv) {
       // Choose if we correlate all AuAu tracks with
       // pp
       if ( arguments[5] == "true" )       { correlateAll = true; }
-      else if ( arguments[5] = "false" )  { correlateAll = false; }
+      else if ( arguments[5] == "false" ) { correlateAll = false; }
       else { __ERR("argument 4 must be true or false") return -1; }
       
       // jet kinematics
