@@ -208,7 +208,7 @@ int main ( int argc, const char** argv) {
       // Choose if we correlate all 2 GeV tracks from AuAu
       // With the pp
       if ( arguments[4] == "true" )       { addAuAuHard = true; }
-      else if ( arguments[4] = "false" )  { addAuAuHard = false; }
+      else if ( arguments[4] == "false" )  { addAuAuHard = false; }
       else { __ERR("argument 5 must be true or false") return -1; }
       
       // Choose if we correlate all AuAu tracks with
