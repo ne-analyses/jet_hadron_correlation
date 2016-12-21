@@ -197,7 +197,7 @@ namespace jetHadron {
   // Used to fit each histogram
   std::vector<std::vector<TF1*> > FitDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
   std::vector<std::vector<TF1*> > FitDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
-  std::vector<std::vector<TF1*> > FitDphiRestrict( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TF1*> > FitDphiRestricted( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" );
   
   // Extracts the yield and errors from the fits
   // only extracts for near side so can be used

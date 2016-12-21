@@ -241,7 +241,7 @@ int main( int argc, const char** argv) {
   
   // and print
   for ( int i = 0; i < mixingProjection.size(); ++i ) {
-    jetHadron::Print1DHistogramsDeta( mixingProjection[i], outputDirBase+"/mixing_deta_"+analysisNames[i], selector );
+    jetHadron::Print1DHistogramsDeta( mixingProjection[i], outputDirBase+"/mixing_deta_"+analysisNames[i], analysisNames[i], selector );
   }
   
   // *************************************
