@@ -498,7 +498,7 @@ namespace jetHadron {
               mixedEvents[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               
               if ( m <= 2 ) {
-                if ( !combinedMixedEvents[i][m] ) {
+                if ( !combinedMixedEvents[i][j][m] ) {
                   combinedMixedEvents[i][j][m] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
                   std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_pt_" + patch::to_string(m);
                   combinedMixedEvents[i][j][m]->SetName( tmp.c_str() );
