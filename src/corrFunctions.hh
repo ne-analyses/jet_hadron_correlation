@@ -110,6 +110,10 @@ namespace jetHadron {
   // Converts TStarJetPicoVectors into PseudoJets
   void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true );
   
+  // Used in pp to convert either all embedding tracks or
+  // only hard embedding tracks ( > 2.0 GeV )
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks = false );
+  
   // Finds the triggers and saves them, if requireTrigger == True
   void GetTriggers( bool requireTrigger, TClonesArray* triggerObjs, std::vector<fastjet::PseudoJet> & triggers );
   

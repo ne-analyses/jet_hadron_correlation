@@ -147,6 +147,25 @@ namespace jetHadron {
     }
   }
   
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks = false ) {
+    
+    // Transform TStarJetVectors into (FastJet) PseudoJets
+    // ---------------------------------------------------
+    TStarJetVector* sv;
+    for ( int i=0; i < container->GetEntries() ; ++i ){
+      sv = container->Get(i);
+      
+      fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      tmpPJ.set_user_index( sv->GetCharge() );
+      double pt = tmpPJ.pt();
+      
+      // only add if allTracks is selected, or if the track has pt > 2.0
+      if ( allTracks || pt > 2.0 )
+        particles.push_back( tmpPJ );
+    }
+    
+  }
+  
   // finds the triggers and saves them, if requireTrigger == True
   void GetTriggers( bool requireTrigger, TClonesArray* triggerObjs, std::vector<fastjet::PseudoJet> & triggers ) {
     
