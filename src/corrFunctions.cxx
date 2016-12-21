@@ -147,7 +147,7 @@ namespace jetHadron {
     }
   }
   
-  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks = false ) {
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks ) {
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
     // ---------------------------------------------------
