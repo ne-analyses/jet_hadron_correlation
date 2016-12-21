@@ -79,7 +79,7 @@ if ( $2 == 'default' ) then
 set useEfficiency = 'true'
 set triggerCoincidence = 'true'
 set softTrig = 'true'
-set auauHard = 'true'
+set auauHard = 'false'
 set auauAll = 'false'
 if ( $analysis == 'ppdijet' ) then
 set subLeadPtMin = 10.0
