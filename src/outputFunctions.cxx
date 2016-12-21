@@ -964,7 +964,7 @@ namespace jetHadron {
   
   // fits dPhi with only a single gaussian on the
   // near side for subtracted results
-  std::vector<std::vector<TF1*> > FitDphiRestrict( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID = "" ) {
+  std::vector<std::vector<TF1*> > FitDphiRestrict( std::vector<std::vector<TH1F*> >& histograms, binSelector selector, std::string uniqueID ) {
     //std::string phiForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)+[4]*exp(-0.5*((x-[5])/[6])**2)";
     std::string phiForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
