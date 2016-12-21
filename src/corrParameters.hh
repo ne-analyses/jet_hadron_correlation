@@ -95,7 +95,7 @@ namespace jetHadron {
 	const int 		y7RefMultCent[9] = { 10, 21, 39, 69, 114, 178, 269, 399, 485 };
 	
 	// Pt binning
-	const int 	 	binsPt = 20;							// number of pt bins
+	const int 	 	binsPt = 40;							// number of pt bins
 	const double 	ptLowEdge = 0.0;					// lower edge for accepted pt range
 	const double 	ptHighEdge = 10.0;				// upper edge for accepted pt range
 	
