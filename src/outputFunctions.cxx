@@ -489,7 +489,7 @@ namespace jetHadron {
       combinedMixedEvents[i].resize( mixedEvents[i].size() );
       
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
-        combinedMixedEvents[i][j].resize( 3 )
+        combinedMixedEvents[i][j].resize( 3 );
         
         for ( int k = 0; k < mixedEvents[i][j].size(); ++k ) {
           for ( int l = 0; l < mixedEvents[i][j][k].size(); ++l ) {
