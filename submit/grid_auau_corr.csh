@@ -46,7 +46,7 @@ set analysis = $1
 set execute = './bin/auau_correlation'
 set base = /nfs/rhi/STAR/Data/CleanAuAuY7/Clean
 
-if ( $# != "10" && !( $2 == 'default' ) ) then
+if ( $# != "11" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters (-h for help)'
 	exit
 endif
