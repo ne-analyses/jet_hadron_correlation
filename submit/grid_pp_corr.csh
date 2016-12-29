@@ -10,7 +10,7 @@
 #
 #  -----Di_jet selection criteria-----
 #  [3]: whether to require a trigger in your leading jet
-#  [4]: require software trigger of 6 GeV
+#  [4]: software trigger E threshold
 #  [5]: subleading jet minimum pt ( for jet hadron, set to zero )
 #  [6]: leading jet minimum pt ( jet min pt for jet-hadron )
 #  [7]: jet pt max ( global maximum, both dijet and jet )
@@ -31,7 +31,7 @@ echo 'for defaults use "(di)/jet default"'
 echo '1: analysis type [dijet/jet] (default: dijet)'
 echo '2: use tracking efficiency corrections [true/false] (default: true)'
 echo '3: require trigger in leading jet [true/false] (default: true)'
-echo '4: require software trigger of 6 GeV [true/false] (default: true)'
+echo '4: require software trigger above this value (default: 6.0)'
 echo '5: correlate w/ all embedding tracks > 2.0 GeV [true/false] (default: false)'
 echo '6: correlate w/ all embedding tracks [true/false] (default: false)'
 echo '7: subleading jet min pt (default: 10)'
@@ -78,7 +78,7 @@ set binsPhi = $11
 if ( $2 == 'default' ) then
 set useEfficiency = 'true'
 set triggerCoincidence = 'true'
-set softTrig = 'true'
+set softTrig = 6.0
 set auauHard = 'false'
 set auauAll = 'false'
 if ( $analysis == 'ppdijet' ) then
