@@ -27,8 +27,8 @@ make bin/pp_correlation || exit
 
 if ( $1 == '-h') then
 echo 'parameters:'
-echo 'for defaults use "(di)/jet default"'
-echo '1: analysis type [dijet/jet] (default: dijet)'
+echo 'for defaults use "pp(di)/jet default"'
+echo '1: analysis type [ppdijet/ppjet] (default: ppdijet)'
 echo '2: use tracking efficiency corrections [true/false] (default: true)'
 echo '3: require trigger in leading jet [true/false] (default: true)'
 echo '4: require software trigger above this value (default: 6.0)'
@@ -55,7 +55,6 @@ echo 'Error: illegal number of parameters (-h for help)'
 exit
 endif
 
-echo $analysis
 if ( $analysis != 'ppdijet' && $analysis != 'ppjet' ) then
 echo 'Error: unknown analysis type'
 exit
@@ -66,14 +65,14 @@ set useEfficiency = $2
 set triggerCoincidence = $3
 set softTrig = $4
 set auauHard = $5
-set auauAll = $5
-set subLeadPtMin = $6
-set leadPtMin = $7
-set jetPtMax = $8
-set jetRadius = $9
-set constPtCut = $10
-set binsEta = $11
-set binsPhi = $12
+set auauAll = $6
+set subLeadPtMin = $7
+set leadPtMin = $8
+set jetPtMax = $9
+set jetRadius = $10
+set constPtCut = $11
+set binsEta = $12
+set binsPhi = $13
 
 if ( $2 == 'default' ) then
 set useEfficiency = 'true'
