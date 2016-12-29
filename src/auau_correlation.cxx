@@ -99,7 +99,7 @@
 //      choices: dijet || jet
 // [1]:	Choose to use particle efficiency corrections or not: true/false
 // [2]: trigger coincidence: require a trigger with the leading jet
-// [3]: software trigger: requires 6 GeV trigger ( true or false)
+// [3]: software trigger: require a software trigger above this value in the event
 // [4]: subleading jet pt min ( not used if doing jet-hadron correlations )
 // [5]: leading jet pt min
 // [6]: jet pt max
@@ -143,7 +143,7 @@ int main ( int argc, const char** argv ) {
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
-  bool          softwareTrig  = true;                     // require there to be a 6 GeV trigger offline
+  double        softwareTrig  = 6.0;                     // require there to be an offline trigger with E > softwareTrig
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
@@ -193,11 +193,9 @@ int main ( int argc, const char** argv ) {
       else if ( arguments[2] == "false" ) 	{ requireTrigger = false; }
       else { __ERR( "argument 2 must be true or false" ) return -1; }
       
-      // Choose if we require further high tower offline
-      // trigger of 6 GeV
-      if ( arguments[3] == "true" )        { softwareTrig = true; }
-      else if ( arguments[3] == "false" )  { softwareTrig = false; }
-      else { __ERR("argument 3 must be true or false") return -1; }
+      // require there to be a high tower offline
+      // above this value
+      softwareTrig = atof ( arguments[3].c_str() );
       
       // jet kinematics
       subJetPtMin 	= atof ( arguments[4].c_str() );

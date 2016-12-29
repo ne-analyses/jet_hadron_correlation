@@ -294,9 +294,9 @@ int main ( int argc, const char** argv) {
   TStarJetPicoReader reader;
   
   if ( jetHadron::BeginsWith( analysisType, "pp"  ) )
-    jetHadron::InitReader( reader, chain, "pp", jetHadron::triggerAll, false, nMixTotal );
+    jetHadron::InitReader( reader, chain, "pp", jetHadron::triggerAll, 0.0, nMixTotal );
   else
-    jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, false, nMixTotal );
+    jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, 0.0, nMixTotal );
   
   
   // Data classes

@@ -135,7 +135,7 @@ namespace jetHadron {
   // Initializes the TStarJetPicoReader, so we dont have
   // To have all that code hanging around in the analysis
   // Collision Type is 'AuAu' or 'pp'
-  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, bool softwareTrigger, int nEvents );
+  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, double softwareTrigger, int nEvents );
   
   // Use this to decide if there are 2 dijets for dijet analysis in the proper pt ranges
   // Or for jet analysis if there is a single jet
