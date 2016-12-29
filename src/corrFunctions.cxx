@@ -319,10 +319,8 @@ namespace jetHadron {
     // Towers
     TStarJetPicoTowerCuts* towerCuts = reader.GetTowerCuts();
     towerCuts->SetMaxEtCut( towerEtCut );
-    if ( collisionType == "auau" ) {
+    if ( collisionType == "auau" || collisionType == "pp" ) {
     	towerCuts->AddBadTowers( y7AuAuTowerList.c_str() );
-    }
-    else if ( collisionType == "pp" ) {
       towerCuts->AddBadTowers( y6PPTowerList.c_str() );
     }
     else
