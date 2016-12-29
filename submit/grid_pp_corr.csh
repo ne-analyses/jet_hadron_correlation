@@ -50,7 +50,7 @@ set execute = './bin/pp_correlation'
 set base = pp_list/grid/pp
 set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/picoMB_0_20.root
 
-if ( $# != "12" && !( $2 == 'default' ) ) then
+if ( $# != "13" && !( $2 == 'default' ) ) then
 echo 'Error: illegal number of parameters (-h for help)'
 exit
 endif
