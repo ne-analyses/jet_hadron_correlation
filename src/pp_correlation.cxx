@@ -480,7 +480,7 @@ int main ( int argc, const char** argv) {
       // Find corresponding jets with soft constituents
       // ----------------------------------------------
       std::vector<fastjet::PseudoJet> LoResult;
-      if ( requireDijets ) {
+      if ( requireDijets && correlateAll ) {
         fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, analysisDefinition, areaDef ); // WITH background subtraction
         
         // Background initialization
@@ -492,6 +492,11 @@ int main ( int argc, const char** argv) {
         // Subtract A*rho from the original pT
         fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
         LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
+      }
+      else {
+        lowPtCons = selectorLowPtCons ( ppParticles );
+        fastjet::ClusterSequence ClusterSequenceLow ( lowPtCons, analysisDefinition );
+        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets()  );
       }
       
       // Get the jets used for correlations
