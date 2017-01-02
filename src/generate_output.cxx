@@ -105,13 +105,13 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/tmp/trig_auau.root", "READ" );
-      TFile* tmpMix = new TFile( "out/tmp/auau_mix_20_10.root", "READ" );
+      TFile* tmp = new TFile( "out/tmp/auau_trig_6_corr.root", "READ" );
+      TFile* tmpMix = new TFile( "out/tmp/auau_trig_6_mix.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/tmp/trig_pp.root", "READ" );
-      tmpMix = new TFile( "out/tmp/pp_mix_20_10.root", "READ");
+      tmp = new TFile( "out/tmp/pp_trig_6_corr.root", "READ" );
+      tmpMix = new TFile( "out/tmp/pp_trig_6_mix.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
