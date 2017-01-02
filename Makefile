@@ -1,7 +1,7 @@
 os = $(shell uname -s)
 
 #INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICOPATH)
-INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include -I$(BOOSTDIR)/include
+INCFLAGS      =  -I$(shell root-config --incdir) -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include -I$(BOOSTDIR)/include
 
 
 ifeq ($(os),Linux)
