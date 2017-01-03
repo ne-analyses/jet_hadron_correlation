@@ -197,7 +197,7 @@ namespace jetHadron {
       if ( aj < ajBinWidth*( i + 1 ) )
         return i; 
     }
-
+    return -1;
   }
   
 
