@@ -1048,6 +1048,15 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
+          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
+          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
+          histograms[i][j]->Add( subtmp, -1 );
+          
+          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        }
+
+        
       }
     }
     
@@ -1079,6 +1088,15 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 6, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
+          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
+          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
+          histograms[i][j]->Add( subtmp, -1 );
+          
+          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        }
+        
       }
     }
     return fits;
@@ -1107,6 +1125,14 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 3, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
+          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
+          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
+          histograms[i][j]->Add( subtmp, -1 );
+          
+          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        }
       }
     }
     return fits;
