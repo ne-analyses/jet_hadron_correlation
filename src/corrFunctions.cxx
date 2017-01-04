@@ -321,7 +321,7 @@ namespace jetHadron {
     towerCuts->SetMaxEtCut( towerEtCut );
     if ( collisionType == "auau" || collisionType == "pp" ) {
     	towerCuts->AddBadTowers( y7AuAuTowerList.c_str() );
-      //towerCuts->AddBadTowers( y6PPTowerList.c_str() );
+      towerCuts->AddBadTowers( y6PPTowerList.c_str() );
     }
     else
       __ERR("unknown collision system")
