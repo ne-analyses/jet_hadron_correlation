@@ -56,7 +56,7 @@ namespace jetHadron {
 	// Trying to make everything machine independent
 	// Define a path to bad tower list
 	const std::string y7AuAuTowerList = "src/y7_AuAu_HT_hot_list.txt";
-  const std::string y6PPTowerList = "src/Combined_y7_PP_Nick.txt";
+  const std::string y6PPTowerList = "src/y6_pp_HT_hot_list.txt";
 	
 	// If that doesnt work, here are machine dependent paths
 	// bad tower list location on RHIC121
