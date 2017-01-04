@@ -63,7 +63,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/generate_output_avg $(BDIR)/generate_output_split_avg
+all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output 
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -81,8 +81,6 @@ $(ODIR)/auau_correlation.o	: $(SDIR)/auau_correlation.cxx
 $(ODIR)/pp_correlation.o		: $(SDIR)/pp_correlation.cxx
 $(ODIR)/event_mixing.o       : $(SDIR)/event_mixing.cxx
 $(ODIR)/generate_output.o   : $(SDIR)/generate_output.cxx
-$(ODIR)/generate_output_avg.o : $(SDIR)/generate_output.cxx
-$(ODIR)/generate_output_split_avg.o : $(SDIR)/generate_output_split_avg.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
@@ -92,8 +90,7 @@ $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o
-$(BDIR)/generate_output_avg : $(ODIR)/generate_output_avg.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
-$(BDIR)/generate_output_split_avg : $(ODIR)/generate_output_split_avg.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o
+
 
 ###############################################################################
 ##################################### MISC ####################################
