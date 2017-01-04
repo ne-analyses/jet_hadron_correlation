@@ -1048,15 +1048,18 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
-        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
-          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
-          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
-          histograms[i][j]->Add( subtmp, -1 );
+        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
+          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          delete fits[i][j];
+          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          
+          histograms[i][j]->Add( tmpsub, -1 );
           
           histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         }
-
-        
       }
     }
     
@@ -1089,13 +1092,21 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
-        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
-          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
-          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
-          histograms[i][j]->Add( subtmp, -1 );
+        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          delete fits[i][j];
+          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->FixParameter( 5, jetHadron::pi );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          fits[i][j]->SetParameter( 6, 0.2 );
+          
+          histograms[i][j]->Add( tmpsub, -1 );
           
           histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         }
+
         
       }
     }
@@ -1126,13 +1137,19 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
-        while ( fabs(fits[i][j]->GetParameter(0)) > 0.1 ) {
-          TF1* subtmp = new TF1("tmpsub", subForm.c_str());
-          subtmp->SetParameter(0, fits[i][j]->GetParameter(0) );
-          histograms[i][j]->Add( subtmp, -1 );
+        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          delete fits[i][j];
+          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          
+          histograms[i][j]->Add( tmpsub, -1 );
           
           histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         }
+
       }
     }
     return fits;
