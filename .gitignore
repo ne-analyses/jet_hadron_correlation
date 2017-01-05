@@ -10,7 +10,7 @@
 
 # ROOT files and dictionary
 *.root
-src/dict.*
+src/dict*
 
 # log information
 *.err
