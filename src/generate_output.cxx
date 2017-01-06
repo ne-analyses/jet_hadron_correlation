@@ -237,7 +237,7 @@ int main( int argc, const char** argv) {
   // print out the 2d histograms
   // ***************************
   for ( int i = 0; i < nFiles; ++ i ) {
-    jetHadron::Print2DHistograms( leadingMix[i], outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsMix( leadingMix[i], outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistograms( averagedSignal[i], outputDirBase+"/uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistogramsEtaRestricted( averagedMixedEventCorrected[i], outputDirBase+"/avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
