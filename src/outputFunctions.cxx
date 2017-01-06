@@ -879,7 +879,7 @@ namespace jetHadron {
   }
   
   // this returns both near and far individually
-  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH2F*> >& near, std::vector<std::vector<TH2F*> >& far, binSelector selector, std::string uniqueID, bool restrictDeta ) {
+  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, std::string uniqueID, bool restrictDeta ) {
     
     // scale the return histograms
     near.resize( correlation2d.size() );
