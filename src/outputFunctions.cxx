@@ -1841,6 +1841,10 @@ namespace jetHadron {
       }
       graphs[i] = new TGraphErrors( ptBins, xGraph, yGraph, xGraphErr, yGraphErr );
       graphs[i]->SetTitle( title.c_str() );
+      graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
+      graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
+      graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
+      graphs[i]->GetYaxis()->SetTitle( "dN/dp_{T}" );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
