@@ -61,6 +61,9 @@
 #include <unistd.h>
 
 // list all input files as arguments -
+// 0 = aj split bin
+// 1 = output directory
+
 // 0 = corr1
 // 1 = mix1
 // 2 = analysis1 identifying string
@@ -99,6 +102,8 @@ int main( int argc, const char** argv) {
   double R = 0.4;
   // and the output location
   std::string outputDirBase;
+  // include low pt bin or no?
+  bool includeLowPt = false;
   
   switch ( argc ) {
     case 1: { // Default case
@@ -123,29 +128,30 @@ int main( int argc, const char** argv) {
       break;
     }
     default: {
-      if ( (argc-4)%3 != 0 ) {
+      if ( (argc-5)%3 != 0 ) {
         __ERR("Need correlation file, mixing file, and analysis name for each entry")
         return -1;
       }
       std::vector<std::string> arguments( argv+1, argv+argc );
       
       // number of correlations
-      int nCorrFiles = ( argc - 3 )/3;
+      int nCorrFiles = ( argc - 4 )/3;
       
       analysisNames.resize( nCorrFiles );
       
       ajSplitBin = atoi ( arguments[ 0 ].c_str() );
       outputDirBase = arguments[ 1 ];
       R = atof( arguments[ 2 ].c_str() );
+      includeLowPt = atoi(arguments[3].c_str() );
       
       for ( int i = 0; i < nCorrFiles; ++i ) {
         
-        TFile* tmp = new TFile( arguments[ 3*i+3 ].c_str(), "READ" );
-        TFile* tmpMix =  new TFile( arguments[ (3*i)+4 ].c_str(), "READ" );
+        TFile* tmp = new TFile( arguments[ 3*i+4 ].c_str(), "READ" );
+        TFile* tmpMix =  new TFile( arguments[ (3*i)+5 ].c_str(), "READ" );
         
         corrFiles.push_back( tmp );
         mixFiles.push_back( tmpMix );
-        analysisNames[i] = arguments[ (3*i)+5 ];
+        analysisNames[i] = arguments[ (3*i)+6 ];
       }
     }
   }
@@ -349,12 +355,18 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_sub, corrected_dphi_sub_fit, outputDirBase+"/corrected_dphi_sub"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_lead, corrected_deta_lead_fit, outputDirBase+"/corrected_deta_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_sub, corrected_deta_sub_fit, outputDirBase+"/corrected_deta_sub"+analysisNames[0], analysisNames, selector );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_fit_yield, zeros, corrected_dphi_fit_yield_err, outputDirBase+"/corrected_dphi_graph", analysisNames, "Trigger Jet Yields",  0, 4 );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_sub_fit_yield, zeros, corrected_dphi_sub_fit_yield_err, outputDirBase+"/corrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields",  0, 4 );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_fit_yield, zeros, corrected_deta_fit_yield_err, outputDirBase+"/corrected_deta_graph", analysisNames, "Trigger Jet Yields",  0, 4 );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_sub_fit_yield, zeros, corrected_deta_sub_fit_yield_err, outputDirBase+"/corrected_deta_sub_graph", analysisNames, "Recoil Jet Yields",  0, 4 );
   
-  
+  // and choose whether to plot the full range or remove the lowest bin
+  int graphPtBinLow = 1;
+  int graphPtBinHigh = 4;
+  if ( includeLowPt ) {
+    graphPtBinLow = 0;
+  }
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_fit_yield, zeros, corrected_dphi_fit_yield_err, outputDirBase+"/corrected_dphi_graph", analysisNames, "Trigger Jet Yields",  graphPtBinLow, graphPtBinHigh );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_sub_fit_yield, zeros, corrected_dphi_sub_fit_yield_err, outputDirBase+"/corrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields",  graphPtBinLow, graphPtBinHigh );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_fit_yield, zeros, corrected_deta_fit_yield_err, outputDirBase+"/corrected_deta_graph", analysisNames, "Trigger Jet Yields",  graphPtBinLow, graphPtBinHigh );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_sub_fit_yield, zeros, corrected_deta_sub_fit_yield_err, outputDirBase+"/corrected_deta_sub_graph", analysisNames, "Recoil Jet Yields",  graphPtBinLow, graphPtBinHigh );
+
   // *******************************
   // get 1D projections for Aj split
   // *******************************
