@@ -165,6 +165,13 @@ int main( int argc, const char** argv) {
   jetHadron::binSelector selector;
   selector.ChangeRadius( R );
   
+  // and choose whether to plot the full range or remove the lowest bin
+  int graphPtBinLow = 1;
+  int graphPtBinHigh = 4;
+  if ( includeLowPt ) {
+    graphPtBinLow = 0;
+  }
+  
   // Build our initial histogram holders
   std::vector<TH3F*> nEvents;
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingCorrelationIn;
@@ -311,8 +318,8 @@ int main( int argc, const char** argv) {
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted, corrected_dphi_subtracted_fit, outputDirBase+"/corrected_dphi_subtracted_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted_sub, corrected_dphi_subtracted_sub_fit, outputDirBase+"/corrected_dphi_subtracted_sub"+analysisNames[0], analysisNames, selector );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_fit_yield, zeros, corrected_dphi_subtracted_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_graph", analysisNames, "Trigger Jet Yields",  0, 4 );
-  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_sub_fit_yield, zeros, corrected_dphi_subtracted_sub_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_sub_graph", analysisNames, "Recoil Jet Yields",  0, 4 );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_fit_yield, zeros, corrected_dphi_subtracted_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_graph", analysisNames, "Trigger Jet Yields", graphPtBinLow, graphPtBinHigh );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_sub_fit_yield, zeros, corrected_dphi_subtracted_sub_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_sub_graph", analysisNames, "Recoil Jet Yields",  graphPtBinLow, graphPtBinHigh );
   
   // Now we will do not subtracted projections
   // and dEta
@@ -356,12 +363,6 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_lead, corrected_deta_lead_fit, outputDirBase+"/corrected_deta_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_sub, corrected_deta_sub_fit, outputDirBase+"/corrected_deta_sub"+analysisNames[0], analysisNames, selector );
   
-  // and choose whether to plot the full range or remove the lowest bin
-  int graphPtBinLow = 1;
-  int graphPtBinHigh = 4;
-  if ( includeLowPt ) {
-    graphPtBinLow = 0;
-  }
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_fit_yield, zeros, corrected_dphi_fit_yield_err, outputDirBase+"/corrected_dphi_graph", analysisNames, "Trigger Jet Yields",  graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_sub_fit_yield, zeros, corrected_dphi_sub_fit_yield_err, outputDirBase+"/corrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields",  graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_fit_yield, zeros, corrected_deta_fit_yield_err, outputDirBase+"/corrected_deta_graph", analysisNames, "Trigger Jet Yields",  graphPtBinLow, graphPtBinHigh );
