@@ -63,12 +63,12 @@
 // list all input files as arguments -
 // 0 = aj split bin
 // 1 = output directory
-
-// 0 = corr1
-// 1 = mix1
-// 2 = analysis1 identifying string
-// 3 = corr2
-// 4 = mix2
+// 2 = include the lowest pt bin in graphs
+// 3 = corr1
+// 4 = mix1
+// 5 = analysis1 identifying string
+// 6 = corr2
+// 7 = mix2
 // .......
 
 int main( int argc, const char** argv) {
