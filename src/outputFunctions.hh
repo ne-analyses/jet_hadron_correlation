@@ -76,12 +76,19 @@ namespace jetHadron {
     
     // histogram bins
     
-    // pt
+    // pt with low bin
     double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
     double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
     std::string ptBinString[5] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
     const int nPtBins = 5;
+    
+    // without low bin
+    //double ptBinEdgeLo[4] = { 1.0, 2.0, 3.0, 4.0 };
+    //double ptBinEdgeHi[4] = { 2.0, 3.0, 4.0, 6.0 };
+    //double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
+    //std::string ptBinString[4] = { "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
+    //const int nPtBins = 4;
     
     double GetPtBinWidth( int i ) { return ptBinEdgeHi[i] - ptBinEdgeLo[i]; }
     
