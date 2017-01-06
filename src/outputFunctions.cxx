@@ -1859,7 +1859,7 @@ namespace jetHadron {
       if ( x.size() > 2 )
         leg->AddEntry( graphs[i], analysisNames[i].c_str(), "lep" );
       else
-        leg->AddEntry( graphs[i], selector.analysisStrings[i], "lep" );
+        leg->AddEntry( graphs[i], selector.analysisStrings[i].c_str(), "lep" );
       
       if ( i == 0 )
         graphs[i]->Draw();
