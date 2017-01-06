@@ -1236,8 +1236,8 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
-      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
-      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
+      //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       
@@ -1269,8 +1269,8 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
-      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
-      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
+      //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
       histograms[i]->SetTitle( selector.ptBinStringMix[i].c_str() );
       
@@ -1306,8 +1306,8 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
-      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
-      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
+      //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -1338,7 +1338,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetYaxis()->SetRangeUser(min , max );
       
@@ -1381,7 +1381,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1438,7 +1438,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1502,7 +1502,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1556,7 +1556,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetYaxis()->SetRangeUser( min, max );
       
@@ -1599,7 +1599,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1658,7 +1658,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1722,7 +1722,7 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        histograms[j][i]->GetYaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->SetLineColor( j+1 );
         histograms[j][i]->SetMarkerStyle( j+20 );
@@ -1778,7 +1778,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->SetLineColor( 1 );
       histograms[i]->SetMarkerStyle( 20 );
@@ -1789,7 +1789,7 @@ namespace jetHadron {
       histograms2[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms2[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      histograms2[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms2[i]->GetYaxis()->SetTitleSize( 0.04 );
       histograms2[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms2[i]->SetLineColor( 2 );
       histograms2[i]->SetMarkerStyle( 21 );
@@ -1856,7 +1856,11 @@ namespace jetHadron {
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
     for ( int i = 0; i < x.size(); ++i ) {
       
-      leg->AddEntry( graphs[i], analysisNames[i].c_str(), "lep" );
+      if ( x.size() > 2 )
+        leg->AddEntry( graphs[i], analysisNames[i].c_str(), "lep" );
+      else
+        leg->AddEntry( graphs[i], selector.analysisStrings[i], "lep" );
+      
       if ( i == 0 )
         graphs[i]->Draw();
       else
