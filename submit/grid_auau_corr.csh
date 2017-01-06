@@ -126,6 +126,6 @@ echo "Logging errors to " $ErrFile
 
 set arg = "$analysis $useEfficiency $triggerCoincidence $softTrig $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $constPtCut $binsEta $binsPhi $outLocation $outName $outNameTree $Files"
 
-qsub -V -q erhiq -l mem=7GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -V -q erhiq -l mem=10GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end
