@@ -1890,7 +1890,7 @@ namespace jetHadron {
       histograms[i]->SetMarkerStyle( 20 );
       histograms[i]->SetMarkerStyle( 2 );
       histograms[i]->SetMarkerColor( 1 );
-      histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
+      //histograms[i]->GetYaxis()->SetRangeUser( -1.0, 3.0 );
       
       histograms2[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms2[i]->GetXaxis()->SetTitleSize( 0.06 );
