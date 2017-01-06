@@ -1250,7 +1250,7 @@ namespace jetHadron {
     
   }
   
-  void Print2DHistogramsMix( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+  void Print2DHistogramsMixing( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
