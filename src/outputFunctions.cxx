@@ -878,6 +878,112 @@ namespace jetHadron {
     
   }
   
+  // this returns both near and far individually
+  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH2F*> >& near, std::vector<std::vector<TH2F*> >& far, binSelector selector, std::string uniqueID, bool restrictDeta ) {
+    
+    // scale the return histograms
+    near.resize( correlation2d.size() );
+    far.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      near[i].resize( correlation2d[i].resize() );
+      far[i].resize( correlation2d[i].resize() );
+      
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        // new name for the projection
+        std::string tmpNear = uniqueID + "_near_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        std::string tmpFar = uniqueID + "_far_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        // now find the bins for the subtraction
+        selector.SetHistogramBins( correlation2d[i][j] );
+        double etaMin = selector.dEtaLow;
+        double etaMax = selector.dEtaHigh;
+        double etaBins = selector.bindEta;
+        double etaBinWidth = ( etaMax - etaMin ) / etaBins;
+        
+        // now we set the actual range of interest
+        // but we can restrict the region of interest if restrictDeta is
+        double acceptEtaMin;
+        double acceptEtaMax;
+        if ( restrictDeta ) {
+          acceptEtaMin = selector.dEtaAcceptanceLow+0.4;
+          acceptEtaMax = selector.dEtaAcceptanceHigh-0.4;
+        }
+        else { // if not restricted, the bounds are set by the kinematics of the jet
+          acceptEtaMin = selector.dEtaAcceptanceLow;
+          acceptEtaMax = selector.dEtaAcceptanceHigh;
+        }
+        
+        // and define our working range between eta min and eta max
+        double etaRange = ( acceptEtaMax - acceptEtaMin );
+        
+        // now we define three regions -
+        // region 2 - inner range - the "near side"
+        // region 2 has twice the width of range 1 or 3
+        // region 1 & 3 - two outer regions - the remainder
+        // of the histogram on either side
+        // here we find the bin numbers corresponding
+        // to these ranges
+        
+        // region one will be from [etaMin -> etaMin + etaRange/4.0 )
+        // region two will be from [etaMin + etaRange -> etaMin + 3.0*etaRange/4.0]
+        // region three will be from ( etaMin + 3.0*etaRange/4.0 -> etaMax]
+        double bound1 = acceptEtaMin;
+        double bound2 = acceptEtaMin + etaRange/4.0;
+        double bound3 = acceptEtaMin + 3.0*etaRange/4.0;
+        double bound4 = acceptEtaMax;
+        
+        
+        int range1Low = 0;
+        int range1High = 0;
+        int range2Low = 0;
+        int range2High = 0;
+        int range3Low = 0;
+        int range3High = 0;
+        
+        // now we will search for each bin
+        for ( int i = 1; i <= etaBins; ++i ) {
+          double binLowEdge = etaMin + ( i - 1 )*etaBinWidth;
+          double binUpEdge = etaMin + ( i )*etaBinWidth;
+          
+          if ( bound1 >= binLowEdge && bound1 < binUpEdge ) {
+            range1Low = i;
+          }
+          if ( bound2 >= binLowEdge && bound2 < binUpEdge ) {
+            range1High = i-1;
+            range2Low = i;
+          }
+          if ( bound3 >= binLowEdge && bound3 < binUpEdge ) {
+            range2High = i;
+            range3Low = i+1;
+          }
+          if ( bound4 >= binLowEdge && bound4 < binUpEdge ) {
+            range3High = i;
+          }
+        }
+        
+        // now do the projections
+        correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );
+        near[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        near[i][j]->SetName( tmpNear.c_str() );
+        
+        // for the far as well
+        correlation2d[i][j]->GetXaxis()->SetRange( range1Low, range1High );
+        far[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        far[i][j]->SetName( tmpFar.c_str() );
+        correlation2d[i][j]->GetXaxis()->SetRange( range3Low, range3High );
+        far[i][j]->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
+        
+        // scale the subtraction histogram by the relative number of bins
+        far[i][j]->Scale( (range2High-range2Low)/( (range1High-range1Low) + (range3High - range3Low) ) );
+        
+      }
+    }
+    
+  }
+
+  
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID, bool restrictDphi ) {
     // build the return vector
     std::vector<std::vector<TH1F*> > projections;
