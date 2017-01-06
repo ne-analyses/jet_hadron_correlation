@@ -75,12 +75,15 @@ namespace jetHadron {
     unsigned ajHigh = binsAj-1;
     
     // histogram bins
+    std::string analysisStrings[2] = { "Au+Au 0-20%", "P+P" };
     
     // pt with low bin
     double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
     double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
     std::string ptBinString[5] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
+    std::string ptBinStringMix[3] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T}" };
+    
     const int nPtBins = 5;
     
     // without low bin
@@ -223,6 +226,7 @@ namespace jetHadron {
   
   // Used to print out and save the 2D prots ( correlations, mixed events )
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
+  void Print2DHistogramsMixing( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   void Print2DHistogramsEtaRestricted( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   
   void Print1DHistogramsDphi( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );

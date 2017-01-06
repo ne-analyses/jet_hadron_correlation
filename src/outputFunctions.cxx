@@ -1229,9 +1229,48 @@ namespace jetHadron {
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetXaxis()->CenterTitle( true );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetYaxis()->CenterTitle( true );
+      histograms[i]->GetZaxis()->SetTitle("counts");
+      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->CenterTitle( true );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      
+      TCanvas c1;
+      histograms[i]->Draw("surf1");
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+  
+  void Print2DHistogramsMix( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetXaxis()->CenterTitle( true );
+      histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetYaxis()->CenterTitle( true );
+      histograms[i]->GetZaxis()->SetTitle("counts");
+      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->CenterTitle( true );
+      histograms[i]->SetTitle( selector.ptBinStringMix[i].c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1255,9 +1294,17 @@ namespace jetHadron {
       
       histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetXaxis()->CenterTitle( true );
       histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetYaxis()->CenterTitle( true );
+      histograms[i]->GetZaxis()->SetTitle("counts");
+      histograms[i]->GetZaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->CenterTitle( true );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       TCanvas c1;
@@ -1340,7 +1387,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1398,7 +1448,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1458,7 +1511,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1542,7 +1598,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1601,7 +1660,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
@@ -1661,7 +1723,10 @@ namespace jetHadron {
         }
         
         // add to legend
-        leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
       leg->Draw();
