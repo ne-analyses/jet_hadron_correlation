@@ -75,10 +75,6 @@ int main( int argc, const char** argv) {
   
   gStyle->SetOptStat(false);
   gStyle->SetOptFit(false);
-  
-  Float_t lmargin2d=0.20;
-  gPad->SetLeftMargin  ( lmargin2d );
-  gPad->SetBottomMargin( lmargin2d ); // standard is usually okay
 
   
   // First check to make sure we're located properly
