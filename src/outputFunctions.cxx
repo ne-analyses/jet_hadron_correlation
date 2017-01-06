@@ -887,8 +887,8 @@ namespace jetHadron {
     
     // now loop over every 2d histogram and project
     for ( int i = 0; i < correlation2d.size(); ++i ) {
-      near[i].resize( correlation2d[i].resize() );
-      far[i].resize( correlation2d[i].resize() );
+      near[i].resize( correlation2d[i].size() );
+      far[i].resize( correlation2d[i].size() );
       
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
