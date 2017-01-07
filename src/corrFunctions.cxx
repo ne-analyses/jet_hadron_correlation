@@ -168,8 +168,12 @@ namespace jetHadron {
     TStarJetVector* sv;
     std::cout<<"n-entries: "<< container->GetEntries()<<std::endl;
     int count = 0;
+    int charged = 0;
     for ( int i=0; i < container->GetEntries() ; ++i ){
       sv = container->Get(i);
+      
+      if ( sv->GetCharge() )
+        charged++;
       
       if ( sv->GetCharge() && dis(g) > 0.9 ) {
         continue;
@@ -181,6 +185,7 @@ namespace jetHadron {
       
       
     }
+    std::cout<<"charged: "<<charged<<std::endl;
     std::cout<<"made it through: "<<count<<std::endl;
   }
   
