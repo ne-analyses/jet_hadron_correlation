@@ -433,7 +433,7 @@ int main ( int argc, const char** argv) {
 
       // Convert TStarJetVector to PseudoJet
       jetHadron::ConvertTStarJetVector( container, particles, true );
-      jetHadron::ConvertTStarJetVector( container, ppParticles, true );
+      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, true );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false);
       
