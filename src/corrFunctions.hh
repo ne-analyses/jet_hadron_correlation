@@ -109,6 +109,8 @@ namespace jetHadron {
   
   // Converts TStarJetPicoVectors into PseudoJets
   void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true );
+  // applies an effective 90% relative efficiency compared to auau
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true );
   
   // Used in pp to convert either all embedding tracks or
   // only hard embedding tracks ( > 2.0 GeV )

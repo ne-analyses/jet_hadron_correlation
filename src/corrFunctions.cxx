@@ -7,6 +7,9 @@
 #include "corrParameters.hh"
 #include "histograms.hh"
 
+#include <time.h>
+#include <random>
+
 namespace jetHadron {
 	
 	// -------------------------
@@ -147,6 +150,41 @@ namespace jetHadron {
     }
   }
   
+  // applies an effective 90% relative efficiency compared to auau
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector ) {
+    // Empty the container
+    // if called for
+    if ( ClearVector )
+      particles.clear();
+    
+    // create a RNG for shuffling events
+    std::random_device rd;
+    std::mt19937 g(rd());
+    g.seed( clock() );
+    std::uniform_real_distribution<> dis(0.0, 1.0);
+    
+    // Transform TStarJetVectors into (FastJet) PseudoJets
+    // ---------------------------------------------------
+    TStarJetVector* sv;
+    std::cout<<"n-entries: "<< container->GetEntries()<<std::endl;
+    int count = 0;
+    for ( int i=0; i < container->GetEntries() ; ++i ){
+      sv = container->Get(i);
+      
+      if ( sv->GetCharge() && dis(g) > 0.9 ) {
+        continue;
+      }
+      count++;
+      fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      tmpPJ.set_user_index( sv->GetCharge() );
+      particles.push_back( tmpPJ );
+      
+      
+    }
+    std::cout<<"made it through: "<<count<<std::endl;
+  }
+  
+  // For AuAu being embedded into PP
   void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks ) {
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
