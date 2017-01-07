@@ -172,12 +172,13 @@ namespace jetHadron {
     for ( int i=0; i < container->GetEntries() ; ++i ){
       sv = container->Get(i);
       
-      if ( sv->GetCharge() )
+      if ( sv->GetCharge() != 0 )
         charged++;
       
       if ( sv->GetCharge() && dis(g) > 0.9 ) {
         continue;
       }
+      
       count++;
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
       tmpPJ.set_user_index( sv->GetCharge() );
