@@ -166,28 +166,20 @@ namespace jetHadron {
     // Transform TStarJetVectors into (FastJet) PseudoJets
     // ---------------------------------------------------
     TStarJetVector* sv;
-    std::cout<<"n-entries: "<< container->GetEntries()<<std::endl;
-    int count = 0;
-    int charged = 0;
     for ( int i=0; i < container->GetEntries() ; ++i ){
       sv = container->Get(i);
-      
-      if ( sv->GetCharge() != 0 )
-        charged++;
       
       if ( sv->GetCharge() && dis(g) > 0.9 ) {
         continue;
       }
       
-      count++;
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
       tmpPJ.set_user_index( sv->GetCharge() );
       particles.push_back( tmpPJ );
       
       
     }
-    std::cout<<"charged: "<<charged<<std::endl;
-    std::cout<<"made it through: "<<count<<std::endl;
+
   }
   
   // For AuAu being embedded into PP
