@@ -115,15 +115,15 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/tmp/pp_corr_6.root", "READ" );
-      tmpMix = new TFile( "out/tmp/pp_mix_6.root", "READ");
+      tmp = new TFile( "out/tmp/pp_eff_corr_6.root", "READ" );
+      tmpMix = new TFile( "out/tmp/pp_eff_mix_6.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/results/jet_20_10_trig_6";
+      outputDirBase = "/results/jet_ppEff_20_10_trig_6";
       
       break;
     }
