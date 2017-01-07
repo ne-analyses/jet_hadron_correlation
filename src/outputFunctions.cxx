@@ -1292,7 +1292,49 @@ namespace jetHadron {
     }
   }
   
-  
+  // Used to get the integrals of the
+  // histograms, and errors on the integrals
+  void ExtractIntegral( std::vector<std::vector<TH1F*> > histograms, std::vector<std::vector<double> > integrals, std::vector<std::vector<double> > errors, binSelector selector, double lowEdge, double highEdge ) {
+    
+    // resize the output containers
+    integrals.resize( histograms.size() );
+    errors.resize( histograms.size() );
+    
+    // do checks on the histograms and minimum/maximum values
+    if ( lowEdge > highEdge ) {
+      __ERR("warning: lower edge set above high edge for integration - flipping")
+      double tmp = lowEdge;
+      lowEdge = highEdge;
+      highEdge = tmp;
+    }
+    int lowBin = histograms[0][0]->GetXaxis()->GetFirst();
+    int highBin = histograms[0][0]->GetXaxis()->GetLast();
+    
+    if ( histograms[0][0]->FindBin( lowBin ) > lowBin ) {
+      __ERR("warning: asking for integrals outside of histogram set user range- low edge - resetting")
+    }
+    else {
+      lowBin = histograms[0][0]->FindBin( lowEdge );
+    }
+    if ( histograms[0][0]->GetXaxis()->FindBin( highEdge ) < highBin ) {
+      __ERR("warning: asking for integrals outside of histogram set user range- upper edge - resetting")
+    }
+    else {
+      highBin = histograms[0][0]->FindBin( highEdge );
+    }
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      //resize inner output containers
+      integrals[i].resize( histograms[i].size() );
+      errors[i].resize( histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        integrals[i][j] = histograms[i][j]->IntegralAndError( lowBin, highBin, errors[i][j] );
+      }
+      
+    }
+  }
   
   
   // *****************************

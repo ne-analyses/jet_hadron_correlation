@@ -220,6 +220,11 @@ namespace jetHadron {
   // for both dphi and deta
   void ExtractFitVals( std::vector<std::vector<TF1*> >& fits, std::vector<std::vector<double> >& yields, std::vector<std::vector<double> >& widths, std::vector<std::vector<double> >& normError, std::vector<std::vector<double> >& widthError, binSelector selector );
   
+  // Used to get the integrals of the
+  // histograms, and errors on the integrals
+  void ExtractIntegral( std::vector<std::vector<TH1F*> > histograms, std::vector<std::vector<double> > integrals, std::vector<std::vector<double> > errors, binSelector selector, double lowEdge, double highEdge );
+  
+  
   // Methods for Printing out and Saving
   // ***********************************
   
