@@ -151,7 +151,7 @@ int main ( int argc, const char** argv) {
   double        softwareTrig  = true;                     // require there to be a trigger with E > this value in the event
   bool          addAuAuHard   = true;                     // add all pt > 2 GeV tracks from AuAu to correlations
   bool          correlateAll  = true;                     // correlates all pp & auau tracks
-  int           iTowerScale   = 1;                        // energy scale shift for systematic efficiency
+  int           iTowerScale   = -1;                        // energy scale shift for systematic efficiency
   int           iTrackingEff  = 0;                        // tracking efficiency shift for systematic efficiencies
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
