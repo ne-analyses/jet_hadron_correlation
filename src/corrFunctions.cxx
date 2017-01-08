@@ -167,7 +167,6 @@ namespace jetHadron {
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
     // ---------------------------------------------------
-    int accepted=0;
     TStarJetVector* sv;
     for ( int i=0; i < container->GetEntries() ; ++i ){
       sv = container->Get(i);
@@ -179,15 +178,20 @@ namespace jetHadron {
           continue;
         }
       }
-      accepted++;
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      if ( sv->GetCharge() == 0 ) {
+      std::cout<<"energy before: "<< sv->E()<<std::endl;
+      std::cout<<"eta after: "<< sv->eta() << std::endl;
+      }
       if ( sv->GetCharge() == 0 )
         tmpPJ *= towerScale;
+      if ( sv->GetCharge() == 0 ) {
+      std::cout<<"energy after: "<< sv->E() <<std::endl;
+      std::cout<<"eta after: "<< sv->eta() <<std::endl;
+      }
       tmpPJ.set_user_index( sv->GetCharge() );
       particles.push_back( tmpPJ );
     }
-    std::cout<<"total: "<<container->GetEntries()<<std::endl;
-    std::cout<<"accepted: "<<accepted<<std::endl;
     
   }
   
