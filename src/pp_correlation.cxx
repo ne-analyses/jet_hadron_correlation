@@ -455,8 +455,6 @@ int main ( int argc, const char** argv) {
       if ( VzBin == -1 )																				{ continue; }
 
       // Convert TStarJetVector to PseudoJet
-      // TESTING:
-      std::cout<<"tower scale: "<< fTowerScale<<std::endl;
       jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
       
       // now for pp - we also need a seed so we use high resolution timing
