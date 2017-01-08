@@ -112,15 +112,15 @@ set subfolder = tower_${towerEff}_track_${trackEff}
 set outFile = ${analysis}
 set outFile = ${outFile}_trigger_${triggerCoincidence}_softTrig_${softTrig}_eff_${useEfficiency}_auauHard_${auauHard}_auauAll_${auauAll}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
-if ( ! -d out/${analysis}/${subfolder}/${outFile} ) then
-mkdir -p out/${analysis}/${subfolder}/${outFile}
-mkdir -p out/${analysis}/${subfolder}/${outFile}/correlations
-mkdir -p out/${analysis}/${subfolder}/${outFile}/tree
-mkdir -p out/${analysis}/${subfolder}/${outFile}/mixing
+if ( ! -d out/${analysis}/${outFile}${subfolder} ) then
+mkdir -p out/${analysis}/${outFile}${subfolder}
+mkdir -p out/${analysis}/${outFile}/${subfolder}/correlations
+mkdir -p out/${analysis}/${outFile}/${subfolder}/tree
+mkdir -p out/${analysis}/${outFile}/${subfolder}/mixing
 endif
 
-if ( ! -d log/pp/${analysis}/${subfolder}/${outFile} ) then
-mkdir -p log/pp/${analysis}/${subfolder}/${outFile}
+if ( ! -d log/pp/${analysis}/${outFile}/${subfolder} ) then
+mkdir -p log/pp/${analysis}/${outFile}/${subfolder}
 endif
 
 # Now Submit jobs for each data file
@@ -130,7 +130,7 @@ foreach input ( ${base}* )
 set OutBase = `basename $input | sed 's/.list//g'`
 
 # Make the output names and path
-set outLocation = "out/${analysis}/${outFile}/"
+set outLocation = "out/${analysis}/${outFile}/${subfolder}"
 set outName = correlations/corr_${OutBase}.root
 set outNameTree = tree/tree_${OutBase}.root
 
@@ -138,8 +138,8 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/pp/${analysis}/${outFile}/${analysis}_${OutBase}.log
-set ErrFile     = log/pp/${analysis}/${outFile}/${analysis}_${OutBase}.err
+set LogFile     = log/pp/${analysis}/${outFile}/${subfolder}/${analysis}_${OutBase}.log
+set ErrFile     = log/pp/${analysis}/${outFile}/${subfolder}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
