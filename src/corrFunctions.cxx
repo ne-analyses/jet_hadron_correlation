@@ -171,7 +171,7 @@ namespace jetHadron {
     for ( int i=0; i < container->GetEntries() ; ++i ){
       sv = container->Get(i);
       
-      double ratio = eff->EffRatio_20(sv->Eta(),sv->Pt());
+      double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
       if ( sv->GetCharge() && dis(g) > ratio ) {
         continue;
       }
