@@ -1,4 +1,4 @@
-// testing nick's new correlation implementations
+// testing for whatever
 
 #include "corrParameters.hh"
 #include "corrFunctions.hh"
@@ -47,50 +47,6 @@
 
 int main() {
   
-  // test read in
-  std::vector<TFile*> inFile;
-  std::vector<TFile*> inFileMix;
-  inFile.resize(1);
-  inFile[0] = new TFile("out/tmp/auau_corr_20_10.root", "READ");
-  inFileMix.resize(1);
-  inFileMix[0] = new TFile("out/tmp/auau_mix_20_10.root", "READ");
-  
-  // testing
-  jetHadron::binSelector selector;
-  
-  std::vector<TH3F*> nEvents;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leading;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > sub;
-  std::vector<TH3F*> nEventsMix;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > leadingMix;
-  std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subMix;
-  
-  jetHadron::ReadInFiles( inFile, leading, sub, nEvents, selector );
-  jetHadron::ReadInFilesMix( inFileMix, leadingMix, subMix, nEventsMix, selector );
-  
-  
-  std::vector<std::vector<TH2F*> > mixedEvents = jetHadron::RecombineMixedEvents( leadingMix, selector );
-  jetHadron::ScaleMixedEvents( mixedEvents );
-  
-  // Find the pt bin center for future use
-  std::vector<TH1F*> ptSpectra;
-  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( leading, ptSpectra, selector );
-  
-  
-  // Now testing redoing the correlations to 2d in pt
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingCorr;
-  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subCorr;
-  
-  jetHadron::BuildSingleCorrelation( leading, leadingCorr, selector );
-  
-  std::vector<std::vector<TH2F*> > reducedCorr = jetHadron::AverageCorrelations( leadingCorr, selector );
-  
-  std::vector<std::vector<TH2F*> > correctedCorr = jetHadron::EventMixingCorrection( leadingCorr, mixedEvents, selector );
-  
-  jetHadron::Print2DHistograms( mixedEvents[0], "tmp/test", "mixing", selector );
-  jetHadron::Print2DHistograms( reducedCorr[0], "tmp/corr", "corr", selector);
-  jetHadron::Print2DHistogramsEtaRestricted( correctedCorr[0], "tmp/corrected", "corrected", selector );
-  
-  
+    
 	return 0;
 }

@@ -452,6 +452,8 @@ int main ( int argc, const char** argv) {
       if ( VzBin == -1 )																				{ continue; }
 
       // Convert TStarJetVector to PseudoJet
+      // TESTING:
+      std::cout<<"tower scale: "<< fTowerScale<<std::endl;
       jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
       jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
