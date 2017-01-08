@@ -66,13 +66,13 @@ set triggerCoincidence = $3
 set softTrig = $4
 set auauHard = $5
 set auauAll = $6
-set subLeadPtMin = $9
-set leadPtMin = $10
-set jetPtMax = $11
-set jetRadius = $12
-set constPtCut = $13
-set binsEta = $14
-set binsPhi = $15
+set subLeadPtMin = $7
+set leadPtMin = $8
+set jetPtMax = $9
+set jetRadius = $10
+set constPtCut = $11
+set binsEta = $12
+set binsPhi = $13
 
 if ( $2 == 'default' ) then
 set useEfficiency = 'true'
