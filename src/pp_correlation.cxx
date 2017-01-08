@@ -223,11 +223,11 @@ int main ( int argc, const char** argv) {
       iTowerScale    = atoi ( arguments[6].c_str() );
       iTrackingEff   = atoi ( arguments[7].c_str() );
       
-      if ( abs( towerScale ) >= 2  ) {
+      if ( abs( iTowerScale ) >= 2  ) {
         __ERR("Tower scale systematics needs to be -1, 0, 1")
         return 0;
       }
-      if ( abs( trackingEff ) >= 2  ) {
+      if ( abs( iTrackingEff ) >= 2  ) {
         __ERR("Tracking efficiency systematics needs to be -1, 0, 1")
         return 0;
       }
@@ -399,7 +399,7 @@ int main ( int argc, const char** argv) {
   // Finally, make ktEfficiency obj for pt-eta
   // Efficiency corrections
   ktTrackEff efficiencyCorrection( jetHadron::y7EfficiencyFile );
-  efficiencyCorrection.SetSysUncertainty( trackingEff );
+  efficiencyCorrection.SetSysUncertainty( iTrackingEff );
   // Now everything is set up
   // We can start the event loop
   // First, our counters
@@ -453,7 +453,7 @@ int main ( int argc, const char** argv) {
 
       // Convert TStarJetVector to PseudoJet
       jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
-      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, true, fTowerScale );
+      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
       
