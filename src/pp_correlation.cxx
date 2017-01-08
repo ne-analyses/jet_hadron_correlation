@@ -407,6 +407,9 @@ int main ( int argc, const char** argv) {
   int nHardDijets = 0;
   int nMatchedHard = 0;
   
+  // getting seed for rng
+  auto begin = std::chrono::high_resolution_clock::now();
+  
   try{
     while ( reader.NextEvent() ) {
       
@@ -422,7 +425,6 @@ int main ( int argc, const char** argv) {
         mbReader.ReadEvent(0);
         std::cout<<"RESET MB events"<<std::endl;
       }
-      
       
       // Get the event header and event
       event = reader.GetEvent();
@@ -455,6 +457,12 @@ int main ( int argc, const char** argv) {
       // TESTING:
       std::cout<<"tower scale: "<< fTowerScale<<std::endl;
       jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
+      
+      // now for pp - we also need a seed so we use high resolution timing
+      auto end = std::chrono::high_resolution_clock::now();
+      auto seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
+      std::cout<<"seed: "<< seed<<std::endl;
+      
       jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
