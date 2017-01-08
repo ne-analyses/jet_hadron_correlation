@@ -112,8 +112,8 @@ set subfolder = tower_${towerEff}_track_${trackEff}
 set outFile = ${analysis}
 set outFile = ${outFile}_trigger_${triggerCoincidence}_softTrig_${softTrig}_eff_${useEfficiency}_auauHard_${auauHard}_auauAll_${auauAll}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
-if ( ! -d out/${analysis}/${outFile}${subfolder} ) then
-mkdir -p out/${analysis}/${outFile}${subfolder}
+if ( ! -d out/${analysis}/${outFile}/${subfolder} ) then
+mkdir -p out/${analysis}/${outFile}/${subfolder}
 mkdir -p out/${analysis}/${outFile}/${subfolder}/correlations
 mkdir -p out/${analysis}/${outFile}/${subfolder}/tree
 mkdir -p out/${analysis}/${outFile}/${subfolder}/mixing
