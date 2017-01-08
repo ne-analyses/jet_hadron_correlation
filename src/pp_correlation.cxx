@@ -462,9 +462,8 @@ int main ( int argc, const char** argv) {
       // now for pp - we also need a seed so we use high resolution timing
       auto end = std::chrono::high_resolution_clock::now();
       auto seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
-      std::cout<<"seed: "<< seed<<std::endl;
       
-      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, true, fTowerScale );
+      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, seed, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
       
