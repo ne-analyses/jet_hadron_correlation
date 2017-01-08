@@ -155,7 +155,6 @@ Double_t ktTrackEff::EffAAY07(Double_t eta, Double_t mPt, Int_t centBin)
     effWeight = effY04[centBin]->Eval(eta,mPt);
   else
     effWeight = effY04[centBin]->Eval(eta,5.0);
-  std::cout<<"got here too"<<std::endl;
   if(mPt > 1.5)
     effWeight *= effY07eta[centBin]->GetBinContent(effY07eta[centBin]->GetXaxis()->FindBin(eta));
   else
