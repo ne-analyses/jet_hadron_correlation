@@ -153,7 +153,7 @@ namespace jetHadron {
   }
   
   // applies an effective 90% relative efficiency compared to auau
-  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff eff, bool ClearVector, double towerScale ) {
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, bool ClearVector, double towerScale ) {
     // Empty the container
     // if called for
     if ( ClearVector )
