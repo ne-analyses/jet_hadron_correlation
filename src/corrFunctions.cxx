@@ -181,7 +181,6 @@ namespace jetHadron {
       if ( sv->GetCharge() ) {
         double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
         double random_ = dis(g);
-        std::cout<<"ratio: "<<ratio<<std::endl;
         std::cout<<"random: "<<random_<<std::endl;
         if ( random_ > ratio ) {
           nRejected++;
