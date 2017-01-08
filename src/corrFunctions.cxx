@@ -180,14 +180,14 @@ namespace jetHadron {
       }
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
       if ( sv->GetCharge() == 0 ) {
-      std::cout<<"energy before: "<< sv->E()<<std::endl;
-      std::cout<<"eta after: "<< sv->eta() << std::endl;
+      std::cout<<"energy before: "<< tmpPJ.E()<<std::endl;
+      std::cout<<"eta after: "<< tmpPJ.eta() << std::endl;
       }
       if ( sv->GetCharge() == 0 )
         tmpPJ *= towerScale;
       if ( sv->GetCharge() == 0 ) {
-      std::cout<<"energy after: "<< sv->E() <<std::endl;
-      std::cout<<"eta after: "<< sv->eta() <<std::endl;
+      std::cout<<"energy after: "<< tmpPJ.E() <<std::endl;
+      std::cout<<"eta after: "<< tmpPJ.eta() <<std::endl;
       }
       tmpPJ.set_user_index( sv->GetCharge() );
       particles.push_back( tmpPJ );
