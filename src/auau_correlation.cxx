@@ -388,7 +388,7 @@ int main ( int argc, const char** argv ) {
       if ( VzBin == -1 )																				{ continue; }
       
       // Convert TStarJetVector to PseudoJet
-      jetHadron::ConvertTStarJetVector( container, particles, true );
+      jetHadron::ConvertTStarJetVector( container, particles, true, 1 );
       
       // Get HT triggers
       jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
