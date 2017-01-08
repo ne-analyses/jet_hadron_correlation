@@ -178,12 +178,13 @@ namespace jetHadron {
       if ( sv->GetCharge() )
         nCharged++;
       
-        
-      double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
-      std::cout<<"ratio: "<<ratio<<std::endl;
-      if ( sv->GetCharge() && dis(g) > ratio ) {
-        nRejected++;
-        continue;
+      if ( sv->GetCharge() ) {
+        double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
+        std::cout<<"ratio: "<<ratio<<std::endl;
+        if ( dis(g) > ratio ) {
+          nRejected++;
+          continue;
+        }
       }
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
       if ( sv->GetCharge() == 0 )
