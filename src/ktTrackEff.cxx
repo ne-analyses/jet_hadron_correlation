@@ -150,7 +150,6 @@ Double_t ktTrackEff::EffAAY07_20(Double_t eta, Double_t mPt)
 Double_t ktTrackEff::EffAAY07(Double_t eta, Double_t mPt, Int_t centBin)
 {
   Double_t effWeight=1.0;
-  std::cout<<"got here"<<std::endl;
   if(mPt < 5.)
     effWeight = effY04[centBin]->Eval(eta,mPt);
   else
