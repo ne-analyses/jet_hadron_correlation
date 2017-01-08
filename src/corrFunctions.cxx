@@ -130,7 +130,7 @@ namespace jetHadron {
   // Also makes sure to empty the containers if they are full
   //
   // ------------------------------------------------------------------------------
-  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector, int towerScale ) {
+  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector, double towerScale ) {
     // Empty the container
     // if called for
     if ( ClearVector )
@@ -153,7 +153,7 @@ namespace jetHadron {
   }
   
   // applies an effective 90% relative efficiency compared to auau
-  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff eff, bool ClearVector, int towerScale ) {
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff eff, bool ClearVector, double towerScale ) {
     // Empty the container
     // if called for
     if ( ClearVector )
@@ -185,7 +185,7 @@ namespace jetHadron {
   }
   
   // For AuAu being embedded into PP
-  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks, int towerScale ) {
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks, double towerScale ) {
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
     // ---------------------------------------------------
