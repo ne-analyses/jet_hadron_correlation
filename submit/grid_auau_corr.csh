@@ -99,8 +99,8 @@ mkdir -p out/${analysis}/${outFile}/tree
 mkdir -p out/${analysis}/${outFile}/mixing
 endif
 
-if ( ! -d log/${analysis}/${outFile} ) then
-mkdir -p log/${analysis}/${outFile}
+if ( ! -d log/auau/${analysis}/${outFile} ) then
+mkdir -p log/auau/${analysis}/${outFile}
 endif
 
 # Now Submit jobs for each data file
@@ -118,8 +118,8 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.log
-set ErrFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.err
+set LogFile     = log/auau/${analysis}/${outFile}/${analysis}_${OutBase}.log
+set ErrFile     = log/auau/${analysis}/${outFile}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile

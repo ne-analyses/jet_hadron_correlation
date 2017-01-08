@@ -34,13 +34,15 @@ echo '3: require trigger in leading jet [true/false] (default: true)'
 echo '4: require software trigger above this value (default: 6.0)'
 echo '5: correlate w/ all embedding tracks > 2.0 GeV [true/false] (default: false)'
 echo '6: correlate w/ all embedding tracks [true/false] (default: false)'
-echo '7: subleading jet min pt (default: 10)'
-echo '8: leading jet min pt (default: 20)'
-echo '9: jet pt max (default: 100)'
-echo '10: jet resolution parameter (default: 0.4)'
-echo '11: hard constituent pt cut (default: 2.0)'
-echo '12: bins in correlation histograms in eta (default: 22)'
-echo '13: bins in correlation histograms in phi (default: 22)'
+echo '7: tower energy scale shift for systematics [-1, 0, 1] (default: 0)'
+echo '8: tracking efficiency shift for systematics [-1, 0, 1] (default: 0)'
+echo '9: subleading jet min pt (default: 10)'
+echo '10: leading jet min pt (default: 20)'
+echo '11: jet pt max (default: 100)'
+echo '12: jet resolution parameter (default: 0.4)'
+echo '13: hard constituent pt cut (default: 2.0)'
+echo '14: bins in correlation histograms in eta (default: 22)'
+echo '15: bins in correlation histograms in phi (default: 22)'
 exit
 endif
 
@@ -50,7 +52,7 @@ set execute = './bin/pp_correlation'
 set base = pp_list/grid/pp
 set mbData = /nfs/rhi/STAR/Data/AuAuMB_0_20/picoMB_0_20.root
 
-if ( $# != "13" && !( $2 == 'default' ) ) then
+if ( $# != "15" && !( $2 == 'default' ) ) then
 echo 'Error: illegal number of parameters (-h for help)'
 exit
 endif
@@ -66,13 +68,15 @@ set triggerCoincidence = $3
 set softTrig = $4
 set auauHard = $5
 set auauAll = $6
-set subLeadPtMin = $7
-set leadPtMin = $8
-set jetPtMax = $9
-set jetRadius = $10
-set constPtCut = $11
-set binsEta = $12
-set binsPhi = $13
+set towerEff = $7
+set trackEff = $8
+set subLeadPtMin = $9
+set leadPtMin = $10
+set jetPtMax = $11
+set jetRadius = $12
+set constPtCut = $13
+set binsEta = $14
+set binsPhi = $15
 
 if ( $2 == 'default' ) then
 set useEfficiency = 'true'
@@ -80,6 +84,8 @@ set triggerCoincidence = 'true'
 set softTrig = 6.0
 set auauHard = 'false'
 set auauAll = 'false'
+set towerEff = 0
+set trackEff = 0
 if ( $analysis == 'ppdijet' ) then
 set subLeadPtMin = 10.0
 set leadPtMin = 20.0
@@ -95,19 +101,22 @@ set binsEta = 22
 set binsPhi = 22
 endif
 
+# subfolder
+set subfolder = tower_${towerEff}_track_${trackEff}
+
 # Create the folder name for output
 set outFile = ${analysis}
 set outFile = ${outFile}_trigger_${triggerCoincidence}_softTrig_${softTrig}_eff_${useEfficiency}_auauHard_${auauHard}_auauAll_${auauAll}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
-if ( ! -d out/${analysis}/${outFile} ) then
-mkdir -p out/${analysis}/${outFile}
-mkdir -p out/${analysis}/${outFile}/correlations
-mkdir -p out/${analysis}/${outFile}/tree
-mkdir -p out/${analysis}/${outFile}/mixing
+if ( ! -d out/${analysis}/${subfolder}/${outFile} ) then
+mkdir -p out/${analysis}/${subfolder}/${outFile}
+mkdir -p out/${analysis}/${subfolder}/${outFile}/correlations
+mkdir -p out/${analysis}/${subfolder}/${outFile}/tree
+mkdir -p out/${analysis}/${subfolder}/${outFile}/mixing
 endif
 
-if ( ! -d log/${analysis}/${outFile} ) then
-mkdir -p log/${analysis}/${outFile}
+if ( ! -d log/pp/${analysis}/${subfolder}/${outFile} ) then
+mkdir -p log/pp/${analysis}/${subfolder}/${outFile}
 endif
 
 # Now Submit jobs for each data file
@@ -125,13 +134,13 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.log
-set ErrFile     = log/${analysis}/${outFile}/${analysis}_${OutBase}.err
+set LogFile     = log/pp/${analysis}/${outFile}/${analysis}_${OutBase}.log
+set ErrFile     = log/pp/${analysis}/${outFile}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
-set arg = "$analysis $useEfficiency $triggerCoincidence $softTrig $auauHard $auauAll $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $constPtCut $binsEta $binsPhi $outLocation $outName $outNameTree $Files $mbData"
+set arg = "$analysis $useEfficiency $triggerCoincidence $softTrig $auauHard $auauAll $towerEff $trackEff $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $constPtCut $binsEta $binsPhi $outLocation $outName $outNameTree $Files $mbData"
 
 qsub -V -q erhiq -l mem=10GB -o $LogFile -e $ErrFile -N ppCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
