@@ -102,18 +102,20 @@
 // [3]: software trigger: require a software trigger above this value in the event
 // [4]: add all auau tracks with greater than 2 GeV to the correlations ( true or false )
 // [5]: correlate all auau tracks with pp ( supercedes above option, doesnt cause any problems ( true or false )
-// [6]: subleading jet pt min ( not used if doing jet-hadron correlations )
-// [7]: leading jet pt min
-// [8]: jet pt max
-// [9]: jet radius, used in the jet definition
-// [10]: hard constituent pt cut
-// [11]: number of bins for eta in correlation histograms
-// [12]: number of bins for phi in correlation histograms
-// [13]: output directory
-// [14]: name for the correlation histogram file
-// [15]: name for the dijet TTree file
-// [16]: input data: can be a single .root or a .txt or .list of root files
-// [17]: MB AuAu event file for embedding, can be .root, .txt, .list
+// [6]: tower energy scale shift: -1, 0, 1 (for systematics)
+// [7]: tracking efficiency shift: -1, 0, 1 (for systematics)
+// [8]: subleading jet pt min ( not used if doing jet-hadron correlations )
+// [9]: leading jet pt min
+// [10]: jet pt max
+// [11]: jet radius, used in the jet definition
+// [12]: hard constituent pt cut
+// [13]: number of bins for eta in correlation histograms
+// [14]: number of bins for phi in correlation histograms
+// [15]: output directory
+// [16]: name for the correlation histogram file
+// [17]: name for the dijet TTree file
+// [18]: input data: can be a single .root or a .txt or .list of root files
+// [19]: MB AuAu event file for embedding, can be .root, .txt, .list
 
 // DEF MAIN()
 int main ( int argc, const char** argv) {
@@ -148,6 +150,8 @@ int main ( int argc, const char** argv) {
   double        softwareTrig  = true;                     // require there to be a trigger with E > this value in the event
   bool          addAuAuHard   = true;                     // add all pt > 2 GeV tracks from AuAu to correlations
   bool          correlateAll  = true;                     // correlates all pp & auau tracks
+  int           iTowerScale   = 0;                        // energy scale shift for systematic efficiency
+  int           iTrackingEff  = 0;                        // tracking efficiency shift for systematic efficiencies
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
   double				jetPtMax			= 100.0;										// maximum jet pt
@@ -167,7 +171,7 @@ int main ( int argc, const char** argv) {
     case 1: // Default case
       __OUT( "Using Default Settings" )
       break;
-    case 19: { // Custom case
+    case 21: { // Custom case
       __OUT( "Using Custom Settings" )
       std::vector<std::string> arguments( argv+1, argv+argc );
       
@@ -215,23 +219,36 @@ int main ( int argc, const char** argv) {
       else if ( arguments[5] == "false" ) { correlateAll = false; }
       else { __ERR("argument 4 must be true or false") return -1; }
       
+      // Choose systematic uncertainty settings
+      iTowerScale    = atoi ( arguments[6].c_str() );
+      iTrackingEff   = atoi ( arguments[7].c_str() );
+      
+      if ( abs( towerScale ) >= 2  ) {
+        __ERR("Tower scale systematics needs to be -1, 0, 1")
+        return 0;
+      }
+      if ( abs( trackingEff ) >= 2  ) {
+        __ERR("Tracking efficiency systematics needs to be -1, 0, 1")
+        return 0;
+      }
+      
       // jet kinematics
-      subJetPtMin 	= atof ( arguments[6].c_str() );
-      leadJetPtMin 	= atof ( arguments[7].c_str() );
-      jetPtMax 			= atof ( arguments[8].c_str() );
-      jetRadius 		= atof ( arguments[9].c_str() );
-      hardPtCut     = atof ( arguments[10].c_str() );
+      subJetPtMin 	= atof ( arguments[8].c_str() );
+      leadJetPtMin 	= atof ( arguments[9].c_str() );
+      jetPtMax 			= atof ( arguments[10].c_str() );
+      jetRadius 		= atof ( arguments[11].c_str() );
+      hardPtCut     = atof ( arguments[12].c_str() );
 
       // bins in eta and phi
-      binsEta = atoi ( arguments[11].c_str() );
-      binsPhi = atoi ( arguments[12].c_str() );
+      binsEta = atoi ( arguments[13].c_str() );
+      binsPhi = atoi ( arguments[14].c_str() );
 
       // output and file names
-      outputDir 		= arguments[13];
-      corrOutFile		= arguments[14];
-      treeOutFile		= arguments[15];
-      inputFile 		= arguments[16];
-      mbInputFile		= arguments[17];
+      outputDir 		= arguments[15];
+      corrOutFile		= arguments[16];
+      treeOutFile		= arguments[17];
+      inputFile 		= arguments[18];
+      mbInputFile		= arguments[19];
       
       break;
     }
@@ -241,6 +258,9 @@ int main ( int argc, const char** argv) {
       break;
     }
   }
+  
+  // set the tower scale
+  double fTowerScale = 1.0 + 0.02*iTowerScale;
   
   // Announce our settings
   if ( requireDijets ) { jetHadron::BeginSummaryDijet ( jetRadius, leadJetPtMin, subJetPtMin, jetPtMax, hardPtCut, jetHadron::trackMinPt, jetHadron::binsVz, jetHadron::vzRange, treeOutFile, corrOutFile ); }
@@ -379,7 +399,7 @@ int main ( int argc, const char** argv) {
   // Finally, make ktEfficiency obj for pt-eta
   // Efficiency corrections
   ktTrackEff efficiencyCorrection( jetHadron::y7EfficiencyFile );
-  
+  efficiencyCorrection.SetSysUncertainty( trackingEff );
   // Now everything is set up
   // We can start the event loop
   // First, our counters
@@ -432,10 +452,10 @@ int main ( int argc, const char** argv) {
       if ( VzBin == -1 )																				{ continue; }
 
       // Convert TStarJetVector to PseudoJet
-      jetHadron::ConvertTStarJetVector( container, particles, true );
-      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, true );
+      jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
+      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
-      jetHadron::ConvertTStarJetVector( mbContainer, particles, false);
+      jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
       
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
