@@ -787,10 +787,6 @@ namespace jetHadron {
     double edge3 = edges[2];
     double edge4 = edges[3];
     
-    for ( int i = 1; i <= correlation2d[0][0]->GetXaxis()->GetNbins(); ++i ) {
-      std::cout<<"bin: "<<i << " upper edge: "<< correlation2d[0][0]->GetXaxis()->GetBinUpEdge(i)<<std::endl;
-    }
-    
     if ( fabs( edge1 ) > 2.0 || fabs( edge2 ) > 2.0 || fabs( edge3 ) > 2.0 || fabs( edge4 ) > 2.0 )
       throw "dEta edges for projections defined outside of detector acceptance regions";
     
@@ -814,17 +810,18 @@ namespace jetHadron {
         int region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
         int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
+        region1Low = 2;
+        region1High = 5;
+        region2Low = 6;
+        region2High = 16;
+        region3Low = 17;
+        region3High = 20;
+        
         // do some sanity checking
         if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
           __ERR("Can't project - high edge less than low edge for one of the projection regions")
           continue;
         }
-        std::cout<<"region 1 low: "<< region1Low <<std::endl;
-        std::cout<<"region 1 high: "<< region1High <<std::endl;
-        std::cout<<"region 2 low: "<< region2Low <<std::endl;
-        std::cout<<"region 2 high: "<< region2High <<std::endl;
-        std::cout<<"region 3 low: "<< region3Low <<std::endl;
-        std::cout<<"region 3 high: "<< region3High <<std::endl;
         
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
@@ -881,6 +878,13 @@ namespace jetHadron {
         int region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
         int region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
         int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
+        
+        region1Low = 2;
+        region1High = 5;
+        region2Low = 6;
+        region2High = 16;
+        region3Low = 17;
+        region3High = 20;
         
         // do some sanity checking
         if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
