@@ -78,13 +78,13 @@ namespace jetHadron {
     std::string analysisStrings[2] = { "Au+Au 0-20%", "P+P" };
     
     // pt with low bin
-    double ptBinEdgeLo[5] = { 0.5, 1.0, 2.0, 3.0, 4.0 };
-    double ptBinEdgeHi[5] = { 1.0, 2.0, 3.0, 4.0, 6.0 };
+    double ptBinEdgeLo[6] = { 0.5, 1.0, 2.0, 3.0, 4.0, 6.0 };
+    double ptBinEdgeHi[6] = { 1.0, 2.0, 3.0, 4.0, 6.0, 10.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
-    std::string ptBinString[5] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
+    std::string ptBinString[6] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0", "6.0 < p_{T} < 10.0" };
     std::string ptBinStringMix[3] = { "0.5 < p_{T} < 1.0", "1.0 < p_{T} < 2.0", "2.0 < p_{T}" };
     
-    const int nPtBins = 5;
+    const int nPtBins = 6;
     
     // without low bin
     //double ptBinEdgeLo[4] = { 1.0, 2.0, 3.0, 4.0 };
