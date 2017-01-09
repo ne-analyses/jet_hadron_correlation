@@ -3,7 +3,7 @@
 // the jet hadron correlation analysis
 
 #include "outputFunctions.hh"
-#include "corrFunctions.hh"
+
 #include "corrParameters.hh"
 #include "histograms.hh"
 
@@ -812,7 +812,7 @@ namespace jetHadron {
         
         // do some sanity checking
         if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
-          _ERR("Can't project - high edge less than low edge for one of the projection regions")
+          __ERR("Can't project - high edge less than low edge for one of the projection regions")
           continue;
         }
         
@@ -874,7 +874,7 @@ namespace jetHadron {
         
         // do some sanity checking
         if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
-          _ERR("Can't project - high edge less than low edge for one of the projection regions")
+          __ERR("Can't project - high edge less than low edge for one of the projection regions")
           continue;
         }
         
