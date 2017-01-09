@@ -95,8 +95,8 @@ namespace jetHadron {
     
     double GetPtBinWidth( int i ) { return ptBinEdgeHi[i] - ptBinEdgeLo[i]; }
     
-    double ptBinLowEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeLo[i]/ptBinWidth ) + 1; else __ERR("bad pt bin index") return 0;  }
-    double ptBinHighEdge( int i ) {if (i < 5 && i >= 0 ) return ( ptBinEdgeHi[i]/ptBinWidth ); else __ERR("bad pt bin index") return 0;  }
+    double ptBinLowEdge( int i ) {if (i < 6 && i >= 0 ) return ( ptBinEdgeLo[i]/ptBinWidth ) + 1; else __ERR("bad pt bin index") return 0;  }
+    double ptBinHighEdge( int i ) {if (i < 6 && i >= 0 ) return ( ptBinEdgeHi[i]/ptBinWidth ); else __ERR("bad pt bin index") return 0;  }
     
     // these can be used to help with deta and dphi binning
     unsigned bindEta = 22;
