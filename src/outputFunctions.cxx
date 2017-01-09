@@ -811,10 +811,10 @@ namespace jetHadron {
         int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
         region1Low = 2;
-        region1High = 5;
-        region2Low = 6;
-        region2High = 16;
-        region3Low = 17;
+        region1High = 6;
+        region2Low = 7;
+        region2High = 15;
+        region3Low = 16;
         region3High = 20;
         
         // do some sanity checking
@@ -880,10 +880,10 @@ namespace jetHadron {
         int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
         region1Low = 2;
-        region1High = 5;
-        region2Low = 6;
-        region2High = 16;
-        region3Low = 17;
+        region1High = 6;
+        region2Low = 7;
+        region2High = 15;
+        region3Low = 16;
         region3High = 20;
         
         // do some sanity checking
