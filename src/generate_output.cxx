@@ -167,7 +167,7 @@ int main( int argc, const char** argv) {
   
   // and choose whether to plot the full range or remove the lowest bin
   int graphPtBinLow = 1;
-  int graphPtBinHigh = 4;
+  int graphPtBinHigh = 5;
   if ( includeLowPt ) {
     graphPtBinLow = 0;
   }
