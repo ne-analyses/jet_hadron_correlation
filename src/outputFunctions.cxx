@@ -787,7 +787,6 @@ namespace jetHadron {
     double edge3 = edges[2];
     double edge4 = edges[3];
     
-    std::cout<<"bins:"<<
     for ( int i = 1; i <= correlation2d[0][0]->GetXaxis()->GetNbins(); ++i ) {
       std::cout<<"bin: "<<i << " upper edge: "<< correlation2d[0][0]->GetXaxis()->GetBinUpEdge(i)<<std::endl;
     }
