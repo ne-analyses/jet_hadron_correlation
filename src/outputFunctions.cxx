@@ -1491,6 +1491,8 @@ namespace jetHadron {
       min = -1.0;
     if ( max < 1.0 )
       max = 1.0;
+    if ( max > 4.0 )
+      max = 4.0;
          
   }
   
