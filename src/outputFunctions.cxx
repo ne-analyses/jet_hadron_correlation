@@ -803,12 +803,12 @@ namespace jetHadron {
         std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         
         // now get the bins
-        int region1Low = correlation2d[i][j]->GetXaxis()->FindBin( edge1 );
-        int region1High = correlation2d[i][j]->GetXaxis()->FindBin( edge2 ) - 1;
-        int region2Low = correlation2d[i][j]->GetXaxis()->FindBin( edge2 );
-        int region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
-        int region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
-        int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
+        double region1Low = correlation2d[i][j]->GetXaxis()->FindBin( edge1 );
+        double region1High = correlation2d[i][j]->GetXaxis()->FindBin( edge2 ) - 1;
+        double region2Low = correlation2d[i][j]->GetXaxis()->FindBin( edge2 );
+        double region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
+        double region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
+        double region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
         region1Low = 2;
         region1High = 6;
@@ -835,7 +835,7 @@ namespace jetHadron {
         sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        sub_tmp->Scale( ((double)region2High-region2Low)/( ((double)region1High-region1Low) + ((double)region3High - region3Low) ) );
+        sub_tmp->Scale( ((region2High-region2Low)/( ((region1High-region1Low) + (region3High - region3Low) ) );
         
         // subtract
         projections[i][j]->Add( sub_tmp, -1 );
@@ -872,12 +872,12 @@ namespace jetHadron {
         std::string tmpFar = uniqueID + "_far_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         
         // now get the bins
-        int region1Low = correlation2d[i][j]->GetXaxis()->FindBin( edge1 );
-        int region1High = correlation2d[i][j]->GetXaxis()->FindBin( edge2 ) - 1;
-        int region2Low = correlation2d[i][j]->GetXaxis()->FindBin( edge2 );
-        int region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
-        int region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
-        int region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
+        double region1Low = correlation2d[i][j]->GetXaxis()->FindBin( edge1 );
+        double region1High = correlation2d[i][j]->GetXaxis()->FindBin( edge2 ) - 1;
+        double region2Low = correlation2d[i][j]->GetXaxis()->FindBin( edge2 );
+        double region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
+        double region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
+        double region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
         region1Low = 2;
         region1High = 6;
@@ -905,7 +905,7 @@ namespace jetHadron {
         far[i][j]->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        far[i][j]->Scale( ( (double) region2High-region2Low)/( (double) (region1High-region1Low) + ( (double) region3High - region3Low) ) );
+        far[i][j]->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
 
         
       }
