@@ -340,8 +340,8 @@ int main( int argc, const char** argv) {
     std::vector<std::string> tmpVec;
     tmpVec.push_back("near");
     tmpVec.push_back("far");
-    jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_near[i], corrected_dphi_subtracted_far[i], outputDirBase+"/near_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
-    jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_sub_near[i], corrected_dphi_subtracted_sub_far[i], outputDirBase+"/far_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
+    jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_far[i], corrected_dphi_subtracted_near[i], outputDirBase+"/near_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
+    jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_sub_far[i], corrected_dphi_subtracted_sub_near[i], outputDirBase+"/far_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
   }
 
   
