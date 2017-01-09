@@ -292,15 +292,17 @@ int main( int argc, const char** argv) {
   // Mixing corrected stuff -
   // first Subtracted DPhi
   // *************************************
+  // define what "regions" we want the subtraction to be done in
+  double subtractionRegions[4] = { -1.4, -1, 1, 1.4 };
 
-  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, "mixing_corrected_near_far_sub_dphi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, "mixing_corrected_near_far_sub_dphi_sub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
  
   // and to get the individual near and far histograms
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_near, corrected_dphi_subtracted_far;
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub_near, corrected_dphi_subtracted_sub_far;
-  jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, corrected_dphi_subtracted_near, corrected_dphi_subtracted_far, selector, "mixing_corrected_near_far_sub_dphi", true );
-  jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, corrected_dphi_subtracted_sub_near, corrected_dphi_subtracted_sub_far, selector, "mixing_corrected_near_far_sub_dphi_sub", true  );
+  jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, corrected_dphi_subtracted_near, corrected_dphi_subtracted_far, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
+  jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, corrected_dphi_subtracted_sub_near, corrected_dphi_subtracted_sub_far, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
   
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted, selector );
