@@ -835,7 +835,7 @@ namespace jetHadron {
         sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        sub_tmp->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
+        sub_tmp->Scale( ((double)region2High-region2Low)/( ((double)region1High-region1Low) + ((double)region3High - region3Low) ) );
         
         // subtract
         projections[i][j]->Add( sub_tmp, -1 );
@@ -905,7 +905,7 @@ namespace jetHadron {
         far[i][j]->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        far[i][j]->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
+        far[i][j]->Scale( ( (double) region2High-region2Low)/( (double) (region1High-region1Low) + ( (double) region3High - region3Low) ) );
 
         
       }
