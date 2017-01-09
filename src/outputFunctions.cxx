@@ -816,18 +816,18 @@ namespace jetHadron {
         }
         
         // now do the projections
-        correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
         projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
         projections[i][j]->SetName( tmp.c_str() );
         
         // build the subtraction histogram
-        correlation2d[i][j]->GetXaxis()->SetRange( range1Low, range1High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region1Low, region1High );
         TH1F* sub_tmp = (TH1F*) ((TH1F*)  correlation2d[i][j]->ProjectionY())->Clone();
-        correlation2d[i][j]->GetXaxis()->SetRange( range3Low, range3High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region3Low, region3High );
         sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        sub_tmp->Scale( (range2High-range2Low)/( (range1High-range1Low) + (range3High - range3Low) ) );
+        sub_tmp->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
         
         // subtract
         projections[i][j]->Add( sub_tmp, -1 );
@@ -878,19 +878,19 @@ namespace jetHadron {
         }
         
         // now do the projections
-        correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
         near[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
         near[i][j]->SetName( tmpNear.c_str() );
         
         // for the far as well
-        correlation2d[i][j]->GetXaxis()->SetRange( range1Low, range1High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region1Low, region1High );
         far[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
         far[i][j]->SetName( tmpFar.c_str() );
-        correlation2d[i][j]->GetXaxis()->SetRange( range3Low, range3High );
+        correlation2d[i][j]->GetXaxis()->SetRange( region3Low, region3High );
         far[i][j]->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
         
         // scale the subtraction histogram by the relative number of bins
-        far[i][j]->Scale( (range2High-range2Low)/( (range1High-range1Low) + (range3High - range3Low) ) );
+        far[i][j]->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
 
         
       }
