@@ -192,7 +192,7 @@ namespace jetHadron {
   // only the near side of the dPhi range in a dEta
   // projection )
   std::vector<std::vector<TH1F*> > ProjectDphi( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false );
-  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
   void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDphi = false );
   
