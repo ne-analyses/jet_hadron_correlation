@@ -787,6 +787,11 @@ namespace jetHadron {
     double edge3 = edges[2];
     double edge4 = edges[3];
     
+    std::cout<<"bins:"<<
+    for ( int i = 1; i <= correlation2d[0][0]->GetXaxis()->GetNbins(); ++i ) {
+      std::cout<<"bin: "<<i << " upper edge: "<< correlation2d[0][0]->GetXaxis()->GetBinUpEdge(i)<<std::endl;
+    }
+    
     if ( fabs( edge1 ) > 2.0 || fabs( edge2 ) > 2.0 || fabs( edge3 ) > 2.0 || fabs( edge4 ) > 2.0 )
       throw "dEta edges for projections defined outside of detector acceptance regions";
     
@@ -815,6 +820,12 @@ namespace jetHadron {
           __ERR("Can't project - high edge less than low edge for one of the projection regions")
           continue;
         }
+        std::cout<<"region 1 low: "<< region1Low <<std::endl;
+        std::cout<<"region 1 high: "<< region1High <<std::endl;
+        std::cout<<"region 2 low: "<< region2Low <<std::endl;
+        std::cout<<"region 2 high: "<< region2High <<std::endl;
+        std::cout<<"region 3 low: "<< region3Low <<std::endl;
+        std::cout<<"region 3 high: "<< region3High <<std::endl;
         
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );

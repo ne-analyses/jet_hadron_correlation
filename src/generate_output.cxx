@@ -293,11 +293,12 @@ int main( int argc, const char** argv) {
   // first Subtracted DPhi
   // *************************************
   // define what "regions" we want the subtraction to be done in
-  double subtractionRegions[4] = { -1.5, -1.0, 1.0, 1.5 };
+  double subtractionRegions[4] = { -1.6, -1.0, 1.0, 1.6 };
 
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
- 
+  
+  return 0;
   // and to get the individual near and far histograms
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_near, corrected_dphi_subtracted_far;
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub_near, corrected_dphi_subtracted_sub_far;
