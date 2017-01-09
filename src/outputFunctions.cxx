@@ -3,6 +3,7 @@
 // the jet hadron correlation analysis
 
 #include "outputFunctions.hh"
+#include "corrFunctions.hh"
 #include "corrParameters.hh"
 #include "histograms.hh"
 
