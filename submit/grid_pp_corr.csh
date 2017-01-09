@@ -130,7 +130,7 @@ foreach input ( ${base}* )
 set OutBase = `basename $input | sed 's/.list//g'`
 
 # Make the output names and path
-set outLocation = "out/${analysis}/${outFile}/${subfolder}"
+set outLocation = "out/${analysis}/${outFile}/${subfolder}/"
 set outName = correlations/corr_${OutBase}.root
 set outNameTree = tree/tree_${OutBase}.root
 
