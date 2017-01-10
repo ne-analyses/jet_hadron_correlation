@@ -816,20 +816,6 @@ namespace jetHadron {
           continue;
         }
         
-        
-        std::cout<<"range1Low: "<< region1Low<<std::endl;
-        std::cout<<"range1High: "<< region1High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region1Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region1High)<<std::endl;
-        std::cout<<"range2Low: "<< region2Low<<std::endl;
-        std::cout<<"range2High: "<< region2High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region2Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region2High)<<std::endl;
-        std::cout<<"range3Low: "<< region3Low<<std::endl;
-        std::cout<<"range3High: "<< region3High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region3Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region3High)<<std::endl;
-        
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
         projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
@@ -893,19 +879,6 @@ namespace jetHadron {
           continue;
         }
         
-        
-        std::cout<<"range1Low: "<< region1Low<<std::endl;
-        std::cout<<"range1High: "<< region1High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region1Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region1High)<<std::endl;
-        std::cout<<"range2Low: "<< region2Low<<std::endl;
-        std::cout<<"range2High: "<< region2High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region2Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region2High)<<std::endl;
-        std::cout<<"range3Low: "<< region3Low<<std::endl;
-        std::cout<<"range3High: "<< region3High<<std::endl;
-        std::cout<<"binlow: "<< correlation2d[i][j]->GetXaxis()->GetBinLowEdge(region3Low)<<std::endl;
-        std::cout<<"binup: "<< correlation2d[i][j]->GetXaxis()->GetBinUpEdge( region3High)<<std::endl;
         
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
