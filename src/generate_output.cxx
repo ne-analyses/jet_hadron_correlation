@@ -115,7 +115,7 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/tmp/pp/trig5.6.root", "READ" );
+      tmp = new TFile( "out/tmp/pp/trg5.6.root", "READ" );
       tmpMix = new TFile( "out/tmp/pp_mix_6.root", "READ");
       
       corrFiles.push_back( tmp );
