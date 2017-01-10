@@ -981,6 +981,13 @@ namespace jetHadron {
           }
         }
         
+        std::cout<<"range1Low: "<< range1Low<<std::endl;
+        std::cout<<"range1High: "<< range1High<<std::endl;
+        std::cout<<"range2Low: "<< range2Low<<std::endl;
+        std::cout<<"range2High: "<< range2High<<std::endl;
+        std::cout<<"range3Low: "<< range3Low<<std::endl;
+        std::cout<<"range3High: "<< range3High<<std::endl;
+        
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );
         projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
@@ -1090,6 +1097,13 @@ namespace jetHadron {
             range3High = i;
           }
         }
+        
+        std::cout<<"range1Low: "<< range1Low<<std::endl;
+        std::cout<<"range1High: "<< range1High<<std::endl;
+        std::cout<<"range2Low: "<< range2Low<<std::endl;
+        std::cout<<"range2High: "<< range2High<<std::endl;
+        std::cout<<"range3Low: "<< range3Low<<std::endl;
+        std::cout<<"range3High: "<< range3High<<std::endl;
         
         // now do the projections
         correlation2d[i][j]->GetXaxis()->SetRange( range2Low, range2High );

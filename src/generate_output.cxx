@@ -304,6 +304,8 @@ int main( int argc, const char** argv) {
   jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, corrected_dphi_subtracted_near, corrected_dphi_subtracted_far, selector, "mixing_corrected_near_far_sub_dphi", true );
   jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, corrected_dphi_subtracted_sub_near, corrected_dphi_subtracted_sub_far, selector, "mixing_corrected_near_far_sub_dphi_sub", true  );
   
+  return 0;
+  
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted_sub, selector );
