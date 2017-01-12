@@ -78,7 +78,7 @@ int main () {
   mixFiles.push_back( new TFile("out/tmp/pp_mix_6.root", "READ") );
   
   TString location = "out/tmp/pp/sys/";
-  TString trigger = "trg5.6/"
+  TString trigger = "trg5.6/";
   
   TString path = location + trigger;
   
