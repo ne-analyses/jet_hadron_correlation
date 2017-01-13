@@ -228,6 +228,18 @@ namespace jetHadron {
   // histograms, and errors on the integrals
   void ExtractIntegral( std::vector<std::vector<TH1F*> > histograms, std::vector<std::vector<double> > integrals, std::vector<std::vector<double> > errors, binSelector selector, double lowEdge, double highEdge );
   
+  // ***************************************
+  // these are used for building uncertainty
+  // bands for the pp data
+  // ****************************************
+  
+  // Used to create systematic uncertainty bands
+  // from varying tower energy scale / TPC tracking variables
+  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
+  
+  // Used to add systematic errors in quadrature
+  std::vector<TH1F*> AddInQuadrature( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
+  
   
   // Methods for Printing out and Saving
   // ***********************************

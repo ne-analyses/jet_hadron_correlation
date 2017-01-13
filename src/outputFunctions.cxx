@@ -1482,6 +1482,64 @@ namespace jetHadron {
     }
   }
   
+  // ***************************************
+  // these are used for building uncertainty
+  // bands for the pp data
+  // ****************************************
+  // Used to create systematic uncertainty bands
+  // from varying tower energy scale / TPC tracking efficiency
+  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID ) {
+    
+    std::vector<TH1F*> histograms;
+    histograms.resize( upper.size() );
+    
+    for ( int i = 0; i < upper.size(); ++i ) {
+    
+      std::string tmp = uniqueID + "_systematic_pt_"+ patch::to_string(i);
+      
+      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), upper[i]->GetXaxis()->GetNbins(), selector.dEtaAcceptanceLow, selector.dEtaAcceptanceHigh );
+      
+      for ( int j = 1; j <= upper[i]->GetXaxis()->GetNbins(); ++j ) {
+        double binContent = fabs( upper[i]->GetBinContent( j ) + lower[i]->GetBinContent( j ) ) / 2.0;
+        double binWidth = fabs( upper[i]->GetBinContent( j ) - lower[i]->GetBinContent( j ) );
+        
+        histograms[i]->SetBinContent( j, binContent );
+        histograms[i]->SetBinError( j, binWidth );
+        
+      }
+      
+    }
+    
+    return histograms;
+  }
+  
+  // Used to add systematic errors in quadrature
+  // For when we plot both tower energy & tracking efficiency
+  std::vector<TH1F*> AddInQuadrature( std::vector<TH1F*> hist1, std::vector<TH1F*> hist2, binSelector selector, std::string uniqueID ) {
+    
+    std::vector<TH1F*> histograms;
+    histograms.resize( hist1.size() );
+    
+    for ( int i = 0; i < hist1.size(); ++i ) {
+      
+      std::string tmp = uniqueID + "_sys_quad_pt_"+ patch::to_string(i);
+      
+      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), hist1[i]->GetXaxis()->GetNbins(), selector.dEtaAcceptanceLow, selector.dEtaAcceptanceHigh );
+      
+      for ( int j = 1; j <= hist1[i]->GetXaxis()->GetNbins(); ++j ) {
+        
+        double binContent = fabs( hist1[i]->GetBinContent( j ) + hist2[i]->GetBinContent( j ) ) / 2.0;
+        double binWidth = sqrt(fabs( hist1[i]->GetBinError( j )*hist1[i]->GetBinError( j ) + hist2[i]->GetBinError( j )*hist2[i]->GetBinError( j ) ) );
+        
+        histograms[i]->SetBinContent( j, binContent );
+        histograms[i]->SetBinError( j, binWidth );
+        
+      }
+    }
+    
+    return histograms;
+  }
+  
   
   // *****************************
   // HISTOGRAM PRINTING AND SAVING
