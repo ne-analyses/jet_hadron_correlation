@@ -78,14 +78,14 @@ int main () {
   mixFiles.push_back( new TFile("out/tmp/pp_mix_6.root", "READ") );
   
   TString location = "out/tmp/pp/sys/";
-  TString trigger = "trg5.6/";
+  TString trigger = "trg5.6";
   
   TString path = location + trigger;
   
-  TString towLow = path + "trk_0_tow_-1.root";
-  TString towHigh = path + "trk_0_tow_1.root";
-  TString trkLow = path + "trk_-1_tow_0.root";
-  TString trkHigh = path + "trk_1_tow_0.root";
+  TString towLow = path + "/trk_0_tow_-1.root";
+  TString towHigh = path + "/trk_0_tow_1.root";
+  TString trkLow = path + "/trk_-1_tow_0.root";
+  TString trkHigh = path + "/trk_1_tow_0.root";
   
   towFiles.push_back( new TFile( towLow, "READ" ) );
   towFiles.push_back( new TFile( towHigh, "READ" ) );
@@ -118,6 +118,148 @@ int main () {
   jetHadron::ReadInFiles( towFiles, towCorrIn, towCorrInSub, nEventsTow, selector );
   jetHadron::ReadInFiles( trkFiles, trkCorrIn, trkCorrInSub, nEventsTrk, selector );
   jetHadron::ReadInFilesMix( mixFiles, mixIn, mixInSub, nEventsMix, selector );
+  
+  // Find the pt bin center for future use
+  std::vector<TH1F*> ptSpectra;
+  std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( towCorrIn, ptSpectra, selector );
+  
+  // building a pt bin error
+  std::vector<std::vector<double> > zeros;
+  zeros.resize( ptBinCenters.size() );
+  for ( int i = 0; i < ptBinCenters.size(); ++i ) {
+    zeros[i].resize( ptBinCenters[i].size() );
+  }
+  
+  // setup the event mixing histograms
+  std::vector<std::vector<TH2F*> > leadingMix =  jetHadron::RecombineMixedEvents( mixIn, selector, "avg_mix_" );
+  std::vector<std::vector<TH2F*> > subleadingMix = jetHadron::RecombineMixedEvents( mixInSub, selector, "avg_mix_sub" );
+  
+  //scale the event mixing histograms
+  jetHadron::ScaleMixedEvents( leadingMix );
+  jetHadron::ScaleMixedEvents( subleadingMix );
+  
+  // since we might be using the same event mixing stuff...
+  // hack it and just do a pointer copy if the second doesnt exist,
+  // we can use the same mixed events
+  if ( leadingMix.size() == 1 )
+    leadingMix.push_back( leadingMix[0] );
+  if ( subleadingMix.size() == 1 )
+    subleadingMix.push_back( subleadingMix[0] );
+  
+  // now reorganize the correlations... get rid of the aj split
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > towCorr;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > towCorrSub;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > trkCorr;
+  std::vector<std::vector<std::vector<std::vector<TH2F*> > > > trkCorrSub;
+
+  
+  jetHadron::BuildSingleCorrelation( towCorrIn, towCorr, selector, "leadTow" );
+  jetHadron::BuildSingleCorrelation( towCorrInSub, towCorrSub, selector, "subTow" );
+  jetHadron::BuildSingleCorrelation( trkCorrIn, trkCorr, selector, "leadTrk" );
+  jetHadron::BuildSingleCorrelation( trkCorrInSub, trkCorrSub, selector, "subTrk" );
+  
+  // now get the corrected histograms
+  std::vector<std::vector<TH2F*> > correctedTow = jetHadron::EventMixingCorrection( towCorr, leadingMix, selector, "corTow"  );
+  std::vector<std::vector<TH2F*> > correctedTowSub = jetHadron::EventMixingCorrection( towCorrSub, subleadingMix, selector, "corTowSub" );
+  std::vector<std::vector<TH2F*> > correctedTrk = jetHadron::EventMixingCorrection( trkCorr, leadingMix, selector, "corTrk"  );
+  std::vector<std::vector<TH2F*> > correctedTrkSub = jetHadron::EventMixingCorrection( trkCorrSub, subleadingMix, selector, "corTrkSub" );
+  
+  // get the projections
+  // first Subtracted DPhi
+  // *************************************
+  // define what "regions" we want the subtraction to be done in
+  double subtractionRegions[4] = { -1.0, -0.6, 0.6, 1.0 };
+  
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow = jetHadron::ProjectDphiNearMinusFar( correctedTow, selector, subtractionRegions, "corTowDPhi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow_sub = jetHadron::ProjectDphiNearMinusFar( correctedTowSub, selector, subtractionRegions, "corTowDPhiSub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector, subtractionRegions, "corTrkDPhi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, subtractionRegions, "corTrkDPhiSub", true  );
+  
+  // do background subtraction
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_tow, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_tow_sub, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_trk, selector );
+  jetHadron::SubtractBackgroundDphi( corrected_dphi_trk_sub, selector );
+  
+  // normalize with 1/dijets 1/bin width
+  jetHadron::Normalize1D( corrected_dphi_tow, nEventsTow );
+  jetHadron::Normalize1D( corrected_dphi_tow_sub, nEventsTow );
+  jetHadron::Normalize1D( corrected_dphi_trk, nEventsTrk );
+  jetHadron::Normalize1D( corrected_dphi_trk_sub, nEventsTrk );
+  
+  // do final fitting
+  std::vector<std::vector<TF1*> > corrected_dphi_tow_fit = jetHadron::FitDphi( corrected_dphi_tow, selector );
+  std::vector<std::vector<TF1*> > corrected_dphi_tow_sub_fit = jetHadron::FitDphi( corrected_dphi_tow_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_dphi_trk_fit = jetHadron::FitDphi( corrected_dphi_trk, selector );
+  std::vector<std::vector<TF1*> > corrected_dphi_trk_sub_fit = jetHadron::FitDphi( corrected_dphi_trk_sub, selector );
+
+  // extract fit values
+  std::vector<std::vector<double> > corrected_dphi_tow_fit_yield, corrected_dphi_tow_fit_width, corrected_dphi_tow_fit_width_err, corrected_dphi_tow_fit_yield_err;
+  std::vector<std::vector<double> > corrected_dphi_tow_sub_fit_yield, corrected_dphi_tow_sub_fit_width, corrected_dphi_tow_sub_fit_width_err, corrected_dphi_tow_sub_fit_yield_err;
+  std::vector<std::vector<double> > corrected_dphi_trk_fit_yield, corrected_dphi_trk_fit_width, corrected_dphi_trk_fit_width_err, corrected_dphi_trk_fit_yield_err;
+  std::vector<std::vector<double> > corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_width_err, corrected_dphi_trk_sub_fit_yield_err;
+  
+  jetHadron::ExtractFitVals( corrected_dphi_tow_fit, corrected_dphi_tow_fit_yield, corrected_dphi_tow_fit_width, corrected_dphi_tow_fit_yield_err, corrected_dphi_tow_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_dphi_tow_sub_fit, corrected_dphi_tow_sub_fit_yield, corrected_dphi_tow_sub_fit_width, corrected_dphi_tow_sub_fit_yield_err, corrected_dphi_tow_sub_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_dphi_trk_fit, corrected_dphi_trk_fit_yield, corrected_dphi_trk_fit_width, corrected_dphi_trk_fit_yield_err, corrected_dphi_trk_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
+  
+  
+  // now DEta
+  // *************************************
+  std::vector<std::vector<TH1F*> > corrected_deta_tow = jetHadron::ProjectDeta( correctedTow, selector, "corTowDEta", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_tow_sub = jetHadron::ProjectDeta( correctedTowSub, selector, "corTowDEtaSub", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_trk = jetHadron::ProjectDeta( correctedTrk, selector, "corTrkDEta", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub", true );
+  
+  // do background subtraction
+  jetHadron::SubtractBackgroundDeta( corrected_deta_tow, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_tow_sub, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_trk, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_trk_sub, selector );
+  
+  // normalize with 1/dijets 1/bin width
+  jetHadron::Normalize1D( corrected_deta_tow, nEventsTow );
+  jetHadron::Normalize1D( corrected_deta_tow_sub, nEventsTow );
+  jetHadron::Normalize1D( corrected_deta_trk, nEventsTrk );
+  jetHadron::Normalize1D( corrected_deta_trk_sub, nEventsTrk );
+  
+  // do final fitting
+  std::vector<std::vector<TF1*> > corrected_deta_tow_fit = jetHadron::FitDeta( corrected_deta_tow, selector );
+  std::vector<std::vector<TF1*> > corrected_deta_tow_sub_fit = jetHadron::FitDeta( corrected_deta_tow_sub, selector );
+  std::vector<std::vector<TF1*> > corrected_deta_trk_fit = jetHadron::FitDeta( corrected_deta_trk, selector );
+  std::vector<std::vector<TF1*> > corrected_deta_trk_sub_fit = jetHadron::FitDeta( corrected_deta_trk_sub, selector );
+  
+  // extract fit values
+  std::vector<std::vector<double> > corrected_deta_tow_fit_yield, corrected_deta_tow_fit_width, corrected_deta_tow_fit_width_err, corrected_deta_tow_fit_yield_err;
+  std::vector<std::vector<double> > corrected_deta_tow_sub_fit_yield, corrected_deta_tow_sub_fit_width, corrected_deta_tow_sub_fit_width_err, corrected_deta_tow_sub_fit_yield_err;
+  std::vector<std::vector<double> > corrected_deta_trk_fit_yield, corrected_deta_trk_fit_width, corrected_deta_trk_fit_width_err, corrected_deta_trk_fit_yield_err;
+  std::vector<std::vector<double> > corrected_deta_trk_sub_fit_yield, corrected_deta_trk_sub_fit_width, corrected_deta_trk_sub_fit_width_err, corrected_deta_trk_sub_fit_yield_err;
+  
+  jetHadron::ExtractFitVals( corrected_deta_tow_fit, corrected_deta_tow_fit_yield, corrected_deta_tow_fit_width, corrected_deta_tow_fit_yield_err, corrected_deta_tow_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_deta_tow_sub_fit, corrected_deta_tow_sub_fit_yield, corrected_deta_tow_sub_fit_width, corrected_deta_tow_sub_fit_yield_err, corrected_deta_tow_sub_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_deta_trk_fit, corrected_deta_trk_fit_yield, corrected_deta_trk_fit_width, corrected_deta_trk_fit_yield_err, corrected_deta_trk_fit_width_err, selector  );
+  jetHadron::ExtractFitVals( corrected_deta_trk_sub_fit, corrected_deta_trk_sub_fit_yield, corrected_deta_trk_sub_fit_width, corrected_deta_trk_sub_fit_yield_err, corrected_deta_trk_sub_fit_width_err, selector  );
+  
+  
+  // ******************************************
+  // we have our fit values from the TF1s now
+  // we will save them into trees and write out
+  // ******************************************
+  TTree* tree = new TTree(trigger+"_sys","tower & tree systematics" );
+  
+  double towYieldUp, towYieldDown, towSubYieldUp, towSubYieldDown;
+  double trkYieldUp, trkYieldDown, trkSubYieldUp, trkSubYieldDown;
+  
+  
+  TBranch* branchTowYieldUp = tree->Branch("towerYieldUpper", &towYieldUp );
+  TBranch* branchTowYieldDown = tree->Branch("towerYieldLower", &towYieldDown );
+  TBranch* branchTowSubYieldUp = tree->Branch("towerSubYieldUpper", &towSubYieldUp );
+  TBranch* branchTowSubYieldDown = tree->Branch("towerSubYieldLower", &towSubYieldDown );
+  TBranch* branchTrkYieldUp = tree->Branch("TrackingYieldUpper", &trkYieldUp );
+  TBranch* branchTrkYieldDown = tree->Branch("TrackingYieldLower", &trkYieldDown );
+  TBranch* branchTrkSubYieldUp = tree->Branch("TrackingSubYieldUpper", &trkSubYieldUp );
+  TBranch* branchTrkSubYieldDown = tree->Branch("TrackingSubYieldLower", &trkSubYieldDown );
   
   
   return 0;
