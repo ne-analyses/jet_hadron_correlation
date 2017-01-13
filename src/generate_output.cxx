@@ -252,6 +252,15 @@ int main( int argc, const char** argv) {
   // first do the 1D dEta for mixing
   std::vector<std::vector<TH1F*> > mixingProjection = jetHadron::ProjectDeta( leadingMix, selector, "mixing_deta" );
   
+  // scale by #bins in phi
+  for ( int i = 0; i < mixingProjection.size(); ++i ) {
+    for ( int j = 0; j < mixingProjection[i].size(); ++j ) {
+      
+      mixingProjection[i][j]->Scale( 1.0 / mixingProjection[i][j]->GetYaxis()->GetNbins() );
+      
+    }
+  }
+  
   // and print
   for ( int i = 0; i < mixingProjection.size(); ++i ) {
     jetHadron::Print1DHistogramsDeta( mixingProjection[i], outputDirBase+"/mixing_deta_"+analysisNames[i], analysisNames[i], selector );
