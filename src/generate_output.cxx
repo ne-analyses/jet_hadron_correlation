@@ -365,8 +365,8 @@ int main( int argc, const char** argv) {
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_lead, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_sub, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_deta_lead, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_deta_sub, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_lead, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
   
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_lead, nEvents );
