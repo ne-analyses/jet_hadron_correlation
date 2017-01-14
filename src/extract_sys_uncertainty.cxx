@@ -80,7 +80,7 @@ int main () {
   TString path = location + trigger;
   
   // event mixing file
-  TString mixFileName = path + "mix.root";
+  TString mixFileName = path + "/mix.root";
   mixFiles.push_back( new TFile( mixFileName, "READ") );
   
   TString towLow = path + "/sys/tow-1trk0.root";
