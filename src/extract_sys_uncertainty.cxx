@@ -167,7 +167,6 @@ int main () {
   std::vector<std::vector<TH2F*> > correctedTrk = jetHadron::EventMixingCorrection( trkCorr, leadingMix, selector, "corTrk"  );
   std::vector<std::vector<TH2F*> > correctedTrkSub = jetHadron::EventMixingCorrection( trkCorrSub, subleadingMix, selector, "corTrkSub" );
   
-  return 0;
   // get the projections
   // first Subtracted DPhi
   // *************************************
