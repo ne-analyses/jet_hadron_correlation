@@ -74,18 +74,19 @@ int main () {
   std::vector<TFile*> mixFiles;
   std::vector<std::string> analysisNames;
   
-  // event mixing file
-  mixFiles.push_back( new TFile("out/tmp/pp_mix_6.root", "READ") );
-  
-  TString location = "out/tmp/pp/sys/";
+  TString location = "out/added/pp/";
   TString trigger = "trg5.6";
   
   TString path = location + trigger;
   
-  TString towLow = path + "/trk_0_tow_-1.root";
-  TString towHigh = path + "/trk_0_tow_1.root";
-  TString trkLow = path + "/trk_-1_tow_0.root";
-  TString trkHigh = path + "/trk_1_tow_0.root";
+  // event mixing file
+  TString mixFileName = path + "mix.root";
+  mixFiles.push_back( new TFile( mixFileName, "READ") );
+  
+  TString towLow = path + "/sys/tow-1trk0.root";
+  TString towHigh = path + "/sys/tow1trk0.root";
+  TString trkLow = path + "/sys/tow0trk-1.root";
+  TString trkHigh = path + "/sys/tow0trk1.root";
   
   towFiles.push_back( new TFile( towLow, "READ" ) );
   towFiles.push_back( new TFile( towHigh, "READ" ) );
@@ -95,7 +96,8 @@ int main () {
   jetHadron::binSelector selector;
   
   // output file
-  TFile* out = new TFile("out/tmp/pp/sys/sys.root","UPDATE");
+  TString outPath = path + "/sys.root";
+  TFile* out = new TFile( outPath,"UPDATE");
   
   // read in files
   // *************
