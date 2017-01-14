@@ -100,13 +100,16 @@ foreach towerEff ( -1 0 1 )
 foreach trackEff ( -1 0 1 )
 
 @ TowEff = $towerEff * $trackEff
+@ tow = $towerEff
+@ track = $trackEff
 
 # only perpendicular combinations
 # doing efficiencies separately
 if ( $TowEff != 0 ) continue;
 
 # subfolder
-set subfolder = tower_${towerEff}_track_${trackEff}
+set subfolder = sys/tower_${towerEff}_track_${trackEff}
+if ($tow == 0 && $track == 0 ) set subfolder = ''
 
 # Create the folder name for output
 set outFile = ${analysis}
