@@ -97,7 +97,7 @@ int main () {
   
   // output file
   TString outPath = path + "/sys.root";
-  TFile* out = new TFile( outPath,"UPDATE");
+  TFile* out = new TFile( outPath,"RECREATE");
   
   // read in files
   // *************
