@@ -125,7 +125,6 @@ int main () {
   std::vector<TH1F*> ptSpectra;
   std::vector<std::vector<double> > ptBinCenters = jetHadron::FindPtBinCenter( towCorrIn, ptSpectra, selector );
   
-  return 0;
   
   // building a pt bin error
   std::vector<std::vector<double> > zeros;
@@ -168,6 +167,7 @@ int main () {
   std::vector<std::vector<TH2F*> > correctedTrk = jetHadron::EventMixingCorrection( trkCorr, leadingMix, selector, "corTrk"  );
   std::vector<std::vector<TH2F*> > correctedTrkSub = jetHadron::EventMixingCorrection( trkCorrSub, subleadingMix, selector, "corTrkSub" );
   
+  return 0;
   // get the projections
   // first Subtracted DPhi
   // *************************************
