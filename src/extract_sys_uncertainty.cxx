@@ -66,6 +66,9 @@ int main () {
   // we're going to extract the systematic errors for tower energy
   // scale and tracking efficiency
   
+  // turning off info printing
+  gErrorIgnoreLevel = kInfo;
+  
   // first, get systematic files
   
   // files and naming
