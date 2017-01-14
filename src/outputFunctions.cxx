@@ -1213,7 +1213,7 @@ namespace jetHadron {
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
@@ -1246,7 +1246,7 @@ namespace jetHadron {
         tmpFit->SetParameter( 3, 0.2 );
         tmpFit->SetParameter( 6, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
@@ -1283,7 +1283,7 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
         if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
           TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
@@ -1295,7 +1295,7 @@ namespace jetHadron {
           
           histograms[i][j]->Add( tmpsub, -1 );
           
-          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
       }
     }
@@ -1327,7 +1327,7 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 3, 0.2 );
         fits[i][j]->SetParameter( 6, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
         if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
           TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
@@ -1341,7 +1341,7 @@ namespace jetHadron {
           
           histograms[i][j]->Add( tmpsub, -1 );
           
-          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
 
         
@@ -1372,7 +1372,7 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
         if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
           TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
@@ -1385,7 +1385,7 @@ namespace jetHadron {
           histograms[i][j]->Add( tmpsub, -1 );
           delete tmpsub;
           
-          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
         if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
           TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
@@ -1398,7 +1398,7 @@ namespace jetHadron {
           histograms[i][j]->Add( tmpsub, -1 );
           delete tmpsub;
           
-          histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
 
 
