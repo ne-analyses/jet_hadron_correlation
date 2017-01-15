@@ -1342,7 +1342,7 @@ namespace jetHadron {
           fits[i][j]->SetParameter( 6, 0.2 );
           
           histograms[i][j]->Add( tmpsub, -1 );
-          delete tmpSub;
+          delete tmpsub;
           
           histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
@@ -1357,7 +1357,7 @@ namespace jetHadron {
           fits[i][j]->SetParameter( 6, 0.2 );
           
           histograms[i][j]->Add( tmpsub, -1 );
-          delete tmpSub;
+          delete tmpsub;
           
           histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         }
