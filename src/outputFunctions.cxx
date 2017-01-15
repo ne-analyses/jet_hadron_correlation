@@ -1204,13 +1204,10 @@ namespace jetHadron {
     std::string etaForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
     
-    std::cout<<"nfiles: "<< histograms.size();
     
     for ( int i = 0; i < histograms.size(); ++i ) {
-      std::cout<<"nptbins: "<<histograms[i].size()<<std::endl;
+
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        std::cout<<"got here"<<std::endl;
-        std::cout<<"histogram name:"<<histograms[i][j]->GetName()<<std::endl;
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
@@ -1218,19 +1215,15 @@ namespace jetHadron {
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.2 );
         
-        std::cout<<"about to fit"<<std::endl;
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        std::cout<<"fitted"<<std::endl;
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
-        std::cout<<"built sub TF1"<<std::endl;
-        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
-        std::cout<<"fixed the parameter"<<std::endl;
+        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );;
         histograms[i][j]->Add( tmpSub, -1 );
         
-        std::cout<<"wtf"<<std::endl;
-        histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
-        std::cout<<"i dont get it"<<std::endl;
+
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
       }
     }
     
@@ -1262,7 +1255,8 @@ namespace jetHadron {
         
         histograms[i][j]->Add( tmpSub, -1 );
         
-        histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
 
       }
     }
