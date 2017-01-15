@@ -1219,7 +1219,25 @@ namespace jetHadron {
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );;
-        histograms[i][j]->Add( tmpSub, -1 );
+        histograms[i][j]->Add( tmpSub, -1.0 );
+        delete tmpSub;
+        
+        // do a test fit to see if the background was subtracted properly
+        std::string testName = tmp + "_TEST";
+        TF1* testFit = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+        while ( testFit->GetParameter(0) > 0.01 ) {
+          
+          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
+          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
+          histograms[i][j]->Add( tmpSub, -1.0 );
+          
+          delete tmpSub;
+          delete testFit;
+          testFit = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        }
+        
+        delete testFit;
         
 
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
@@ -1254,6 +1272,24 @@ namespace jetHadron {
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
         
         histograms[i][j]->Add( tmpSub, -1 );
+        delete tmpSub;
+        
+        // do a test fit to see if the background was subtracted properly
+        std::string testName = tmp + "_TEST";
+        TF1* testFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+        while ( testFit->GetParameter(0) > 0.01 ) {
+          
+          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
+          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
+          histograms[i][j]->Add( tmpSub, -1.0 );
+          
+          delete tmpSub;
+          delete testFit;
+          testFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        }
+        
+        delete testFit;
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
@@ -1287,32 +1323,32 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), eta_min, eta_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//
       }
     }
     
@@ -1345,37 +1381,37 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->FixParameter( 5, jetHadron::pi );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          fits[i][j]->SetParameter( 6, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->FixParameter( 5, jetHadron::pi );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          fits[i][j]->SetParameter( 6, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-        
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->FixParameter( 5, jetHadron::pi );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          fits[i][j]->SetParameter( 6, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->FixParameter( 5, jetHadron::pi );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          fits[i][j]->SetParameter( 6, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//        
         
       }
     }
@@ -1406,33 +1442,33 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
-          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
-          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          delete fits[i][j];
-          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          
-          histograms[i][j]->Add( tmpsub, -1.0 );
-          delete tmpsub;
-          
-          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        }
-
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//        if ( fabs(fits[i][j]->GetParameter(0) ) > 0.1 ) {
+//          TF1* tmpsub = new TF1("tmpsub", subForm.c_str(), phi_min, phi_max );
+//          tmpsub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+//          delete fits[i][j];
+//          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+//          fits[i][j]->FixParameter( 2, 0 );
+//          fits[i][j]->SetParameter( 3, 0.2 );
+//          
+//          histograms[i][j]->Add( tmpsub, -1.0 );
+//          delete tmpsub;
+//          
+//          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+//        }
+//
 
       }
     }
