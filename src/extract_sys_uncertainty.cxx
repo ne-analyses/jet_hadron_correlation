@@ -211,6 +211,9 @@ int main () {
   jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
   
   
+  // GOT HERE OK
+  // DEBUG FROM HERE
+  
   // now DEta
   // *************************************
   std::vector<std::vector<TH1F*> > corrected_deta_tow = jetHadron::ProjectDeta( correctedTow, selector, "corTowDEta", true );
@@ -219,14 +222,9 @@ int main () {
   std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub", true );
   
   // do background subtraction
-  std::cout<<"FIRST SUBTRACTION"<<std::endl;
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow, selector );
-  
-  std::cout<<"SECOND SUBTRACTION"<<std::endl;
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow_sub, selector );
-  std::cout<<"THIRD SUBTRACTION"<<std::endl;
   jetHadron::SubtractBackgroundDeta( corrected_deta_trk, selector );
-  std::cout<<"FOURTH SUBTRACTION"<<std::endl;
   jetHadron::SubtractBackgroundDeta( corrected_deta_trk_sub, selector );
   
   // normalize with 1/dijets 1/bin width

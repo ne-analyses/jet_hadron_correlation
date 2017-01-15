@@ -1206,6 +1206,7 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
+        std::cout<<"got here"<<std::endl;
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
