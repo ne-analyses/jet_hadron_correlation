@@ -207,10 +207,10 @@ int main () {
   jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
   
   // now build the error histograms
-  std::vector<TH1F*> dphi_tow_err = jetHadron::BuildSystematicHistogram( corrected_dphi_tow[0], corrected_dphi_tow[1], selector, "tow_sys_err" );
-  std::vector<TH1F*> dphi_trk_err = jetHadron::BuildSystematicHistogram( corrected_dphi_trk[0], corrected_dphi_trk[1], selector, "trk_sys_err" );
-  std::vector<TH1F*> dphi_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_tow_sub[0], corrected_dphi_tow_sub[1], selector, "tow_sub_sys_err" );
-  std::vector<TH1F*> dphi_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_trk_sub[0], corrected_dphi_trk_sub[1], selector, "trk_sub_sys_err" );
+  std::vector<TH1F*> dphi_tow_err = jetHadron::BuildSystematicHistogram( corrected_dphi_tow[0], corrected_dphi_tow[1], selector, "dphi_tow_sys_err" );
+  std::vector<TH1F*> dphi_trk_err = jetHadron::BuildSystematicHistogram( corrected_dphi_trk[0], corrected_dphi_trk[1], selector, "dphi_trk_sys_err" );
+  std::vector<TH1F*> dphi_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_tow_sub[0], corrected_dphi_tow_sub[1], selector, "dphi_tow_sub_sys_err" );
+  std::vector<TH1F*> dphi_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_trk_sub[0], corrected_dphi_trk_sub[1], selector, "dphi_trk_sub_sys_err" );
 
   
   // GOT HERE OK
@@ -222,18 +222,6 @@ int main () {
   std::vector<std::vector<TH1F*> > corrected_deta_tow_sub = jetHadron::ProjectDeta( correctedTowSub, selector, "corTowDEtaSub", true );
   std::vector<std::vector<TH1F*> > corrected_deta_trk = jetHadron::ProjectDeta( correctedTrk, selector, "corTrkDEta", true );
   std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub", true );
-  
-  // output file
-  TString outPath = path + "/sys.root";
-  TFile* out = new TFile( outPath,"RECREATE");
-  
-  for ( int i = 0; i < corrected_deta_tow.size(); ++i ) {
-    for ( int j = 0; j < corrected_deta_tow[i].size(); ++j ) {
-      corrected_deta_tow[i][j]->Write();
-    }
-  }
-  out->Close();
-  return 0;
   
   // do background subtraction
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow, selector );
@@ -264,6 +252,11 @@ int main () {
   jetHadron::ExtractFitVals( corrected_deta_trk_fit, corrected_deta_trk_fit_yield, corrected_deta_trk_fit_width, corrected_deta_trk_fit_yield_err, corrected_deta_trk_fit_width_err, selector  );
   jetHadron::ExtractFitVals( corrected_deta_trk_sub_fit, corrected_deta_trk_sub_fit_yield, corrected_deta_trk_sub_fit_width, corrected_deta_trk_sub_fit_yield_err, corrected_deta_trk_sub_fit_width_err, selector  );
   
+  // now build the error histograms
+  std::vector<TH1F*> deta_tow_err = jetHadron::BuildSystematicHistogram( corrected_deta_tow[0], corrected_deta_tow[1], selector, "deta_tow_sys_err" );
+  std::vector<TH1F*> deta_trk_err = jetHadron::BuildSystematicHistogram( corrected_deta_trk[0], corrected_deta_trk[1], selector, "deta_trk_sys_err" );
+  std::vector<TH1F*> deta_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_tow_sub[0], corrected_deta_tow_sub[1], selector, "deta_tow_sub_sys_err" );
+  std::vector<TH1F*> deta_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_trk_sub[0], corrected_deta_trk_sub[1], selector, "deta_trk_sub_sys_err" );
   
   // ******************************************
   // we have our fit values from the TF1s now
@@ -284,11 +277,18 @@ int main () {
   TBranch* branchTrkSubYieldUp = tree->Branch("TrackingSubYieldUpper", &trkSubYieldUp );
   TBranch* branchTrkSubYieldDown = tree->Branch("TrackingSubYieldLower", &trkSubYieldDown );
   
-  // NOW! Build the uncertainties...
   
   
   
+  // output file
+  TString outPath = path + "/sys.root";
+  TFile* out = new TFile( outPath,"RECREATE");
   
+  for ( int i = 0; i < deta_tow_err.size(); ++i ) {
+    deta_tow_err[i]->Write();
+  }
+  out->Close();
+  return 0;
   
 
   return 0;
