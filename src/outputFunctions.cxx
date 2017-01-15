@@ -1442,7 +1442,7 @@ namespace jetHadron {
   
   // Used to get the integrals of the
   // histograms, and errors on the integrals
-  void ExtractIntegral( std::vector<std::vector<TH1F*> > histograms, std::vector<std::vector<double> > integrals, std::vector<std::vector<double> > errors, binSelector selector, double lowEdge, double highEdge ) {
+  void ExtractIntegral( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<double> >& integrals, std::vector<std::vector<double> >& errors, binSelector selector, double lowEdge, double highEdge ) {
     
     // resize the output containers
     integrals.resize( histograms.size() );
@@ -1482,6 +1482,24 @@ namespace jetHadron {
       }
       
     }
+  }
+  
+  // testing function to fix histogram
+  // bins not being drawn if the content is small
+  void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        for ( int k = 1; k < histograms[i][j]->GetXaxis()->GetNbins(); ++k ) {
+          
+          if ( fabs(histograms[i][j]->GetBinContent(k)) < 0.005 ) {
+            histograms[i][j]->SetBinContent(k, 0 );
+          }
+          
+        }
+      }
+    }
+    
   }
   
   // ***************************************

@@ -226,7 +226,11 @@ namespace jetHadron {
   
   // Used to get the integrals of the
   // histograms, and errors on the integrals
-  void ExtractIntegral( std::vector<std::vector<TH1F*> > histograms, std::vector<std::vector<double> > integrals, std::vector<std::vector<double> > errors, binSelector selector, double lowEdge, double highEdge );
+  void ExtractIntegral( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<double> >& integrals, std::vector<std::vector<double> >& errors, binSelector selector, double lowEdge, double highEdge );
+  
+  // testing function to fix histogram
+  // bins not being drawn if the content is small
+  void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms );
   
   // ***************************************
   // these are used for building uncertainty

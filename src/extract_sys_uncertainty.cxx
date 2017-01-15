@@ -206,12 +206,21 @@ int main () {
   jetHadron::ExtractFitVals( corrected_dphi_trk_fit, corrected_dphi_trk_fit_yield, corrected_dphi_trk_fit_width, corrected_dphi_trk_fit_yield_err, corrected_dphi_trk_fit_width_err, selector  );
   jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
   
+  
+  // do the bin content fixing...
+  FixTheDamnBins( corrected_dphi_tow );
+  FixTheDamnBins( corrected_dphi_tow_sub );
+  FixTheDamnBins( corrected_dphi_trk );
+  FixTheDamnBins( corrected_dphi_trk_sub );
+  
   // output file
   TString outPath = path + "/sys.root";
   TFile* out = new TFile( outPath,"RECREATE");
   
-  for ( int i = 1; i < corrected_dphi_tow[0][5]->GetXaxis()->GetNbins(); ++i ) {
-    std::cout<<"bin: "<<i<<" content: "<<corrected_dphi_tow[0][5]->GetBinContent(i)<<std::endl;
+  for ( int i = 1; i < corrected_dphi_tow.size(); ++i ) {
+    for ( int j = 0; j < corrected_dphi_tow[i].size(); ++j ) {
+      corrected_dphi_tow[i][j]->Write();
+    }
   }
   out->Close();
   return 0;
