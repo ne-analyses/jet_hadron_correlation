@@ -1109,6 +1109,7 @@ namespace jetHadron {
         // scale the subtraction histogram by the relative number of bins
         far[i][j]->Scale( ((double)(range2High-range2Low))/( ((double)(range1High-range1Low)) + ((double)(range3High - range3Low)) ) );
         
+        correlation2d[i][j]->GetXaxis()->SetRange();
       }
     }
     
