@@ -206,6 +206,18 @@ int main () {
   jetHadron::ExtractFitVals( corrected_dphi_trk_fit, corrected_dphi_trk_fit_yield, corrected_dphi_trk_fit_width, corrected_dphi_trk_fit_yield_err, corrected_dphi_trk_fit_width_err, selector  );
   jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
   
+  // output file
+  TString outPath = path + "/sys.root";
+  TFile* out = new TFile( outPath,"RECREATE");
+  
+  for ( int i = 0; i < corrected_dphi_tow.size(); ++i ) {
+    for ( int j = 0; j < corrected_dphi_tow[i].size(); ++j ) {
+      corrected_dphi_tow[i][j]->Write();
+    }
+  }
+  out->Close();
+  return 0;
+
   
   // GOT HERE OK
   // DEBUG FROM HERE
