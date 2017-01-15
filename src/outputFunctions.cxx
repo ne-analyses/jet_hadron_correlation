@@ -1218,16 +1218,19 @@ namespace jetHadron {
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.2 );
         
+        std::cout<<"about to fit"<<std::endl;
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        
+        std::cout<<"fitted"<<std::endl;
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
+        std::cout<<"built sub TF1"<<std::endl;
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
-        
+        std::cout<<"fixed the parameter"<<std::endl;
         histograms[i][j]->Add( tmpSub, -1 );
         
+        std::cout<<"wtf"<<std::endl;
         histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
-        
+        std::cout<<"i dont get it"<<std::endl;
       }
     }
     
