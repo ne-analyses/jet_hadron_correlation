@@ -1287,7 +1287,7 @@ namespace jetHadron {
           
           delete tmpSub;
           delete testFit;
-          testFit = new TF1( tmpSubName.c_str(), phiForm.c_str(), phi_min, phi_max );
+          testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
           histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
         }
         
