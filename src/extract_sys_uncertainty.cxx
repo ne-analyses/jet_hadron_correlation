@@ -210,10 +210,8 @@ int main () {
   TString outPath = path + "/sys.root";
   TFile* out = new TFile( outPath,"RECREATE");
   
-  for ( int i = 0; i < corrected_dphi_tow.size(); ++i ) {
-    for ( int j = 0; j < corrected_dphi_tow[i].size(); ++j ) {
-      corrected_dphi_tow[i][j]->Write();
-    }
+  for ( int i = 1; i < corrected_dphi_tow[0][5]->GetXaxis()->GetNbins(); ++i ) {
+    std::cout<<"bin: "<<i<<" content: "<<corrected_dphi_tow[0][5]->GetBinContent(i)<<std::endl;
   }
   out->Close();
   return 0;
