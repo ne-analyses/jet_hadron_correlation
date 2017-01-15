@@ -279,7 +279,7 @@ int main () {
   
   for ( int i = 0; i < corrected_deta_tow_fit.size(); ++i ) {
     for ( int j = 0; j < corrected_deta_tow_fit[i].size(); ++j ) {
-      corrected_deta_tow_fit[i][j]->Write();
+      corrected_deta_tow[i][j]->Write();
     }
   }
   out->Close();
