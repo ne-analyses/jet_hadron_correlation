@@ -209,12 +209,20 @@ int main () {
   // now build the error histograms
   std::vector<TH1F*> dphi_tow_err = jetHadron::BuildSystematicHistogram( corrected_dphi_tow[0], corrected_dphi_tow[1], selector, "tow_sys_err" );
   std::vector<TH1F*> dphi_trk_err = jetHadron::BuildSystematicHistogram( corrected_dphi_trk[0], corrected_dphi_trk[1], selector, "trk_sys_err" );
+  std::vector<TH1F*> dphi_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_tow_sub[0], corrected_dphi_tow_sub[1], selector, "tow_sub_sys_err" );
+  std::vector<TH1F*> dphi_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_trk_sub[0], corrected_dphi_trk_sub[1], selector, "trk_sub_sys_err" );
+  
+  
   // output file
   TString outPath = path + "/sys.root";
   TFile* out = new TFile( outPath,"RECREATE");
   
   for ( int i = 0; i < dphi_trk_err.size(); ++i ) {
+    corrected_dphi_trk[0][i]->Write();
+    corrected_dphi_trk[1][i]->Write();
     dphi_trk_err[i]->Write();
+    corrected_dphi_tow[0][i]->Write();
+    corrected_dphi_tow[1][i]->Write();
     dphi_tow_err[i]->Write();
   }
   out->Close();
