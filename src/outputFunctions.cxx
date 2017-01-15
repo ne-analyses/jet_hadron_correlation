@@ -1204,9 +1204,13 @@ namespace jetHadron {
     std::string etaForm = "[0] + gausn(1)";
     std::string subForm = "[0]";
     
+    std::cout<<"nfiles: "<< histograms.size();
+    
     for ( int i = 0; i < histograms.size(); ++i ) {
+      std::cout<<"nptbins: "<<histograms[i].size()<<std::endl;
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         std::cout<<"got here"<<std::endl;
+        std::cout<<"histogram name:"<<histograms[i][j]-GetName()<<std::endl;
         double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
