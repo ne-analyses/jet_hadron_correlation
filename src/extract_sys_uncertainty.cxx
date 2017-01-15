@@ -178,7 +178,6 @@ int main () {
   std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, subtractionRegions, "corTrkDPhiSub", true  );
   
   // do background subtraction
-  std::cout<<"dphi background sub"<<std::endl;
   jetHadron::SubtractBackgroundDphi( corrected_dphi_tow, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_tow_sub, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_trk, selector );
@@ -191,7 +190,6 @@ int main () {
   jetHadron::Normalize1D( corrected_dphi_trk_sub, nEventsTrk );
   
   // do final fitting
-  std::cout<<"dphi fit"<<std::endl;
   std::vector<std::vector<TF1*> > corrected_dphi_tow_fit = jetHadron::FitDphi( corrected_dphi_tow, selector );
   std::vector<std::vector<TF1*> > corrected_dphi_tow_sub_fit = jetHadron::FitDphi( corrected_dphi_tow_sub, selector );
   std::vector<std::vector<TF1*> > corrected_dphi_trk_fit = jetHadron::FitDphi( corrected_dphi_trk, selector );
@@ -226,7 +224,6 @@ int main () {
   std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub", true );
   
   // do background subtraction
-  std::cout<<"deta background sub"<<std::endl;
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow_sub, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_trk, selector );
@@ -239,7 +236,6 @@ int main () {
   jetHadron::Normalize1D( corrected_deta_trk_sub, nEventsTrk );
   
   // do final fitting
-  std::cout<<"deta fit"<<std::endl;
   std::vector<std::vector<TF1*> > corrected_deta_tow_fit = jetHadron::FitDeta( corrected_deta_tow, selector );
   std::vector<std::vector<TF1*> > corrected_deta_tow_sub_fit = jetHadron::FitDeta( corrected_deta_tow_sub, selector );
   std::vector<std::vector<TF1*> > corrected_deta_trk_fit = jetHadron::FitDeta( corrected_deta_trk, selector );
