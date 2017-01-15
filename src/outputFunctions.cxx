@@ -753,6 +753,10 @@ namespace jetHadron {
       projections[i].resize( correlation2d[i].size() );
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
         // new name for the projection
         std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         
@@ -798,6 +802,10 @@ namespace jetHadron {
     for ( int i = 0; i < correlation2d.size(); ++i ) {
       projections[i].resize( correlation2d[i].size() );
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
         
         // new name for the projection
         std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
@@ -860,6 +868,10 @@ namespace jetHadron {
       
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
         // new name for the projection
         std::string tmpNear = uniqueID + "_near_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         std::string tmpFar = uniqueID + "_far_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
@@ -910,6 +922,10 @@ namespace jetHadron {
     for ( int i = 0; i < correlation2d.size(); ++i ) {
       projections[i].resize( correlation2d[i].size() );
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
         
         // new name for the projection
         std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
@@ -1022,6 +1038,10 @@ namespace jetHadron {
       
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
         // new name for the projection
         std::string tmpNear = uniqueID + "_near_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         std::string tmpFar = uniqueID + "_far_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
@@ -1125,6 +1145,10 @@ namespace jetHadron {
     for ( int i = 0; i < correlation2d.size(); ++i ) {
       projections[i].resize( correlation2d[i].size() );
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
         
         // new name for the projection
         std::string tmp = uniqueID + "_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
