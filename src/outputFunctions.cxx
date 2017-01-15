@@ -1224,7 +1224,7 @@ namespace jetHadron {
         
         // do a test fit to see if the background was subtracted properly
         std::string testName = tmp + "_TEST";
-        TF1* testFit = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        TF1* testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
         histograms[i][j]->Fit( testName.c_str(), "RMIQ");
         while ( testFit->GetParameter(0) > 0.01 ) {
           
@@ -1234,7 +1234,7 @@ namespace jetHadron {
           
           delete tmpSub;
           delete testFit;
-          testFit = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+          testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
         }
         
         delete testFit;
@@ -1276,7 +1276,7 @@ namespace jetHadron {
         
         // do a test fit to see if the background was subtracted properly
         std::string testName = tmp + "_TEST";
-        TF1* testFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        TF1* testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
         histograms[i][j]->Fit( testName.c_str(), "RMIQ");
         while ( testFit->GetParameter(0) > 0.01 ) {
           
@@ -1286,7 +1286,7 @@ namespace jetHadron {
           
           delete tmpSub;
           delete testFit;
-          testFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+          testFit = new TF1( tmpSubName.c_str(), phiForm.c_str(), phi_min, phi_max );
         }
         
         delete testFit;
