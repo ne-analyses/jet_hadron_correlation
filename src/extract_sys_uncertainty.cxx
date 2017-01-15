@@ -208,10 +208,10 @@ int main () {
   
   
   // do the bin content fixing...
-  FixTheDamnBins( corrected_dphi_tow );
-  FixTheDamnBins( corrected_dphi_tow_sub );
-  FixTheDamnBins( corrected_dphi_trk );
-  FixTheDamnBins( corrected_dphi_trk_sub );
+  jetHadron::FixTheDamnBins( corrected_dphi_tow );
+  jetHadron::FixTheDamnBins( corrected_dphi_tow_sub );
+  jetHadron::FixTheDamnBins( corrected_dphi_trk );
+  jetHadron::FixTheDamnBins( corrected_dphi_trk_sub );
   
   // output file
   TString outPath = path + "/sys.root";
