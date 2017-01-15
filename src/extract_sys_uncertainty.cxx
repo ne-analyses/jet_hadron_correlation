@@ -228,7 +228,7 @@ int main () {
   TFile* out = new TFile( outPath,"RECREATE");
   
   for ( int i = 0; i < corrected_deta_tow.size(); ++i ) {
-    for ( int j = 0; j < corrected_deta_tow[i].size(); ++j {
+    for ( int j = 0; j < corrected_deta_tow[i].size(); ++j ) {
       corrected_deta_tow[i][j]->Write();
     }
   }
