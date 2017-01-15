@@ -1508,7 +1508,7 @@ namespace jetHadron {
   // ****************************************
   // Used to create systematic uncertainty bands
   // from varying tower energy scale / TPC tracking efficiency
-  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID ) {
+  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*>& upper, std::vector<TH1F*>& lower, binSelector selector, std::string uniqueID ) {
     
     std::vector<TH1F*> histograms;
     histograms.resize( upper.size() );

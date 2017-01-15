@@ -206,21 +206,16 @@ int main () {
   jetHadron::ExtractFitVals( corrected_dphi_trk_fit, corrected_dphi_trk_fit_yield, corrected_dphi_trk_fit_width, corrected_dphi_trk_fit_yield_err, corrected_dphi_trk_fit_width_err, selector  );
   jetHadron::ExtractFitVals( corrected_dphi_trk_sub_fit, corrected_dphi_trk_sub_fit_yield, corrected_dphi_trk_sub_fit_width, corrected_dphi_trk_sub_fit_yield_err, corrected_dphi_trk_sub_fit_width_err, selector  );
   
-  
-  // do the bin content fixing...
-  jetHadron::FixTheDamnBins( corrected_dphi_tow );
-  jetHadron::FixTheDamnBins( corrected_dphi_tow_sub );
-  jetHadron::FixTheDamnBins( corrected_dphi_trk );
-  jetHadron::FixTheDamnBins( corrected_dphi_trk_sub );
-  
+  // now build the error histograms
+  std::vector<TH1F*> dphi_tow_err = jetHadron::BuildSystematicHistogram( corrected_dphi_tow[0], corrected_dphi_tow[1], selector, "tow_sys_err" );
+  std::vector<TH1F*> dphi_trk_err = jetHadron::BuildSystematicHistogram( corrected_dphi_trk[0], corrected_dphi_trk[1], selector, "trk_sys_err" );
   // output file
   TString outPath = path + "/sys.root";
   TFile* out = new TFile( outPath,"RECREATE");
   
-  for ( int i = 1; i < corrected_dphi_tow.size(); ++i ) {
-    for ( int j = 0; j < corrected_dphi_tow[i].size(); ++j ) {
-      corrected_dphi_tow[i][j]->Write();
-    }
+  for ( int i = 0; i < dphi_trk_err.size(); ++i ) {
+    dphi_trk_err[i]->Write();
+    dphi_tow_err[i]->Write();
   }
   out->Close();
   return 0;

@@ -239,7 +239,7 @@ namespace jetHadron {
   
   // Used to create systematic uncertainty bands
   // from varying tower energy scale / TPC tracking variables
-  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
+  std::vector<TH1F*> BuildSystematicHistogram( std::vector<TH1F*>& upper, std::vector<TH1F*>& lower, binSelector selector, std::string uniqueID = "" );
   
   // Used to add systematic errors in quadrature
   std::vector<TH1F*> AddInQuadrature( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
