@@ -444,26 +444,44 @@ int main( int argc, const char** argv) {
   // Now we need to test the systematic errors
   //******************************************
   TFile sysIn( "out/added/pp/trg5.6/sys.root", "READ");
-  std::vector<TH1F*> deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
-
+  std::vector<std::vector<TH1F*> > deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
+  deta_sys.resize( 1 );
+  deta_sys_sub.resize( 1 );
+  dphi_sys.resize( 1 );
+  dphi_sys_sub.resize( 1 );
   for ( int i = 0; i < corrected_dphi_lead[1].size(); ++i ) {
     std::string tmpdEta = "deta_sys_quad_pt_" + patch::to_string(i);
     std::string tmpdEtaSub = "sub_deta_sys_quad_pt_" + patch::to_string(i);
     std::string tmpdPhi = "dphi_sys_quad_pt_" + patch::to_string(i);
     std::string tmpdPhiSub = "sub_dphi_sys_quad_pt_" + patch::to_string(i);
     
-    deta_sys.push_back( (TH1F*) sysIn.Get( tmpdEta.c_str() ) );
-    deta_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdEtaSub.c_str() ) );
-    dphi_sys.push_back( (TH1F*) sysIn.Get( tmpdPhi.c_str() ) );
-    dphi_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
+    deta_sys[0].push_back( (TH1F*) sysIn.Get( tmpdEta.c_str() ) );
+    deta_sys_sub[0].push_back( (TH1F*) sysIn.Get( tmpdEtaSub.c_str() ) );
+    dphi_sys[0].push_back( (TH1F*) sysIn.Get( tmpdPhi.c_str() ) );
+    dphi_sys_sub[0].push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
     
   }
   
   // and do printouts
-  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_lead[1], dphi_sys, selector, outputDirBase+"/dphi_sys_lead", -0.8, 0.8  );
-  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub[1], dphi_sys_sub, selector, outputDirBase+"/dphi_sys_sub", -0.8 , 0.8  );
-  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_lead[1], deta_sys, selector, outputDirBase+"/deta_sys_lead", -0.8 , 0.8  );
-  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub[1], deta_sys_sub, selector, outputDirBase+"/deta_sys_sub", -0.8 , 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_lead[1], dphi_sys[0], selector, outputDirBase+"/dphi_sys_lead", -0.8, 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub[1], dphi_sys_sub[0], selector, outputDirBase+"/dphi_sys_sub", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_lead[1], deta_sys[0], selector, outputDirBase+"/deta_sys_lead", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub[1], deta_sys_sub[0], selector, outputDirBase+"/deta_sys_sub", -0.8 , 0.8  );
+  
+  // generate some TGraphErrors for those
+  
+  std::vector<std::vector<double> > dphi_lead_sys_rel_bin_int, dphi_sub_sys_rel_bin_int, deta_lead_sys_rel_bin_int, deta_sub_sys_rel_bin_int;
+  std::vector<std::vector<double> > dphi_lead_sys_rel_bin_int_err, dphi_sub_sys_rel_bin_int_err, deta_lead_sys_rel_bin_int_err, deta_sub_sys_rel_bin_int_err;
+  
+  jetHadron::ExtractIntegral( dphi_sys, dphi_lead_sys_rel_bin_int, dphi_lead_sys_rel_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( dphi_sys_sub, dphi_sub_sys_rel_bin_int, dphi_sub_sys_rel_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( deta_sys, deta_lead_sys_rel_bin_int, deta_lead_sys_rel_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( deta_sys_sub, deta_sub_sys_rel_bin_int, deta_sub_sys_rel_bin_int_err, selector, -0.6, 0.6 );
+  
+  std::vector<TGraphErrors*> dphi_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_sys_rel_bin_int, zeros, dphi_lead_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "dphi_sys_rel" );
+  std::vector<TGraphErrors*> dphi_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_sys_rel_bin_int, zeros, dphi_sub_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub_sys_rel" );
+  std::vector<TGraphErrors*> deta_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_rel_bin_int, zeros, deta_lead_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sys_rel" );
+  std::vector<TGraphErrors*> deta_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_rel_bin_int, zeros, deta_sub_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys_rel" );
   
   // generate some 5% error histograms for each of the histograms we use
   std::vector<std::vector<TH1F*> > dphi_yield_err = jetHadron::BuildYieldError( corrected_dphi_lead, selector, analysisNames, "dphi_lead_yield_err" );
@@ -500,6 +518,11 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> dphi_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_sys_bin_int, zeros, dphi_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub_sys" );
   std::vector<TGraphErrors*> deta_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_bin_int, zeros, deta_lead_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sys" );
   std::vector<TGraphErrors*> deta_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_bin_int, zeros, deta_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys" );
+  
+  PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_dphi", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
+  PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
+  PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_deta", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
+  PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_deta", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
   
   
   return 0;
