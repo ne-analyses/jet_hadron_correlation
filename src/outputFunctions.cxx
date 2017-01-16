@@ -2473,6 +2473,8 @@ namespace jetHadron {
       return;
     }
     
+    
+    
     TCanvas c1;
     for ( int i = 0; i < 2; ++i ) {
       
@@ -2498,11 +2500,12 @@ namespace jetHadron {
         graphs[i]->Draw();
       else
         graphs[i]->Draw("P");
-      sys1[i]->Draw("a4");
+      sys1[i]->Draw("a3");
       
       if ( i == 0 ) {
+        sys2[0]->SetFillStyle(3005);
         sys2[0]->SetFillColor( 16 );
-        sys2[0]->Draw("a4");
+        sys2[0]->Draw("a3");
       }
       
     }
