@@ -2498,12 +2498,12 @@ namespace jetHadron {
       sys1[i]->SetLineWidth( 0 );
       
       if ( i == 0 ) {
-        sys1[i]->SetFillStyle(3005)
+        sys1[i]->SetFillStyle(3005);
         sys1[i]->SetFillColor(i+1);
       }
       
       if ( i == 1 ) {
-        sys[i]->SetFillStyle(3006)
+        sys1[i]->SetFillStyle(3006);
         sys1[i]->SetFillColor(i+1);
       }
       
