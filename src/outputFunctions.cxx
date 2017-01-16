@@ -1251,7 +1251,7 @@ namespace jetHadron {
         std::string testName = tmp + "_TEST";
         TF1* testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
         histograms[i][j]->Fit( testName.c_str(), "RMIQ");
-        while ( testFit->GetParameter(0) > 0.01 ) {
+        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
           
           tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
           tmpSub->SetParameter( 0, testFit->GetParameter(0) );
@@ -1304,7 +1304,7 @@ namespace jetHadron {
         std::string testName = tmp + "_TEST";
         TF1* testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
         histograms[i][j]->Fit( testName.c_str(), "RMIQ");
-        while ( testFit->GetParameter(0) > 0.01 ) {
+        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
           
           tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
           tmpSub->SetParameter( 0, testFit->GetParameter(0) );
@@ -1350,6 +1350,23 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.01 ) {
+          std::string tmpName = tmp+"sub";
+          TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), eta_min, eta_max );
+          tmpSub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          
+          histograms[i][j]->Add( tmpSub, -1.0 );
+          delete tmpSub;
+          delete fits[i][j];
+          
+          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+          
+        }
+        
       }
     }
     
@@ -1381,6 +1398,24 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 6, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+        
+        while ( fits[i][j]->GetParameter(0) > 0.01 ) {
+          std::string tmpName = tmp+"sub";
+          TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), phi_min, phi_max );
+          tmpSub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          
+          histograms[i][j]->Add( tmpSub, -1.0 );
+          delete tmpSub;
+          delete fits[i][j];
+          
+          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          
+          histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+          
+        }
+
         
       }
     }
