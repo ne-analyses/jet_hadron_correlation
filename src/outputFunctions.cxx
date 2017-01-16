@@ -1350,6 +1350,8 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
+        int counter = 0;
+        
         while ( fabs(fits[i][j]->GetParameter(0)) > 0.01 ) {
           std::string tmpName = tmp+"sub";
           TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), eta_min, eta_max );
@@ -1365,6 +1367,10 @@ namespace jetHadron {
           
           histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
           
+          counter++
+          
+          if ( counter >= 20 )
+            break;
         }
         
       }
@@ -1398,7 +1404,7 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 6, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
-        
+        int counter = 0;
         while ( fits[i][j]->GetParameter(0) > 0.01 ) {
           std::string tmpName = tmp+"sub";
           TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), phi_min, phi_max );
@@ -1413,6 +1419,10 @@ namespace jetHadron {
           fits[i][j]->SetParameter( 3, 0.2 );
           
           histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+          counter++;
+          
+          if ( counter >= 20 )
+            break;
           
         }
 
