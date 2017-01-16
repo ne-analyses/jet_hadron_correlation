@@ -1605,7 +1605,7 @@ namespace jetHadron {
     double tmpMax = 0;
     
     for ( int i = 0; i < histograms.size(); ++i ) {
-      histograms[i]->SetRangeUser( xMin, xMax );
+      histograms[i]->GetXaxis()->SetRangeUser( xMin, xMax );
       
       if ( i == 0 ) {
         tmpMax = histograms[i]->GetMaximum();
@@ -1615,7 +1615,7 @@ namespace jetHadron {
         if ( histograms[i]->GetMaximum() > tmpMax ) { tmpMax = histograms[i]->GetMaximum(); }
         if ( histograms[i]->GetMinimum() < tmpMin ) { tmpMin = histograms[i]->GetMinimum(); }
       }
-      histograms[i]->SetRange();
+      histograms[i]->GetXaxis()->SetRange();
     }
     max = 1.2*tmpMax;
     min = 0.8*fabs(tmpMin);
