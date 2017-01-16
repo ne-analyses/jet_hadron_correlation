@@ -2485,7 +2485,7 @@ namespace jetHadron {
       graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
-      graphs[i]->GetYaxis()->SetTitle( "dN/dp_{T}" );
+      graphs[i]->GetYaxis()->SetTitle( "1/p_{T}dN/dp_{T}" );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
