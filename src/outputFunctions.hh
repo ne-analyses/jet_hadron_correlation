@@ -232,7 +232,7 @@ namespace jetHadron {
   // bins not being drawn if the content is small
   void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms );
   
-  std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, std::vector<std::string> analysisName, std::string uniqueID = "" );
+  std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   
   // ***************************************
   // these are used for building uncertainty
@@ -278,6 +278,8 @@ namespace jetHadron {
   void Print1DDPhiHistogramsWithSysErr( std::vector<TH1F*>& histograms, std::vector<TH1F*>& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  );
   void Print1DDEtaHistogramsWithSysErr( std::vector<TH1F*>& histograms, std::vector<TH1F*>& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  );
   
+  // printing some graphs with some systematic errors as well
+  void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
   
 } // end namespace
 

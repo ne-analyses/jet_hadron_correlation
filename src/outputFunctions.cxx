@@ -1509,7 +1509,7 @@ namespace jetHadron {
     
   }
   
-  std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, std::vector<std::string> analysisName, std::string uniqueID ) {
+  std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID ) {
     
     // making some tgraphs to plot and/or save
     std::vector<TGraphErrors*> returnGraph;
@@ -1526,7 +1526,7 @@ namespace jetHadron {
       
       for ( int j = ptBinLow; j <= ptBinHigh; ++j ) {
         x_[j-ptBinLow] = x[i][j];
-        y_[j-ptBinLow] = y[i][j];
+        y_[j-ptBinLow] = y[i][j] / selector.GetPtBinWidth(j);
         x_err_[j-ptBinLow] = x_err[i][j];
         y_err_[j-ptBinLow] = y_err[i][j];
       }
@@ -2460,5 +2460,53 @@ namespace jetHadron {
     
     
   }
+  
+  // printing some graphs with some systematic errors as well
+  void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisNames, std::string title, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( graphs.size() != 2 || sys1.size() != 2 || sys2.size()!= 2 ) {
+      __ERR("WARNING: we arent prepared for this combination!!")
+      return;
+    }
+    
+    TCanvas c1;
+    for ( int i = 0; i < 2; ++i ) {
+      
+      
+      
+      graphs[i]->SetTitle( title.c_str() );
+      graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
+      graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
+      graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
+      graphs[i]->GetYaxis()->SetTitle( "dN/dp_{T}" );
+      graphs[i]->SetLineColor( i+1 );
+      graphs[i]->SetMarkerColor( i+1 );
+      graphs[i]->SetMarkerStyle( i+20 );
+      graphs[i]->SetMarkerSize( 2 );
+      
+      sys1[i]->SetFillColor( i+1 );
+      sys1[i]->SetFillStyle(1001);
+      
+      sys1[i]->SetMarkerSize( 0 );
+      sys1[i]->SetLineWidth( 0 );
+      
+      graphs[i]->Draw();
+      sys1[i]->Draw();
+      
+      if ( i == 0 ) {
+        sys2[0]->SetFillColor( 16 );
+        sys2[0]->Draw("a4");
+      }
+      
+    }
+    std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
+    c1.SaveAs( tmp.c_str() );
+    
+  }
+  
   
 } // end namespace
