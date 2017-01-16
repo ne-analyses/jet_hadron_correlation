@@ -2503,11 +2503,11 @@ namespace jetHadron {
       }
       
     }
-    graphs[0]->Draw("P");
+    graphs[0]->Draw();
     graphs[1]->Draw("P");
-    sys1[0]->Draw("a3");
-    sys1[1]->Draw("a3");
-    sys2[0]->Draw("a3");
+    sys1[0]->Draw("3");
+    sys1[1]->Draw("3");
+    sys2[0]->Draw("3");
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
