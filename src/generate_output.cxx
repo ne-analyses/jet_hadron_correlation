@@ -459,6 +459,13 @@ int main( int argc, const char** argv) {
     
   }
   
+  // and do printouts
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_lead[1], dphi_sys, selector, outputDirBase+"/dphi_sys_lead", -1.0 , 1.0  );
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub[1], dphi_sys_sub, selector, outputDirBase+"/dphi_sys_sub", -1.0 , 1.0  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_lead[1], deta_sys, selector, outputDirBase+"/deta_sys_lead", -1.0 , 1.0  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub[1], deta_sys_sub, selector, outputDirBase+"/deta_sys_sub", -1.0 , 1.0  );
+
+  
   
   return 0;
 }
