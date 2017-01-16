@@ -1612,7 +1612,7 @@ namespace jetHadron {
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
       
-        std::string tmp = uniqueID + "_yield_sys_err_" + analysisName[i] + "_pt_"+ patch::to_string(i);
+        std::string tmp = uniqueID + "_yield_sys_err_" + analysisName[i] + "_pt_"+ patch::to_string(j);
       
         returnHist[i][j] = new TH1F( tmp.c_str(), selector.ptBinString[j].c_str(), histograms[i][j]->GetXaxis()->GetNbins(), histograms[i][j]->GetXaxis()->GetBinLowEdge(1), histograms[i][j]->GetXaxis()->GetBinUpEdge(histograms[i][j]->GetXaxis()->GetNbins()) );
       
