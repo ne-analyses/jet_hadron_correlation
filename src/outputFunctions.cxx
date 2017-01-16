@@ -2288,7 +2288,7 @@ namespace jetHadron {
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
-      errors[i]->SetRangeUser( rangeLow, rangeHigh );
+      errors[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
 
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
@@ -2330,7 +2330,7 @@ namespace jetHadron {
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
-      errors[i]->SetRangeUser( rangeLow, rangeHigh );
+      errors[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
