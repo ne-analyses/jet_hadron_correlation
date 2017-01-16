@@ -60,6 +60,19 @@
 #include <limits.h>
 #include <unistd.h>
 
+// the grid does not have std::to_string() for some ungodly reason
+// replacing it here. Simply ostringstream
+namespace patch {
+  template < typename T > std::string to_string( const T& n )
+  {
+    std::ostringstream stm ;
+    stm << n ;
+    return stm.str() ;
+  }
+}
+
+
+
 // list all input files as arguments -
 // 0 = aj split bin
 // 1 = output directory
@@ -424,6 +437,26 @@ int main( int argc, const char** argv) {
     tmpVec.push_back("balanced");
     tmpVec.push_back("unbalanced");
     jetHadron::Print1DHistogramsOverlayedDphiOther( aj_balanced_dphi[i], aj_unbalanced_dphi[i], outputDirBase+"/aj_dif_dphi"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
+  }
+  
+  
+  
+  // Now we need to test the systematic errors
+  TFile sysIn( "out/added/pp/trg5.6/sys.root", "READ");
+  std::vector<TH1F*> deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
+  
+  for ( int i = 0; i < corrected_dphi_lead[1].size(); ++i ) {
+    
+    std::string tmpdEta = "deta_sys_quad_" + patch::to_string(i);
+    std::string tmpdEtaSub = "sub_deta_sys_quad_" + patch::to_string(i);
+    std::string tmpdPhi = "dphi_sys_quad_" + patch::to_string(i);
+    std::string tmpdPhiSub = "sub_dphi_sys_quad_" + patch::to_string(i);
+    
+    deta_sys.push_back( (TH1F*) sysIn.Get( tmpdEta.c_str() ) );
+    deta_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdEtaSub.c_str() ) );
+    dphi_sys.push_back( (TH1F*) sysIn.Get( tmpdPhi.c_str() ) );
+    dphi_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
+    
   }
   
   

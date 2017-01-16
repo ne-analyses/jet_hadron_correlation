@@ -259,10 +259,10 @@ int main () {
   std::vector<TH1F*> deta_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_trk_sub[0], corrected_deta_trk_sub[1], selector, "deta_trk_sub_sys_err" );
   
   // aaaand build the sum in quadrature
-  std::vector<TH1F*> deta_err = jetHadron::AddInQuadrature( deta_tow_err, deta_trk_err, selector, "sys_quad_deta" );
-  std::vector<TH1F*> deta_err_sub = jetHadron::AddInQuadrature( deta_tow_err_sub, deta_trk_err_sub, selector, "sys_quad_sub_deta");
-  std::vector<TH1F*> dphi_err = jetHadron::AddInQuadrature( dphi_tow_err, dphi_trk_err, selector, "sys_quad_dphi");
-  std::vector<TH1F*> dphi_err_sub = jetHadron::AddInQuadrature( dphi_tow_err_sub, dphi_trk_err_sub, selector, "sys_quad_sub_dphi");
+  std::vector<TH1F*> deta_err = jetHadron::AddInQuadrature( deta_tow_err, deta_trk_err, selector, "deta" );
+  std::vector<TH1F*> deta_err_sub = jetHadron::AddInQuadrature( deta_tow_err_sub, deta_trk_err_sub, selector, "sub_deta");
+  std::vector<TH1F*> dphi_err = jetHadron::AddInQuadrature( dphi_tow_err, dphi_trk_err, selector, "dphi");
+  std::vector<TH1F*> dphi_err_sub = jetHadron::AddInQuadrature( dphi_tow_err_sub, dphi_trk_err_sub, selector, "sub_dphi");
   
   // ******************************************
   // we have our fit values from the TF1s now

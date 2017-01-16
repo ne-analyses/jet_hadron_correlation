@@ -2283,6 +2283,8 @@ namespace jetHadron {
       
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
+      
+      c1.SaveAs ( tmp.c_str() );
     }
     
   }
@@ -2315,6 +2317,7 @@ namespace jetHadron {
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
       
+      c1.SaveAs ( tmp.c_str() );
     }
     
     
