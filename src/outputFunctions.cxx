@@ -1509,6 +1509,39 @@ namespace jetHadron {
     
   }
   
+  std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, std::vector<std::string> analysisName, std::string uniqueID ) {
+    
+    // making some tgraphs to plot and/or save
+    std::vector<TGraphErrors*> returnGraph;
+    returnGraph.resize( x.size() );
+    
+    for ( int i = 0; i < x.size(); ++i ) {
+      
+      int ptBins = ptBinHigh - ptBinLow + 1;
+      
+      double x_[ptBins];
+      double y_[ptBins];
+      double x_err_[ptBins];
+      double y_err_[ptBins];
+      
+      for ( int j = ptBinLow; j <= ptBinHigh; ++j ) {
+        x_[j-ptBinLow] = x[i][j];
+        y_[j-ptBinLow] = y[i][j];
+        x_err_[j-ptBinLow] = x_err[i][j];
+        y_err_[j-ptBinLow] = y_err[i][j];
+      }
+      
+      std::string tmp = uniqueID + "_graph_" + analysisName[i];
+      
+      returnGraph[i] = new TGraphErrors( ptBins, x_, y_, x_err_, y_err_ );
+      returnGraph[i]->SetName( tmp.c_str() );
+      
+    }
+    
+    return returnGraph;
+  }
+  
+  
   // ***************************************
   // these are used for building uncertainty
   // bands for the pp data
@@ -1581,7 +1614,7 @@ namespace jetHadron {
       
         std::string tmp = uniqueID + "_yield_sys_err_" + analysisName[i] + "_pt_"+ patch::to_string(i);
       
-        histograms[i][j] = new TH1F( tmp.c_str(), selector.ptBinString[j].c_str(), histograms[i][j]->GetXaxis()->GetNbins(), histograms[i][j]->GetXaxis()->GetBinLowEdge(1), histograms[i][j]->GetXaxis()->GetBinUpEdge(histograms[i][j]->GetXaxis()->GetNbins()) );
+        returnHist[i][j] = new TH1F( tmp.c_str(), selector.ptBinString[j].c_str(), histograms[i][j]->GetXaxis()->GetNbins(), histograms[i][j]->GetXaxis()->GetBinLowEdge(1), histograms[i][j]->GetXaxis()->GetBinUpEdge(histograms[i][j]->GetXaxis()->GetNbins()) );
       
         for ( int k = 1; k <= histograms[i][j]->GetXaxis()->GetNbins(); ++k ) {
         
