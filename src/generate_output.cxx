@@ -460,7 +460,7 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < deta_sys.size(); ++i ) {
-    std::cout<<deta_sys[i]<<std::endl;
+    std::cout<<dphi_sys[i]<<std::endl;
   }
   
   // and do printouts
