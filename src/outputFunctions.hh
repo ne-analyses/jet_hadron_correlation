@@ -244,6 +244,8 @@ namespace jetHadron {
   // Used to add systematic errors in quadrature
   std::vector<TH1F*> AddInQuadrature( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
   
+  // used to make 5% errors on yields due to tracking
+  std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   
   // Methods for Printing out and Saving
   // ***********************************

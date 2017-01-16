@@ -440,8 +440,9 @@ int main( int argc, const char** argv) {
   }
   
   
-  
+  //******************************************
   // Now we need to test the systematic errors
+  //******************************************
   TFile sysIn( "out/added/pp/trg5.6/sys.root", "READ");
   std::vector<TH1F*> deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
 
@@ -463,7 +464,24 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub[1], dphi_sys_sub, selector, outputDirBase+"/dphi_sys_sub", -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_lead[1], deta_sys, selector, outputDirBase+"/deta_sys_lead", -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub[1], deta_sys_sub, selector, outputDirBase+"/deta_sys_sub", -0.8 , 0.8  );
-
+  
+  // generate some 5% error histograms for each of the histograms we use
+  std::vector<std::vector<TH1F*> > dphi_yield_err = jetHadron::BuildYieldError( corrected_dphi_lead, selector, analysisNames, "dphi_lead_yield_err" );
+  std::vector<std::vector<TH1F*> > dphi_sub_yield_err = jetHadron::BuildYieldError( corrected_dphi_sub, selector, analysisNames, "dphi_sub_yield_err" );
+  std::vector<std::vector<TH1F*> > deta_yield_err = jetHadron::BuildYieldError( corrected_deta_lead, selector, analysisNames, "deta_lead_yield_err" );
+  std::vector<std::vector<TH1F*> > deta_sub_yield_err = jetHadron::BuildYieldError( corrected_deta_sub, selector, analysisNames, "deta_sub_yield_err" );
+  
+  // ******************************************
+  // now we're testing yields from bin counting
+  // ******************************************
+  std::vector<std::vector<double> > dphi_lead_bin_int, dphi_sub_bin_int, deta_lead_bin_int, deta_sub_bin_int;
+  std::vector<std::vector<double> > dphi_lead_bin_int_err, dphi_sub_bin_int_err, deta_lead_bin_int_err, deta_sub_bin_int_err;
+  
+  jetHadron::ExtractIntegral( corrected_dphi_lead, dphi_lead_bin_int, dphi_lead_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( corrected_dphi_sub, dphi_sub_bin_int, dphi_sub_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( corrected_deta_lead, deta_lead_bin_int, deta_lead_bin_int_err, selector, -0.6, 0.6 );
+  jetHadron::ExtractIntegral( corrected_deta_sub, deta_sub_bin_int, deta_sub_bin_int_err, selector, -0.6, 0.6 );
+  
   
   
   return 0;

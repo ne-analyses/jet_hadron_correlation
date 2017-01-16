@@ -1567,6 +1567,39 @@ namespace jetHadron {
     return histograms;
   }
   
+  // used to make 5% errors on yields due to tracking
+  std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID  ) {
+    
+    std::vector<std::vector<TH1F*> > returnHist;
+    returnHist.resize( histograms.size() );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      returnHist[i].resize( histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+      
+        std::string tmp = uniqueID + "_yield_sys_err_" + analysisName[i] + "_pt_"+ patch::to_string(i);
+      
+        histograms[i][j] = new TH1F( tmp.c_str(), selector.ptBinString[j].c_str(), histograms[i][j]->GetXaxis()->GetNbins(), histograms[i][j]->GetXaxis()->GetBinLowEdge(1), histograms[i][j]->GetXaxis()->GetBinUpEdge(histograms[i][j]->GetXaxis()->GetNbins()) );
+      
+        for ( int k = 1; k <= histograms[i][j]->GetXaxis()->GetNbins(); ++k ) {
+        
+          double binContent = histograms[i][j]->GetBinContent( k );
+          double binWidth = histograms[i][j]->GetBinContent( k ) * 0.05;
+        
+          returnHist[i][j]->SetBinContent( k, binContent );
+          returnHist[i][j]->SetBinError( k, binWidth );
+        }
+        
+      }
+      
+    }
+    
+    return returnHist;
+  }
+  
+  
   
   // *****************************
   // HISTOGRAM PRINTING AND SAVING
