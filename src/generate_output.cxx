@@ -447,20 +447,16 @@ int main( int argc, const char** argv) {
   
   for ( int i = 0; i < corrected_dphi_lead[1].size(); ++i ) {
     
-    std::string tmpdEta = "deta_sys_quad_" + patch::to_string(i);
-    std::string tmpdEtaSub = "sub_deta_sys_quad_" + patch::to_string(i);
-    std::string tmpdPhi = "dphi_sys_quad_" + patch::to_string(i);
-    std::string tmpdPhiSub = "sub_dphi_sys_quad_" + patch::to_string(i);
+    std::string tmpdEta = "deta_sys_quad_pt_" + patch::to_string(i);
+    std::string tmpdEtaSub = "sub_deta_sys_quad_pt_" + patch::to_string(i);
+    std::string tmpdPhi = "dphi_sys_quad_pt_" + patch::to_string(i);
+    std::string tmpdPhiSub = "sub_dphi_sys_quad_pt_" + patch::to_string(i);
     
     deta_sys.push_back( (TH1F*) sysIn.Get( tmpdEta.c_str() ) );
     deta_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdEtaSub.c_str() ) );
     dphi_sys.push_back( (TH1F*) sysIn.Get( tmpdPhi.c_str() ) );
     dphi_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
     
-  }
-  
-  for ( int i = 0; i < deta_sys.size(); ++i ) {
-    std::cout<<deta_sys[i]<<std::endl;
   }
   
   // and do printouts
