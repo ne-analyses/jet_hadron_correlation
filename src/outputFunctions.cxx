@@ -1367,7 +1367,7 @@ namespace jetHadron {
           
           histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
           
-          counter++
+          counter++;
           
           if ( counter >= 20 )
             break;
