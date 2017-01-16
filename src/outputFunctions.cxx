@@ -1465,7 +1465,12 @@ namespace jetHadron {
     int lowBin = histograms[0][0]->GetXaxis()->GetFirst();
     int highBin = histograms[0][0]->GetXaxis()->GetLast();
     
-    if ( histograms[0][0]->FindBin( lowBin ) > lowBin ) {
+    std::cout<<" low edge: "<< lowEdge << std::endl;
+    std::cout<< " low bin: "<< lowBin<< std::endl;
+    std::cout<<" high edge: "<< highEdge<<std::endl;
+    std::cout<<" high bin: "<< highBin << std::endl;
+    
+    if ( histograms[0][0]->FindBin( lowEdge ) > lowBin ) {
       __ERR("warning: asking for integrals outside of histogram set user range- low edge - resetting")
     }
     else {
