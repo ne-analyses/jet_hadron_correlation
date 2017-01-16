@@ -2502,8 +2502,8 @@ namespace jetHadron {
       }
       
     }
-    graphs[0]->Draw("P");
-    graphs[1]->Draw("P");
+    graphs[0]->Draw();
+    graphs[1]->Draw();
     //sys1[0]->Draw("a3");
     //sys1[i]->Draw("a3");
     //sys2[0]->Draw("a3");
