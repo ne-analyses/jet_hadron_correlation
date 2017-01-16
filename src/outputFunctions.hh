@@ -249,6 +249,7 @@ namespace jetHadron {
   // ***********************************
   
   void FindGood1DUserRange( std::vector<TH1F*> histograms, double& max, double& min );
+  void FindGood1DUserRange( std::vector<TH1F*> histograms, double& max, double& min, double xMax, double xMin );
   
   // Used to print out and save the 2D prots ( correlations, mixed events )
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );

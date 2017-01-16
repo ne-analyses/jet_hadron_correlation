@@ -1599,6 +1599,36 @@ namespace jetHadron {
          
   }
   
+  void FindGood1DUserRange( std::vector<TH1F*> histograms, double& max, double& min, double xMax, double xMin ) {
+    
+    double tmpMin = 0;
+    double tmpMax = 0;
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      histograms[i]->SetRangeUser( xMin, xMax );
+      
+      if ( i == 0 ) {
+        tmpMax = histograms[i]->GetMaximum();
+        tmpMin = histograms[i]->GetMinimum();
+      }
+      else {
+        if ( histograms[i]->GetMaximum() > tmpMax ) { tmpMax = histograms[i]->GetMaximum(); }
+        if ( histograms[i]->GetMinimum() < tmpMin ) { tmpMin = histograms[i]->GetMinimum(); }
+      }
+      histograms[i]->SetRange();
+    }
+    max = 1.2*tmpMax;
+    min = 0.8*fabs(tmpMin);
+    if ( min > -0.1 )
+      min = -1.0;
+    if ( max < 1.0 )
+      max = 1.0;
+    if ( max > 4.0 )
+      max = 4.0;
+    
+  }
+
+  
   // Used to print out 2D plots ( correlations, mixed events )
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
     
@@ -2267,8 +2297,17 @@ namespace jetHadron {
     if ( histograms.size() != errors.size() )
       __ERR("Warning: number of errors does not match number of signal histograms")
     
+      double min, max;
+    std::vector<TH1F*> tmpvec;
+      
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      tmpvec.clear();
+      tmpvec.push_back( histograms[i]);
+      tmpvec.push_back( errors[i] );
+      
+      FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
       
       if ( ! histograms[i] || !errors[i] ) {
         __ERR("Warning: Missing histogram. Skipping")
@@ -2309,8 +2348,17 @@ namespace jetHadron {
       __ERR("Warning: number of errors does not match number of signal histograms")
       
     
+    double min, max;
+    std::vector<TH1F*> tmpvec;
+      
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
+      tmpvec.clear();
+      tmpvec.push_back( histograms[i]);
+      tmpvec.push_back( errors[i] );
+      
+      FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
+      
       
       if ( ! histograms[i] || !errors[i] ) {
         __ERR("Warning: Missing histogram. Skipping")
