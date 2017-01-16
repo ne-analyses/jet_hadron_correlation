@@ -2468,6 +2468,9 @@ namespace jetHadron {
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
     
+    std::cout<<"graphs: "<< graphs.size() << std::endl;
+    std::cout<<"sys1: "<< sys1.size() << std::endl;
+    std::cout<<"sys2: "<< sys2.size() << std::endl;
     if ( graphs.size() != 2 || sys1.size() != 2 || sys2.size()!= 2 ) {
       __ERR("WARNING: we arent prepared for this combination!!")
       return;
