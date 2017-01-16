@@ -2257,6 +2257,67 @@ namespace jetHadron {
     
   }
   
-
+  // printing with errors
+  void Print1DDPhiHistogramsWithSysErr( std::vector<TH1F*> histograms, std::vector<TH1F*> errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
+      
+      histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      
+      errors[i]->SetFillColor( kRed-10 );
+      errors[i]->SetFillStyle(1001);
+      errors[i]->SetLineWidth( 0 );
+      errors[i]->SetMarkerColor( 0 );
+      
+      errors[i]->Draw("9e2");
+      histograms[i]->Draw("9same");
+    }
+    
+  }
+  
+  // printing with errors
+  void Print1DDEtaHistogramsWithSysErr( std::vector<TH1F*> histograms, std::vector<TH1F*> errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_err.pdf";
+      
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
+      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      histograms[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      
+      errors[i]->SetFillColor( kRed-10 );
+      errors[i]->SetFillStyle(1001);
+      errors[i]->SetLineWidth( 0 );
+      errors[i]->SetMarkerColor( 0 );
+      
+      errors[i]->Draw("9e2");
+      histograms[i]->Draw("9same");
+      
+    }
+    
+    
+  }
   
 } // end namespace
