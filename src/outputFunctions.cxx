@@ -2476,7 +2476,7 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.DrawFrame(0, 10, -1, 6);
+    //c1.DrawFrame(0, 10, -1, 6);
     for ( int i = 0; i < 2; ++i ) {
       
       
