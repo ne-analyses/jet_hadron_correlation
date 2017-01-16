@@ -2323,11 +2323,14 @@ namespace jetHadron {
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
  
+      errors[i]->GetXaxis()->SetTitle("#Delta#phi");
+      errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
       errors[i]->SetFillColor( kRed-10 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
       errors[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      errors[i]->GetYaxis()->SetRangeUser( min, max );
 
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
@@ -2374,11 +2377,14 @@ namespace jetHadron {
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       
+      errors[i]->GetXaxis()->SetTitle("#Delta#eta");
+      errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
       errors[i]->SetFillColor( kRed-10 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
       errors[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      errors[i]->GetYaxis()->SetRangeUser( min, max );
       
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
