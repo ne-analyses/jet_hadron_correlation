@@ -2264,26 +2264,31 @@ namespace jetHadron {
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
     
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+    
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
       
-      std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
+      std::cout<<"got here"<<std::endl;
       
+      std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
+      std::cout<<"setting histogram"<<std::endl;
       histograms[i]->GetXaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
       histograms[i]->GetYaxis()->SetTitleSize( 0.04 );
       histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
       histograms[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
-      
+      std::cout<<"setting errors"<<std::endl;
       errors[i]->SetFillColor( kRed-10 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
-      
+      std::cout<<"drawing"<<std::endl;
       errors[i]->Draw("9e2");
       histograms[i]->Draw("9same");
-      
+      std::cout<<"saving"<<std::endl;
       c1.SaveAs ( tmp.c_str() );
     }
     
@@ -2296,6 +2301,9 @@ namespace jetHadron {
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
     
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
     
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
