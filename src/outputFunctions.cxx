@@ -2496,19 +2496,18 @@ namespace jetHadron {
       sys1[i]->SetMarkerSize( 0 );
       sys1[i]->SetLineWidth( 0 );
       
-      if ( i == 0 )
-        graphs[i]->Draw("P");
-      else
-        graphs[i]->Draw("P");
-      sys1[i]->Draw("a3");
-      
       if ( i == 0 ) {
         sys2[0]->SetFillStyle(3005);
         sys2[0]->SetFillColor( 16 );
-        sys2[0]->Draw("a3");
       }
       
     }
+    graphs[0]->Draw("P");
+    graphs[1]->Draw("P");
+    //sys1[0]->Draw("a3");
+    //sys1[i]->Draw("a3");
+    //sys2[0]->Draw("a3");
+    
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
     
