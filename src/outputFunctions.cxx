@@ -2271,6 +2271,8 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       std::cout<<"got here"<<std::endl;
+      std::cout<<histograms[i]<<std::endl;
+      std::cout<<errors[i]<<std::endl;
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
       std::cout<<"setting histogram"<<std::endl;
