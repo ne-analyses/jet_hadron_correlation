@@ -2506,7 +2506,7 @@ namespace jetHadron {
     graphs[0]->Draw("P");
     graphs[1]->Draw("P");
     sys1[0]->Draw("a3");
-    sys1[i]->Draw("a3");
+    sys1[1]->Draw("a3");
     sys2[0]->Draw("a3");
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
