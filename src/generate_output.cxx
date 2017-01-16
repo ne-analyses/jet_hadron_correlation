@@ -459,6 +459,10 @@ int main( int argc, const char** argv) {
     
   }
   
+  for ( int i = 0; i < deta_sys.size(); ++i ) {
+    std::cout<<deta_sys[i]<<std::endl;
+  }
+  
   // and do printouts
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_lead[1], dphi_sys, selector, outputDirBase+"/dphi_sys_lead", -1.0 , 1.0  );
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub[1], dphi_sys_sub, selector, outputDirBase+"/dphi_sys_sub", -1.0 , 1.0  );
