@@ -2476,7 +2476,7 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.DrawFrame(0, 10, 0, 6);
+    c1.DrawFrame(0, 10, -1, 6);
     for ( int i = 0; i < 2; ++i ) {
       
       
@@ -2503,7 +2503,7 @@ namespace jetHadron {
       }
       
     }
-    graphs[0]->Draw("P");
+    graphs[0]->Draw();
     graphs[1]->Draw("P");
     sys1[0]->Draw("a3");
     sys1[1]->Draw("a3");
