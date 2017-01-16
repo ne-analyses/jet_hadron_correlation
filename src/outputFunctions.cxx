@@ -2498,6 +2498,14 @@ namespace jetHadron {
       sys1[i]->SetLineWidth( 0 );
       
       if ( i == 0 ) {
+        sys1[i]->SetFillColor(kBlack-10);
+      }
+      
+      if ( i == 1 ) {
+        sys1[i]->SetFillColor(kRed-10);
+      }
+      
+      if ( i == 0 ) {
         sys2[0]->SetFillStyle(3005);
         sys2[0]->SetFillColor( 16 );
       }
