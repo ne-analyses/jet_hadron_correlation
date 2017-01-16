@@ -2258,7 +2258,7 @@ namespace jetHadron {
   }
   
   // printing with errors
-  void Print1DDPhiHistogramsWithSysErr( std::vector<TH1F*> histograms, std::vector<TH1F*> errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+  void Print1DDPhiHistogramsWithSysErr( std::vector<TH1F*>& histograms, std::vector<TH1F*>& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -2270,9 +2270,10 @@ namespace jetHadron {
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
       
-      std::cout<<"got here"<<std::endl;
-      std::cout<<histograms[i]<<std::endl;
-      std::cout<<errors[i]<<std::endl;
+      if ( ! histograms[i] || !errors[i] ) {
+        __ERR("Warning: Missing histogram. Skipping")
+        continue;
+      }
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
       std::cout<<"setting histogram"<<std::endl;
@@ -2297,7 +2298,7 @@ namespace jetHadron {
   }
   
   // printing with errors
-  void Print1DDEtaHistogramsWithSysErr( std::vector<TH1F*> histograms, std::vector<TH1F*> errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+  void Print1DDEtaHistogramsWithSysErr( std::vector<TH1F*>& histograms, std::vector<TH1F*>& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -2309,6 +2310,11 @@ namespace jetHadron {
     
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      if ( ! histograms[i] || !errors[i] ) {
+        __ERR("Warning: Missing histogram. Skipping")
+        continue;
+      }
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_err.pdf";
       

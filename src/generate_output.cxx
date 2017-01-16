@@ -444,9 +444,8 @@ int main( int argc, const char** argv) {
   // Now we need to test the systematic errors
   TFile sysIn( "out/added/pp/trg5.6/sys.root", "READ");
   std::vector<TH1F*> deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
-  std::cout<<"vector size: "<< corrected_dphi_lead[1].size()<<std::endl;
+
   for ( int i = 0; i < corrected_dphi_lead[1].size(); ++i ) {
-    std::cout<<"index: "<< i << std::endl;
     std::string tmpdEta = "deta_sys_quad_pt_" + patch::to_string(i);
     std::string tmpdEtaSub = "sub_deta_sys_quad_pt_" + patch::to_string(i);
     std::string tmpdPhi = "dphi_sys_quad_pt_" + patch::to_string(i);
@@ -457,10 +456,6 @@ int main( int argc, const char** argv) {
     dphi_sys.push_back( (TH1F*) sysIn.Get( tmpdPhi.c_str() ) );
     dphi_sys_sub.push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
     
-  }
-  
-  for ( int i = 0; i < deta_sys.size(); ++i ) {
-    std::cout<<dphi_sys[i]<<std::endl;
   }
   
   // and do printouts
