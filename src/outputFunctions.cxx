@@ -1516,7 +1516,7 @@ namespace jetHadron {
     returnGraph.resize( x.size() );
     
     for ( int i = 0; i < x.size(); ++i ) {
-      
+      std::cout<<"loop"<<std::endl;
       int ptBins = ptBinHigh - ptBinLow + 1;
       
       double x_[ptBins];
@@ -1525,17 +1525,19 @@ namespace jetHadron {
       double y_err_[ptBins];
       
       for ( int j = ptBinLow; j <= ptBinHigh; ++j ) {
+        std::cout<<" inner loop"<<std::endl;
         x_[j-ptBinLow] = x[i][j];
         y_[j-ptBinLow] = y[i][j] / selector.GetPtBinWidth(j);
         x_err_[j-ptBinLow] = x_err[i][j];
         y_err_[j-ptBinLow] = y_err[i][j];
+        std::cout<<"end innper loop"<<std::endl;
       }
       
       std::string tmp = uniqueID + "_graph_" + analysisName[i];
-      
+      std::cout<<"build"<<std::endl;
       returnGraph[i] = new TGraphErrors( ptBins, x_, y_, x_err_, y_err_ );
       returnGraph[i]->SetName( tmp.c_str() );
-      
+      std::cout<<"test"<<std::endl;
     }
     
     return returnGraph;
