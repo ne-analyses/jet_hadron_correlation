@@ -1524,7 +1524,7 @@ namespace jetHadron {
     
       std::string tmp = uniqueID + "_systematic_pt_"+ patch::to_string(i);
       
-      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), upper[i]->GetXaxis()->GetNbins(), selector.dEtaAcceptanceLow, selector.dEtaAcceptanceHigh );
+      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), upper[i]->GetXaxis()->GetNbins(), upper[i]->GetXaxis()->GetBinLowEdge(1), upper[i]->GetXaxis()->GetBinUpEdge(upper[i]->GetXaxis()->GetNbins()) );
       
       for ( int j = 1; j <= upper[i]->GetXaxis()->GetNbins(); ++j ) {
         double binContent = fabs( upper[i]->GetBinContent( j ) + lower[i]->GetBinContent( j ) ) / 2.0;
@@ -1551,7 +1551,7 @@ namespace jetHadron {
       
       std::string tmp = uniqueID + "_sys_quad_pt_"+ patch::to_string(i);
       
-      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), hist1[i]->GetXaxis()->GetNbins(), selector.dEtaAcceptanceLow, selector.dEtaAcceptanceHigh );
+      histograms[i] = new TH1F( tmp.c_str(), selector.ptBinString[i].c_str(), hist1[i]->GetXaxis()->GetNbins(), hist1[i]->GetXaxis()->GetBinLowEdge(1), hist1[i]->GetXaxis()->GetBinUpEdge(hist1[i]->GetXaxis()->GetNbins()) );
       
       for ( int j = 1; j <= hist1[i]->GetXaxis()->GetNbins(); ++j ) {
         
