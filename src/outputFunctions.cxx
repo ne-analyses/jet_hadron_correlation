@@ -2497,7 +2497,7 @@ namespace jetHadron {
       sys1[i]->SetLineWidth( 0 );
       
       if ( i == 0 )
-        graphs[i]->Draw();
+        graphs[i]->Draw("P");
       else
         graphs[i]->Draw("P");
       sys1[i]->Draw("a3");
