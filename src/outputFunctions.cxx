@@ -2491,8 +2491,14 @@ namespace jetHadron {
       sys1[i]->SetFillColor( i+1 );
       sys1[i]->SetFillStyle(1001);
       
-      graphs[i]->Draw();
-      sys1[i]->Draw();
+      sys1[i]->SetMarkerSize( 0 );
+      sys1[i]->SetLineWidth( 0 );
+      
+      if ( i == 0 )
+        graphs[i]->Draw();
+      else
+        graphs[i]->Draw("P");
+      sys1[i]->Draw("a4");
       
       if ( i == 0 ) {
         sys2[0]->SetFillColor( 16 );
