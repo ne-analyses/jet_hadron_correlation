@@ -2491,9 +2491,6 @@ namespace jetHadron {
       sys1[i]->SetFillColor( i+1 );
       sys1[i]->SetFillStyle(1001);
       
-      sys1[i]->SetMarkerSize( 0 );
-      sys1[i]->SetLineWidth( 0 );
-      
       graphs[i]->Draw();
       sys1[i]->Draw();
       
