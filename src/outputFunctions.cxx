@@ -2459,17 +2459,16 @@ namespace jetHadron {
       
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
+      if ( ! histograms[i] || !errors[i] ) {
+        __ERR("Warning: Missing histogram. Skipping")
+        continue;
+      }
       
       tmpvec.clear();
       tmpvec.push_back( histograms[i]);
       tmpvec.push_back( errors[i] );
       
       FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
-      
-      if ( ! histograms[i] || !errors[i] ) {
-        __ERR("Warning: Missing histogram. Skipping")
-        continue;
-      }
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.pdf";
 
@@ -2513,17 +2512,18 @@ namespace jetHadron {
       
     TCanvas c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      if ( ! histograms[i] || !errors[i] ) {
+        __ERR("Warning: Missing histogram. Skipping")
+        continue;
+      }
+      
       tmpvec.clear();
       tmpvec.push_back( histograms[i]);
       tmpvec.push_back( errors[i] );
       
       FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
       
-      
-      if ( ! histograms[i] || !errors[i] ) {
-        __ERR("Warning: Missing histogram. Skipping")
-        continue;
-      }
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_err.pdf";
       
@@ -2551,6 +2551,125 @@ namespace jetHadron {
     
     
   }
+  
+  void Print1DDPhiHistogramsWithSysErr( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
+    
+    TCanvas c1;
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+      
+        if ( ! histograms[i][j] || !errors[i][j] ) {
+          __ERR("Warning: Missing histogram. Skipping")
+          continue;
+        }
+        
+        tmpvec.clear();
+        tmpvec.push_back( histograms[i][j]);
+        tmpvec.push_back( errors[i][j] );
+      
+        FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
+      
+      
+        std::string tmp = outputDir + "/" + "dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j) +"_err.pdf";
+        
+        histograms[i][j]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[i][j]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[i][j]->GetYaxis()->SetTitleSize( 0.04 );
+        histograms[i][j]->SetTitle( selector.ptBinString[j].c_str() );
+        histograms[i][j]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      
+        errors[i][j]->GetXaxis()->SetTitle("#Delta#phi");
+        errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors[i][j]->SetFillColor( kRed-10 );
+        errors[i][j]->SetFillStyle(1001);
+        errors[i][j]->SetLineWidth( 0 );
+        errors[i][j]->SetMarkerColor( 0 );
+        errors[i][j]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors[i][j]->GetYaxis()->SetRangeUser( min, max );
+      
+        errors[i][j]->Draw("9e2");
+        histograms[i][j]->Draw("9same");
+      
+        c1.SaveAs ( tmp.c_str() );
+        
+      }
+    }
+
+    
+  }
+  
+  void Print1DDEtaHistogramsWithSysErr( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
+      
+    TCanvas c1;
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+      
+        if ( ! histograms[i][j] || !errors[i][j] ) {
+          __ERR("Warning: Missing histogram. Skipping")
+          continue;
+        }
+      
+        tmpvec.clear();
+        tmpvec.push_back( histograms[i][j]);
+        tmpvec.push_back( errors[i][j] );
+        
+        FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
+      
+      
+        std::string tmp = outputDir + "/" + "deta_" + patch::to_string(i) + "_pt_" + patch::to_string(j) + "_err.pdf";
+        
+        histograms[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[i][j]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[i][j]->GetYaxis()->SetTitleSize( 0.04 );
+        histograms[i][j]->SetTitle( selector.ptBinString[j].c_str() );
+        histograms[i][j]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      
+        errors[i][j]->GetXaxis()->SetTitle("#Delta#eta");
+        errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors[i][j]->SetFillColor( kRed-10 );
+        errors[i][j]->SetFillStyle(1001);
+        errors[i][j]->SetLineWidth( 0 );
+        errors[i][j]->SetMarkerColor( 0 );
+        errors[i][j]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors[i][j]->GetYaxis()->SetRangeUser( min, max );
+      
+        errors[i][j]->Draw("9e2");
+        histograms[i][j]->Draw("9same");
+        
+        c1.SaveAs ( tmp.c_str() );
+        
+      }
+    }
+    
+
+    
+  }
+  
   
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisNames, std::string title, binSelector selector ) {

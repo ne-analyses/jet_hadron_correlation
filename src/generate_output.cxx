@@ -524,8 +524,14 @@ int main( int argc, const char** argv) {
   PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_deta", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
   PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_deta", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
   
+  // check errors on yields
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_lead, dphi_yield_err, selector, outputDirBase+"/dphi_yield_err_lead", -0.8, 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_sub, dphi_sub_yield_err, selector, outputDirBase+"/dphi_yield_err_sub", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_lead, deta_yield_err, selector, outputDirBase+"/deta_yield_err_lead", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub, deta_sub_yield_err, selector, outputDirBase+"/deta_yield_err_sub", -0.8 , 0.8  );
   
   
+  /*
   
   // *******************************************************
   // TEMPORARY ---------------------------------------------
@@ -1101,7 +1107,7 @@ int main( int argc, const char** argv) {
   PPDEtaSubYieldSysRel->Write();
 
   outFile.Write();
-  outFile.Close();
+  outFile.Close();*/
   return 0;
 }
 
