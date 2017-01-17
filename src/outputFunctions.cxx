@@ -1468,6 +1468,32 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 3, 0.2 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+        
+        int counter = 0;
+        
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.01 ) {
+          std::string tmpName = tmp+"sub";
+          TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), phi_min, phi_max );
+          tmpSub->SetParameter( 0, fits[i][j]->GetParameter(0) );
+          
+          histograms[i][j]->Add( tmpSub, -1.0 );
+          delete tmpSub;
+          delete fits[i][j];
+          
+          fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+          fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->SetParameter( 3, 0.2 );
+          if ( j <= 2 )
+            fits[i][j]->SetParameter( 3, 0.3);
+          
+          histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
+          
+          counter++;
+          
+          if ( counter >= 20 )
+            break;
+        }
+
 
       }
     }
