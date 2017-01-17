@@ -1723,6 +1723,31 @@ namespace jetHadron {
     return returnHist;
   }
   
+  // testing function to reset the bin contents to those of the histogram
+  void ResetSysBinContent( std::vector<TH1F*>& errors, std::vector<TH1F*>& histograms, binSelector selector ) {
+    
+    if ( histograms.size() != errors.size() ) {
+      __ERR("warning: mismatched bin sizes")
+      return;
+    }
+    
+    if ( histograms[0]->GetXaxis()->GetNbins() != errors[0]->GetXaxis()->GetNbins() ) {
+      __ERR("warning: bin mismatch between errors and histograms")
+      return;
+    }
+    
+    for ( int i = 0; i < errors.size(); ++i ) {
+      
+      for ( int j = 1; j <= errors[i]->GetXaxis()->GetNbins(); ++j ) {
+        errors[i]->SetBinContent( j, histograms[i]->GetBinContent( j ) );
+        
+      }
+      
+    }
+    
+    
+  }
+  
   
   
   // *****************************
@@ -1816,6 +1841,8 @@ namespace jetHadron {
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw("surf1");
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -1848,6 +1875,8 @@ namespace jetHadron {
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw("surf1");
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -1885,6 +1914,8 @@ namespace jetHadron {
     
       histograms[i]->Draw("surf1");
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -1916,6 +1947,8 @@ namespace jetHadron {
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw();
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -1973,6 +2006,8 @@ namespace jetHadron {
       }
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -2036,6 +2071,8 @@ namespace jetHadron {
       }
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -2102,6 +2139,8 @@ namespace jetHadron {
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -2134,6 +2173,8 @@ namespace jetHadron {
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw();
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
 
@@ -2192,6 +2233,8 @@ namespace jetHadron {
       }
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
 
@@ -2256,6 +2299,8 @@ namespace jetHadron {
       }
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
     
@@ -2322,6 +2367,8 @@ namespace jetHadron {
       leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
+      c1.SaveAs( tmp.c_str() );
     }
     
     
@@ -2377,6 +2424,8 @@ namespace jetHadron {
       histograms[i]->Draw();
       histograms2[i]->Draw("same");
       leg->Draw();
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName1 + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
     }
 
@@ -2441,6 +2490,8 @@ namespace jetHadron {
     }
     leg->Draw();
     c1.SaveAs( tmp.c_str() );
+    tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
+    c1.SaveAs( tmp.c_str() );
     
   }
   
@@ -2492,6 +2543,8 @@ namespace jetHadron {
       histograms[i]->Draw("9same");
 
       c1.SaveAs ( tmp.c_str() );
+      tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_err.C";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -2547,6 +2600,8 @@ namespace jetHadron {
       histograms[i]->Draw("9same");
       
       c1.SaveAs ( tmp.c_str() );
+      tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_err.C";
+      c1.SaveAs( tmp.c_str() );
     }
     
     
@@ -2603,6 +2658,8 @@ namespace jetHadron {
         errors[i][j]->Draw("9e2");
         histograms[i][j]->Draw("9same");
       
+        c1.SaveAs ( tmp.c_str() );
+        tmp = outputDir + "/" + "dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j) +"_err.C";
         c1.SaveAs ( tmp.c_str() );
         
       }
@@ -2662,7 +2719,8 @@ namespace jetHadron {
         histograms[i][j]->Draw("9same");
         
         c1.SaveAs ( tmp.c_str() );
-        
+        tmp = outputDir + "/" + "deta_" + patch::to_string(i) + "_pt_" + patch::to_string(j) + "_err.C";
+        c1.SaveAs( tmp.c_str() );
       }
     }
     
@@ -2695,7 +2753,7 @@ namespace jetHadron {
       graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
-      graphs[i]->GetYaxis()->SetTitle( "1/p_{T}dN/dp_{T}" );
+      graphs[i]->GetYaxis()->SetTitle( "dN/dp_{T}" );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
@@ -2731,7 +2789,8 @@ namespace jetHadron {
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
-    
+    tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
+    c1.SaveAs( tmp.c_str() );
   }
   
   

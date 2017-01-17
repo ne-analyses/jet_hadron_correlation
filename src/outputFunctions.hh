@@ -249,6 +249,9 @@ namespace jetHadron {
   // used to make 5% errors on yields due to tracking
   std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   
+   // testing function to reset the bin contents to those of the histogram
+  void ResetSysBinContent( std::vector<TH1F*>& errors, std::vector<TH1F*>& histograms, binSelector selector );
+  
   // Methods for Printing out and Saving
   // ***********************************
   
