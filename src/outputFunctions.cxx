@@ -1347,6 +1347,8 @@ namespace jetHadron {
         fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
+        if ( j <= 2 )
+          fits[i][j]->SetParameter( 3, 0.3);
         
         histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
         
@@ -1364,6 +1366,8 @@ namespace jetHadron {
           fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
           fits[i][j]->FixParameter( 2, 0 );
           fits[i][j]->SetParameter( 3, 0.2 );
+          if ( j <= 2 )
+            fits[i][j]->SetParameter( 3, 0.3);
           
           histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
           
@@ -1402,6 +1406,10 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 5, jetHadron::pi );
         fits[i][j]->SetParameter( 3, 0.2 );
         fits[i][j]->SetParameter( 6, 0.2 );
+        if ( j <= 2 ) {
+          fits[i][j]->SetParameter( 3, 0.3);
+          fits[i][j]->SetParameter( 6, 0.3);
+        }
         
         histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
         int counter = 0;
@@ -1416,8 +1424,13 @@ namespace jetHadron {
           
           fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
           fits[i][j]->FixParameter( 2, 0 );
+          fits[i][j]->FixParameter( 5, jetHadron::pi );
           fits[i][j]->SetParameter( 3, 0.2 );
-          
+          fits[i][j]->SetParameter( 6, 0.2 );
+          if ( j <= 2 ) {
+            fits[i][j]->SetParameter( 3, 0.3);
+            fits[i][j]->SetParameter( 6, 0.3);
+          }
           histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
           counter++;
           
