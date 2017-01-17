@@ -836,7 +836,7 @@ int main( int argc, const char** argv) {
   AuAuDPhiYield->Write();
   AuAuDPhiSubYield->Write();
   AuAuDEtaYield->Write();
-  AuAUDEtaSubYield->Write();
+  AuAuDEtaSubYield->Write();
   PPDPhiYield->Write();
   PPDPhiSubYield->Write();
   PPDEtaYield->Write();
