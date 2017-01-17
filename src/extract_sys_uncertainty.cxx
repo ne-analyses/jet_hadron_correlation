@@ -78,7 +78,7 @@ int main () {
   std::vector<std::string> analysisNames;
   
   TString location = "out/added/pp/";
-  TString trigger = "trg6";
+  TString trigger = "trg5.6";
   
   TString path = location + trigger;
   
