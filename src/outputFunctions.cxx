@@ -1348,7 +1348,7 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "MIQ", -1, 1 );
+        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
         
         int counter = 0;
         
@@ -1365,7 +1365,7 @@ namespace jetHadron {
           fits[i][j]->FixParameter( 2, 0 );
           fits[i][j]->SetParameter( 3, 0.2 );
           
-          histograms[i][j]->Fit( tmp.c_str(), "MIQ", -1, 1 );
+          histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
           
           counter++;
           
@@ -1403,7 +1403,7 @@ namespace jetHadron {
         fits[i][j]->SetParameter( 3, 0.2 );
         fits[i][j]->SetParameter( 6, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "MIQ", -1, 1 );
+        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
         int counter = 0;
         while ( fits[i][j]->GetParameter(0) > 0.01 ) {
           std::string tmpName = tmp+"sub";
@@ -1418,7 +1418,7 @@ namespace jetHadron {
           fits[i][j]->FixParameter( 2, 0 );
           fits[i][j]->SetParameter( 3, 0.2 );
           
-          histograms[i][j]->Fit( tmp.c_str(), "MIQ", -1, 1 );
+          histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
           counter++;
           
           if ( counter >= 20 )
