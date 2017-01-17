@@ -560,8 +560,8 @@ int main( int argc, const char** argv) {
   for ( int i = etaBinLow; i <= etaBinHigh; ++i ) {
     for ( int j = 1; j <= phiBins; ++j ) {
       
-      corr2dAuAu->SetBinContent( i-etaBinLow, j, averagedMixedEventCorrected[0][1]->GetBinContent( i, j ) );
-      corr2dPP->SetBinContent( i-etaBinLow, j, averagedMixedEventCorrected[1][1]->GetBinContent( i, j ) );
+      corr2dAuAu->SetBinContent( i-etaBinLow+1, j, averagedMixedEventCorrected[0][1]->GetBinContent( i, j ) );
+      corr2dPP->SetBinContent( i-etaBinLow+1, j, averagedMixedEventCorrected[1][1]->GetBinContent( i, j ) );
       
     }
   }
@@ -632,51 +632,69 @@ int main( int argc, const char** argv) {
   
   for ( int i = etaBinLow1D; i <= etaBinHigh1D; ++i ) {
   
-    corr1DAuAuDEtaLow->SetBinContent( i-etaBinLow1D, corrected_deta_lead[0][1]->GetBinContent( i ) );
-    corr1DAuAuDEtaLow->SetBinError( i-etaBinLow1D, corrected_deta_lead[0][1]->GetBinError( i ) );
-    corr1DAuAuDEtaHigh->SetBinContent( i-etaBinLow1D, corrected_deta_lead[0][2]->GetBinContent( i ) );
-    corr1DAuAuDEtaHigh->SetBinError( i-etaBinLow1D, corrected_deta_lead[0][2]->GetBinError( i ) );
+    corr1DAuAuDEtaLow->SetBinContent( i-etaBinLow1D+1, corrected_deta_lead[0][1]->GetBinContent( i ) );
+    corr1DAuAuDEtaLow->SetBinError( i-etaBinLow1D+1, corrected_deta_lead[0][1]->GetBinError( i ) );
+    corr1DAuAuDEtaHigh->SetBinContent( i-etaBinLow1D+1, corrected_deta_lead[0][2]->GetBinContent( i ) );
+    corr1DAuAuDEtaHigh->SetBinError( i-etaBinLow1D+1, corrected_deta_lead[0][2]->GetBinError( i ) );
     
-    corr1DPPDEtaLow->SetBinContent( i-etaBinLow1D, corrected_deta_lead[1][1]->GetBinContent( i ) );
-    corr1DPPDEtaLow->SetBinError( i-etaBinLow1D, corrected_deta_lead[1][1]->GetBinError( i ) );
-    corr1DPPDEtaHigh->SetBinContent( i-etaBinLow1D, corrected_deta_lead[1][2]->GetBinContent( i ) );
-    corr1DPPDEtaHigh->SetBinError( i-etaBinLow1D, corrected_deta_lead[1][2]->GetBinError( i ) );
+    corr1DPPDEtaLow->SetBinContent( i-etaBinLow1D+1, corrected_deta_lead[1][1]->GetBinContent( i ) );
+    corr1DPPDEtaLow->SetBinError( i-etaBinLow1D+1, corrected_deta_lead[1][1]->GetBinError( i ) );
+    corr1DPPDEtaHigh->SetBinContent( i-etaBinLow1D+1, corrected_deta_lead[1][2]->GetBinContent( i ) );
+    corr1DPPDEtaHigh->SetBinError( i-etaBinLow1D+1, corrected_deta_lead[1][2]->GetBinError( i ) );
     
-    corr1DAuAuDEtaSubLow->SetBinContent( i-etaBinLow1D, corrected_deta_sub[0][1]->GetBinContent( i ) );
-    corr1DAuAuDEtaSubLow->SetBinError( i-etaBinLow1D, corrected_deta_sub[0][1]->GetBinError( i ) );
-    corr1DAuAuDEtaSubHigh->SetBinContent( i-etaBinLow1D, corrected_deta_sub[0][2]->GetBinContent( i ) );
-    corr1DAuAuDEtaSubHigh->SetBinError( i-etaBinLow1D, corrected_deta_sub[0][2]->GetBinError( i ) );
+    corr1DAuAuDEtaSubLow->SetBinContent( i-etaBinLow1D+1, corrected_deta_sub[0][1]->GetBinContent( i ) );
+    corr1DAuAuDEtaSubLow->SetBinError( i-etaBinLow1D+1, corrected_deta_sub[0][1]->GetBinError( i ) );
+    corr1DAuAuDEtaSubHigh->SetBinContent( i-etaBinLow1D+1, corrected_deta_sub[0][2]->GetBinContent( i ) );
+    corr1DAuAuDEtaSubHigh->SetBinError( i-etaBinLow1D+1, corrected_deta_sub[0][2]->GetBinError( i ) );
     
-    corr1DPPDEtaSubLow->SetBinContent( i-etaBinLow1D, corrected_deta_sub[1][1]->GetBinContent( i ) );
-    corr1DPPDEtaSubLow->SetBinError( i-etaBinLow1D, corrected_deta_sub[1][1]->GetBinError( i ) );
-    corr1DPPDEtaSubHigh->SetBinContent( i-etaBinLow1D, corrected_deta_sub[1][2]->GetBinContent( i ) );
-    corr1DPPDEtaSubHigh->SetBinError( i-etaBinLow1D, corrected_deta_sub[1][2]->GetBinError( i ) );
+    corr1DPPDEtaSubLow->SetBinContent( i-etaBinLow1D+1, corrected_deta_sub[1][1]->GetBinContent( i ) );
+    corr1DPPDEtaSubLow->SetBinError( i-etaBinLow1D+1, corrected_deta_sub[1][1]->GetBinError( i ) );
+    corr1DPPDEtaSubHigh->SetBinContent( i-etaBinLow1D+1, corrected_deta_sub[1][2]->GetBinContent( i ) );
+    corr1DPPDEtaSubHigh->SetBinError( i-etaBinLow1D+1, corrected_deta_sub[1][2]->GetBinError( i ) );
     
   }
   
   for ( int i = phiBinLow1D; i <= phiBinHigh1D; ++i ) {
     
-    corr1DAuAuDPhiLow->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted[0][1]->GetBinContent( i ) );
-    corr1DAuAuDPhiLow->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted[0][1]->GetBinError( i ) );
-    corr1DAuAuDPhiHigh->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted[0][2]->GetBinContent( i ) );
-    corr1DAuAuDPhiHigh->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted[0][2]->GetBinError( i ) );
+    corr1DAuAuDPhiLow->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted[0][1]->GetBinContent( i ) );
+    corr1DAuAuDPhiLow->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted[0][1]->GetBinError( i ) );
+    corr1DAuAuDPhiHigh->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted[0][2]->GetBinContent( i ) );
+    corr1DAuAuDPhiHigh->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted[0][2]->GetBinError( i ) );
     
-    corr1DPPDPhiLow->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted[1][1]->GetBinContent( i ) );
-    corr1DPPDPhiLow->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted[1][1]->GetBinError( i ) );
-    corr1DPPDPhiHigh->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted[1][2]->GetBinContent( i ) );
-    corr1DPPDPhiHigh->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted[1][2]->GetBinError( i ) );
+    corr1DPPDPhiLow->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted[1][1]->GetBinContent( i ) );
+    corr1DPPDPhiLow->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted[1][1]->GetBinError( i ) );
+    corr1DPPDPhiHigh->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted[1][2]->GetBinContent( i ) );
+    corr1DPPDPhiHigh->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted[1][2]->GetBinError( i ) );
     
-    corr1DAuAuDPhiSubLow->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted_sub[0][1]->GetBinContent( i ) );
-    corr1DAuAuDPhiSubLow->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted_sub[0][1]->GetBinError( i ) );
-    corr1DAuAuDPhiSubHigh->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted_sub[0][2]->GetBinContent( i ) );
-    corr1DAuAuDPhiSubHigh->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted_sub[0][2]->GetBinError( i ) );
+    corr1DAuAuDPhiSubLow->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[0][1]->GetBinContent( i ) );
+    corr1DAuAuDPhiSubLow->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[0][1]->GetBinError( i ) );
+    corr1DAuAuDPhiSubHigh->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[0][2]->GetBinContent( i ) );
+    corr1DAuAuDPhiSubHigh->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[0][2]->GetBinError( i ) );
     
-    corr1DPPDPhiSubLow->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted_sub[1][1]->GetBinContent( i ) );
-    corr1DPPDPhiSubLow->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted_sub[1][1]->GetBinError( i ) );
-    corr1DPPDPhiSubHigh->SetBinContent( i-phiBinLow1D, corrected_dphi_subtracted_sub[1][2]->GetBinContent( i ) );
-    corr1DPPDPhiSubHigh->SetBinError( i-phiBinLow1D, corrected_dphi_subtracted_sub[1][2]->GetBinError( i ) );
+    corr1DPPDPhiSubLow->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[1][1]->GetBinContent( i ) );
+    corr1DPPDPhiSubLow->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[1][1]->GetBinError( i ) );
+    corr1DPPDPhiSubHigh->SetBinContent( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[1][2]->GetBinContent( i ) );
+    corr1DPPDPhiSubHigh->SetBinError( i-phiBinLow1D+1, corrected_dphi_subtracted_sub[1][2]->GetBinError( i ) );
     
   }
+  
+  TGraphErrors* AuAuDPhiYield = (TGraphErrors*) dphi_yield_graph[0]->Clone();
+  AuAuDPhiYield->SetName("AuAuDPhiYield");
+  TGraphErrors* AuAuDEtaYield = (TGraphErrors*) deta_yield_graph[0]->Clone();
+  AuAuDEtaYield->SetName("AuAuDEtaYield");
+  TGraphErrors* AuAuDPhiSubYield = (TGraphErrors*) dphi_sub_yield_graph[0]->Clone();
+  AuAuDPhiSubYield->SetName("AuAuDPhiSubYield");
+  TGraphErrors* AuAuDEtaSubYield  = (TGraphErrors*) deta_sub_yield_graph[0]->Clone();
+  AuAuDEtaSubYield->SetName("AuAuDEtaSubYield");
+  
+  TGraphErrors* PPDPhiYield = (TGraphErrors*) dphi_yield_graph[1]->Clone();
+  PPDPhiYield->SetName("PPDPhiYield");
+  TGraphErrors* PPDEtaYield = (TGraphErrors*) deta_yield_graph[1]->Clone();
+  PPDEtaYield->SetName("PPDEtaYield");
+  TGraphErrors* PPDPhiSubYield = (TGraphErrors*) dphi_sub_yield_graph[1]->Clone();
+  PPDPhiSubYield->SetName("PPDPhiSubYield");
+  TGraphErrors* PPDEtaSubYield = (TGraphErrors*) deta_sub_yield_graph[1]->Clone();
+  PPDEtaSubYield->SetName("PPDEtaSubYield");
   
   outFile.Write();
   outFile.Close();
