@@ -1467,7 +1467,7 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.2 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "MIQ", -1.2, 1.2 );
+        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1.2, 1.2 );
         
         int counter = 0;
         
