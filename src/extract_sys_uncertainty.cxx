@@ -172,10 +172,10 @@ int main () {
   // define what "regions" we want the subtraction to be done in
   double subtractionRegions[4] = { -1.0, -0.6, 0.6, 1.0 };
   
-  std::vector<std::vector<TH1F*> > corrected_dphi_tow = jetHadron::ProjectDphiNearMinusFar( correctedTow, selector, "corTowDPhi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_tow_sub = jetHadron::ProjectDphiNearMinusFar( correctedTowSub, selector, "corTowDPhiSub", true  );
-  std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector, "corTrkDPhi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, "corTrkDPhiSub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow = jetHadron::ProjectDphiNearMinusFar( correctedTow, selector, subtractionRegions, "corTowDPhi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow_sub = jetHadron::ProjectDphiNearMinusFar( correctedTowSub, selector, subtractionRegions, "corTowDPhiSub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector, subtractionRegions, "corTrkDPhi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, subtractionRegions, "corTrkDPhiSub", true  );
   
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_tow, selector );
