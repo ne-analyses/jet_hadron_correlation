@@ -1569,7 +1569,7 @@ namespace jetHadron {
       errors[i].resize( histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        integrals[i][j] = histograms[i][j]->IntegralAndError( lowBin, highBin, errors[i][j] );
+        integrals[i][j] = histograms[i][j]->IntegralAndError( lowBin, highBin, errors[i][j], "width");
       }
       
     }
