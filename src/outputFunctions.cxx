@@ -1413,7 +1413,7 @@ namespace jetHadron {
         
         histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1, 1 );
         int counter = 0;
-        while ( fits[i][j]->GetParameter(0) > 0.01 ) {
+        while ( fabs(fits[i][j]->GetParameter(0)) > 0.01 ) {
           std::string tmpName = tmp+"sub";
           TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), phi_min, phi_max );
           tmpSub->SetParameter( 0, fits[i][j]->GetParameter(0) );
