@@ -77,7 +77,7 @@ int main () {
   std::vector<TFile*> mixFiles;
   std::vector<std::string> analysisNames;
   
-  TString location = "out/added/ppembedhard/";
+  TString location = "out/added/pp/";
   TString trigger = "trg6";
   
   TString path = location + trigger;

@@ -1377,6 +1377,9 @@ namespace jetHadron {
             break;
         }
         
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
+        
       }
     }
     
@@ -1438,7 +1441,9 @@ namespace jetHadron {
             break;
           
         }
-
+        
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
         
       }
     }
@@ -1494,7 +1499,9 @@ namespace jetHadron {
             break;
         }
 
-
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
+        
       }
     }
     return fits;
