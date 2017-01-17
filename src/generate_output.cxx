@@ -681,6 +681,32 @@ int main( int argc, const char** argv) {
   corr1DPPDEtaSubHighSys->GetXaxis()->SetTitle("#Delta#eta");
   corr1DPPDEtaSubHighSys->GetYaxis()->SetTitle( corrected_deta_lead[0][0]->GetYaxis()->GetTitle() );
   
+  // AAAAND THE RELATIVE SYSTEMATIC ERRORS
+  TH1F* corr1DPPDPhiLowSysRel = new TH1F( "corr1DPPDPhiLowSysRel", corrected_dphi_subtracted[1][1]->GetTitle(), phiBins1D, phiBoundLow1D, phiBoundHigh1D  );
+  corr1DPPDPhiLowSys->GetXaxis()->SetTitle("#Delta#phi");
+  corr1DPPDPhiLowSys->GetYaxis()->SetTitle( corrected_dphi_subtracted[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDPhiHighSysRel = new TH1F( "corr1DPPDPhiHighSysRel", corrected_dphi_subtracted[1][2]->GetTitle(), phiBins1D, phiBoundLow1D, phiBoundHigh1D  );
+  corr1DPPDPhiHighSys->GetXaxis()->SetTitle("#Delta#phi");
+  corr1DPPDPhiHighSys->GetYaxis()->SetTitle( corrected_dphi_subtracted[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDEtaLowSysRel = new TH1F( "corr1DPPDEtaLowSysRel", corrected_deta_lead[1][1]->GetTitle(), etaBins1D, etaBoundLow1D, etaBoundHigh1D );
+  corr1DPPDEtaLowSys->GetXaxis()->SetTitle("#Delta#eta");
+  corr1DPPDEtaLowSys->GetYaxis()->SetTitle( corrected_deta_lead[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDEtaHighSysRel = new TH1F( "corr1DPPDEtaHighSysRel", corrected_deta_lead[1][2]->GetTitle(), etaBins1D, etaBoundLow1D, etaBoundHigh1D);
+  corr1DPPDEtaHighSys->GetXaxis()->SetTitle("#Delta#eta");
+  corr1DPPDEtaHighSys->GetYaxis()->SetTitle( corrected_deta_lead[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDPhiSubLowSysRel = new TH1F( "corr1DPPDPhiLowRecoilSysRel", corrected_dphi_subtracted[1][1]->GetTitle(), phiBins1D, phiBoundLow1D, phiBoundHigh1D  );
+  corr1DPPDPhiSubLowSys->GetXaxis()->SetTitle("#Delta#phi");
+  corr1DPPDPhiSubLowSys->GetYaxis()->SetTitle( corrected_dphi_subtracted[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDPhiSubHighSysRel = new TH1F( "corr1DPPDPhiHighRecoilSysRel", corrected_dphi_subtracted[1][2]->GetTitle(), phiBins1D, phiBoundLow1D, phiBoundHigh1D  );
+  corr1DPPDPhiSubHighSys->GetXaxis()->SetTitle("#Delta#phi");
+  corr1DPPDPhiSubHighSys->GetYaxis()->SetTitle( corrected_dphi_subtracted[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDEtaSubLowSysRel = new TH1F( "corr1DPPDEtaLowRecoilSysRel", corrected_deta_lead[1][1]->GetTitle(), etaBins1D, etaBoundLow1D, etaBoundHigh1D );
+  corr1DPPDEtaSubLowSys->GetXaxis()->SetTitle("#Delta#eta");
+  corr1DPPDEtaSubLowSys->GetYaxis()->SetTitle( corrected_deta_lead[0][0]->GetYaxis()->GetTitle() );
+  TH1F* corr1DPPDEtaSubHighSysRel = new TH1F( "corr1DPPDEtaHighRecoilSysRel", corrected_deta_lead[1][2]->GetTitle(), etaBins1D, etaBoundLow1D, etaBoundHigh1D);
+  corr1DPPDEtaSubHighSys->GetXaxis()->SetTitle("#Delta#eta");
+  corr1DPPDEtaSubHighSys->GetYaxis()->SetTitle( corrected_deta_lead[0][0]->GetYaxis()->GetTitle() );
+  
   for ( int i = etaBinLow1D; i <= etaBinHigh1D; ++i ) {
   
     corr1DAuAuDEtaLow->SetBinContent( i-etaBinLow1D+1, corrected_deta_lead[0][1]->GetBinContent( i ) );
@@ -722,6 +748,16 @@ int main( int argc, const char** argv) {
     corr1DPPDEtaSubLowSys->SetBinError( i-etaBinLow1D+1, deta_sub_yield_err[1][1]->GetBinError( i ) );
     corr1DPPDEtaSubHighSys->SetBinContent( i-etaBinLow1D+1, deta_sub_yield_err[1][2]->GetBinContent( i ) );
     corr1DPPDEtaSubHighSys->SetBinError( i-etaBinLow1D+1, deta_sub_yield_err[1][2]->GetBinError( i ) );
+    
+    corr1DPPDEtaLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[1][1]->GetBinContent( i ) );
+    corr1DPPDEtaLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[1][1]->GetBinError( i ) );
+    corr1DPPDEtaHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[1][2]->GetBinContent( i ) );
+    corr1DPPDEtaHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[1][2]->GetBinError( i ) );
+    
+    corr1DPPDEtaSubLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sub_sys[1][1]->GetBinContent( i ) );
+    corr1DPPDEtaSubLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sub_sys[1][1]->GetBinError( i ) );
+    corr1DPPDEtaSubHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sub_sys[1][2]->GetBinContent( i ) );
+    corr1DPPDEtaSubHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sub_sys[1][2]->GetBinError( i ) );
     
   }
   
@@ -767,6 +803,15 @@ int main( int argc, const char** argv) {
     corr1DPPDPhiSubHighSys->SetBinContent( i-phiBinLow1D+1, dphi_sub_yield_err[1][2]->GetBinContent( i ) );
     corr1DPPDPhiSubHighSys->SetBinError( i-phiBinLow1D+1, dphi_sub_yield_err[1][2]->GetBinError( i ) );
     
+    corr1DPPDPhiLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[1][1]->GetBinContent( i ) );
+    corr1DPPDPhiLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[1][1]->GetBinError( i ) );
+    corr1DPPDPhiHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[1][2]->GetBinContent( i ) );
+    corr1DPPDPhiHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[1][2]->GetBinError( i ) );
+
+    corr1DPPDPhiSubLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sub_sys[1][1]->GetBinContent( i ) );
+    corr1DPPDPhiSubLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sub_sys[1][1]->GetBinError( i ) );
+    corr1DPPDPhiSubHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sub_sys[1][2]->GetBinContent( i ) );
+    corr1DPPDPhiSubHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sub_sys[1][2]->GetBinError( i ) );
   }
   
   // save the yields
@@ -804,6 +849,21 @@ int main( int argc, const char** argv) {
   TGraphErrors* PPDPhiSubYieldSysRel = (TGraphErrors*) dphi_sub_yield_graph_sys_rel[0]->Clone("PPDPhiSubSysRel");
   TGraphErrors* PPDEtaSubYieldSysRel = (TGraphErrors*) deta_sub_yield_graph_sys_rel[0]->Clone("PPDEtaSubSysRel");
   
+  AuAuDPhiYieldSys->Write();
+  AuAuDEtaYieldSys->Write();
+  AuAuDPhiSubYieldSys->Write();
+  AuAUDEtaSubYieldSys->Write();
+  
+  PPDPhiYieldSys->Write();
+  PPDEtaYieldSys->Write();
+  PPDPhiSubYieldSys->Write();
+  PPDEtaSubYieldSys->Write();
+
+  PPDPhiYieldSysRel->Write();
+  PPDEtaYieldSysRel->Write();
+  PPDPhiSubYieldSysRel->Write();
+  PPDEtaSubYieldSysRel->Write();
+
   outFile.Write();
   outFile.Close();
   return 0;
