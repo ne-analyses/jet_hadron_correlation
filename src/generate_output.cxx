@@ -749,15 +749,15 @@ int main( int argc, const char** argv) {
     corr1DPPDEtaSubHighSys->SetBinContent( i-etaBinLow1D+1, deta_sub_yield_err[1][2]->GetBinContent( i ) );
     corr1DPPDEtaSubHighSys->SetBinError( i-etaBinLow1D+1, deta_sub_yield_err[1][2]->GetBinError( i ) );
     
-    corr1DPPDEtaLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[1][1]->GetBinContent( i ) );
-    corr1DPPDEtaLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[1][1]->GetBinError( i ) );
-    corr1DPPDEtaHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[1][2]->GetBinContent( i ) );
-    corr1DPPDEtaHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[1][2]->GetBinError( i ) );
+    corr1DPPDEtaLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[0][1]->GetBinContent( i ) );
+    corr1DPPDEtaLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[0][1]->GetBinError( i ) );
+    corr1DPPDEtaHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys[0][2]->GetBinContent( i ) );
+    corr1DPPDEtaHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sys[0][2]->GetBinError( i ) );
     
-    corr1DPPDEtaSubLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys_sub[1][1]->GetBinContent( i ) );
-    corr1DPPDEtaSubLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sys_sub[1][1]->GetBinError( i ) );
-    corr1DPPDEtaSubHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys_sub[1][2]->GetBinContent( i ) );
-    corr1DPPDEtaSubHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sys_sub[1][2]->GetBinError( i ) );
+    corr1DPPDEtaSubLowSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys_sub[0][1]->GetBinContent( i ) );
+    corr1DPPDEtaSubLowSysRel->SetBinError( i-etaBinLow1D+1, deta_sys_sub[0][1]->GetBinError( i ) );
+    corr1DPPDEtaSubHighSysRel->SetBinContent( i-etaBinLow1D+1, deta_sys_sub[0][2]->GetBinContent( i ) );
+    corr1DPPDEtaSubHighSysRel->SetBinError( i-etaBinLow1D+1, deta_sys_sub[0][2]->GetBinError( i ) );
     
   }
   
@@ -803,15 +803,15 @@ int main( int argc, const char** argv) {
     corr1DPPDPhiSubHighSys->SetBinContent( i-phiBinLow1D+1, dphi_sub_yield_err[1][2]->GetBinContent( i ) );
     corr1DPPDPhiSubHighSys->SetBinError( i-phiBinLow1D+1, dphi_sub_yield_err[1][2]->GetBinError( i ) );
     
-    corr1DPPDPhiLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[1][1]->GetBinContent( i ) );
-    corr1DPPDPhiLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[1][1]->GetBinError( i ) );
-    corr1DPPDPhiHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[1][2]->GetBinContent( i ) );
-    corr1DPPDPhiHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[1][2]->GetBinError( i ) );
+    corr1DPPDPhiLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[0][1]->GetBinContent( i ) );
+    corr1DPPDPhiLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[0][1]->GetBinError( i ) );
+    corr1DPPDPhiHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys[0][2]->GetBinContent( i ) );
+    corr1DPPDPhiHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys[0][2]->GetBinError( i ) );
 
-    corr1DPPDPhiSubLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys_sub[1][1]->GetBinContent( i ) );
-    corr1DPPDPhiSubLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys_sub[1][1]->GetBinError( i ) );
-    corr1DPPDPhiSubHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys_sub[1][2]->GetBinContent( i ) );
-    corr1DPPDPhiSubHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys_sub[1][2]->GetBinError( i ) );
+    corr1DPPDPhiSubLowSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys_sub[0][1]->GetBinContent( i ) );
+    corr1DPPDPhiSubLowSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys_sub[0][1]->GetBinError( i ) );
+    corr1DPPDPhiSubHighSysRel->SetBinContent( i-phiBinLow1D+1, dphi_sys_sub[0][2]->GetBinContent( i ) );
+    corr1DPPDPhiSubHighSysRel->SetBinError( i-phiBinLow1D+1, dphi_sys_sub[0][2]->GetBinError( i ) );
   }
   
   // save the yields
