@@ -833,6 +833,15 @@ int main( int argc, const char** argv) {
   TGraphErrors* PPDEtaSubYield = (TGraphErrors*) deta_sub_yield_graph[1]->Clone();
   PPDEtaSubYield->SetName("PPDEtaSubYield");
   
+  AuAuDPhiYield->Write();
+  AuAuDPhiSubYield->Write();
+  AuAuDEtaYield->Write();
+  AuAUDEtaSubYield->Write();
+  PPDPhiYield->Write();
+  PPDPhiSubYield->Write();
+  PPDEtaYield->Write();
+  PPDEtaSubYield->Write();
+  
   // aaaand the errors
   TGraphErrors* AuAuDPhiYieldSys = (TGraphErrors*) dphi_yield_sys_graph[0]->Clone("AuAuDPhiSys");
   TGraphErrors* AuAuDEtaYieldSys = (TGraphErrors*) deta_yield_sys_graph[0]->Clone("AuAuDEtaSys");
