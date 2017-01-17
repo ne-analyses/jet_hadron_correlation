@@ -678,6 +678,7 @@ int main( int argc, const char** argv) {
     
   }
   
+  // save the yields
   TGraphErrors* AuAuDPhiYield = (TGraphErrors*) dphi_yield_graph[0]->Clone();
   AuAuDPhiYield->SetName("AuAuDPhiYield");
   TGraphErrors* AuAuDEtaYield = (TGraphErrors*) deta_yield_graph[0]->Clone();
@@ -695,6 +696,22 @@ int main( int argc, const char** argv) {
   PPDPhiSubYield->SetName("PPDPhiSubYield");
   TGraphErrors* PPDEtaSubYield = (TGraphErrors*) deta_sub_yield_graph[1]->Clone();
   PPDEtaSubYield->SetName("PPDEtaSubYield");
+  
+  // aaaand the errors
+  TGraphErrors* AuAuDPhiYieldSys = (TGraphErrors*) dphi_yield_sys_graph[0]->Clone("AuAuDPhiSys");
+  TGraphErrors* AuAuDEtaYieldSys = (TGraphErrors*) deta_yield_sys_graph[0]->Clone("AuAuDEtaSys");
+  TGraphErrors* AuAuDPhiSubYieldSys = (TGraphErrors*) dphi_sub_yield_sys_graph[0]->Clone("AuAuDPhiSubSys");
+  TGraphErrors* AuAUDEtaSubYieldSys = (TGraphErrors*) deta_sub_yield_sys_graph[0]->Clone("AuAuDEtaSubSys");
+  
+  TGraphErrors* PPDPhiYieldSys = (TGraphErrors*) dphi_yield_sys_graph[1]->Clone("PPDPhiSys");
+  TGraphErrors* PPDEtaYieldSys = (TGraphErrors*) deta_yield_sys_graph[1]->Clone("PPDEtaSys");
+  TGraphErrors* PPDPhiSubYieldSys = (TGraphErrors*) dphi_sub_yield_sys_graph[1]->Clone("PPDPhiSubSys");
+  TGraphErrors* PPDEtaSubYieldSys = (TGraphErrors*) deta_sub_yield_sys_graph[1]->Clone("PPDEtaSubSys");
+  
+  TGraphErrors* PPDPhiYieldSysRel = (TGraphErrors*)  dphi_yield_graph_sys_rel[0]->Clone("PPDPhiSysRel");
+  TGraphErrors* PPDEtaYieldSysRel = (TGraphErrors*)  deta_yield_graph_sys_rel[0]->Clone("PPDEtaSysRel");
+  TGraphErrors* PPDPhiSubYieldSysRel = (TGraphErrors*) dphi_sub_yield_graph_sys_rel[0]->Clone("PPDPhiSubSysRel");
+  TGraphErrors* PPDEtaSubYieldSysRel = (TGraphErrors*) deta_sub_yield_graph_sys_rel[0]->Clone("PPDEtaSubSysRel");
   
   outFile.Write();
   outFile.Close();
