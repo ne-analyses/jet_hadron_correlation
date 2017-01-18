@@ -537,6 +537,13 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErr( corrected_deta_sub, deta_sub_yield_err, selector, outputDirBase+"/deta_yield_err_sub", -0.8 , 0.8  );
   
   
+  // and plot the full histograms
+  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_lead, dphi_yield_err, dphi_sys[0], selector, outputDirBase+"/new_dphi_yield_err_lead", -0.8, 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", -0.8 , 0.8  );
+  
+  
   return 0;
 }
 
