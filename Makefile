@@ -1,7 +1,7 @@
 os = $(shell uname -s)
 
 #INCFLAGS      = -I$(ROOTSYS)/include -I$(FASTJETDIR)/include -I$(STARPICOPATH)
-INCFLAGS      =  -I$(shell root-config --incdir) -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include -I$(BOOSTDIR)/include
+INCFLAGS      =  -I$(shell root-config --incdir) -I$(FASTJETDIR)/include -I$(STARPICODIR) -I/opt/local/include -I$(BOOSTDIR)/include -I$(shell pythia8-config --includedir)
 
 
 ifeq ($(os),Linux)
@@ -30,10 +30,11 @@ endif
 
 ROOTLIBS      = $(shell root-config --libs)
 FJLIBS        = $(shell fastjet-config --libs)
+PYTHIALIBS    = $(shell pythia8-config --ldflags)
 
 #LIBPATH       = $(ROOTLIBS) -L$(FASTJETDIR)/lib -L$(STARPICODIR)
 #LIBS          = -lTStarJetPico -lfastjet -lfastjettools
-LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS) -L$(BOOSTDIR)/lib -lboost_filesystem -lboost_system
+LIBS          = -L$(STARPICODIR) -lTStarJetPico $(ROOTLIBS) $(FJLIBS) -L$(BOOSTDIR)/lib -lboost_filesystem -lboost_system $(PYTHIALIBS)
 
 # for cleanup
 SDIR          = src
@@ -63,7 +64,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty
+all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty $(BDIR)/pythia_background
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -74,6 +75,7 @@ $(ODIR)/corrFunctions.o					: $(SDIR)/corrFunctions.cxx $(SDIR)/corrFunctions.hh
 $(ODIR)/histograms.o            : $(SDIR)/histograms.cxx $(SDIR)/histograms.hh
 $(ODIR)/outputFunctions.o       : $(SDIR)/outputFunctions.cxx $(SDIR)/outputFunctions.hh
 $(ODIR)/extract_sys_uncertainty.o : $(SDIR)/extract_sys_uncertainty.cxx
+$(ODIR)/pythia_background.o     : $(SDIR)/pythia_background.cxx
 
 #$(ODIR)/qa_v1.o 		: $(SDIR)/qa_v1.cxx
 $(ODIR)/test.o			: $(SDIR)/test.cxx
@@ -92,7 +94,7 @@ $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(OD
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/extract_sys_uncertainty: $(ODIR)/extract_sys_uncertainty.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
-
+$(BDIR)/pythia_background   : $(ODIR)/pythia_background.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 ###############################################################################
 ##################################### MISC ####################################
 ###############################################################################
