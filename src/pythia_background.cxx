@@ -428,7 +428,7 @@ int main( int argc, const char** argv ) {
   }
   
   // write out the dijet/jet trees
-  std::cout<<"making the stuff!"<<std::endl;
+  std::cout<<"making the stuff! in "<< (outputDir + corrOutFile).c_str() <<std::endl;
   TFile*  Out   = new TFile( (outputDir + corrOutFile).c_str(), "RECREATE" );
   Out->cd();
   hCorrLead->Write();
