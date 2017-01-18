@@ -913,7 +913,7 @@ namespace jetHadron {
         farFit->SetParameter( 6, 0.2 );
         
         projections[i][j]->Fit( "nearFit", "RMIQ" );
-        sub_tmp->Fit( "farFit", "RMIQ" )
+        sub_tmp->Fit( "farFit", "RMIQ" );
         
         double scale = nearFit->GetParameter(0)/farFit->GetParameter(0);
         // scale the subtraction histogram by the relative number of bins
