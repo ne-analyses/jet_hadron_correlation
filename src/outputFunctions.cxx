@@ -818,6 +818,10 @@ namespace jetHadron {
         double region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
         double region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
         
+        std::cout<<"region 1: "<< region1Low << " "<<region1High << std::endl;
+        std::cout<<"region 2: "<< region2Low << " "<<region2High << std::endl;
+        std::cout<<"region 3: "<< region3Low << " "<<region3High << std::endl;
+        
         // do some sanity checking
         if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
           __ERR("Can't project - high edge less than low edge for one of the projection regions")
