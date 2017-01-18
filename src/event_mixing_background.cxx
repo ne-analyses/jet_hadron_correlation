@@ -552,6 +552,10 @@ int main ( int argc, const char** argv) {
       // get the event
       reader.ReadEvent( randomizedEventID[j] );
       
+      // Get the event header and event
+      event = reader.GetEvent();
+      header = event->GetHeader();
+      
       // count event
       // first set any dummy variables necessary
       if ( jetHadron::BeginsWith( analysisType, "pp") )
@@ -562,7 +566,22 @@ int main ( int argc, const char** argv) {
       
       // get the reference centrality definition used by
       // the track efficiency class
-      int refCentAlt = jetHadron::GetReferenceCentralityAlt( centBranch );
+      
+      // Find the reference centrality
+      // for y14 it takes the corrected gRefMult and
+      // corresponding reference centrality
+      int gRefMult = 0;
+      int refCent  = 0;
+      if ( header->GetCorrectedGReferenceMultiplicity() ) {
+        gRefMult = header->GetCorrectedGReferenceMultiplicity();
+        refCent = header->GetGReferenceCentrality();
+      }
+      else {
+        gRefMult = header->GetGReferenceMultiplicity();
+        refCent  = jetHadron::GetReferenceCentrality( gRefMult );
+      }
+      
+      int refCentAlt = jetHadron::GetReferenceCentralityAlt( refCent );
       
       // get event headers
       event = reader.GetEvent();
