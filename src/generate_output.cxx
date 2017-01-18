@@ -136,7 +136,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/results/jet_20_10_trig_6__05_10";
+      outputDirBase = "/results/jet_20_10_trig_6__06_12";
       
       break;
     }
