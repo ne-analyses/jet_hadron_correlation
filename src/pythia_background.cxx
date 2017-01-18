@@ -349,7 +349,7 @@ int main( int argc, const char** argv ) {
       // Now first apply global jet selector to inclusive jets, then sort by pt
       std::vector<fastjet::PseudoJet> HiResult = fastjet::sorted_by_pt( selectorJetCandidate ( clusterSequenceHigh.inclusive_jets() ) );
       
-      if ( HiResult.size() && HiResult[0].pt() > leadJetPtMin*0.8 ) {
+      if ( !HiResult.size() || HiResult[0].pt() < leadJetPtMin*0.8 ) {
         goodBkgEvent = true;
       }
       else {
