@@ -316,7 +316,23 @@ int main( int argc, const char** argv) {
   // *************************************
   // define what "regions" we want the subtraction to be done in
   double subtractionRegions[4] = { -1.0, -0.7, 0.7, 1.0 };
-
+  
+//  TCanvas c1;
+//  TH2F* testHist = (TH2F*) averagedMixedEventCorrected[0][1]->Clone();
+//  for ( int i = 4; i <= 12; ++i ) {
+//    testHist->GetXaxis()->SetRange( i, i );
+//    TH1F* tmpHist = (TH1F*) testHist->ProjectionY();
+//    std::string testname = "test_" + i;
+//    tmpHist->SetName( testname.c_str() );
+//    tmpHist->SetLineColor( i-3 );
+//    if ( i == 4 )
+//      tmpHist->Draw();
+//    else
+//      tmpHist->Draw("same");
+//  }
+//
+//  return 0;
+  
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
   
@@ -328,8 +344,8 @@ int main( int argc, const char** argv) {
   
   
   // do background subtraction
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted_sub, selector );
+  //jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted, selector );
+  //jetHadron::SubtractBackgroundDphi( corrected_dphi_subtracted_sub, selector );
   
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
