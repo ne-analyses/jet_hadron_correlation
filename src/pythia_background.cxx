@@ -435,6 +435,8 @@ int main( int argc, const char** argv ) {
   hLead->Write();
   hSub->Write();
   hCounter->Write();
+  result->Write();
+  resultSub->Write();
   Out->Close();
   
   return 0;
