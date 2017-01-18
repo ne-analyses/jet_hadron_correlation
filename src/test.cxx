@@ -47,13 +47,33 @@
 
 int main() {
   
-  TFile in ( "out/tmp/pythia.root", "READ" );
+  TFile in ( "out/added/pythia/pythia.root", "READ" );
   
   TH3D* corrLead = (TH3D*) in.Get("correlationsLead");
   TH3D* subLead = (TH3D*) in.Get("correlationsSub");
   TH1D* counts = (TH1D*) in.Get("events");
+  TH1D* ptCount = (TH1D*) in.Get("ptcount");
+  TH1D* ptCountSub = (TH1D*) in.Get("ptcountSub");
   
-  TH1D* leaddEta = (TH1D*) corrLead->ProjectionX();
-    
+  ptCount->Scale( 1.0 / counts->GetEntries() );
+  ptCountSub->Scale( 1.0 / counts->GetEntries() );
+  
+  std::vector<double> yieldsLead;
+  std::vector<double> yieldsSub;
+  
+  jetHadron::binSelector selector;
+  
+  for ( int i = 0; i < selector.nPtBins; ++i  ) {
+    yieldsLead.push_back( ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )/selector.GetPtBinWidth(i) );
+    yieldsSub.push_back( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )/selector.GetPtBinWidth(i) );
+  }
+  
+  
+  for ( int i = 0; i < yieldsLead.size(); ++i ) {
+    std::cout<<"bin: "<< i<< std::endl;
+    std::cout<<"lead int: "<< yieldsLead[i]<<std::endl;
+    std::cout<<"sub int: "<< yieldsSub[i]<<std::endl;
+  }
+  
 	return 0;
 }
