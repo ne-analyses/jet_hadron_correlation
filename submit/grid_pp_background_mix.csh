@@ -14,11 +14,11 @@
 
 
 # first make sure program is updated and exists
-make bin/event_mixing || exit
+make bin/event_mixing_background || exit
 
 set ExecPath = `pwd`
 set inputDir = $1
-set execute = './bin/event_mixing'
+set execute = './bin/event_mixing_background'
 set base = ${inputDir}/tree/tree
 
 if ( $# != "5" && !( $2 == 'default' ) ) then
