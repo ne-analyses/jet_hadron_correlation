@@ -2792,7 +2792,7 @@ namespace jetHadron {
       leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
       leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
       leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
-      
+      leg->Draw();
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.C";
@@ -2868,7 +2868,7 @@ namespace jetHadron {
       leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
       leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
       leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
-      
+      leg->Draw();
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.C";
