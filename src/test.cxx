@@ -68,8 +68,8 @@ int main() {
   double area = jetHadron::pi*0.4*0.4 / (4*jetHadron::pi);
   
   for ( int i = 0; i < selector.nPtBins; ++i  ) {
-    yieldsLead.push_back( (ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )  - ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) )/selector.GetPtBinWidth(i)  );
-    yieldsSub.push_back(  ( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) - ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ))/selector.GetPtBinWidth(i)  );
+    yieldsLead.push_back( (ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )  - area*ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) )/selector.GetPtBinWidth(i)  );
+    yieldsSub.push_back(  ( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) - area*ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ))/selector.GetPtBinWidth(i)  );
   }
   
   
