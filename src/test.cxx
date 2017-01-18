@@ -47,6 +47,13 @@
 
 int main() {
   
+  TFile in ( "out/tmp/pythia.root", "READ" );
+  
+  TH3D* corrLead = (TH3D*) in.Get("correlationsLead");
+  TH3D* subLead = (TH3D*) in.Get("correlationsSub");
+  TH1D* counts = (TH1D*) in.Get("events");
+  
+  TH1D* leaddEta = (TH1D*) corrLead->ProjectionX();
     
 	return 0;
 }
