@@ -64,7 +64,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty $(BDIR)/pythia_background
+all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/pp_correlation_background $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty $(BDIR)/pythia_background
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -74,16 +74,17 @@ $(ODIR)/ktTrackEff.o            : $(SDIR)/ktTrackEff.cxx $(SDIR)/ktTrackEff.hh
 $(ODIR)/corrFunctions.o					: $(SDIR)/corrFunctions.cxx $(SDIR)/corrFunctions.hh
 $(ODIR)/histograms.o            : $(SDIR)/histograms.cxx $(SDIR)/histograms.hh
 $(ODIR)/outputFunctions.o       : $(SDIR)/outputFunctions.cxx $(SDIR)/outputFunctions.hh
-$(ODIR)/extract_sys_uncertainty.o : $(SDIR)/extract_sys_uncertainty.cxx
-$(ODIR)/pythia_background.o     : $(SDIR)/pythia_background.cxx
 
 #$(ODIR)/qa_v1.o 		: $(SDIR)/qa_v1.cxx
 $(ODIR)/test.o			: $(SDIR)/test.cxx
 $(ODIR)/globvprim.o : $(SDIR)/globvprim.cxx
 $(ODIR)/auau_correlation.o	: $(SDIR)/auau_correlation.cxx
 $(ODIR)/pp_correlation.o		: $(SDIR)/pp_correlation.cxx
+$(ODIR)/pp_correlation_background.o		: $(SDIR)/pp_correlation_background.cxx
 $(ODIR)/event_mixing.o       : $(SDIR)/event_mixing.cxx
 $(ODIR)/generate_output.o   : $(SDIR)/generate_output.cxx
+$(ODIR)/extract_sys_uncertainty.o : $(SDIR)/extract_sys_uncertainty.cxx
+$(ODIR)/pythia_background.o     : $(SDIR)/pythia_background.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
@@ -91,6 +92,7 @@ $(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(O
 $(BDIR)/globvprim : $(ODIR)/globvprim.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
+$(BDIR)/pp_correlation_background			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/extract_sys_uncertainty: $(ODIR)/extract_sys_uncertainty.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
