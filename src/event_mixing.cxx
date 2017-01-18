@@ -607,7 +607,7 @@ int main ( int argc, const char** argv) {
         
         // loop over associated particles
         for ( int k = 0; k < particles.size(); ++k ) {
-          fastjet::PseudoJet assocParticle = particles[j];
+          fastjet::PseudoJet assocParticle = particles[k];
           
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
