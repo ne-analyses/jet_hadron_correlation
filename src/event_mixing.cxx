@@ -548,9 +548,9 @@ int main ( int argc, const char** argv) {
     std::shuffle( randomizedEventID.begin(), randomizedEventID.end(), g );
     
     // now use the first nEventsToMix
-    for ( int i = 0; i < nEventsToMix; ++i ) {
+    for ( int j = 0; j < nEventsToMix; ++j ) {
       // get the event
-      reader.ReadEvent( randomizedEventID[i] );
+      reader.ReadEvent( randomizedEventID[j] );
       
       // count event
       // first set any dummy variables necessary
@@ -583,8 +583,8 @@ int main ( int argc, const char** argv) {
         histograms->FillSubEtaPhi( subTrigger.eta(), subTrigger.phi_std() );
         
         // loop over associated particles
-        for ( int j = 0; j < particles.size(); ++j ) {
-          fastjet::PseudoJet assocParticle = particles[j];
+        for ( int k = 0; k < particles.size(); ++k ) {
+          fastjet::PseudoJet assocParticle = particles[k];
           
           // if we're using particle - by - particle efficiencies, get it,
           // else, set to one
@@ -606,7 +606,7 @@ int main ( int argc, const char** argv) {
         histograms->FillJetEtaPhi( leadTrigger.eta(), leadTrigger.phi_std() );
         
         // loop over associated particles
-        for ( int j = 0; j < particles.size(); ++j ) {
+        for ( int k = 0; k < particles.size(); ++k ) {
           fastjet::PseudoJet assocParticle = particles[j];
           
           // if we're using particle - by - particle efficiencies, get it,
