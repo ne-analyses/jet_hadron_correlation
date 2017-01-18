@@ -847,6 +847,87 @@ namespace jetHadron {
     return projections;
   }
   
+  // uses a fit to get the relative scales instead of relying on bin widths
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarTest( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, double* edges, std::string uniqueID, bool restrictDeta ) {
+    
+    double edge1 = edges[0];
+    double edge2 = edges[1];
+    double edge3 = edges[2];
+    double edge4 = edges[3];
+    
+    if ( fabs( edge1 ) > 2.0 || fabs( edge2 ) > 2.0 || fabs( edge3 ) > 2.0 || fabs( edge4 ) > 2.0 )
+      throw "dEta edges for projections defined outside of detector acceptance regions";
+    
+    // build the return vector
+    std::vector<std::vector<TH1F*> > projections;
+    projections.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      projections[i].resize( correlation2d[i].size() );
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        // new name for the projection
+        std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        
+        // now get the bins
+        double region1Low = correlation2d[i][j]->GetXaxis()->FindBin( edge1 );
+        double region1High = correlation2d[i][j]->GetXaxis()->FindBin( edge2 ) - 1;
+        double region2Low = correlation2d[i][j]->GetXaxis()->FindBin( edge2 );
+        double region2High = correlation2d[i][j]->GetXaxis()->FindBin( edge3 );
+        double region3Low = correlation2d[i][j]->GetXaxis()->FindBin( edge3 ) + 1;
+        double region3High = correlation2d[i][j]->GetXaxis()->FindBin( edge4 );
+        
+        
+        // do some sanity checking
+        if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
+          __ERR("Can't project - high edge less than low edge for one of the projection regions")
+          continue;
+        }
+        
+        // now do the projections
+        correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        projections[i][j]->SetName( tmp.c_str() );
+        
+        // build the subtraction histogram
+        correlation2d[i][j]->GetXaxis()->SetRange( region1Low, region1High );
+        TH1F* sub_tmp = (TH1F*) ((TH1F*)  correlation2d[i][j]->ProjectionY())->Clone();
+        correlation2d[i][j]->GetXaxis()->SetRange( region3Low, region3High );
+        sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
+        
+        std::string phiForm = "[0] + gausn(1) + gausn(4)";
+        TF1* nearFit = new TF1("nearFit", phiForm.c_str(), -jetHadron::pi/2.0, 3*jetHadron::pi/2.0  );
+        nearFit->FixParameter( 2, 0 );
+        nearFit->FixParameter( 5, jetHadron::pi );
+        nearFit->SetParameter( 3, 0.2 );
+        nearFit->SetParameter( 6, 0.2 );
+        TF1* farFit = new TF1("nearFit", phiForm.c_str(), -jetHadron::pi/2.0, 3.0*jetHadron::pi/2.0  );
+        farFit->FixParameter( 2, 0 );
+        farFit->FixParameter( 5, jetHadron::pi );
+        farFit->SetParameter( 3, 0.2 );
+        farFit->SetParameter( 6, 0.2 );
+        
+        projections[i][j]->Fit( "nearFit", "RMIQ" );
+        sub_tmp->Fit( "farFit", "RMIQ" )
+        
+        double scale = nearFit->GetParameter(0)/farFit->GetParameter(0);
+        // scale the subtraction histogram by the relative number of bins
+        //sub_tmp->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
+        sub_tmp->Scale( scale );
+        
+        // subtract
+        projections[i][j]->Add( sub_tmp, -1 );
+        
+      }
+    }
+    return projections;
+  }
+  
   // this returns both near and far individually
   void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, double* edges, std::string uniqueID, bool restrictDeta ) {
     

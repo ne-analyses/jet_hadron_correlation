@@ -200,6 +200,8 @@ namespace jetHadron {
   std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
   void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
   
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarTest( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
+  
   // Normalizes 1D histograms based on what
   // type of analysis they are
   void Normalize1D( std::vector<std::vector<TH1F*> >& histograms, std::vector<TH3F*>& nEvents );
