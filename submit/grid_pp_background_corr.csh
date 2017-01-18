@@ -95,35 +95,21 @@ set binsEta = 22
 set binsPhi = 22
 endif
 
-foreach towerEff ( -1 0 1 )
 
-foreach trackEff ( -1 0 1 )
-
-@ TowEff = $towerEff * $trackEff
-@ tow = $towerEff
-@ track = $trackEff
-
-# only perpendicular combinations
-# doing efficiencies separately
-if ( $TowEff != 0 ) continue;
-
-# subfolder
-set subfolder = sys/tower_${towerEff}_track_${trackEff}
-if ($tow == 0 && $track == 0 ) set subfolder = ''
 
 # Create the folder name for output
 set outFile = ${analysis}
 set outFile = ${outFile}_trigger_${triggerCoincidence}_softTrig_${softTrig}_eff_${useEfficiency}_auauHard_${auauHard}_auauAll_${auauAll}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
-if ( ! -d out/pp_bkg/${outFile}/${subfolder} ) then
-mkdir -p out/pp_bkg/${outFile}/${subfolder}
-mkdir -p out/pp_bkg/${outFile}/${subfolder}/correlations
-mkdir -p out/pp_bkg/${outFile}/${subfolder}/tree
-mkdir -p out/pp_bkg/${outFile}/${subfolder}/mixing
+if ( ! -d out/pp_bkg/${outFile} ) then
+mkdir -p out/pp_bkg/${outFile}
+mkdir -p out/pp_bkg/${outFile}/correlations
+mkdir -p out/pp_bkg/${outFile}/tree
+mkdir -p out/pp_bkg/${outFile}/mixing
 endif
 
-if ( ! -d log/pp_bkg/${analysis}/${outFile}/${subfolder} ) then
-mkdir -p log/pp_bkg/${analysis}/${outFile}/${subfolder}
+if ( ! -d log/pp_bkg/${analysis}/${outFile} ) then
+mkdir -p log/pp_bkg/${analysis}/${outFile}
 endif
 
 # Now Submit jobs for each data file
@@ -133,7 +119,7 @@ foreach input ( ${base}* )
 set OutBase = `basename $input | sed 's/.list//g'`
 
 # Make the output names and path
-set outLocation = "out/pp_bkg/${outFile}/${subfolder}/"
+set outLocation = "out/pp_bkg/${outFile}/"
 set outName = correlations/corr_${OutBase}.root
 set outNameTree = tree/tree_${OutBase}.root
 
@@ -141,8 +127,8 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/pp_bkg/${analysis}/${outFile}/${subfolder}/${analysis}_${OutBase}.log
-set ErrFile     = log/pp_bkg/${analysis}/${outFile}/${subfolder}/${analysis}_${OutBase}.err
+set LogFile     = log/pp_bkg/${analysis}/${outFile}/${analysis}_${OutBase}.log
+set ErrFile     = log/pp_bkg/${analysis}/${outFile}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
