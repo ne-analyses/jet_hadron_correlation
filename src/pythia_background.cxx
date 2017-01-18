@@ -193,6 +193,8 @@ int main( int argc, const char** argv ) {
   TH1D* hCounter = new TH1D("events", "events", 1, -1, 1 );
   TH1D* hLead = new TH1D("leadPt", "leadPt", 50, 0, 50 );
   TH1D* hSub  = new TH1D("subPt", "subPt", 50, 0, 50 );
+  TH1D* result = new TH1D("ptcount", "ptcount", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge);
+  TH1D* resultSub = new TH1D("ptcountSub", "ptcountSub", jetHadron::binsPt, jetHadron::ptLowEdge, jetHadron::ptHighEdge);
   
   // Build our input now
   TChain* chain = new TChain( chainName.c_str() );
@@ -417,7 +419,10 @@ int main( int argc, const char** argv ) {
         hCorrLead->Fill( deltaEta, deltaPhi, assocPt, weight );
         hCorrSub->Fill( deltaEtaSub, deltaPhiSub, assocPt, weight );
       }
-      
+      if ( hardJets[0].delta_R( assocTrack ) )
+        result->Fill( assocPt, weight );
+      if ( hardJets[1].delta_R( assocTrack ) )
+        resultSub->Fill( assocPt, weight );
     }
     
   }
