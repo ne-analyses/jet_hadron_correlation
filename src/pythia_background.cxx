@@ -440,6 +440,7 @@ int main( int argc, const char** argv ) {
   hCounter->Write();
   result->Write();
   resultSub->Write();
+  resultAll->Write();
   Out->Close();
   
   return 0;
