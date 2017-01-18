@@ -2723,10 +2723,160 @@ namespace jetHadron {
         c1.SaveAs( tmp.c_str() );
       }
     }
-    
-
-    
   }
+  
+  // and the plotting with full set of errors
+  void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
+    if ( histograms[0].size() != errors[0].size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+
+      
+    TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      tmpvec.push_back( histograms[0][i] );
+      tmpvec.push_back( histograms[1][i] );
+      tmpvec.push_back( errors[0][i] );
+      tmpvec.push_back( errors[1][i] );
+      tmpvec.push_back( errors2[i] );
+      
+      FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        
+        errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors[j][i]->SetFillColor( kRed-10 );
+        if ( i == 0 ) {
+          errors[j][i]->SetFillColor( 12 );
+        }
+        errors[j][i]->SetFillStyle(1001);
+        errors[j][i]->SetLineWidth( 0 );
+        errors[j][i]->SetMarkerColor( 0 );
+        errors[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors[j][i]->GetYaxis()->SetRangeUser( min, max );
+        
+        errors2[i]->SetFillStyle(1001);
+        errors2[i]->SetLineWidth(0);
+        errors2[i]->SetMarkerSize(0);
+        errors2[i]->SetFillColor( 46 );
+        
+      }
+      
+      errors[0][i]->Draw("9e2");
+      errors[1][i]->Draw("9e2SAME");
+      errors2[i]->Draw("9e2SAME");
+      histograms[0][i]->Draw("9SAME");
+      histograms[1][i]->Draw("9SAME");
+      
+      TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+      leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
+      leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
+      leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
+      leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
+      
+      std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.C";
+      c1.SaveAs( tmp.c_str() );
+    }
+  }
+  
+  void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( histograms.size() != errors.size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
+      
+    if ( histograms[0].size() != errors[0].size() )
+      __ERR("Warning: number of errors does not match number of signal histograms")
+      
+      
+      TCanvas c1;
+    for ( int i = 0; i < histograms[0].size(); ++i ) {
+      
+      double min, max;
+      std::vector<TH1F*> tmpvec;
+      tmpvec.push_back( histograms[0][i] );
+      tmpvec.push_back( histograms[1][i] );
+      tmpvec.push_back( errors[0][i] );
+      tmpvec.push_back( errors[1][i] );
+      tmpvec.push_back( errors2[i] );
+      
+      FindGood1DUserRange( tmpvec, max, min, rangeHigh, rangeLow );
+      
+      
+      for ( int j = 0; j < histograms.size(); ++j ) {
+        
+        histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
+        histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
+        histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        
+        errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors[j][i]->SetFillColor( kRed-10 );
+        if ( i == 0 ) {
+          errors[j][i]->SetFillColor( 12 );
+        }
+        errors[j][i]->SetFillStyle(1001);
+        errors[j][i]->SetLineWidth( 0 );
+        errors[j][i]->SetMarkerColor( 0 );
+        errors[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors[j][i]->GetYaxis()->SetRangeUser( min, max );
+        
+        errors2[i]->SetFillStyle(1001);
+        errors2[i]->SetLineWidth(0);
+        errors2[i]->SetMarkerSize(0);
+        errors2[i]->SetFillColor( 46 );
+        
+      }
+      
+      errors[0][i]->Draw("9e2");
+      errors[1][i]->Draw("9e2SAME");
+      errors2[i]->Draw("9e2SAME");
+      histograms[0][i]->Draw("9SAME");
+      histograms[1][i]->Draw("9SAME");
+      
+      TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+      leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
+      leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
+      leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
+      leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
+      
+      std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.C";
+      c1.SaveAs( tmp.c_str() );
+    }
+
+  }
+  
   
   
   // printing some graphs with some systematic errors as well
