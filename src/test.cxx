@@ -54,18 +54,22 @@ int main() {
   TH1D* counts = (TH1D*) in.Get("events");
   TH1D* ptCount = (TH1D*) in.Get("ptcount");
   TH1D* ptCountSub = (TH1D*) in.Get("ptcountSub");
-  
+  TH1D* ptCountAll = (TH1D*) in.Get("ptcountAll");
+
   ptCount->Scale( 1.0 / counts->GetEntries() );
   ptCountSub->Scale( 1.0 / counts->GetEntries() );
+  ptCountAll->Scale( 1.0 / counts->GetEntries() );
   
   std::vector<double> yieldsLead;
   std::vector<double> yieldsSub;
   
   jetHadron::binSelector selector;
   
+  double area = jetHadron::pi*0.4*0.4 / (4*jetHadron::pi);
+  
   for ( int i = 0; i < selector.nPtBins; ++i  ) {
-    yieldsLead.push_back( ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )/selector.GetPtBinWidth(i) );
-    yieldsSub.push_back( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )/selector.GetPtBinWidth(i) );
+    yieldsLead.push_back( (ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )  - ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) )/selector.GetPtBinWidth(i)  );
+    yieldsSub.push_back(  ( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) - ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ))/selector.GetPtBinWidth(i)  );
   }
   
   
