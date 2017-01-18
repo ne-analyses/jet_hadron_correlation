@@ -92,7 +92,7 @@ $(BDIR)/test			: $(ODIR)/test.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(O
 $(BDIR)/globvprim : $(ODIR)/globvprim.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/auau_correlation		: $(ODIR)/auau_correlation.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
-$(BDIR)/pp_correlation_background			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
+$(BDIR)/pp_correlation_background			: $(ODIR)/pp_correlation_background.o	$(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/extract_sys_uncertainty: $(ODIR)/extract_sys_uncertainty.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
