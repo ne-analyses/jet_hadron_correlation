@@ -919,6 +919,8 @@ namespace jetHadron {
         // scale the subtraction histogram by the relative number of bins
         //sub_tmp->Scale( (region2High-region2Low)/( (region1High-region1Low) + (region3High - region3Low) ) );
         sub_tmp->Scale( scale );
+        delete farFit;
+        delete nearFit;
         
         // subtract
         projections[i][j]->Add( sub_tmp, -1 );
