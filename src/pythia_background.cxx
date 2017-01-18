@@ -153,11 +153,11 @@ int main( int argc, const char** argv ) {
   double        hardPtCut     = 2.0;                      // hard cut on constituent momentum for initial jet finding
   unsigned      binsEta       = 22;                       // default number of bins for eta for correlation histograms
   unsigned      binsPhi       = 22;                       // default number of bins for phi for correlation histograms
-  unsigned      nEvents       = 100;
+  unsigned      nEvents       = 10e6;
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
-  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/CleanAuAuY7/Clean809.root";		// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/AuAuMB_0_20/picoMB_0_20.root";		// input file: can be .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
