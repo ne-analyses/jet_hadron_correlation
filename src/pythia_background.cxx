@@ -153,7 +153,7 @@ int main( int argc, const char** argv ) {
   double        hardPtCut     = 2.0;                      // hard cut on constituent momentum for initial jet finding
   unsigned      binsEta       = 22;                       // default number of bins for eta for correlation histograms
   unsigned      binsPhi       = 22;                       // default number of bins for phi for correlation histograms
-  unsigned      nEvents       = 10e6;
+  unsigned      nEvents       = 100;
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
@@ -428,6 +428,7 @@ int main( int argc, const char** argv ) {
   }
   
   // write out the dijet/jet trees
+  std::cout<<"making the stuff!"<<std::endl;
   TFile*  Out   = new TFile( (outputDir + corrOutFile).c_str(), "RECREATE" );
   Out->cd();
   hCorrLead->Write();
