@@ -7,7 +7,7 @@ set analysis = $1
 set execute = './bin/pythia_background'
 set base = /nfs/rhi/STAR/Data/CleanAuAuY7/Clean
 
-set nEvents = 10000
+set nEvents = 100000
 
 # Create the folder name for output
 set outFile = pythia
