@@ -136,7 +136,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/results/jet_20_10_trig_6_08_12";
+      outputDirBase = "/results/jet_20_10_trig_6_06_10_test";
       
       break;
     }
@@ -317,8 +317,8 @@ int main( int argc, const char** argv) {
   // define what "regions" we want the subtraction to be done in
   double subtractionRegions[4] = { -1.0, -0.6, 0.6, 1.0 };
 
-  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFarTest( averagedMixedEventCorrected, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFarTest( averagedMixedEventCorrectedSub, selector, subtractionRegions, "mixing_corrected_near_far_sub_dphi_sub", true  );
   
   // and to get the individual near and far histograms
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_near, corrected_dphi_subtracted_far;
