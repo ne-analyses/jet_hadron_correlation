@@ -260,9 +260,12 @@ int main( int argc, const char** argv) {
   TFile outFile( "tmp/histograms.root", "RECREATE" );
   for ( int i = 0; i < leadingMix[0].size(); ++i ) {
     leadingMix[0][i]->Write();
+    subleadingMix[0][i]->Write();
   }
   for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
     averagedSignal[0][i]->Write();
+    averagedSignalSub[0][i]->Write();
+    
   }
   nEvents[0]->Write();
   
