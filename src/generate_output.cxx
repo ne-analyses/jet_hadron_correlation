@@ -264,6 +264,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
     averagedSignal[0][i]->Write();
   }
+  nEvents[0]->Write();
   
   outFile.Close();
   
