@@ -256,6 +256,16 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
+  // save to an output file
+  TFile outFile( "tmp/histograms.root", "RECREATE" );
+  for ( int i = 0; i leadingMix[i].size(); ++i ) {
+    leadingMix[i]->Write();
+  }
+  for ( int i = 0; i < averagedSignal[i].size(); ++i ) {
+    averagedSignal[i]->Write();
+  }
+  
+  outFile.Close();
   
   // ***************************
   // print out the 1d dEta for
