@@ -268,7 +268,7 @@ int main( int argc, const char** argv) {
     averagedSignal[0][i]->Write();
     averagedSignalSub[0][i]->Write();
     averagedSignal[1][i]->Write();
-    averagedSignalSub[1][0]->Write();
+    averagedSignalSub[1][i]->Write();
   }
   nEvents[0]->Write();
   nEvents[1]->Write();
