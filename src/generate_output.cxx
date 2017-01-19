@@ -258,7 +258,7 @@ int main( int argc, const char** argv) {
   
   // save to an output file
   TFile outFile( "tmp/histograms.root", "RECREATE" );
-  for ( int i = 0; i leadingMix[i].size(); ++i ) {
+  for ( int i = 0; i < leadingMix[i].size(); ++i ) {
     leadingMix[i]->Write();
   }
   for ( int i = 0; i < averagedSignal[i].size(); ++i ) {
