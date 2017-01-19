@@ -262,7 +262,7 @@ int main( int argc, const char** argv) {
     leadingMix[0][i]->Write();
     subleadingMix[0][i]->Write();
     leadingMix[1][i]->Write();
-    subleadingMix[1][i]->Write():
+    subleadingMix[1][i]->Write();
   }
   for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
     averagedSignal[0][i]->Write();
