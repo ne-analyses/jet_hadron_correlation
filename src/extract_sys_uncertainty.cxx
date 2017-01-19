@@ -95,6 +95,7 @@ int main () {
   towFiles.push_back( new TFile( towHigh, "READ" ) );
   trkFiles.push_back( new TFile( trkLow, "READ" ) );
   trkFiles.push_back( new TFile( trkHigh, "READ" ) );
+  
   // Build our bin selector with default settings
   jetHadron::binSelector selector;
   
@@ -284,8 +285,6 @@ int main () {
   TBranch* branchTrkSubYieldDown = tree->Branch("TrackingSubYieldLower", &trkSubYieldDown );
   
   
-  
-  
   // output file
   TString outPath = path + "/sys.root";
   TFile* out = new TFile( outPath,"RECREATE");
@@ -296,9 +295,9 @@ int main () {
     dphi_err[i]->Write();
     dphi_err_sub[i]->Write();
   }
-  out->Close();
-  return 0;
   
-
+  // now
+  out->Close();
+  
   return 0;
 }
