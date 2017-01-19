@@ -267,6 +267,7 @@ int main( int argc, const char** argv) {
   nEvents[0]->Write();
   
   outFile.Close();
+  return 0;
   
   // ***************************
   // print out the 1d dEta for
