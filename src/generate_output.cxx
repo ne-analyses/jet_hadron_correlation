@@ -435,27 +435,32 @@ int main( int argc, const char** argv) {
     jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_sub_far[i], corrected_dphi_subtracted_sub_near[i], outputDirBase+"/far_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
   }
   
-  /*
+
   
+  __OUT("now, do projections for dphi and deta")
+  __OUT("this time, dPhi is from the corrected signal, but without near minus far subtraction")
   // Now we will do not subtracted projections
   // and dEta
-  std::vector<std::vector<TH1F*> > corrected_dphi_lead = jetHadron::ProjectDphi( averagedMixedEventCorrected, selector, "mixing_corrected_dphi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_sub = jetHadron::ProjectDphi( averagedMixedEventCorrectedSub, selector, "mixing_corrected_dphi_sub", true );
-  std::vector<std::vector<TH1F*> > corrected_deta_lead = jetHadron::ProjectDeta( averagedMixedEventCorrected, selector, "mixing_corrected_deta", true );
-  std::vector<std::vector<TH1F*> > corrected_deta_sub = jetHadron::ProjectDeta( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub", true );
+  std::vector<std::vector<TH1F*> > corrected_dphi_lead = jetHadron::ProjectDphi( averagedMixedEventCorrected, selector, "mixing_corrected_dphi" );
+  std::vector<std::vector<TH1F*> > corrected_dphi_sub = jetHadron::ProjectDphi( averagedMixedEventCorrectedSub, selector, "mixing_corrected_dphi_sub" );
+  std::vector<std::vector<TH1F*> > corrected_deta_lead = jetHadron::ProjectDeta( averagedMixedEventCorrected, selector, "mixing_corrected_deta" );
+  std::vector<std::vector<TH1F*> > corrected_deta_sub = jetHadron::ProjectDeta( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
   
+  __OUT("Background subtraction")
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_lead, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_sub, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_lead, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
   
+  __OUT("Normalization")
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_lead, nEvents );
   jetHadron::Normalize1D( corrected_dphi_sub, nEvents );
   jetHadron::Normalize1D( corrected_deta_lead, nEvents );
   jetHadron::Normalize1D( corrected_deta_sub, nEvents );
   
+  __OUT("fitting")
   // do final fitting
   std::vector<std::vector<TF1*> > corrected_dphi_lead_fit = jetHadron::FitDphi( corrected_dphi_lead, selector );
   std::vector<std::vector<TF1*> > corrected_dphi_sub_fit = jetHadron::FitDphi( corrected_dphi_sub, selector );
@@ -472,6 +477,7 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractFitVals( corrected_deta_lead_fit, corrected_deta_fit_yield, corrected_dphi_fit_width, corrected_deta_fit_yield_err, corrected_deta_fit_width_err, selector  );
   jetHadron::ExtractFitVals( corrected_deta_sub_fit, corrected_deta_sub_fit_yield, corrected_deta_sub_fit_width, corrected_deta_sub_fit_yield_err, corrected_deta_sub_fit_width_err, selector  );
   
+  __OUT("overlay and save output")
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_lead, corrected_dphi_lead_fit, outputDirBase+"/corrected_dphi_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_sub, corrected_dphi_sub_fit, outputDirBase+"/corrected_dphi_sub"+analysisNames[0], analysisNames, selector );
@@ -483,6 +489,7 @@ int main( int argc, const char** argv) {
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_fit_yield, zeros, corrected_deta_fit_yield_err, outputDirBase+"/corrected_deta_graph", analysisNames, "Trigger Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_deta_sub_fit_yield, zeros, corrected_deta_sub_fit_yield_err, outputDirBase+"/corrected_deta_sub_graph", analysisNames, "Recoil Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
 
+  /*
   // *******************************
   // get 1D projections for Aj split
   // *******************************
