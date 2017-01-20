@@ -1197,7 +1197,7 @@ namespace jetHadron {
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", selector.phi_corrected_fit_low_edge, selector.phi_corrected_fit_high_edge );
+        histograms[i][j]->Fit( tmp.c_str(), "RMI", "", selector.phi_corrected_fit_low_edge, selector.phi_corrected_fit_high_edge );
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
