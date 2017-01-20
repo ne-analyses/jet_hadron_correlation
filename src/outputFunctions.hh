@@ -301,6 +301,7 @@ namespace jetHadron {
   // testing function to fix histogram
   // bins not being drawn if the content is small
   void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms );
+  void FixTheDamnBins( std::vector<TH1F*>& histograms );
   
   std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   

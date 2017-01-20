@@ -1306,6 +1306,18 @@ namespace jetHadron {
     
   }
   
+  void FixTheDamnBins(vstd::vector<TH1F*>& histograms ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int k = 1; k < histograms[i]->GetXaxis()->GetNbins(); ++k ) {
+        if ( fabs(histograms[i]->GetBinContent(k)) == 0 && fabs( histograms[i]->GetBinError(k))== 0 ) {
+          histograms[i]->SetBinContent(k, 0.0001 );
+          histograms[i]->SetBinError( k, 0.0001 );
+        }
+      }
+    }
+  }
+  
   std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID ) {
     
     // making some tgraphs to plot and/or save
