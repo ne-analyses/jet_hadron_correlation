@@ -269,6 +269,13 @@ int main () {
   std::vector<TH1F*> dphi_err = jetHadron::AddInQuadrature( dphi_tow_err, dphi_trk_err, selector, "dphi");
   std::vector<TH1F*> dphi_err_sub = jetHadron::AddInQuadrature( dphi_tow_err_sub, dphi_trk_err_sub, selector, "sub_dphi");
   
+  // fix the damn bins
+  jetHadron::FixTheDamnBins( dphi_err );
+  jetHadron::FixTheDamnBins( dphi_err_sub );
+  jetHadron::FixTheDamnBins( dphi_err );
+  jetHadron::FixTheDamnBins( dphi_err_sub );
+  
+  
   // ******************************************
   // we have our fit values from the TF1s now
   // write them out
