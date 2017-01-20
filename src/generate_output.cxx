@@ -398,6 +398,15 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1D( corrected_dphi_subtracted_sub_near, nEvents );
   jetHadron::Normalize1D( corrected_dphi_subtracted_sub_far, nEvents );
   
+  // make sure the bins are correct...
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_near );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_far );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub_near );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub_far );
+  
+  
   __OUT("do final fitting and extract fit values")
   // do final fitting
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit = jetHadron::FitDphiRestricted( corrected_dphi_subtracted, selector );
@@ -424,11 +433,6 @@ int main( int argc, const char** argv) {
     tmpVec.push_back("far");
     jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_far[i], corrected_dphi_subtracted_near[i], outputDirBase+"/near_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
     jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_sub_far[i], corrected_dphi_subtracted_sub_near[i], outputDirBase+"/far_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
-  }
-
-  // TESTING
-  for ( int i = 0; i < corrected_dphi_subtracted[0][5]->GetXaxis()->GetNbins(); ++i ) {
-    std::cout<<"bin: "<<i<< " content: "<< corrected_dphi_subtracted[0][5]->GetBinContent(i)<< " error: "<< corrected_dphi_subtracted[0][5]->GetBinError(i) << std::endl;
   }
   
   /*
