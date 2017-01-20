@@ -2655,6 +2655,15 @@ namespace jetHadron {
     sys1[1]->Draw("3");
     sys2[0]->Draw("3");
     
+    TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
+    leg->AddEntry( graphs[1], "p+p HT", "lep" );
+    leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
+    leg->AddEntry( sys1[1], "Sys Uncertainty p+p yield", "f" );
+    leg->AddEntry( sys2[0], "Sys Uncertainty rel. jet energy scale", "f");
+    leg->Draw();
+
+    
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
     tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
