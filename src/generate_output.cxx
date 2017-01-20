@@ -107,7 +107,10 @@ int main( int argc, const char** argv) {
   // files and naming
   std::vector<TFile*> corrFiles;
   std::vector<TFile*> mixFiles;
+  std::vector<TFile*> corrFilesHard;
+  std::vector<TFile*> mixFilesHard;
   std::vector<std::string> analysisNames;
+  std::vector<std::string> analysisNamesHard;
   
   // bin to split Aj on
   int ajSplitBin = 0;
@@ -133,6 +136,13 @@ int main( int argc, const char** argv) {
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
+      
+      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root");
+      tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
+      
+      corrFilesHard.push_back( tmp );
+      mixFilesHard.push_back( tmpMix );
+      analysisNamesHard.push_back( "ppDijetHard" );
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
@@ -256,14 +266,14 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
-  std::cout<<"testing: clearing histograms"<<std::endl;
+  __OUT("Clearing input histogramshistograms")
   // clear up the 1D histograms for the sake of my sanity
   ClearHistograms( leadingCorrelationIn );
   ClearHistograms( subleadingCorrelationIn );
   ClearHistograms( leadingCorrelation );
   ClearHistograms( subleadingCorrelation );
   
-  std::cout<<"testing: finished clearing"<<std::endl;
+  __Out("Finished clearing input histograms")
   
   // ***************************
   // print out the 1d dEta for
