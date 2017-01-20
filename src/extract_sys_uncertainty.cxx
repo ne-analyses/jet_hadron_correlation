@@ -177,12 +177,6 @@ int main () {
   std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector,  "corTrkDPhi" );
   std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, "corTrkDPhiSub"  );
   
-  // do background subtraction
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_tow, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_tow_sub, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_trk, selector );
-  jetHadron::SubtractBackgroundDphi( corrected_dphi_trk_sub, selector );
-  
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_tow, nEventsTow );
   jetHadron::Normalize1D( corrected_dphi_tow_sub, nEventsTow );
@@ -212,6 +206,11 @@ int main () {
   std::vector<TH1F*> dphi_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_tow_sub[0], corrected_dphi_tow_sub[1], selector, "dphi_tow_sub_sys_err" );
   std::vector<TH1F*> dphi_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_dphi_trk_sub[0], corrected_dphi_trk_sub[1], selector, "dphi_trk_sub_sys_err" );
 
+  // fix the damn bins
+  jetHadron::FixTheDamnBins( dphi_tow_err );
+  jetHadron::FixTheDamnBins( dphi_tow_err_sub );
+  jetHadron::FixTheDamnBins( dphi_trk_err );
+  jetHadron::FixTheDamnBins( dphi_trk_err_sub );
   
   // GOT HERE OK
   // DEBUG FROM HERE
@@ -259,8 +258,8 @@ int main () {
   std::vector<TH1F*> deta_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_trk_sub[0], corrected_deta_trk_sub[1], selector, "deta_trk_sub_sys_err" );
   
   // fix the damn bins
-  jetHadron::FixTheDamnBins( deta_tow_err );
-  jetHadron::FixTheDamnBins( deta_tow_err_sub );
+  jetHadron::FixTheDamnBins( dphi_tow_err );
+  jetHadron::FixTheDamnBins( dphi_tow_err_sub );
   jetHadron::FixTheDamnBins( dphi_trk_err );
   jetHadron::FixTheDamnBins( dphi_trk_err_sub );
   
