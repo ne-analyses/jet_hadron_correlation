@@ -1045,10 +1045,13 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
-        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        
+        std::cout<<"subtracting background: dPhi w/o near - far correction"<<std::endl;
+        std::cout<<"function: "<< phiForm << std::endl;
+        std::cout<<"over range: "<< selector.phi_fit_low_edge  << " to " << selector.phi_fit_high_edge << std::endl;
+        
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
-        TF1* tmpFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        TF1* tmpFit = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_fit_low_edge, selector.phi_fit_high_edge );
         tmpFit->FixParameter( 0, 1 );
         tmpFit->FixParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
@@ -1060,7 +1063,7 @@ namespace jetHadron {
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
         std::string tmpSubName = "sub_" + tmp;
-        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
+        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), selector.phi_fit_low_edge, selector.phi_fit_high_edge );
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );
         
         histograms[i][j]->Add( tmpSub, -1 );
