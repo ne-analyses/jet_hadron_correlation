@@ -342,8 +342,6 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > uncorrected_dphi_lead = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected" );
   std::vector<std::vector<TH1F*> > uncorrected_dphi_sub = jetHadron::ProjectDphi( averagedSignalSub, selector, "not_mixing_corrected_sub" );
   
-  /*
-  
   // do background subtraction
   __OUT("doing background subtraction")
   jetHadron::SubtractBackgroundDphi( uncorrected_dphi_lead, selector );
@@ -374,7 +372,7 @@ int main( int argc, const char** argv) {
   jetHadron::PrintGraphWithErrors( ptBinCenters, uncorrected_dphi_sub_fit_yield, zeros, uncorrected_dphi_sub_fit_yield_err, outputDirBase+"/uncorrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   
   
-  
+  /*
   // *************************************
   // Mixing corrected stuff -
   // first Subtracted DPhi
