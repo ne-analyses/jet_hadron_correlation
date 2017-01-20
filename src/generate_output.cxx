@@ -611,13 +611,7 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> deta_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_rel_bin_int, zeros, deta_lead_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sys_rel" );
   std::vector<TGraphErrors*> deta_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_rel_bin_int, zeros, deta_sub_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys_rel" );
   
-  __OUT("Generate 5% systematic errors on the yields")
-  // generate some 5% error histograms for each of the histograms we use
-  std::vector<std::vector<TH1F*> > dphi_yield_err = jetHadron::BuildYieldError( corrected_dphi_subtracted, selector, analysisNames, "dphi_lead_yield_err" );
-  std::vector<std::vector<TH1F*> > dphi_sub_yield_err = jetHadron::BuildYieldError( corrected_dphi_subtracted_sub, selector, analysisNames, "dphi_sub_yield_err" );
-  std::vector<std::vector<TH1F*> > deta_yield_err = jetHadron::BuildYieldError( corrected_deta_lead, selector, analysisNames, "deta_lead_yield_err" );
-  std::vector<std::vector<TH1F*> > deta_sub_yield_err = jetHadron::BuildYieldError( corrected_deta_sub, selector, analysisNames, "deta_sub_yield_err" );
-  
+ 
   __OUT("now extract the integrals from bin counting")
   // ******************************************
   // now we're testing yields from bin counting
@@ -637,6 +631,14 @@ int main( int argc, const char** argv) {
     deta_lead_bin_int[0][i] -= fabs( deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] );
     deta_sub_bin_int[0][i] -= fabs( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] );
   }
+  
+  __OUT("Generate 5% systematic errors on the yields")
+  // generate some 5% error histograms for each of the histograms we use
+  std::vector<std::vector<TH1F*> > dphi_yield_err = jetHadron::BuildYieldError( corrected_dphi_subtracted, selector, analysisNames, "dphi_lead_yield_err" );
+  std::vector<std::vector<TH1F*> > dphi_sub_yield_err = jetHadron::BuildYieldError( corrected_dphi_subtracted_sub, selector, analysisNames, "dphi_sub_yield_err" );
+  std::vector<std::vector<TH1F*> > deta_yield_err = jetHadron::BuildYieldError( corrected_deta_lead, selector, analysisNames, "deta_lead_yield_err" );
+  std::vector<std::vector<TH1F*> > deta_sub_yield_err = jetHadron::BuildYieldError( corrected_deta_sub, selector, analysisNames, "deta_sub_yield_err" );
+  
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
