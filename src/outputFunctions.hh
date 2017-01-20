@@ -163,6 +163,10 @@ namespace jetHadron {
     // if the radius is NOT 0.4, this needs to be used...
     void ChangeRadius( double R = 0.4);
     
+    // for fitting dEta, the fit range
+    const double eta_fit_low_edge = -1.2;
+    const double eta_fit_high_edge = -1.0*eta_fit_low_edge;
+    
     // used to select the near side correlation for dEta
     const double eta_projection_phi_bound_low = -0.6;
     const double eta_projection_phi_bound_high = -1.0*eta_projection_phi_bound_low;

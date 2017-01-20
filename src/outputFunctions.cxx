@@ -998,8 +998,10 @@ namespace jetHadron {
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         TF1* tmpFit = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        tmpFit->SetParameter( 0, 1 );
+        tmpFit->SetParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
-        tmpFit->SetParameter( 3, 0.2 );
+        tmpFit->SetParameter( 3, 0.5 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         std::string tmpSubName = "sub_" + tmp;
@@ -1008,23 +1010,23 @@ namespace jetHadron {
         histograms[i][j]->Add( tmpSub, -1.0 );
         delete tmpSub;
         
-        // do a test fit to see if the background was subtracted properly
-        std::string testName = tmp + "_TEST";
-        TF1* testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
-        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
-        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
-          
-          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
-          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
-          histograms[i][j]->Add( tmpSub, -1.0 );
-          
-          delete tmpSub;
-          delete testFit;
-          testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
-          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
-        }
-        
-        delete testFit;
+//        // do a test fit to see if the background was subtracted properly
+//        std::string testName = tmp + "_TEST";
+//        TF1* testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
+//        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+//        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
+//          
+//          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
+//          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
+//          histograms[i][j]->Add( tmpSub, -1.0 );
+//          
+//          delete tmpSub;
+//          delete testFit;
+//          testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
+//          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
+//        }
+//        
+//        delete testFit;
         
 
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
@@ -1047,10 +1049,13 @@ namespace jetHadron {
         double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         TF1* tmpFit = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        tmpFit->FixParameter( 0, 1 );
+        tmpFit->FixParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
+        tmpFit->SetParameter( 3, 0.5 );
+        tmpFit->SetParameter( 4, 1 );
         tmpFit->FixParameter( 5, jetHadron::pi );
-        tmpFit->SetParameter( 3, 0.2 );
-        tmpFit->SetParameter( 6, 0.2 );
+        tmpFit->SetParameter( 6, 0.5 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
         
@@ -1061,23 +1066,23 @@ namespace jetHadron {
         histograms[i][j]->Add( tmpSub, -1 );
         delete tmpSub;
         
-        // do a test fit to see if the background was subtracted properly
-        std::string testName = tmp + "_TEST";
-        TF1* testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
-        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
-        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
-          
-          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
-          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
-          histograms[i][j]->Add( tmpSub, -1.0 );
-          
-          delete tmpSub;
-          delete testFit;
-          testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
-          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
-        }
-        
-        delete testFit;
+//        // do a test fit to see if the background was subtracted properly
+//        std::string testName = tmp + "_TEST";
+//        TF1* testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
+//        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+//        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
+//          
+//          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
+//          tmpSub->SetParameter( 0, testFit->GetParameter(0) );
+//          histograms[i][j]->Add( tmpSub, -1.0 );
+//          
+//          delete tmpSub;
+//          delete testFit;
+//          testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
+//          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
+//        }
+//        
+//        delete testFit;
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
@@ -1106,37 +1111,13 @@ namespace jetHadron {
         double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        fits[i][j]->SetParameter( 0, 1 );
+        fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
-        fits[i][j]->SetParameter( 3, 0.2 );
-        if ( j <= 2 )
-          fits[i][j]->SetParameter( 3, 0.3);
+        fits[i][j]->SetParameter( 3, 0.5 );
+
         
         histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1.2, 1.2 );
-        
-        int counter = 0;
-        
-        while ( fabs(fits[i][j]->GetParameter(0)) > 0.01 ) {
-          std::string tmpName = tmp+"sub";
-          TF1* tmpSub = new TF1( tmpName.c_str(), subForm.c_str(), eta_min, eta_max );
-          tmpSub->SetParameter( 0, fits[i][j]->GetParameter(0) );
-          
-          histograms[i][j]->Add( tmpSub, -1.0 );
-          delete tmpSub;
-          delete fits[i][j];
-          
-          fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
-          fits[i][j]->FixParameter( 2, 0 );
-          fits[i][j]->SetParameter( 3, 0.2 );
-          if ( j <= 2 )
-            fits[i][j]->SetParameter( 3, 0.3);
-          
-          histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1.2, 1.2 );
-          
-          counter++;
-          
-          if ( counter >= 20 )
-            break;
-        }
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
