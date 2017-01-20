@@ -273,7 +273,7 @@ int main( int argc, const char** argv) {
   ClearHistograms( leadingCorrelation );
   ClearHistograms( subleadingCorrelation );
   
-  __Out("Finished clearing input histograms")
+  __OUT("Finished clearing input histograms")
   
   // ***************************
   // print out the 1d dEta for
