@@ -680,13 +680,13 @@ int main( int argc, const char** argv) {
   std::cout<<"testing the yields..."<<std::endl;
   std::cout<<"auau trigger dphi: "<< dphi_lead_bin_int[0][1]<<std::endl;
   std::cout<<"auau trigger deta: "<< deta_lead_bin_int[0][1]<<std::endl;
-  std::cout<<"pp trigger dphi: "<< dphi_lead_bin_int[0][1]<<std::endl;
-  std::cout<<"pp trigger deta: "<< deta_lead_bin_int[0][1]<<std::endl;
+  std::cout<<"pp trigger dphi: "<< dphi_lead_bin_int[1][1]<<std::endl;
+  std::cout<<"pp trigger deta: "<< deta_lead_bin_int[1][1]<<std::endl;
   
   std::cout<<"auau recoil dphi: "<< dphi_sub_bin_int[0][1]<<std::endl;
   std::cout<<"auau recoil deta: "<< deta_sub_bin_int[0][1]<<std::endl;
-  std::cout<<"pp recoil dphi: "<< dphi_sub_bin_int[0][1]<<std::endl;
-  std::cout<<"pp recoil deta: "<< deta_sub_bin_int[0][1]<<std::endl;
+  std::cout<<"pp recoil dphi: "<< dphi_sub_bin_int[1][1]<<std::endl;
+  std::cout<<"pp recoil deta: "<< deta_sub_bin_int[1][1]<<std::endl;
   
   return 0;
 }
