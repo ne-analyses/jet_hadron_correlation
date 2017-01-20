@@ -1253,7 +1253,7 @@ namespace jetHadron {
       errors[i].resize( histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        integrals[i][j] = histograms[i][j]->IntegralAndError( selector.phi_projection_integral_range_low, selector.phi_projection_integral_range_high, errors[i][j], "width");
+        integrals[i][j] = histograms[i][j]->IntegralAndError( histograms[i][j]->GetXaxis()->FindBin(selector.phi_projection_integral_range_low), histograms[i][j]->GetXaxis()->FindBin(selector.phi_projection_integral_range_high), errors[i][j], "width");
       }
       
     }
@@ -1272,7 +1272,7 @@ namespace jetHadron {
       errors[i].resize( histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        integrals[i][j] = histograms[i][j]->IntegralAndError( selector.eta_projection_integral_range_low, selector.eta_projection_integral_range_high, errors[i][j], "width");
+        integrals[i][j] = histograms[i][j]->IntegralAndError( histograms[i][j]->GetXaxis()->FindBin(selector.eta_projection_integral_range_low), histograms[i][j]->GetXaxis()->FindBin(selector.eta_projection_integral_range_high), errors[i][j], "width");
       }
       
     }
