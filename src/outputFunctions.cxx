@@ -1051,7 +1051,7 @@ namespace jetHadron {
         if ( i == 0 && j == 1 ) {
           tmpFit->SetParameter( 0, 5 );
           tmpFit->SetParameter( 3, 0.4 );
-          tmpFit->SetParameter( 6, 0.4 ):
+          tmpFit->SetParameter( 6, 0.4 );
         }
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
