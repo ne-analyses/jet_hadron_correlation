@@ -262,6 +262,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < leadingMixHard.size(); ++i ) {
     for ( int j = 0; j < leadingMixHard[i].size(); ++j ) {
       std::cout<<"i: "<<i<<" j: "<<j<< "  histo; "<<leadingMixHard[i][j]<<std::endl;
+      std::cout<<"leading mix histo: "<< leadingMix[i][j]<<std::endl;
     }
   }
   
