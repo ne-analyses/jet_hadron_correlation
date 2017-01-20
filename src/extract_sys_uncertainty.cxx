@@ -258,6 +258,12 @@ int main () {
   std::vector<TH1F*> deta_tow_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_tow_sub[0], corrected_deta_tow_sub[1], selector, "deta_tow_sub_sys_err" );
   std::vector<TH1F*> deta_trk_err_sub = jetHadron::BuildSystematicHistogram( corrected_deta_trk_sub[0], corrected_deta_trk_sub[1], selector, "deta_trk_sub_sys_err" );
   
+  // fix the damn bins
+  jetHadron::FixTheDamnBins( deta_tow_err );
+  jetHadron::FixTheDamnBins( deta_tow_err_sub );
+  jetHadron::FixTheDamnBins( dphi_trk_err );
+  jetHadron::FixTheDamnBins( dphi_trk_err_sub );
+  
   // aaaand build the sum in quadrature
   std::vector<TH1F*> deta_err = jetHadron::AddInQuadrature( deta_tow_err, deta_trk_err, selector, "deta" );
   std::vector<TH1F*> deta_err_sub = jetHadron::AddInQuadrature( deta_tow_err_sub, deta_trk_err_sub, selector, "sub_deta");
