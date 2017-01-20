@@ -259,13 +259,14 @@ int main( int argc, const char** argv) {
   //std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
 
   std::cout<<"debugging: "<<std::endl;
+  std::cout<<"vector size: "<< leadingMixHard.size()<<std::endl;;
   for ( int i = 0; i < leadingMixHard.size(); ++i ) {
     for ( int j = 0; j < leadingMixHard[i].size(); ++j ) {
       std::cout<<"i: "<<i<<" j: "<<j<< "  histo; "<<leadingMixHard[i][j]<<std::endl;
       std::cout<<"leading mix histo: "<< leadingMix[i][j]<<std::endl;
     }
   }
-  
+  std::cout<<"done"<<std::endl;
   // And Scale so that MaxBinContent = 1
   jetHadron::ScaleMixedEvents( leadingMix );
   jetHadron::ScaleMixedEvents( subleadingMix );
