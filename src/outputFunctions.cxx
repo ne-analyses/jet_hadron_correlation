@@ -1001,7 +1001,7 @@ namespace jetHadron {
         std::cout<<"over range: "<< selector.eta_fit_low_edge  << " to " << selector.eta_fit_high_edge << std::endl;
         
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
-        TF1* tmpFit = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, eta_fit_high_edge );
+        TF1* tmpFit = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, selector.eta_fit_high_edge );
         tmpFit->SetParameter( 0, 1 );
         tmpFit->SetParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
@@ -1080,17 +1080,21 @@ namespace jetHadron {
     for ( int i = 0; i < histograms.size(); ++i ) {
       fits[i].resize( histograms[i].size() );
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
-        double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
+        
+        std::cout<<"fitting function: dEta"<<std::endl;
+        std::cout<<"file: "<< i <<" pt bin: "<<j << std::endl;
+        std::cout<<"function: "<< etaForm << std::endl;
+        std::cout<<"over range: "<< selector.eta_fit_low_edge  << " to " << selector.eta_fit_high_edge << std::endl;
+      
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
-        fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), eta_min, eta_max );
+        fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, selector.eta_fit_high_edge );
         fits[i][j]->SetParameter( 0, 1 );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
 
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI", "", -1.2, 1.2 );
+        histograms[i][j]->Fit( tmp.c_str(), "RMI", "", selector.eta_fit_low_edge, selector.eta_fit_high_edge );
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
@@ -1116,19 +1120,23 @@ namespace jetHadron {
       fits[i].resize(histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
-        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        
+        std::cout<<"fitting function: dPhi w/o near - far correction"<<std::endl;
+        std::cout<<"file: "<<i<<" pt bin: "<<j << std::endl;
+        std::cout<<"function: "<< phiForm << std::endl;
+        std::cout<<"over range: "<< selector.phi_fit_low_edge  << " to " << selector.phi_fit_high_edge << std::endl;
+        
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
-        fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max );
+        fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_fit_low_edge, selector.phi_fit_high_edge );
         fits[i][j]->SetParameter( 0, 1 );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
-        fits[i][j]->SetParameter( 4, 1 ):
+        fits[i][j]->SetParameter( 4, 1 );
         fits[i][j]->FixParameter( 5, jetHadron::pi );
         fits[i][j]->SetParameter( 6, 0.5 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMI"", "", -1.2, 1.2 );
+        histograms[i][j]->Fit( tmp.c_str(), "RMI", "", selector.phi_fit_low_edge, selector.phi_fit_high_edge );
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
@@ -1153,15 +1161,19 @@ namespace jetHadron {
       fits[i].resize(histograms[i].size() );
       
       for ( int j = 0; j < histograms[i].size(); ++j ) {
-        double phi_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
-        double phi_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindPhi );
+        
+        std::cout<<"fitting function: dPhi with near minus far correction"<<std::endl;
+        std::cout<<"file: "<<i<<" pt bin: "<<j << std::endl;
+        std::cout<<"function: "<< phiForm << std::endl;
+        std::cout<<"over range: "<< selector.phi_corrected_fit_low_edge  << " to " << selector.phi_corrected_fit_high_edge << std::endl;
+
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
-        fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), phi_min, phi_max-pi );
+        fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_corrected_fit_low_edge, selector.phi_corrected_fit_high_edge );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", -1.2, 1.2 );
+        histograms[i][j]->Fit( tmp.c_str(), "MIQ", "", selector.phi_corrected_fit_low_edge, selector.phi_corrected_fit_high_edge );
         
         if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
           histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);

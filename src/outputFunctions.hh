@@ -172,8 +172,8 @@ namespace jetHadron {
     const double phi_fit_high_edge = 3.0 * pi / 2.0;
     
     // and for dphi with the correction
-    const double phi_corrected_low_edge = - 1.2
-    const double phi_corrected_high_edge = 1.2;
+    const double phi_corrected_fit_low_edge = - 1.2;
+    const double phi_corrected_fit_high_edge = 1.2;
     
     // used to select the near side correlation for dEta
     const double eta_projection_phi_bound_low = -0.6;
