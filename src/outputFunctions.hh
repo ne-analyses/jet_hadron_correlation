@@ -94,7 +94,6 @@ void ClearHistograms( std::vector<std::vector<std::vector<std::vector<T*> > > >&
     for ( int j = 0; j < histograms[i].size(); ++j ) {
       for ( int k = 0; k < histograms[i][j].size(); ++k ) {
         for ( int l = 0; l < histograms[i][j][k].size(); ++l ) {
-          std::cout<<"i: "<<i<<" j: "<<j << " k: "<<k<<" l: "<<l<<std::endl;
           if ( histograms[i][j][k][l] )
             delete histograms[i][j][k][l];
           
