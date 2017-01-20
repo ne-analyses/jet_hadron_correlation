@@ -1013,6 +1013,10 @@ namespace jetHadron {
 
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         
+        if ( j >= 4 ) {
+          continue;
+        }
+        
         std::cout<<"subtracting background: dEta"<<std::endl;
         std::cout<<"file: "<< i <<" pt bin: "<<j << std::endl;
         std::cout<<"function: "<< etaForm << std::endl;
@@ -1050,6 +1054,10 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
+        
+        if ( j >= 4 ) {
+          continue;
+        }
         
         std::cout<<"subtracting background: dPhi w/o near - far correction"<<std::endl;
         std::cout<<"file: "<<i<<" pt bin: "<<j << std::endl;
