@@ -1003,7 +1003,7 @@ namespace jetHadron {
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.5 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
         tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );;
@@ -1013,7 +1013,7 @@ namespace jetHadron {
 //        // do a test fit to see if the background was subtracted properly
 //        std::string testName = tmp + "_TEST";
 //        TF1* testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
-//        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+//        histograms[i][j]->Fit( testName.c_str(), "RMI");
 //        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
 //          
 //          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
@@ -1023,7 +1023,7 @@ namespace jetHadron {
 //          delete tmpSub;
 //          delete testFit;
 //          testFit = new TF1( testName.c_str(), etaForm.c_str(), eta_min, eta_max );
-//          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
+//          histograms[i][j]->Fit( testName.c_str(), "RMI" );
 //        }
 //        
 //        delete testFit;
@@ -1057,7 +1057,7 @@ namespace jetHadron {
         tmpFit->FixParameter( 5, jetHadron::pi );
         tmpFit->SetParameter( 6, 0.5 );
         
-        histograms[i][j]->Fit( tmp.c_str(), "RMIQ" );
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         
         std::string tmpSubName = "sub_" + tmp;
         TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
@@ -1069,7 +1069,7 @@ namespace jetHadron {
 //        // do a test fit to see if the background was subtracted properly
 //        std::string testName = tmp + "_TEST";
 //        TF1* testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
-//        histograms[i][j]->Fit( testName.c_str(), "RMIQ");
+//        histograms[i][j]->Fit( testName.c_str(), "RMI");
 //        while ( fabs(testFit->GetParameter(0)) > 0.01 ) {
 //          
 //          tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), phi_min, phi_max );
@@ -1079,7 +1079,7 @@ namespace jetHadron {
 //          delete tmpSub;
 //          delete testFit;
 //          testFit = new TF1( testName.c_str(), phiForm.c_str(), phi_min, phi_max );
-//          histograms[i][j]->Fit( testName.c_str(), "RMIQ" );
+//          histograms[i][j]->Fit( testName.c_str(), "RMI" );
 //        }
 //        
 //        delete testFit;
