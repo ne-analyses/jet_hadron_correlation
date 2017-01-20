@@ -1306,7 +1306,7 @@ namespace jetHadron {
     
   }
   
-  void FixTheDamnBins(vstd::vector<TH1F*>& histograms ) {
+  void FixTheDamnBins( std::vector<TH1F*>& histograms ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       for ( int k = 1; k < histograms[i]->GetXaxis()->GetNbins(); ++k ) {
