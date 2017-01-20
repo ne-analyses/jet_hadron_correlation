@@ -137,8 +137,8 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root");
-      tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
+      tmp = new TFile( "out/added/pp/trg6/corr.root");
+      tmpMix = new TFile( "out/added/pp/trg6/mix.root");
       
       corrFilesHard.push_back( tmp );
       mixFilesHard.push_back( tmpMix );
@@ -507,6 +507,8 @@ int main( int argc, const char** argv) {
   jetHadron::SubtractBackgroundDeta( corrected_deta_lead, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
   
+  
+  return 0;
   // and normalize
   jetHadron::Normalize1D( corrected_dphi_subtracted_hard, nEventsHard );
   jetHadron::Normalize1D( corrected_dphi_subtracted_sub_hard, nEventsHard );
