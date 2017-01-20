@@ -21,6 +21,7 @@ namespace patch {
   }
 }
 
+
 namespace jetHadron {
   
   // binSelector functionality to set bin information to match
@@ -48,7 +49,7 @@ namespace jetHadron {
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
-  int ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
+  int ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector, std::string uniqueID ) {
     
     // loop over all files and all aj, centrality, and vz bins
     // to return a 4D vector of histograms
@@ -117,8 +118,8 @@ namespace jetHadron {
             }
             
             //now differentiate the names by file
-            leadName = "corr_file_" + patch::to_string(i) + leadName;
-            subLeadName = "corr_file_" + patch::to_string(i) + subLeadName;
+            leadName = uniqueID + "_corr_file_" + patch::to_string(i) + "_" + leadName;
+            subLeadName = uniqueID +  "_corr_file_" + patch::to_string(i) + "_" + subLeadName;
             
             leadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( leadName.c_str() );
             if ( subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
@@ -131,7 +132,7 @@ namespace jetHadron {
     return 1;
   }
   
-  int ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector ) {
+  int ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector, std::string uniqueID ) {
     
     // loop over all files and all aj, centrality, and vz bins
     // to return a 4D vector of histograms
@@ -199,8 +200,8 @@ namespace jetHadron {
             }
             
             //now differentiate the names by file
-            leadName = "mix_corr_file_" + patch::to_string(i) + leadName;
-            subLeadName = "mix_corr_file_" + patch::to_string(i) + subLeadName;
+            leadName = uniqueID + "_mix_corr_file_" + patch::to_string(i) + "_" + leadName;
+            subLeadName = uniqueID + "_mix_corr_file_" + patch::to_string(i) + "_" + subLeadName;
             
             leadingCorrelations[i][cent_index][vz_index][aj_index]->SetName( leadName.c_str() );
             if ( subLeadingCorrelations[i][cent_index][vz_index][aj_index] ) {
@@ -217,7 +218,7 @@ namespace jetHadron {
   // Function used to find the weighted center
   // for each pt bin for each file - vector<vector<double> >
   // and also creates pt spectra for each file
-  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector ) {
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector, std::string uniqueID ) {
     
     // make the returned object 
     std::vector<std::vector<double> > ptBinCenters;
@@ -247,7 +248,7 @@ namespace jetHadron {
               correlations[i][j][k][l]->GetZaxis()->SetRange( selector.ptBinLowEdge(m), selector.ptBinHighEdge(m) );
               if ( !ptBinHolder[i][m] ) {
                 ptBinHolder[i][m] = ((TH1F*) ((TH1F*) correlations[i][j][k][l]->ProjectionZ())->Clone());
-                std::string tmp = "pt_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                std::string tmp = uniqueID + "_pt_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
                 ptBinHolder[i][m]->SetName( tmp.c_str() );
               }
               else {
@@ -462,7 +463,7 @@ namespace jetHadron {
               else {
                 if ( !combinedMixedEvents[i][2] ) {
                   combinedMixedEvents[i][2] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
-                  std::string tmp = uniqueID + "mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
+                  std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_pt_" + patch::to_string(m);
                   combinedMixedEvents[i][2]->SetName( tmp.c_str() );
                 }
                 else {
@@ -511,7 +512,7 @@ namespace jetHadron {
               else {
                 if ( !combinedMixedEvents[i][j][2] ) {
                   combinedMixedEvents[i][j][2] = (TH2F*) ((TH2F*) mixedEvents[i][j][k][l]->Project3D("YX"))->Clone();
-                  std::string tmp = uniqueID + "mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_pt_" + patch::to_string(m);
+                  std::string tmp = uniqueID + "_mix_file_" + patch::to_string(i) + "_cent_" + patch::to_string(j) + "_pt_" + patch::to_string(m);
                   combinedMixedEvents[i][j][2]->SetName( tmp.c_str() );
                 }
                 else {

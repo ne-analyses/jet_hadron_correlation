@@ -214,13 +214,13 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjBalanced;
   std::vector<std::vector<std::vector<std::vector<TH2F*> > > > correlationAjUnbalanced;
   
-  jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector );
-  jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector, "sublead_uncorrsplit" );
-  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjUnbalanced, correlationAjBalanced, selector, ajSplitBin );
+  jetHadron::BuildSingleCorrelation( leadingCorrelationIn, leadingCorrelation, selector, "lead_uncorr" );
+  jetHadron::BuildSingleCorrelation( subleadingCorrelationIn, subleadingCorrelation, selector, "sublead_uncorr" );
+  jetHadron::BuildAjSplitCorrelation( leadingCorrelationIn, correlationAjUnbalanced, correlationAjBalanced, selector, ajSplitBin, "aj_split_recomb" );
   
   // get averaged correlations
-  std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector );
-  std::vector<std::vector<TH2F*> > averagedSignalSub = jetHadron::AverageCorrelations( subleadingCorrelation, selector, "uncorr_sub" );
+  std::vector<std::vector<TH2F*> > averagedSignal = jetHadron::AverageCorrelations( leadingCorrelation, selector, "uncorr_avg" );
+  std::vector<std::vector<TH2F*> > averagedSignalSub = jetHadron::AverageCorrelations( subleadingCorrelation, selector, "uncorr_sub_avg" );
   std::vector<std::vector<TH2F*> > averagedSignalBalanced = jetHadron::AverageCorrelations( correlationAjBalanced, selector, "balanced" );
   std::vector<std::vector<TH2F*> > averagedSignalUnbalanced = jetHadron::AverageCorrelations( correlationAjUnbalanced, selector, "unbalanced" );
   
@@ -256,25 +256,13 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
-  // save to an output file
-  TFile outFile( "tmp/histograms.root", "RECREATE" );
-  for ( int i = 0; i < leadingMix[0].size(); ++i ) {
-    leadingMix[0][i]->Write();
-    subleadingMix[0][i]->Write();
-    leadingMix[1][i]->Write();
-    subleadingMix[1][i]->Write();
-  }
-  for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
-    averagedSignal[0][i]->Write();
-    averagedSignalSub[0][i]->Write();
-    averagedSignal[1][i]->Write();
-    averagedSignalSub[1][i]->Write();
-  }
-  nEvents[0]->Write();
-  nEvents[1]->Write();
+  // clear up the 1D histograms for the sake of my sanity
+  ClearHistograms( leadingCorrelationIn );
+  ClearHistograms( subleadingCorrelationIn );
+  ClearHistograms( leadingCorrelation );
+  ClearHistograms( subleadingCorrelation );
   
-  outFile.Close();
-  return 0;
+  std::cout<<"testing: finished clearing"<<std::endl;
   
   // ***************************
   // print out the 1d dEta for
@@ -288,7 +276,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < mixingProjection.size(); ++i ) {
     for ( int j = 0; j < mixingProjection[i].size(); ++j ) {
       
-      mixingProjection[i][j]->Scale( 1.0 / mixingProjection[i][j]->GetYaxis()->GetNbins() );
+      mixingProjection[i][j]->Scale( 1.0 / leadingMix[i][j]->GetYaxis()->GetNbins() );
       
     }
   }
@@ -568,6 +556,28 @@ int main( int argc, const char** argv) {
 }
 
 
+
+// code for saving histograms to file for my homework assignement
+
+//// save to an output file
+//TFile outFile( "tmp/histograms.root", "RECREATE" );
+//for ( int i = 0; i < leadingMix[0].size(); ++i ) {
+//  leadingMix[0][i]->Write();
+//  subleadingMix[0][i]->Write();
+//  leadingMix[1][i]->Write();
+//  subleadingMix[1][i]->Write();
+//}
+//for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
+//  averagedSignal[0][i]->Write();
+//  averagedSignalSub[0][i]->Write();
+//  averagedSignal[1][i]->Write();
+//  averagedSignalSub[1][i]->Write();
+//}
+//nEvents[0]->Write();
+//nEvents[1]->Write();
+//
+//outFile.Close();
+//return 0;
 
 
 

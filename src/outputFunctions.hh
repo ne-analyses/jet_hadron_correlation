@@ -58,6 +58,55 @@ namespace patch {
   template < typename T > std::string to_string( const T& n );
 }
 
+// first!
+// used to clean up these vectors of large amounts of histograms
+// mainly for my sanity but also to reduce chance of errors...
+template <class T>
+void ClearHistograms( std::vector<std::vector<T*> >& histograms )  {
+  for ( int i = 0; i < histograms.size(); ++i ) {
+    for ( int j = 0; j < histograms[0].size(); ++j ) {
+      
+      if ( histograms[i][j] )
+        delete histograms[i][j];
+      
+    }
+  }
+  histograms.resize(0);
+}
+
+template <class T>
+void ClearHistograms( std::vector<std::vector<std::vector<T*> > >& histograms ) {
+  for ( int i = 0; i < histograms.size(); ++i ) {
+    for ( int j = 0; j < histograms[i].size(); ++j ) {
+      for ( int k = 0; k < histograms[i][j].size(); ++k ) {
+        
+        if ( histograms[i][j][k] )
+          delete histograms[i][j][k];
+        
+      }
+    }
+  }
+  histograms.resize(0);
+}
+
+template <class T>
+void ClearHistograms( std::vector<std::vector<std::vector<std::vector<T*> > > >& histograms ) {
+  for ( int i = 0; i < histograms.size(); ++i ) {
+    for ( int j = 0; j < histograms[i].size(); ++j ) {
+      for ( int k = 0; k < histograms[i][j].size(); ++k ) {
+        for ( int l = 0; l < histograms[i][j][k].size(); ++l ) {
+          
+          if ( histograms[i][j][k][l] )
+            delete histograms[i][j][k][l];
+          
+        }
+      }
+    }
+  }
+  histograms.resize(0);
+}
+
+
 namespace jetHadron {
   
   
@@ -139,14 +188,14 @@ namespace jetHadron {
   // the files passed in - it returns the correlations,
   // and the number of events, and selects using the centralities,
   // vz bin range, and aj ranges passed in via binSelector
-  int ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector );
-  int ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingMix, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingMix, std::vector<TH3F*>& nEvents, binSelector selector );
+  int ReadInFiles(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingCorrelations, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingCorrelations, std::vector<TH3F*>& nEvents, binSelector selector, std::string uniqueID = "" );
+  int ReadInFilesMix(std::vector<TFile*>& filesIn, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& leadingMix, std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& subLeadingMix, std::vector<TH3F*>& nEvents, binSelector selector, std::string uniqueID = "" );
   
   
   // Function used to find the weighted center
   // for each pt bin for each file - vector<vector<double> >
   // and also creates pt spectra for each file
-  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector );
+  std::vector<std::vector<double> > FindPtBinCenter( std::vector<std::vector<std::vector<std::vector<TH3F*> > > >& correlations, std::vector<TH1F*>& ptSpectra, binSelector selector, std::string uniqueID = "" );
   
   // Functions to project out the Aj dependence -
   // can either produce a single, Aj independent bin
@@ -185,6 +234,7 @@ namespace jetHadron {
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<std::vector<TH2F*> > >& mixedEvents, binSelector selector, std::string uniqueID = "" );
   std::vector<std::vector<TH2F*> > EventMixingCorrection( std::vector<std::vector<std::vector<std::vector<TH2F*> > > >& correlations, std::vector<std::vector<TH2F*> >& mixedEvents, binSelector selector, std::string uniqueID = "" );
+  
   
   // Used to extract 1D projections from
   // the 2D histograms - allows for setting
