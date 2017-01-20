@@ -536,7 +536,7 @@ namespace jetHadron {
     // scale each histogram
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
-        std::cout<<"i: "<<i << " j: "<<std::endl;
+        std::cout<<"i: "<<i << " j: "<<j <<std::endl;
         if ( mixedEvents[i][j]->GetEntries() ) {
           std::cout<<"geting projection"<<std::endl;
           TH1F* tmp = (TH1F*) mixedEvents[i][j]->ProjectionX();
