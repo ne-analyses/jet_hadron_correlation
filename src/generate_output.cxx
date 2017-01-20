@@ -426,6 +426,11 @@ int main( int argc, const char** argv) {
     jetHadron::Print1DHistogramsOverlayedDphiOther( corrected_dphi_subtracted_sub_far[i], corrected_dphi_subtracted_sub_near[i], outputDirBase+"/far_overlay_"+analysisNames[i], tmpVec[0], tmpVec[1], selector );
   }
 
+  // TESTING
+  for ( int i = 0; i < corrected_dphi_subtracted[0][5]->GetXaxis()->GetNbins(); ++i ) {
+    std::cout<<"bin: "<<i<< " content: "<< corrected_dphi_subtracted[0][5]->GetBinContent(i)<< " error: "<< corrected_dphi_subtracted[0][5]->GetBinError(i) << std::endl;
+  }
+  
   /*
   
   // Now we will do not subtracted projections
