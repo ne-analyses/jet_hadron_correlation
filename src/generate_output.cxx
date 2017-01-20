@@ -677,6 +677,17 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", -0.8 , 0.8  );
   
   
+  std::cout<<"testing the yields..."<<std::endl;
+  std::cout<<"auau trigger dphi: "<< dphi_lead_bin_int[0][1]<<std::endl;
+  std::cout<<"auau trigger deta: "<< deta_lead_bin_int[0][1]<<std::endl;
+  std::cout<<"pp trigger dphi: "<< dphi_lead_bin_int[0][1]<<std::endl;
+  std::cout<<"pp trigger deta: "<< deta_lead_bin_int[0][1]<<std::endl;
+  
+  std::cout<<"auau recoil dphi: "<< dphi_sub_bin_int[0][1]<<std::endl;
+  std::cout<<"auau recoil deta: "<< deta_sub_bin_int[0][1]<<std::endl;
+  std::cout<<"pp recoil dphi: "<< dphi_sub_bin_int[0][1]<<std::endl;
+  std::cout<<"pp recoil deta: "<< deta_sub_bin_int[0][1]<<std::endl;
+  
   return 0;
 }
 
