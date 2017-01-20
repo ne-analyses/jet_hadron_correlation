@@ -1290,8 +1290,9 @@ namespace jetHadron {
       for ( int j = 0; j < histograms[i].size(); ++j ) {
         for ( int k = 1; k < histograms[i][j]->GetXaxis()->GetNbins(); ++k ) {
           
-          if ( fabs(histograms[i][j]->GetBinContent(k)) < 0.005 ) {
-            histograms[i][j]->SetBinContent(k, 0 );
+          if ( fabs(histograms[i][j]->GetBinContent(k)) == 0 && fabs( histograms[i][j]->GetBinError(k))== 0 ) {
+            histograms[i][j]->SetBinContent(k, 0.0001 );
+            histograms[i][j]->SetBinError( k, 0.0001 );
           }
           
         }
