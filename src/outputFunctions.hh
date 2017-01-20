@@ -163,13 +163,24 @@ namespace jetHadron {
     // if the radius is NOT 0.4, this needs to be used...
     void ChangeRadius( double R = 0.4);
     
-    // used to select the near size correlation for dEta
-    double eta_projection_phi_bound_low = -1.0;
-    double eta_projection_phi_bound_high = 1.0;
+    // used to select the near side correlation for dEta
+    const double eta_projection_phi_bound_low = -0.6;
+    const double eta_projection_phi_bound_high = -1.0*eta_projection_phi_bound_low;
     
-    // used when projecting the mixed events to get  dPhi
-    double phi_projection_eta_bound_low = -1.2;
-    double phi_projection_eta_bound_high = 1.2;
+    // used when projecting the 2d to get  dPhi
+    const double phi_projection_eta_bound_low = -0.45;
+    const double phi_projection_eta_bound_high = -1.0*phi_projection_eta_bound_low;
+    
+    // ranges used for integration
+    // corresponds to the projection range in the other dimension
+    // when taking 1D projections
+    const double phi_projection_integral_range_low = eta_projection_phi_bound_low;
+    const double phi_projection_integral_range_high = eta_projection_phi_bound_high;;
+    
+    const double eta_projection_integral_range_low = phi_projection_eta_bound_low;
+    const double eta_projection_integral_range_high = phi_projection_eta_bound_high;
+    
+    const double phi_projection_subtraction_regions[4] = { -0.99, phi_projection_eta_bound_low, phi_projection_eta_bound_high, 0.99 };
     
     // used when doing near - far subtraction for flow in dPhi
     double restricted_near_phi_projection_eta_bound_low() { return phi_projection_eta_bound_low / 2.0; }
@@ -238,17 +249,13 @@ namespace jetHadron {
   // the 2D histograms - allows for setting
   // ranges for the projection ( e.g. projecting
   // only the near side of the dPhi range in a dEta
-  // projection )
-  std::vector<std::vector<TH1F*> > ProjectDphi( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false );
-  std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDphi = false );
+  // projection ) via binSelector
+  std::vector<std::vector<TH1F*> > ProjectDphi( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
+  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, std::string uniqueID = "" );
   
-  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
-  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
+  std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
   
-  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
-  void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, std::string uniqueID = "", bool restrictDeta = false);
-  
-  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarTest( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, double* edges, std::string uniqueID = "", bool restrictDeta = false);
   
   // Normalizes 1D histograms based on what
   // type of analysis they are

@@ -304,8 +304,7 @@ int main( int argc, const char** argv) {
   ClearHistograms( subleadingCorrelationHard );
   
   __OUT("Finished clearing input histograms")
-  std::cout<<"histogram size: "<< leadingCorrelationIn.size()<<std::endl;
-  return 0;
+  
   
   // ***************************
   // print out the 1d dEta for
@@ -329,14 +328,22 @@ int main( int argc, const char** argv) {
     jetHadron::Print1DHistogramsDeta( mixingProjection[i], outputDirBase+"/mixing_deta_"+analysisNames[i], analysisNames[i], selector );
   }
   
+  __OUT("Starting 1D Correlations")
+  __OUT("first, dphi projections, without near minus far subtraction")
+  // *************************************
+  // correlations start here!!
+  // *************************************
   // *************************************
   // get the 1D projection for uncorrected
   // (no mixing) for dPhi
   // *************************************
   
-  std::vector<std::vector<TH1F*> > uncorrected_dphi_lead = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected", false );
-  std::vector<std::vector<TH1F*> > uncorrected_dphi_sub = jetHadron::ProjectDphi( averagedSignalSub, selector, "not_mixing_corrected_sub", false );
+  std::vector<std::vector<TH1F*> > uncorrected_dphi_lead = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected" );
+  std::vector<std::vector<TH1F*> > uncorrected_dphi_sub = jetHadron::ProjectDphi( averagedSignalSub, selector, "not_mixing_corrected_sub" );
   
+
+  
+  /*
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( uncorrected_dphi_lead, selector );
   jetHadron::SubtractBackgroundDphi( uncorrected_dphi_sub, selector );
@@ -594,7 +601,7 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", -0.8 , 0.8  );
   
-  
+  */
   return 0;
 }
 
