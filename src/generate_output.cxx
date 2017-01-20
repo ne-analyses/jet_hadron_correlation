@@ -266,7 +266,7 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   
-  __OUT("Clearing input histogramshistograms")
+  __OUT("Clearing input histograms")
   // clear up the 1D histograms for the sake of my sanity
   ClearHistograms( leadingCorrelationIn );
   ClearHistograms( subleadingCorrelationIn );
@@ -274,6 +274,8 @@ int main( int argc, const char** argv) {
   ClearHistograms( subleadingCorrelation );
   
   __OUT("Finished clearing input histograms")
+  std::cout<<"histogram size: "<< leadingCorrelationIn.size()<<std::endl;
+  return 0;
   
   // ***************************
   // print out the 1d dEta for
