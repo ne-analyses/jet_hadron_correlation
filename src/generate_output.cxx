@@ -213,7 +213,7 @@ int main( int argc, const char** argv) {
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
   jetHadron::ReadInFiles( corrFilesHard, leadingCorrelationInHard, subleadingCorrelationInHard, nEventsHard, selector, "pp_hard" );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
-  jetHadron::ReadInFilesMix( mixFilesHard, leadingMixIn, subleadingMixIn, nEventsMixing, selector, "pp_hard" );
+  jetHadron::ReadInFilesMix( mixFilesHard, leadingMixInHard, subleadingMixInHard, nEventsMixingHard, selector, "pp_hard" );
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
@@ -258,15 +258,6 @@ int main( int argc, const char** argv) {
   //std::vector<std::vector<std::vector<std::vector<TH2F*> > > > leadingMixNotAveraged = jetHadron::BuildMixedEvents( leadingMixIn, selector, "not_avg_mix" );
   //std::vector<std::vector<std::vector<std::vector<TH2F*> > > > subleadingMixNotAveraged = jetHadron::BuildMixedEvents( subleadingMixIn, selector, "not_avg_mix_sub");
 
-  std::cout<<"debugging: "<<std::endl;
-  std::cout<<"vector size: "<< leadingMixHard.size()<<std::endl;;
-  for ( int i = 0; i < leadingMixHard.size(); ++i ) {
-    for ( int j = 0; j < leadingMixHard[i].size(); ++j ) {
-      std::cout<<"i: "<<i<<" j: "<<j<< "  histo; "<<leadingMixHard[i][j]<<std::endl;
-      std::cout<<"leading mix histo: "<< leadingMix[i][j]<<std::endl;
-    }
-  }
-  std::cout<<"done"<<std::endl;
   // And Scale so that MaxBinContent = 1
   jetHadron::ScaleMixedEvents( leadingMix );
   jetHadron::ScaleMixedEvents( subleadingMix );
