@@ -279,6 +279,15 @@ int main () {
     deta_err_sub[i]->Write();
     dphi_err[i]->Write();
     dphi_err_sub[i]->Write();
+    
+  }
+  
+  for ( int i = 0; i < deta_err.size(); ++i ) {
+    
+    deta_tow_err[i]->Write();
+    deta_tow_err_sub[i]->Write();
+    deta_trk_err[i]->Write();
+    deta_trk_err_sub[i]->Write();
   }
   
   // now
