@@ -298,6 +298,10 @@ int main( int argc, const char** argv) {
   ClearHistograms( subleadingCorrelationIn );
   ClearHistograms( leadingCorrelation );
   ClearHistograms( subleadingCorrelation );
+  ClearHistograms( leadingCorrelationInHard );
+  ClearHistograms( subleadingCorrelationInHard );
+  ClearHistograms( leadingCorrelationHard );
+  ClearHistograms( subleadingCorrelationHard );
   
   __OUT("Finished clearing input histograms")
   std::cout<<"histogram size: "<< leadingCorrelationIn.size()<<std::endl;

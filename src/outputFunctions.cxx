@@ -536,12 +536,14 @@ namespace jetHadron {
     // scale each histogram
     for ( int i = 0; i < mixedEvents.size(); ++i ) {
       for ( int j = 0; j < mixedEvents[i].size(); ++j ) {
+        std::cout<<"i: "<<i << " j: "<<std::endl;
         if ( mixedEvents[i][j]->GetEntries() ) {
           
           TH1F* tmp = (TH1F*) mixedEvents[i][j]->ProjectionX();
           tmp->Scale( 1.0 / (double) mixedEvents[i][j]->GetYaxis()->GetNbins() );
           
           mixedEvents[i][j]->Scale( 1.0 / tmp->GetMaximum() );
+          delete tmp;
         }
       }
     }
@@ -560,6 +562,7 @@ namespace jetHadron {
               tmp->Scale( 1.0 / (double) mixedEvents[i][j][k][l]->GetYaxis()->GetNbins() );
               
               mixedEvents[i][j][k][l]->Scale( 1.0 / tmp->GetMaximum() );
+              delete tmp;
             }
           }
         }
