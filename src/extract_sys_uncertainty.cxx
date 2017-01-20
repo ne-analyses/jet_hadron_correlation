@@ -117,8 +117,8 @@ int main () {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > mixInSub;
   
   // reading in the histograms
-  jetHadron::ReadInFiles( towFiles, towCorrIn, towCorrInSub, nEventsTow, selector );
-  jetHadron::ReadInFiles( trkFiles, trkCorrIn, trkCorrInSub, nEventsTrk, selector );
+  jetHadron::ReadInFiles( towFiles, towCorrIn, towCorrInSub, nEventsTow, selector, "tow" );
+  jetHadron::ReadInFiles( trkFiles, trkCorrIn, trkCorrInSub, nEventsTrk, selector, "trk" );
   jetHadron::ReadInFilesMix( mixFiles, mixIn, mixInSub, nEventsMix, selector );
   
   // Find the pt bin center for future use
@@ -170,13 +170,12 @@ int main () {
   // get the projections
   // first Subtracted DPhi
   // *************************************
-  // define what "regions" we want the subtraction to be done in
-  double subtractionRegions[4] = { -1.0, -0.6, 0.6, 1.0 };
+
   
-  std::vector<std::vector<TH1F*> > corrected_dphi_tow = jetHadron::ProjectDphiNearMinusFar( correctedTow, selector, "corTowDPhi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_tow_sub = jetHadron::ProjectDphiNearMinusFar( correctedTowSub, selector,  "corTowDPhiSub", true  );
-  std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector,  "corTrkDPhi", true );
-  std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, "corTrkDPhiSub", true  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow = jetHadron::ProjectDphiNearMinusFar( correctedTow, selector, "corTowDPhi" );
+  std::vector<std::vector<TH1F*> > corrected_dphi_tow_sub = jetHadron::ProjectDphiNearMinusFar( correctedTowSub, selector,  "corTowDPhiSub" );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk = jetHadron::ProjectDphiNearMinusFar( correctedTrk, selector,  "corTrkDPhi" );
+  std::vector<std::vector<TH1F*> > corrected_dphi_trk_sub = jetHadron::ProjectDphiNearMinusFar( correctedTrkSub, selector, "corTrkDPhiSub"  );
   
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_tow, selector );
@@ -219,10 +218,10 @@ int main () {
   
   // now DEta
   // *************************************
-  std::vector<std::vector<TH1F*> > corrected_deta_tow = jetHadron::ProjectDeta( correctedTow, selector, "corTowDEta", true );
-  std::vector<std::vector<TH1F*> > corrected_deta_tow_sub = jetHadron::ProjectDeta( correctedTowSub, selector, "corTowDEtaSub", true );
-  std::vector<std::vector<TH1F*> > corrected_deta_trk = jetHadron::ProjectDeta( correctedTrk, selector, "corTrkDEta", true );
-  std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub", true );
+  std::vector<std::vector<TH1F*> > corrected_deta_tow = jetHadron::ProjectDeta( correctedTow, selector, "corTowDEta");
+  std::vector<std::vector<TH1F*> > corrected_deta_tow_sub = jetHadron::ProjectDeta( correctedTowSub, selector, "corTowDEtaSub" );
+  std::vector<std::vector<TH1F*> > corrected_deta_trk = jetHadron::ProjectDeta( correctedTrk, selector, "corTrkDEta" );
+  std::vector<std::vector<TH1F*> > corrected_deta_trk_sub = jetHadron::ProjectDeta( correctedTrkSub, selector, "corTrkDEtaSub" );
   
   // do background subtraction
   jetHadron::SubtractBackgroundDeta( corrected_deta_tow, selector );
@@ -267,22 +266,8 @@ int main () {
   
   // ******************************************
   // we have our fit values from the TF1s now
-  // we will save them into trees and write out
+  // write them out
   // ******************************************
-  TTree* tree = new TTree(trigger+"_sys","tower & tree systematics" );
-  
-  double towYieldUp, towYieldDown, towSubYieldUp, towSubYieldDown;
-  double trkYieldUp, trkYieldDown, trkSubYieldUp, trkSubYieldDown;
-  
-  
-  TBranch* branchTowYieldUp = tree->Branch("towerYieldUpper", &towYieldUp );
-  TBranch* branchTowYieldDown = tree->Branch("towerYieldLower", &towYieldDown );
-  TBranch* branchTowSubYieldUp = tree->Branch("towerSubYieldUpper", &towSubYieldUp );
-  TBranch* branchTowSubYieldDown = tree->Branch("towerSubYieldLower", &towSubYieldDown );
-  TBranch* branchTrkYieldUp = tree->Branch("TrackingYieldUpper", &trkYieldUp );
-  TBranch* branchTrkYieldDown = tree->Branch("TrackingYieldLower", &trkYieldDown );
-  TBranch* branchTrkSubYieldUp = tree->Branch("TrackingSubYieldUpper", &trkSubYieldUp );
-  TBranch* branchTrkSubYieldDown = tree->Branch("TrackingSubYieldLower", &trkSubYieldDown );
   
   
   // output file
