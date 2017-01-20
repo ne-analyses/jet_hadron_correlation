@@ -294,15 +294,15 @@ int main( int argc, const char** argv) {
   
   __OUT("Clearing input histograms")
   // clear up the 1D histograms for the sake of my sanity
-  ClearHistograms( leadingCorrelationIn );
-  ClearHistograms( subleadingCorrelationIn );
-  ClearHistograms( leadingCorrelation );
-  ClearHistograms( subleadingCorrelation );
-  ClearHistograms( leadingCorrelationInHard );
-  ClearHistograms( subleadingCorrelationInHard );
-  ClearHistograms( leadingCorrelationHard );
-  ClearHistograms( subleadingCorrelationHard );
-  
+//  ClearHistograms( leadingCorrelationIn );
+//  ClearHistograms( subleadingCorrelationIn );
+//  ClearHistograms( leadingCorrelation );
+//  ClearHistograms( subleadingCorrelation );
+//  ClearHistograms( leadingCorrelationInHard );
+//  ClearHistograms( subleadingCorrelationInHard );
+//  ClearHistograms( leadingCorrelationHard );
+//  ClearHistograms( subleadingCorrelationHard );
+//  
   __OUT("Finished clearing input histograms")
   
   
@@ -342,6 +342,8 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > uncorrected_dphi_lead = jetHadron::ProjectDphi( averagedSignal, selector, "not_mixing_corrected" );
   std::vector<std::vector<TH1F*> > uncorrected_dphi_sub = jetHadron::ProjectDphi( averagedSignalSub, selector, "not_mixing_corrected_sub" );
   
+  /*
+  
   // do background subtraction
   __OUT("doing background subtraction")
   jetHadron::SubtractBackgroundDphi( uncorrected_dphi_lead, selector );
@@ -371,7 +373,7 @@ int main( int argc, const char** argv) {
   jetHadron::PrintGraphWithErrors( ptBinCenters, uncorrected_dphi_lead_fit_yield, zeros, uncorrected_dphi_lead_fit_yield_err, outputDirBase+"/uncorrected_dphi_lead_graph", analysisNames, "Trigger Jet Yields", selector,  graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, uncorrected_dphi_sub_fit_yield, zeros, uncorrected_dphi_sub_fit_yield_err, outputDirBase+"/uncorrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   
-  /*
+  
   
   // *************************************
   // Mixing corrected stuff -
