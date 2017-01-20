@@ -508,10 +508,10 @@ int main( int argc, const char** argv) {
   jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
   
   // and normalize
-  jetHadron::Normalize1D( corrected_dphi_subtracted_hard, nEvents );
-  jetHadron::Normalize1D( corrected_dphi_subtracted_sub_hard, nEvents );
-  jetHadron::Normalize1D( corrected_deta_lead_hard, nEvents );
-  jetHadron::Normalize1D( corrected_deta_sub_hard, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_subtracted_hard, nEventsHard );
+  jetHadron::Normalize1D( corrected_dphi_subtracted_sub_hard, nEventsHard );
+  jetHadron::Normalize1D( corrected_deta_lead_hard, nEventsHard );
+  jetHadron::Normalize1D( corrected_deta_sub_hard, nEventsHard );
   
   // now we can fit for debugging purposes
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit_hard = jetHadron::FitDphiRestricted( corrected_dphi_subtracted, selector, "pp_hard_dphi_fit" );
@@ -631,13 +631,13 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( corrected_deta_lead, deta_lead_bin_int, deta_lead_bin_int_err, selector );
   jetHadron::ExtractIntegraldEta( corrected_deta_sub, deta_sub_bin_int, deta_sub_bin_int_err, selector );
   
-  __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
-  for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
-    dphi_lead_bin_int[0][i] -= dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i];
-    dphi_sub_bin_int[0][i] -= dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i];
-    deta_lead_bin_int[0][i] -= deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i];
-    deta_sub_bin_int[0][i] -= deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i];
-  }
+//  __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
+//  for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
+//    dphi_lead_bin_int[0][i] -= dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i];
+//    dphi_sub_bin_int[0][i] -= dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i];
+//    deta_lead_bin_int[0][i] -= deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i];
+//    deta_sub_bin_int[0][i] -= deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i];
+//  }
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
@@ -676,17 +676,6 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", -0.8 , 0.8  );
   
-  
-  std::cout<<"testing the yields..."<<std::endl;
-  std::cout<<"auau trigger dphi: "<< dphi_lead_bin_int[0][1]<<std::endl;
-  std::cout<<"auau trigger deta: "<< deta_lead_bin_int[0][1]<<std::endl;
-  std::cout<<"pp trigger dphi: "<< dphi_lead_bin_int[1][1]<<std::endl;
-  std::cout<<"pp trigger deta: "<< deta_lead_bin_int[1][1]<<std::endl;
-  
-  std::cout<<"auau recoil dphi: "<< dphi_sub_bin_int[0][1]<<std::endl;
-  std::cout<<"auau recoil deta: "<< deta_sub_bin_int[0][1]<<std::endl;
-  std::cout<<"pp recoil dphi: "<< dphi_sub_bin_int[1][1]<<std::endl;
-  std::cout<<"pp recoil deta: "<< deta_sub_bin_int[1][1]<<std::endl;
   
   return 0;
 }

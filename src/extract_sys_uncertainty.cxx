@@ -277,7 +277,7 @@ int main () {
   
   
   // ******************************************
-  // we have our fit values from the TF1s now
+  // we have our errors from the TH1s now
   // write them out
   // ******************************************
   
