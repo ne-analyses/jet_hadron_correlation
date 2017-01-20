@@ -131,14 +131,14 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root", "READ" );
-      tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root", "READ");
+      tmp = new TFile( "out/added/pp/trg6/corr.root", "READ" );
+      tmpMix = new TFile( "out/added/ppd/trg6/mix.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6/corr.root");
-      tmpMix = new TFile( "out/added/pp/trg6/mix.root");
+      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root");
+      tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
       
       corrFilesHard.push_back( tmp );
       mixFilesHard.push_back( tmpMix );
