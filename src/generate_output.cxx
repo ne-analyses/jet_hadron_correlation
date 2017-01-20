@@ -211,9 +211,9 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<std::vector<std::vector<TH3F*> > > > subleadingMixInHard;
   // reading in the histograms
   jetHadron::ReadInFiles( corrFiles, leadingCorrelationIn, subleadingCorrelationIn, nEvents, selector );
-  jetHadron::ReadInFiles( corrFiles, leadingCorrelationInHard, subleadingCorrelationInHard, nEventsHard, selector, "pp_hard" );
+  jetHadron::ReadInFiles( corrFilesHard, leadingCorrelationInHard, subleadingCorrelationInHard, nEventsHard, selector, "pp_hard" );
   jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector );
-  jetHadron::ReadInFilesMix( mixFiles, leadingMixIn, subleadingMixIn, nEventsMixing, selector, "pp_hard" );
+  jetHadron::ReadInFilesMix( mixFilesHard, leadingMixIn, subleadingMixIn, nEventsMixing, selector, "pp_hard" );
   
   // Find the pt bin center for future use
   std::vector<TH1F*> ptSpectra;
