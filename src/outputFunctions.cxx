@@ -1020,7 +1020,7 @@ namespace jetHadron {
         
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         TF1* tmpFit = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, selector.eta_fit_high_edge );
-        tmpFit->SetParameter( 0, 1 );
+        tmpFit->SetParameter( 0, histograms[i][j]->GetBinContent( histograms[i][j]->GetMinimumBin() ) );
         tmpFit->SetParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.5 );
@@ -1058,7 +1058,7 @@ namespace jetHadron {
         
         std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
         TF1* tmpFit = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_fit_low_edge, selector.phi_fit_high_edge );
-        tmpFit->SetParameter( 0, 1 );
+        tmpFit->SetParameter( 0, histograms[i][j]->GetBinContent( histograms[i][j]->GetMinimumBin() ) );
         tmpFit->SetParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
         tmpFit->SetParameter( 3, 0.5 );
@@ -1067,7 +1067,6 @@ namespace jetHadron {
         tmpFit->SetParameter( 6, 0.5 );
         
         if ( i == 0 && j == 1 ) {
-          tmpFit->SetParameter( 0, 5 );
           tmpFit->SetParameter( 3, 0.4 );
           tmpFit->SetParameter( 6, 0.4 );
         }
@@ -1112,7 +1111,7 @@ namespace jetHadron {
       
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, selector.eta_fit_high_edge );
-        fits[i][j]->SetParameter( 0, 1 );
+        fits[i][j]->SetParameter( 0, 0 );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
@@ -1152,7 +1151,7 @@ namespace jetHadron {
         
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_fit_low_edge, selector.phi_fit_high_edge );
-        fits[i][j]->SetParameter( 0, 1 );
+        fits[i][j]->SetParameter( 0, 0 );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
@@ -1193,6 +1192,7 @@ namespace jetHadron {
 
         std::string tmp = uniqueID + "fit_"; tmp += histograms[i][j]->GetName();
         fits[i][j] = new TF1( tmp.c_str(), phiForm.c_str(), selector.phi_corrected_fit_low_edge, selector.phi_corrected_fit_high_edge );
+        fits[i][j]->SetParameter( 0, 0 );
         fits[i][j]->SetParameter( 1, 1 );
         fits[i][j]->FixParameter( 2, 0 );
         fits[i][j]->SetParameter( 3, 0.5 );
