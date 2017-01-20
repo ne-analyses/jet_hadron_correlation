@@ -532,6 +532,9 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( corrected_deta_lead_hard, deta_lead_bin_int_hard, deta_lead_bin_int_hard_err, selector );
   jetHadron::ExtractIntegraldEta( corrected_deta_sub_hard, deta_sub_bin_int_hard, deta_sub_bin_int_hard_err, selector );
   
+  jetHadron::PrintGraphWithErrors( ptBinCenters, dphi_lead_bin_int_hard, zeros, dphi_lead_bin_int_hard_err, outputDirBase+"/DEBUG_dphi_lead_graph", analysisNames, "Trigger Jet Yields", selector,  graphPtBinLow, graphPtBinHigh );
+  jetHadron::PrintGraphWithErrors( ptBinCenters, deta_lead_bin_int_hard, zeros, deta_lead_bin_int_hard_err, outputDirBase+"/DEBUG_dphi_sub_graph", analysisNames, "Trigger Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
+  
   
   
   // *******************************
@@ -632,12 +635,12 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( corrected_deta_sub, deta_sub_bin_int, deta_sub_bin_int_err, selector );
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
-  for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
-    dphi_lead_bin_int[0][i] -= dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i];
-    dphi_sub_bin_int[0][i] -= dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i];
-    deta_lead_bin_int[0][i] -= deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i];
-    deta_sub_bin_int[0][i] -= deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i];
-  }
+//  for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
+//    dphi_lead_bin_int[0][i] -= dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i];
+//    dphi_sub_bin_int[0][i] -= dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i];
+//    deta_lead_bin_int[0][i] -= deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i];
+//    deta_sub_bin_int[0][i] -= deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i];
+//  }
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
