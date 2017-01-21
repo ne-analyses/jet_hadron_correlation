@@ -456,9 +456,6 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > corrected_deta_lead_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrected, selector, "mixing_corrected_deta" );
   std::vector<std::vector<TH1F*> > corrected_deta_sub_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
   
-  return 0;
-  //testing ENDS
-  
   __OUT("Background subtraction")
   // do background subtraction
   jetHadron::SubtractBackgroundDphi( corrected_dphi_lead, selector );
@@ -641,13 +638,50 @@ int main( int argc, const char** argv) {
   // ******************************************
   // now we're testing yields from bin counting
   // ******************************************
+  // we'll do the actual one and the one that has the extended range on it
   std::vector<std::vector<double> > dphi_lead_bin_int, dphi_sub_bin_int, deta_lead_bin_int, deta_sub_bin_int;
   std::vector<std::vector<double> > dphi_lead_bin_int_err, dphi_sub_bin_int_err, deta_lead_bin_int_err, deta_sub_bin_int_err;
+  std::vector<std::vector<double> > dphi_lead_bin_int_extended, dphi_sub_bin_int_extended, deta_lead_bin_int_extended, deta_sub_bin_int_extended;
+  std::vector<std::vector<double> > dphi_lead_bin_int_err_extended, dphi_sub_bin_int_err_extended, deta_lead_bin_int_err_extended, deta_sub_bin_int_err_extended;
   
+  // first, the actual results
   jetHadron::ExtractIntegraldPhi( corrected_dphi_subtracted, dphi_lead_bin_int, dphi_lead_bin_int_err, selector );
   jetHadron::ExtractIntegraldPhi( corrected_dphi_subtracted_sub, dphi_sub_bin_int, dphi_sub_bin_int_err, selector );
   jetHadron::ExtractIntegraldEta( corrected_deta_lead, deta_lead_bin_int, deta_lead_bin_int_err, selector );
   jetHadron::ExtractIntegraldEta( corrected_deta_sub, deta_sub_bin_int, deta_sub_bin_int_err, selector );
+  
+  // now the extended region used for systematics
+  jetHadron::ExtractIntegraldPhi( corrected_dphi_subtracted_extended, dphi_lead_bin_int_extended, dphi_lead_bin_int_err_extended, selector );
+  jetHadron::ExtractIntegraldPhi( corrected_dphi_subtracted_sub_extended, dphi_sub_bin_int_extended, dphi_sub_bin_int_err_extended, selector );
+  jetHadron::ExtractIntegraldEta( corrected_deta_lead_extended, deta_lead_bin_int_extended, deta_lead_bin_int_err_extended, selector );
+  jetHadron::ExtractIntegraldEta( corrected_deta_sub_extended, deta_sub_bin_int_extended, deta_sub_bin_int_err_extended, selector );
+  
+  __OUT("subtracting the normal and extended bin range yields")
+  __OUT("using as a systematic error")
+  // get difference of yields
+  std::vector<std::vector<double> > dphi_subtracted_yield_dif, dphi_sub_subtracted_yield_dif, deta_subtracted_yield_dif, deta_sub_subtracted_yield_dif;
+  
+  dphi_subtracted_yield_dif.resize( corrected_dphi_subtracted.size() );
+  dphi_sub_subtracted_yield_dif.resize( corrected_dphi_subtracted.size() );
+  deta_subtracted_yield_dif.resize( corrected_dphi_subtracted.size() );
+  deta_sub_subtracted_yield_dif.resize( corrected_dphi_subtracted.size() );
+  for ( int i = 0; i < corrected_dphi_subtracted.size(); ++i ) {
+    for ( int j = 0; j < corrected_dphi_subtracted[i].size(); ++j ) {
+      dphi_subtracted_yield_dif[i].push_back( fabs( dphi_lead_bin_int[i][j] - dphi_lead_bin_int_extended[i][j] ) );
+      dphi_sub_subtracted_yield_dif[i].push_back( fabs( dphi_sub_bin_int[i][j] - dphi_sub_bin_int_extended[i][j] ) );
+      deta_subtracted_yield_dif[i].push_back( fabs( deta_lead_bin_int[i][j] - deta_lead_bin_int_extended[i][j] ) );
+      deta_sub_subtracted_yield_dif[i].push_back( fabs( deta_sub_bin_int[i][j] - deta_sub_bin_int_extended[i][j] ) );
+    }
+  }
+  
+  std::cout<<"difference by bin:"<<std::endl;
+  for ( int i = 0; i < dphi_subtracted_yield_dif.size(); ++i ){
+    for ( int j = 0; j < dphi_subtracted_yield_dif[i].size(); ++j ) {
+      std::cout<<"file: "<<i<<" pt: "<<j<<" diff: "<< dphi_subtracted_yield_dif[i][j] << std::endl;
+    }
+  }
+  
+  return 0;
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
