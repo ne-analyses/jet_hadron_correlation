@@ -2773,5 +2773,81 @@ namespace jetHadron {
     c1.SaveAs( tmp.c_str() );
   }
   
+  void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::vector<TGraphErrors*> sys3, std::string outputDir, std::vector<std::string> analysisNames, std::string title, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( graphs.size() != 2 || sys1.size() != 2 || sys2.size()!= 1 || sys3.size() != 2 ) {
+      __ERR("WARNING: we arent prepared for this combination!!")
+      return;
+    }
+    
+    
+    
+    TCanvas c1;
+    //c1.DrawFrame(-2, 20, -2, 20);
+    for ( int i = 0; i < 2; ++i ) {
+      
+      
+      
+      graphs[i]->SetTitle( title.c_str() );
+      graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
+      graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
+      graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
+      graphs[i]->GetYaxis()->SetTitle( "dN/dp_{T}" );
+      graphs[i]->SetLineColor( i+1 );
+      graphs[i]->SetMarkerColor( i+1 );
+      graphs[i]->SetMarkerStyle( i+20 );
+      graphs[i]->SetMarkerSize( 2 );
+      
+      sys1[i]->SetFillColor( i+1 );
+      sys1[i]->SetFillStyle(1001);
+      
+      sys1[i]->SetMarkerSize( 0 );
+      sys1[i]->SetLineWidth( 0 );
+      
+      if ( i == 0 ) {
+        sys1[i]->SetFillStyle(3005);
+        sys1[i]->SetFillColor(i+1);
+        sys2[0]->SetFillStyle(3004);
+        sys2[0]->SetFillColor( 16 );
+        sys3[i]->SetFillStyle( 1001 );
+        sys3[i]->SetFillColor( 18 );
+        
+      }
+      
+      if ( i == 1 ) {
+        sys1[i]->SetFillStyle(3006);
+        sys1[i]->SetFillColor(i+1);
+        sys3[i]->SetFillColor(20);
+        sys3[i]->SetFillStyle( 12  );
+      }
+      
+      
+    }
+    graphs[0]->Draw();
+    graphs[1]->Draw("P");
+    sys1[0]->Draw("3");
+    sys1[1]->Draw("3");
+    sys2[0]->Draw("3");
+    
+    TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
+    leg->AddEntry( graphs[1], "p+p HT", "lep" );
+    leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
+    leg->AddEntry( sys1[1], "Sys Uncertainty p+p yield", "f" );
+    leg->AddEntry( sys2[0], "Sys Uncertainty rel. jet energy scale", "f");
+    leg->Draw();
+    
+    
+    std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
+    c1.SaveAs( tmp.c_str() );
+    tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
+    c1.SaveAs( tmp.c_str() );
+  }
+
+  
   
 } // end namespace

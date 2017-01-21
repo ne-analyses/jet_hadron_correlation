@@ -375,6 +375,7 @@ namespace jetHadron {
   
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
+  void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2,, std::vector<TGraphErrors*> sys3, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
   
 } // end namespace
 

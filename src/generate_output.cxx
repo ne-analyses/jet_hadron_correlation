@@ -697,6 +697,14 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
   
+  //// annddddddd make some systematic error graphs from the differences
+  std::vector<TGraphErrors*> dphi_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_subtracted_yield_dif, 1, 5, selector, analysisNames, "dphi_proj_sys" );
+  std::vector<TGraphErrors*> dphi_sub_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_subtracted_yield_dif, 1, 5, selector, analysisNames, "dphi_sub_proj_sys" );
+  std::vector<TGraphErrors*> deta_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_subtracted_yield_dif, 1, 5, selector, analysisNames, "deta_proj_sys" );
+  std::vector<TGraphErrors*> deta_sub_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_subtracted_yield_dif, 1, 5, selector, analysisNames, "deta_sub_proj_sys" );
+  
+  
+  
   // and to do that we need some errors as well! We already have relative systematics, but need the yields for the 5% tracking
   std::vector<std::vector<double> > dphi_lead_sys_bin_int, dphi_sub_sys_bin_int, deta_lead_sys_bin_int, deta_sub_sys_bin_int;
   std::vector<std::vector<double> > dphi_lead_sys_bin_int_err, dphi_sub_sys_bin_int_err, deta_lead_sys_bin_int_err, deta_sub_sys_bin_int_err;
