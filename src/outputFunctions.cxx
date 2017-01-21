@@ -801,9 +801,13 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
-        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
+        std::cout<<"projection bins full range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
+        std::cout<<"projection bins inner range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
+        std::cout<<"projection range (full): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) ) << std::endl;
+        std::cout<<"projection range (inner): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
         
+        
+
         //do quick resets
         correlation2d[i][j]->GetXaxis()->SetRange();
         correlation2d[i][j]->GetYaxis()->SetRange();
@@ -864,8 +868,10 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
-        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
+        std::cout<<"projection bins full range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
+        std::cout<<"projection bins inner range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
+        std::cout<<"projection range (full): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) ) << std::endl;
+        std::cout<<"projection range (inner): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
         
         
         
@@ -962,7 +968,9 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far with extended range - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) << std::endl;
+        std::cout<<"projection bins full range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[3] ) << std::endl;
+        std::cout<<"projection bins inner range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) << std::endl;
+        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[0] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[3] ) ) << std::endl;
         std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) ) << std::endl;
         
         //do quick resets
