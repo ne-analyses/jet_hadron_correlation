@@ -674,14 +674,6 @@ int main( int argc, const char** argv) {
     }
   }
   
-  std::cout<<"difference by bin:"<<std::endl;
-  for ( int i = 0; i < dphi_subtracted_yield_dif.size(); ++i ){
-    for ( int j = 0; j < dphi_subtracted_yield_dif[i].size(); ++j ) {
-      std::cout<<"file: "<<i<<" pt: "<<j<<" diff: "<< dphi_subtracted_yield_dif[i][j] << std::endl;
-    }
-  }
-  
-  return 0;
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
@@ -731,6 +723,12 @@ int main( int argc, const char** argv) {
   PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
   PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_deta", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
   PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_deta", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
+  
+  PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, dphi_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_dphi_proj", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
+  PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, dphi_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_dphi_proj", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
+  PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, deta_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_deta_proj", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
+  PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, deta_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_deta_proj", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
+  
   
   // check errors on yields
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_subtracted, dphi_yield_err, selector, outputDirBase+"/dphi_yield_err_lead", -0.8, 0.8  );
