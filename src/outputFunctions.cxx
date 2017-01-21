@@ -947,8 +947,103 @@ namespace jetHadron {
     }
     
     return projections;
-
   }
+  
+  // With more bins for our extended range error
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID ) {
+    
+    // build the return vector
+    std::vector<std::vector<TH1F*> > projections;
+    projections.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      projections[i].resize( correlation2d[i].size() );
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        std::cout<<"projecting dphi near minus far with extended range - file: "<< i << " pt bin: "<< j << std::endl;
+        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
+        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        // new name for the projection
+        std::string tmp = uniqueID + "_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        
+        // now get the bins
+        double region1Low = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[0] );
+        double region1High = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] ) - 1;
+        double region2Low = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] );
+        double region2High = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] );
+        double region3Low = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) + 1;
+        double region3High = correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[3] );
+        
+        
+        // do some sanity checking
+        if ( region3High < region3Low || region2High < region2Low || region1High < region1Low ) {
+          __ERR("Can't project - high edge less than low edge for one of the projection regions")
+          continue;
+        }
+        
+        // now do the projections
+        correlation2d[i][j]->GetXaxis()->SetRange( region2Low, region2High );
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionY();
+        projections[i][j]->SetName( tmp.c_str() );
+        
+        // build the subtraction histogram
+        correlation2d[i][j]->GetXaxis()->SetRange( region1Low, region1High );
+        TH1F* sub_tmp = (TH1F*) ((TH1F*)  correlation2d[i][j]->ProjectionY())->Clone();
+        correlation2d[i][j]->GetXaxis()->SetRange( region3Low, region3High );
+        sub_tmp->Add( (TH1F*) correlation2d[i][j]->ProjectionY() );
+        
+        // scale the subtraction histogram by the relative number of bins
+        sub_tmp->Scale( (region2High-region2Low + 1 )/( (region1High-region1Low + 1 ) + (region3High - region3Low + 1 ) ) );
+        
+        // subtract
+        projections[i][j]->Add( sub_tmp, -1 );
+        
+      }
+    }
+    return projections;
+  }
+
+  std::vector<std::vector<TH1F*> > ProjectDetaExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID ) {
+    // build the return vector
+    std::vector<std::vector<TH1F*> > projections;
+    projections.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      projections[i].resize( correlation2d[i].size() );
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        std::cout<<"projecting dEta with extended range - file: "<< i << " pt bin: "<< j << std::endl;
+        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_low_extended ) << " - " << correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_high_extended ) << std::endl;
+        std::cout<<"projection range: " << correlation2d[i][j]->GetYaxis()->GetBinLowEdge(correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_low_extended )) << " - " << correlation2d[i][j]->GetYaxis()->GetBinUpEdge(correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_high_extended ) ) << std::endl;
+        
+        // new name for the projection
+        std::string tmp = uniqueID + "_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        
+        correlation2d[i][j]->GetYaxis()->SetRangeUser( selector.eta_projection_phi_bound_low_extended, selector.eta_projection_phi_bound_high_extended );
+        
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionX();
+        projections[i][j]->SetName( tmp.c_str() );
+        
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        
+      }
+    }
+    
+    return projections;
+  }
+  
   
   // Normalizes 1D histograms based on what
   // type of analysis they are

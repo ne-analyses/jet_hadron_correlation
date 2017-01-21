@@ -179,9 +179,19 @@ namespace jetHadron {
     const double eta_projection_phi_bound_low = -0.6;
     const double eta_projection_phi_bound_high = -1.0*eta_projection_phi_bound_low;
     
+    // used to select the near side correlation for dEta
+    // with a wider range for our systematic errors
+    const double eta_projection_phi_bound_low_extended = -0.75;
+    const double eta_projection_phi_bound_high_extended = -1.0*eta_projection_phi_bound_low;
+    
     // used when projecting the 2d to get  dPhi
     const double phi_projection_eta_bound_low = -0.45;
     const double phi_projection_eta_bound_high = -1.0*phi_projection_eta_bound_low;
+    
+    // used when projecting the 2d to get  dPhi
+    // with a wider range for our systematic errors
+    const double phi_projection_eta_bound_low_extended = -0.55;
+    const double phi_projection_eta_bound_high_extended = -1.0*phi_projection_eta_bound_low;
     
     // ranges used for integration
     // corresponds to the projection range in the other dimension
@@ -193,6 +203,7 @@ namespace jetHadron {
     const double eta_projection_integral_range_high = phi_projection_eta_bound_high;
     
     const double phi_projection_subtraction_regions[4] = { -0.99, phi_projection_eta_bound_low, phi_projection_eta_bound_high, 0.99 };
+    const double phi_projection_subtraction_regions_extended[4] = { -0.99, phi_projection_eta_bound_low_extended, phi_projection_eta_bound_high_extended, 0.99 };
     
     // used when doing near - far subtraction for flow in dPhi
     double restricted_near_phi_projection_eta_bound_low() { return phi_projection_eta_bound_low / 2.0; }
@@ -268,6 +279,9 @@ namespace jetHadron {
   
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
   
+  // extended range for our systematic errors
+  std::vector<std::vector<TH1F*> > ProjectDetaExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
   
   // Normalizes 1D histograms based on what
   // type of analysis they are

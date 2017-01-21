@@ -381,6 +381,11 @@ int main( int argc, const char** argv) {
   __OUT("now we get near minus far projections for DPhi")
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrected, selector,  "mixing_corrected_near_far_sub_dphi" );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector,  "mixing_corrected_near_far_sub_dphi_sub"  );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_extended = jetHadron::ProjectDphiNearMinusFarExtended( averagedMixedEventCorrected, selector,  "mixing_corrected_near_far_sub_dphi_extended" );
+  std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub_extended = jetHadron::ProjectDphiNearMinusFarExtended( averagedMixedEventCorrectedSub, selector,  "mixing_corrected_near_far_sub_dphi_sub_extended"  );
+
+  return 0;
+  //testing ENDS
   
   // and to get the individual near and far histograms
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_near, corrected_dphi_subtracted_far;
@@ -392,6 +397,8 @@ int main( int argc, const char** argv) {
   // normalize with 1/dijets 1/bin width
   jetHadron::Normalize1D( corrected_dphi_subtracted, nEvents );
   jetHadron::Normalize1D( corrected_dphi_subtracted_sub, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_subtracted_extended, nEvents );
+  jetHadron::Normalize1D( corrected_dphi_subtracted_sub_extended, nEvents );
   
   jetHadron::Normalize1D( corrected_dphi_subtracted_near, nEvents );
   jetHadron::Normalize1D( corrected_dphi_subtracted_far, nEvents );
@@ -401,6 +408,8 @@ int main( int argc, const char** argv) {
   // make sure the bins are correct...
   jetHadron::FixTheDamnBins( corrected_dphi_subtracted );
   jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_extended );
+  jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub_extended );
   jetHadron::FixTheDamnBins( corrected_dphi_subtracted_near );
   jetHadron::FixTheDamnBins( corrected_dphi_subtracted_far );
   jetHadron::FixTheDamnBins( corrected_dphi_subtracted_sub_near );
@@ -422,6 +431,8 @@ int main( int argc, const char** argv) {
   // now overlay and save
   jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted, corrected_dphi_subtracted_fit, outputDirBase+"/corrected_dphi_subtracted_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted_sub, corrected_dphi_subtracted_sub_fit, outputDirBase+"/corrected_dphi_subtracted_sub"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted_extended, corrected_dphi_subtracted_fit, outputDirBase+"/corrected_dphi_subtracted_lead_extended"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDphiWFitRestricted( corrected_dphi_subtracted_sub_extended, corrected_dphi_subtracted_sub_fit, outputDirBase+"/corrected_dphi_subtracted_sub_extended"+analysisNames[0], analysisNames, selector );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_fit_yield, zeros, corrected_dphi_subtracted_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_graph", analysisNames, "Trigger Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_subtracted_sub_fit_yield, zeros, corrected_dphi_subtracted_sub_fit_yield_err, outputDirBase+"/corrected_dphi_subtracted_sub_graph", analysisNames, "Recoil Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   
@@ -445,6 +456,8 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > corrected_dphi_sub = jetHadron::ProjectDphi( averagedMixedEventCorrectedSub, selector, "mixing_corrected_dphi_sub" );
   std::vector<std::vector<TH1F*> > corrected_deta_lead = jetHadron::ProjectDeta( averagedMixedEventCorrected, selector, "mixing_corrected_deta" );
   std::vector<std::vector<TH1F*> > corrected_deta_sub = jetHadron::ProjectDeta( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
+  std::vector<std::vector<TH1F*> > corrected_deta_lead_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrected, selector, "mixing_corrected_deta" );
+  std::vector<std::vector<TH1F*> > corrected_deta_sub_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
   
   __OUT("Background subtraction")
   // do background subtraction
@@ -452,6 +465,8 @@ int main( int argc, const char** argv) {
   jetHadron::SubtractBackgroundDphi( corrected_dphi_sub, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_lead, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_lead_extended, selector );
+  jetHadron::SubtractBackgroundDeta( corrected_deta_sub_extended, selector );
   
   __OUT("Normalization")
   // normalize with 1/dijets 1/bin width
@@ -459,6 +474,8 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1D( corrected_dphi_sub, nEvents );
   jetHadron::Normalize1D( corrected_deta_lead, nEvents );
   jetHadron::Normalize1D( corrected_deta_sub, nEvents );
+  jetHadron::Normalize1D( corrected_deta_lead_extended, nEvents );
+  jetHadron::Normalize1D( corrected_deta_sub_extended, nEvents );
   
   __OUT("fitting")
   // do final fitting
@@ -483,6 +500,8 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DHistogramsOverlayedDphiWFit( corrected_dphi_sub, corrected_dphi_sub_fit, outputDirBase+"/corrected_dphi_sub"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_lead, corrected_deta_lead_fit, outputDirBase+"/corrected_deta_lead"+analysisNames[0], analysisNames, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_sub, corrected_deta_sub_fit, outputDirBase+"/corrected_deta_sub"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_lead_extended, corrected_deta_lead_fit, outputDirBase+"/corrected_deta_lead_extended"+analysisNames[0], analysisNames, selector );
+  jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_sub_extended, corrected_deta_sub_fit, outputDirBase+"/corrected_deta_sub_extended"+analysisNames[0], analysisNames, selector );
   
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_fit_yield, zeros, corrected_dphi_fit_yield_err, outputDirBase+"/corrected_dphi_graph", analysisNames, "Trigger Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
   jetHadron::PrintGraphWithErrors( ptBinCenters, corrected_dphi_sub_fit_yield, zeros, corrected_dphi_sub_fit_yield_err, outputDirBase+"/corrected_dphi_sub_graph", analysisNames, "Recoil Jet Yields", selector, graphPtBinLow, graphPtBinHigh );
