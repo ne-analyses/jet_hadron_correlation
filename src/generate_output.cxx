@@ -383,9 +383,6 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub = jetHadron::ProjectDphiNearMinusFar( averagedMixedEventCorrectedSub, selector,  "mixing_corrected_near_far_sub_dphi_sub"  );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_extended = jetHadron::ProjectDphiNearMinusFarExtended( averagedMixedEventCorrected, selector,  "mixing_corrected_near_far_sub_dphi_extended" );
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_sub_extended = jetHadron::ProjectDphiNearMinusFarExtended( averagedMixedEventCorrectedSub, selector,  "mixing_corrected_near_far_sub_dphi_sub_extended"  );
-
-  return 0;
-  //testing ENDS
   
   // and to get the individual near and far histograms
   std::vector<std::vector<TH1F*> > corrected_dphi_subtracted_near, corrected_dphi_subtracted_far;
@@ -458,6 +455,9 @@ int main( int argc, const char** argv) {
   std::vector<std::vector<TH1F*> > corrected_deta_sub = jetHadron::ProjectDeta( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
   std::vector<std::vector<TH1F*> > corrected_deta_lead_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrected, selector, "mixing_corrected_deta" );
   std::vector<std::vector<TH1F*> > corrected_deta_sub_extended = jetHadron::ProjectDetaExtended( averagedMixedEventCorrectedSub, selector, "mixing_corrected_deta_sub" );
+  
+  return 0;
+  //testing ENDS
   
   __OUT("Background subtraction")
   // do background subtraction
