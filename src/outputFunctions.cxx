@@ -962,8 +962,8 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far with extended range - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
-        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
+        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) << std::endl;
+        std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions_extended[2] ) ) << std::endl;
         
         //do quick resets
         correlation2d[i][j]->GetXaxis()->SetRange();
