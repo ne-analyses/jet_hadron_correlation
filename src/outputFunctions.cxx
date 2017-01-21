@@ -2832,6 +2832,8 @@ namespace jetHadron {
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
     sys2[0]->Draw("3");
+    sys3[0]->Draw("3");
+    sys3[1]->Draw("3");
     
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
@@ -2839,6 +2841,8 @@ namespace jetHadron {
     leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
     leg->AddEntry( sys1[1], "Sys Uncertainty p+p yield", "f" );
     leg->AddEntry( sys2[0], "Sys Uncertainty rel. jet energy scale", "f");
+    leg->AddEntry( sys3[0], "Sys Uncertainty projection range AuAu", "f" );
+    leg->AddEntry( sys3[0], "Sys Uncertainty projection range pp", "f");
     leg->Draw();
     
     
