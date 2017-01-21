@@ -190,7 +190,7 @@ namespace jetHadron {
     
     // used when projecting the 2d to get  dPhi
     // with a wider range for our systematic errors
-    const double phi_projection_eta_bound_low_extended = -0.6;
+    const double phi_projection_eta_bound_low_extended = -0.55;
     const double phi_projection_eta_bound_high_extended = -1.0*phi_projection_eta_bound_low_extended;
     
     // ranges used for integration
