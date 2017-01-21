@@ -181,7 +181,7 @@ namespace jetHadron {
     
     // used to select the near side correlation for dEta
     // with a wider range for our systematic errors
-    const double eta_projection_phi_bound_low_extended = -0.75;
+    const double eta_projection_phi_bound_low_extended = -0.8;
     const double eta_projection_phi_bound_high_extended = -1.0*eta_projection_phi_bound_low;
     
     // used when projecting the 2d to get  dPhi
