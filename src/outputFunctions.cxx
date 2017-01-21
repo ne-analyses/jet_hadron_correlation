@@ -2809,20 +2809,20 @@ namespace jetHadron {
       sys1[i]->SetLineWidth( 0 );
       
       if ( i == 0 ) {
-        sys1[i]->SetFillStyle(3005);
+        sys1[i]->SetFillStyle(1001);
         sys1[i]->SetFillColor(i+1);
-        sys2[0]->SetFillStyle(3004);
+        sys2[0]->SetFillStyle(1001);
         sys2[0]->SetFillColor( 16 );
         sys3[i]->SetFillStyle( 1001 );
-        sys3[i]->SetFillColor( 18 );
+        sys3[i]->SetFillColor( 40 );
         
       }
       
       if ( i == 1 ) {
-        sys1[i]->SetFillStyle(3006);
+        sys1[i]->SetFillStyle(1001);
         sys1[i]->SetFillColor(i+1);
         sys3[i]->SetFillColor(20);
-        sys3[i]->SetFillStyle( 12  );
+        sys3[i]->SetFillStyle( 1001  );
       }
       
       
