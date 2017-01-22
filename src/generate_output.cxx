@@ -599,7 +599,8 @@ int main( int argc, const char** argv) {
   }
   // read in error tree
   TTree* tree = (TTree*) sysIn.Get("yield_err");
-  std::vector<double> dphi_yield_sys_rel, dphi_yield_sub_sys_rel, deta_yield_sys_rel, deta_yield_sub_sys_rel;
+  std::vector<std::vector<double> > dphi_yield_sys_rel, dphi_yield_sub_sys_rel, deta_yield_sys_rel, deta_yield_sub_sys_rel;
+  dphi_yield_sys_rel.resize(1); dphi_yield_sub_sys_rel.resize(1); deta_yield_sys_rel.resize(1); deta_yield_sub_sys_rel.resize(1);
   double dPhi, dPhi_sub, dEta, dEta_sub;
   tree->SetBranchAddress( "dphi_err", &dPhi );
   tree->SetBranchAddress( "dphi_sub_err", &dPhi_sub );
@@ -608,10 +609,10 @@ int main( int argc, const char** argv) {
   
   for ( int i = 0; i < selector.nPtBins; ++i ) {
     tree->GetEntry(0);
-    dphi_yield_sys_rel.push_back(dPhi);
-    dphi_yield_sub_sys_rel.push_back(dPhi_sub);
-    deta_yield_sys_rel.push_back(dEta);
-    deta_yield_sub_sys_rel.push_back(dEta_sub);
+    dphi_yield_sys_rel[0].push_back(dPhi);
+    dphi_yield_sub_sys_rel[0].push_back(dPhi_sub);
+    deta_yield_sys_rel[0].push_back(dEta);
+    deta_yield_sub_sys_rel[0].push_back(dEta_sub);
   }
   
   for ( int i = 0; i < dphi_yield_sys_rel.size(); ++i ) {
