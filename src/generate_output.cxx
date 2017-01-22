@@ -621,7 +621,7 @@ int main( int argc, const char** argv) {
   jetHadron::ScaleErrors( deta_yield_sys_rel, selector );
   jetHadron::ScaleErrors( deta_yield_sub_sys_rel, selector );
   
-  for ( int i = 0; i < dphi_yield_sys_rel; ++i ) {
+  for ( int i = 0; i < dphi_yield_sys_rel[0].size(); ++i ) {
     std::cout<<"bin: "<<i<<std::endl;
     std::cout<<"dphi: "<< dphi_yield_sys_rel[0][i] <<std::endl;
     std::cout<<"dphi_sub: "<< dphi_yield_sub_sys_rel[0][i] << std::endl;
