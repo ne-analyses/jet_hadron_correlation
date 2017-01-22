@@ -716,6 +716,16 @@ int main( int argc, const char** argv) {
   deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int );
   
   
+  // testing
+  for ( int i = 0; i < dphi_lead_bin_int.size(); ++i ) {
+    for ( int j = 0; j < dphi_lead_bin_int[i].size(); ++j ) {
+      std::cout<<"file: "<<i << " bin: "<< j << std::endl;
+      std::cout<<"yield: "<< dphi_lead_bin_int[i][j] << std::endl;
+      std::cout<<"error: "<< dphi_lead_bin_int_err[i][j] << std::endl;
+    }
+  }
+  return 0;
+  
   // reset the Au+Au to the subtracted setting
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {
     dphi_lead_sys_bin_int[0][i] = dphi_lead_bin_int[0][i];
