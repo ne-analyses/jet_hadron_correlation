@@ -721,7 +721,7 @@ int main( int argc, const char** argv) {
     for ( int j = 0; j < dphi_lead_bin_int[i].size(); ++j ) {
       std::cout<<"file: "<<i << " bin: "<< j << std::endl;
       std::cout<<"yield: "<< dphi_lead_bin_int[i][j] << std::endl;
-      std::cout<<"error: "<< dphi_lead_bin_int_err[i][j] << std::endl;
+      std::cout<<"error: "<< dphi_lead_sys_bin_int_err[i][j] << std::endl;
     }
   }
   return 0;
