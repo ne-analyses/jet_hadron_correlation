@@ -1512,6 +1512,21 @@ namespace jetHadron {
     return histograms;
   }
   
+  // and using only numbers
+  std::vector<double> AddInQuadrature( std::vector<double> upper, std::vector<double> lower ) {
+    std::vector<double> values;
+    values.resize( upper.size() );
+    
+    for ( int i = 0; i < values.size(); ++i ) {
+      
+      values[i] = sqrt ( upper[i]*upper[i] + lower[i]*lower[i] );
+      
+    }
+    
+    return values;
+  }
+  
+  
   // used to make 5% errors on yields due to tracking
   std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID  ) {
     
@@ -1590,6 +1605,68 @@ namespace jetHadron {
     
   }
   
+  // and used to scale errors by the pt bin width
+  void ScaleErrors( std::vector<std::vector<double> > errors, binSelector selector ) {
+  
+    for ( int i = 0; i < errors.size(); ++i ) {
+      for ( int j = 0; j < errors[i].size(); ++j ) {
+        errors[i][j] *= 1.0/selector.GetPtBinWidth(j);
+      }
+    }
+  }
+  
+  // used to extract only the yields, dont need the errors
+  std::vector<std::vector<double> > OnlyYieldsEta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::vector<std::vector<double> > yields;
+    yields.resize ( histograms.size() );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      yields[i].resize( histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        
+        yields[i][j] = histograms[i][j]->Integral( histograms[i][j]->GetXaxis()->FindBin(selector.eta_projection_integral_range_low), histograms[i][j]->GetXaxis()->FindBin(selector.eta_projection_integral_range_high), "width");
+        
+        
+      }
+      
+    }
+    return yields;
+  }
+  
+  // used to extract only the yields, dont need the errors
+  std::vector<std::vector<double> > OnlyYieldsPhi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    std::vector<std::vector<double> > yields;
+    yields.resize ( histograms.size() );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      yields[i].resize( histograms[i].size() );
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        
+        yields[i][j] = histograms[i][j]->Integral( histograms[i][j]->GetXaxis()->FindBin(selector.phi_projection_integral_range_low), histograms[i][j]->GetXaxis()->FindBin(selector.phi_projection_integral_range_high), "width");
+        
+        
+      }
+      
+    }
+    return yields;
+  }
+  
+  // used to get the difference between two sets of values... specific use
+  std::vector<double> GetDifference( std::vector<std::vector<double> >& yields ) {
+    
+    std::vector<double> diff;
+    
+    for ( int i = 0; i < yields[0].size(); ++i ) {
+      diff.push_back( fabs( yields[0][i] - yields[1][i] ) );
+    }
+    return diff;
+  }
   
   
   // *****************************

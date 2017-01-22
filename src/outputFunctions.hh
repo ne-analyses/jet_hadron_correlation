@@ -331,6 +331,10 @@ namespace jetHadron {
   // Used to add systematic errors in quadrature
   std::vector<TH1F*> AddInQuadrature( std::vector<TH1F*> upper, std::vector<TH1F*> lower, binSelector selector, std::string uniqueID = "" );
   
+  // and using only numbers
+  std::vector<double> AddInQuadrature( std::vector<double> upper, std::vector<double> lower );
+  
+  
   // used to make 5% errors on yields due to tracking
   std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   // used to make full 5% errors on yields
@@ -338,6 +342,16 @@ namespace jetHadron {
   
    // testing function to reset the bin contents to those of the histogram
   void ResetSysBinContent( std::vector<TH1F*>& errors, std::vector<TH1F*>& histograms, binSelector selector );
+  
+  // and used to scale errors by the pt bin width
+  void ScaleErrors( std::vector<std::vector<double> > errors, binSelector selector );
+  
+  // used to extract only the yields, dont need the errors
+  std::vector<std::vector<double> > OnlyYieldsEta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
+  std::vector<std::vector<double> > OnlyYieldsPhi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
+  
+  // used to get the difference between two sets of values... specific use
+  std::vector<double> GetDifference( std::vector<std::vector<double> >& yields );
   
   // Methods for Printing out and Saving
   // ***********************************

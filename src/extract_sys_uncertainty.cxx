@@ -275,6 +275,54 @@ int main () {
   jetHadron::FixTheDamnBins( dphi_err );
   jetHadron::FixTheDamnBins( dphi_err_sub );
   
+  // *********************************************************************
+  // now we need to calculate the yields for all the individual histograms
+  // *********************************************************************
+  std::vector<std::vector<double> > dphi_yield_tow = jetHadron::OnlyYieldsPhi( corrected_dphi_tow, selector );
+  std::vector<std::vector<double> > dphi_yield_trk = jetHadron::OnlyYieldsPhi( corrected_dphi_trk, selector );
+  std::vector<std::vector<double> > dphi_yield_tow_sub = jetHadron::OnlyYieldsPhi( corrected_dphi_tow_sub, selector );
+  std::vector<std::vector<double> > dphi_yield_trk_sub = jetHadron::OnlyYieldsPhi( corrected_dphi_trk_sub, selector );
+  std::vector<std::vector<double> > deta_yield_tow = jetHadron::OnlyYieldsEta( corrected_deta_tow, selector );
+  std::vector<std::vector<double> > deta_yield_trk = jetHadron::OnlyYieldsEta( corrected_deta_trk, selector );
+  std::vector<std::vector<double> > deta_yield_tow_sub = jetHadron::OnlyYieldsEta( corrected_deta_tow_sub, selector );
+  std::vector<std::vector<double> > deta_yield_trk_sub = jetHadron::OnlyYieldsEta( corrected_deta_trk_sub, selector );
+  
+  // get the difference ( which will be our systematic error...
+  std::vector<double> dphi_tow_diff = jetHadron::GetDifference( dphi_yield_tow );
+  std::vector<double> dphi_trk_diff = jetHadron::GetDifference( dphi_yield_trk );
+  std::vector<double> dphi_tow_diff_sub = jetHadron::GetDifference( dphi_yield_tow_sub );
+  std::vector<double> dphi_trk_diff_sub = jetHadron::GetDifference( dphi_yield_trk_sub );
+  std::vector<double> deta_tow_diff = jetHadron::GetDifference( deta_yield_tow );
+  std::vector<double> deta_trk_diff = jetHadron::GetDifference( deta_yield_trk );
+  std::vector<double> deta_tow_diff_sub = jetHadron::GetDifference( deta_yield_tow_sub );
+  std::vector<double> deta_trk_diff_sub = jetHadron::GetDifference( deta_yield_trk_sub );
+  
+  std::vector<double> dphi_yield_err = jetHadron::AddInQuadrature ( dphi_tow_diff, dphi_trk_diff );
+  std::vector<double> dphi_yield_err_sub = jetHadron::AddInQuadrature ( dphi_tow_diff_sub, dphi_trk_diff_sub );
+  std::vector<double> deta_yield_err = jetHadron::AddInQuadrature ( deta_tow_diff, deta_trk_diff );
+  std::vector<double> deta_yield_err_sub = jetHadron::AddInQuadrature ( deta_tow_diff_sub, deta_trk_diff_sub );
+  
+  TTree* tree = new TTree("yield_err", "yield_err");
+  TBranch *dphi_branch, *dphi_sub_branch, *deta_branch, *deta_sub_branch;
+  double dphi, dphi_sub, deta, deta_sub;
+  
+  dphi_branch = tree->Branch("dphi_err", &dphi);
+  dphi_sub_branch = tree->Branch("dphi_sub_err", &dphi_sub);
+  deta_branch = tree->Branch("deta_err", &deta);
+  deta_sub_branch = tree->Branch("deta_sub_err", &deta_sub);
+  
+  for ( int i = 0; i < dphi_yield_err.size(); ++i ) {
+    
+    dphi = dphi_yield_err[i];
+    dphi_sub = dphi_yield_err_sub[i];
+    deta = deta_yield_err[i];
+    deta_sub = deta_yield_err_sub[i];
+    
+    tree->Fill();
+    
+  }
+  
+  
   
   // ******************************************
   // we have our errors from the TH1s now
@@ -302,6 +350,8 @@ int main () {
     deta_trk_err_sub[i]->Write();
   }
   
+  // and a tree for the yield errors ( raw )
+  tree->Write();
   // now
   out->Close();
   

@@ -597,6 +597,22 @@ int main( int argc, const char** argv) {
     dphi_sys_sub[0].push_back( (TH1F*) sysIn.Get( tmpdPhiSub.c_str() ) );
     
   }
+  // read in error tree
+  TTree* tree = (TTree*) sysIn.Get("yield_err");
+  std::vector<double> dphi_yield_sys_rel, dphi_yield_sub_sys_rel, deta_yield_sys_rel, deta_yield_sub_sys_rel;
+  double dPhi, dPhi_sub, dEta, dEta_sub;
+  tree->SetBranchAddress( "dphi_err", &dPhi );
+  tree->SetBranchAddress( "dphi_sub_err", &dPhi_sub );
+  tree->SetBranchAddress( "deta_err", &dEta );
+  tree->SetBranchAddress( "deta_sub_err", &dEta_sub );
+  
+  for ( int i = 0; i < selector.nPtBins; ++i ) {
+    tree->GetEntry(0);
+    dphi_yield_sys_rel.push_back(dPhi);
+    dphi_yield_sub_sys_rel.push_back(dPhi_sub);
+    deta_yield_sys_rel.push_back(dEta);
+    deta_yield_sub_sys_rel.push_back(dEta_sub);
+  }
   
   __OUT("resetting the bin contents for errors")
   // reset sys bin errors to be set centered on pp
@@ -716,15 +732,6 @@ int main( int argc, const char** argv) {
   deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int, selector );
   
   
-  // testing
-  for ( int i = 0; i < dphi_lead_bin_int.size(); ++i ) {
-    for ( int j = 0; j < dphi_lead_bin_int[i].size(); ++j ) {
-      std::cout<<"file: "<<i << " bin: "<< j << std::endl;
-      std::cout<<"yield: "<< dphi_lead_bin_int[i][j] << std::endl;
-      std::cout<<"error: "<< dphi_lead_sys_bin_int_err[i][j] << std::endl;
-    }
-  }
-  
   // reset the Au+Au to the subtracted setting
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {
     dphi_lead_sys_bin_int[0][i] = dphi_lead_bin_int[0][i];
@@ -739,9 +746,6 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> deta_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_bin_int, zeros, deta_lead_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sys" );
   std::vector<TGraphErrors*> deta_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_bin_int, zeros, deta_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys" );
   
-  TCanvas c1;
-  dphi_yield_sys_graph[0]->Draw();
-  c1.SaveAs("testing.pdf");
   
   PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_dphi", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
   PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
