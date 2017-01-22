@@ -89,6 +89,7 @@ int main( int argc, const char** argv) {
   // set drawing preferences for histograms and graphs
   gStyle->SetOptStat(false);
   gStyle->SetOptFit(false);
+  gStyle->SetOptTitle(0);
   gStyle->SetLegendBorderSize(0);
 
   

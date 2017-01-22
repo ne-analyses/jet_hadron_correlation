@@ -2797,6 +2797,7 @@ namespace jetHadron {
       leg->AddEntry( errors[1][i], "tracking efficiency uncertainty p+p", "f" );
       leg->AddEntry( errors2[i], "rel. jet energy scale uncertainty", "f");
       leg->Draw();
+      
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.C";
@@ -2873,7 +2874,11 @@ namespace jetHadron {
     leg->AddEntry( sys1[1], "tracking efficiency uncertainty p+p", "f" );
     leg->AddEntry( sys2[0], "rel. jet energy scale uncertainty", "f");
     leg->Draw();
+    
+    // and draw some titles and such
+    TPaveLabel *t = new TPaveLabel(0.3, 0.7, 0.59, 0.75, title.c_str(), "brNDC");
 
+    t->Draw();
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
