@@ -2716,9 +2716,9 @@ namespace jetHadron {
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
-      leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
-      leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
-      leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
+      leg->AddEntry( errors[0][i], "tracking efficiency uncertainty Au+Au", "f" );
+      leg->AddEntry( errors[1][i], "tracking efficiency uncertainty p+p", "f" );
+      leg->AddEntry( errors2[i], "rel. jet energy scale uncertainty", "f");
       leg->Draw();
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2793,9 +2793,9 @@ namespace jetHadron {
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
-      leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
-      leg->AddEntry( errors[1][i], "Sys Uncertainty p+p yield", "f" );
-      leg->AddEntry( errors2[i], "Sys Uncertainty rel. jet energy scale", "f");
+      leg->AddEntry( errors[0][i], "tracking efficiency uncertainty Au+Au", "f" );
+      leg->AddEntry( errors[1][i], "tracking efficiency uncertainty p+p", "f" );
+      leg->AddEntry( errors2[i], "rel. jet energy scale uncertainty", "f");
       leg->Draw();
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2855,7 +2855,7 @@ namespace jetHadron {
       
       if ( i == 0 ) {
         sys2[0]->SetFillStyle(1001);
-        sys2[0]->SetFillColorAlpha( 16, 0.35 );
+        sys2[0]->SetFillColorAlpha( 46, 0.35 );
       }
       
     }
@@ -2869,9 +2869,9 @@ namespace jetHadron {
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
-    leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
-    leg->AddEntry( sys1[1], "Sys Uncertainty p+p yield", "f" );
-    leg->AddEntry( sys2[0], "Sys Uncertainty rel. jet energy scale", "f");
+    leg->AddEntry( sys1[0], "tracking efficiency uncertainty Au+Au", "f" );
+    leg->AddEntry( sys1[1], "tracking efficiency uncertainty p+p", "f" );
+    leg->AddEntry( sys2[0], "rel. jet energy scale uncertainty", "f");
     leg->Draw();
 
     
@@ -2947,9 +2947,9 @@ namespace jetHadron {
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
-    leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
-    leg->AddEntry( sys1[1], "Sys Uncertainty p+p yield", "f" );
-    leg->AddEntry( sys2[0], "Sys Uncertainty rel. jet energy scale", "f");
+    leg->AddEntry( sys1[0], "tracking efficiency uncertainty Au+Au", "f" );
+    leg->AddEntry( sys1[1], "tracking efficiency uncertainty p+p", "f" );
+    leg->AddEntry( sys2[0], "rel. jet energy scale uncertainty", "f");
     leg->AddEntry( sys3[0], "Sys Uncertainty projection range AuAu", "f" );
     leg->AddEntry( sys3[0], "Sys Uncertainty projection range pp", "f");
     leg->Draw();
