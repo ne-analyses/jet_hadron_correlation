@@ -11,7 +11,7 @@
 #include "boost/filesystem.hpp"
 
 // and some more root stuff
-#include "TPaveLabel.h"
+#include "TPaveText.h"
 
 // the grid does not have std::to_string() for some ungodly reason
 // replacing it here. Simply ostringstream
@@ -2879,8 +2879,10 @@ namespace jetHadron {
     leg->Draw();
     
     // and draw some titles and such
-    TPaveLabel *t = new TPaveLabel(0.3, 0.7, 0.59, 0.75, title.c_str(), "brNDC");
-
+    TPaveText *t = new TPaveText(0.3, 0.8, 0.59, 0.85, title.c_str(), "brNDC");
+    t->SetFillStyle(0);
+    t->AddText( title.c_str() );
+    
     t->Draw();
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
