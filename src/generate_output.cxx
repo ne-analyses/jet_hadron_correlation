@@ -615,10 +615,12 @@ int main( int argc, const char** argv) {
     deta_yield_sub_sys_rel[0].push_back(dEta_sub);
   }
   
-  for ( int i = 0; i < dphi_yield_sys_rel[0].size(); ++i ) {
-    std::cout<<"err: "<<dphi_yield_sys_rel[0][i]<<std::endl;
-  }
-  return 0;
+  // scale the errors by bin width!
+  jetHadron::ScaleErrors( dphi_yield_sys_rel, selector );
+  jetHadron::ScaleErrors( dphi_yield_sub_sys_rel, selector );
+  jetHadron::ScaleErrors( deta_yield_sys_rel, selector );
+  jetHadron::ScaleErrors( deta_yield_sub_sys_rel, selector );
+  
   
   __OUT("resetting the bin contents for errors")
   // reset sys bin errors to be set centered on pp
@@ -644,10 +646,10 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( deta_sys, deta_lead_sys_rel_bin_int, deta_lead_sys_rel_bin_int_err, selector  );
   jetHadron::ExtractIntegraldEta( deta_sys_sub, deta_sub_sys_rel_bin_int, deta_sub_sys_rel_bin_int_err, selector );
   
-  std::vector<TGraphErrors*> dphi_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_sys_rel_bin_int, zeros, dphi_lead_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "dphi_sys_rel" );
-  std::vector<TGraphErrors*> dphi_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_sys_rel_bin_int, zeros, dphi_sub_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub_sys_rel" );
-  std::vector<TGraphErrors*> deta_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_rel_bin_int, zeros, deta_lead_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sys_rel" );
-  std::vector<TGraphErrors*> deta_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_rel_bin_int, zeros, deta_sub_sys_rel_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys_rel" );
+  std::vector<TGraphErrors*> dphi_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_sys_rel_bin_int, zeros, dphi_yield_sys_rel, 1, 5, selector, analysisNames, "dphi_sys_rel" );
+  std::vector<TGraphErrors*> dphi_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_sys_rel_bin_int, zeros, dphi_yield_sub_sys_rel, 1, 5, selector, analysisNames, "dphi_sub_sys_rel" );
+  std::vector<TGraphErrors*> deta_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_rel_bin_int, zeros, deta_yield_sys_rel, 1, 5, selector, analysisNames, "deta_sys_rel" );
+  std::vector<TGraphErrors*> deta_sub_yield_graph_sys_rel = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_rel_bin_int, zeros, deta_yield_sub_sys_rel, 1, 5, selector, analysisNames, "deta_sub_sys_rel" );
   
   __OUT("Generate 5% systematic errors on the yields")
   // generate some 5% error histograms for each of the histograms we use
