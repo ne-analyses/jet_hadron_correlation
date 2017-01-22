@@ -705,6 +705,16 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldPhi( dphi_sub_yield_err, dphi_sub_sys_bin_int, dphi_sub_sys_bin_int_err, selector );
   jetHadron::ExtractIntegraldEta( deta_yield_err, deta_lead_sys_bin_int, deta_lead_sys_bin_int_err, selector );
   jetHadron::ExtractIntegraldEta( deta_sub_yield_err, deta_sub_sys_bin_int, deta_sub_sys_bin_int_err, selector );
+
+  
+  // we are changing from extracting the 5% yield error for the yield plots
+  // from the integral of the error histograms, to a raw 5% overall yield on the
+  // yield value itself
+  dphi_lead_sys_bin_int_err = jetHadron::BuildYieldError( dphi_lead_bin_int );
+  dphi_sub_sys_bin_int_err = jetHadron::BuildYieldError( dphi_sub_bin_int );
+  deta_lead_sys_bin_int_err = jetHadron::BuildYieldError( deta_lead_bin_int );
+  deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int );
+  
   
   // reset the Au+Au to the subtracted setting
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {

@@ -1544,6 +1544,27 @@ namespace jetHadron {
     return returnHist;
   }
   
+  // used to make full 5% errors on yields
+  std::vector<std::vector<double> > BuildYieldError ( std::vector<std::vector<double> > &yields ) {
+    std::vector<std::vector<double> > errors;
+    errors.resize( yields.size() );
+    
+    for ( int i = 0; i < yields.size(); ++i ) {
+      
+      errors[i].resize( yields[i].size() );
+      
+      for ( int j = 0; j < yields[i].size(); ++j ) {
+        
+        errors[i][j] = 0.05 * yields[i][j];
+        
+      }
+      
+    }
+    
+    return errors;
+  }
+  
+  
   // testing function to reset the bin contents to those of the histogram
   void ResetSysBinContent( std::vector<TH1F*>& errors, std::vector<TH1F*>& histograms, binSelector selector ) {
     
