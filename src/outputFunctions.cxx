@@ -2881,6 +2881,7 @@ namespace jetHadron {
     // and draw some titles and such
     TPaveText *t = new TPaveText(0.3, 0.8, 0.59, 0.85, "NB NDC");
     t->SetFillStyle(0);
+    t->SetBorderSize(0);
     t->AddText( title.c_str() );
     
     t->Draw();
