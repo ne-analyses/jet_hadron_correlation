@@ -315,7 +315,7 @@ namespace jetHadron {
   // testing function to fix histogram
   // bins not being drawn if the content is small
   void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms );
-  void FixTheDamnBins( std::vector<TH1F*>& histograms, binSelector selector );
+  void FixTheDamnBins( std::vector<TH1F*>& histograms );
   
   std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   
@@ -334,7 +334,7 @@ namespace jetHadron {
   // used to make 5% errors on yields due to tracking
   std::vector<std::vector<TH1F*> > BuildYieldError( std::vector<std::vector<TH1F*> > histograms, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
   // used to make full 5% errors on yields
-  std::vector<std::vector<double> > BuildYieldError ( std::vector<std::vector<double> > &yields );
+  std::vector<std::vector<double> > BuildYieldError ( std::vector<std::vector<double> > &yields, binSelector selector );
   
    // testing function to reset the bin contents to those of the histogram
   void ResetSysBinContent( std::vector<TH1F*>& errors, std::vector<TH1F*>& histograms, binSelector selector );
