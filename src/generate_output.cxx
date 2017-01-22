@@ -608,7 +608,7 @@ int main( int argc, const char** argv) {
   tree->SetBranchAddress( "deta_sub_err", &dEta_sub );
   
   for ( int i = 0; i < selector.nPtBins; ++i ) {
-    tree->GetEntry(0);
+    tree->GetEntry(i);
     dphi_yield_sys_rel[0].push_back(dPhi);
     dphi_yield_sub_sys_rel[0].push_back(dPhi_sub);
     deta_yield_sys_rel[0].push_back(dEta);
