@@ -724,7 +724,6 @@ int main( int argc, const char** argv) {
       std::cout<<"error: "<< dphi_lead_sys_bin_int_err[i][j] << std::endl;
     }
   }
-  return 0;
   
   // reset the Au+Au to the subtracted setting
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {
