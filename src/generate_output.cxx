@@ -86,8 +86,10 @@ namespace patch {
 
 int main( int argc, const char** argv) {
   
+  // set drawing preferences for histograms and graphs
   gStyle->SetOptStat(false);
   gStyle->SetOptFit(false);
+  gStyle->SetLegendBorderSize(0);
 
   
   // First check to make sure we're located properly

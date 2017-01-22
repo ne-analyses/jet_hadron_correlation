@@ -1954,6 +1954,7 @@ namespace jetHadron {
       
       TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
+      
       for ( int j = 0; j < histograms.size(); ++j ) {
         
         
@@ -2019,6 +2020,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
+      
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2122,6 +2124,7 @@ namespace jetHadron {
       
       TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
       
+      
       for ( int j = 0; j < histograms.size(); ++j ) {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
@@ -2182,6 +2185,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
+      
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2331,6 +2335,8 @@ namespace jetHadron {
       histograms2[i]->SetMarkerColor( 2 );
       
       TLegend* leg = new TLegend(0.7, 0.7, .9, .9);
+      
+      
       leg->AddEntry( histograms[i], analysisName1.c_str(), "lep" );
       leg->AddEntry( histograms2[i], analysisName2.c_str(), "lep" );
 
@@ -2394,6 +2400,7 @@ namespace jetHadron {
     c1.SetLeftMargin(0.15);
     c1.SetBottomMargin(0.2);
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    
     for ( int i = 0; i < x.size(); ++i ) {
       
       if ( x.size() > 2 )
@@ -2451,7 +2458,7 @@ namespace jetHadron {
  
       errors[i]->GetXaxis()->SetTitle("#Delta#phi");
       errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      errors[i]->SetFillColor( kRed-10 );
+      errors[i]->SetFillColorAlpha( kRed-10, 0.35 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
@@ -2508,7 +2515,7 @@ namespace jetHadron {
       
       errors[i]->GetXaxis()->SetTitle("#Delta#eta");
       errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-      errors[i]->SetFillColor( kRed-10 );
+      errors[i]->SetFillColorAlpha( kRed-10, 0.35 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
@@ -2567,7 +2574,7 @@ namespace jetHadron {
       
         errors[i][j]->GetXaxis()->SetTitle("#Delta#phi");
         errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        errors[i][j]->SetFillColor( kRed-10 );
+        errors[i][j]->SetFillColorAlpha( kRed-10, 0.35 );
         errors[i][j]->SetFillStyle(1001);
         errors[i][j]->SetLineWidth( 0 );
         errors[i][j]->SetMarkerColor( 0 );
@@ -2627,7 +2634,7 @@ namespace jetHadron {
       
         errors[i][j]->GetXaxis()->SetTitle("#Delta#eta");
         errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        errors[i][j]->SetFillColor( kRed-10 );
+        errors[i][j]->SetFillColorAlpha( kRed-10, 0.35 );
         errors[i][j]->SetFillStyle(1001);
         errors[i][j]->SetLineWidth( 0 );
         errors[i][j]->SetMarkerColor( 0 );
@@ -2682,9 +2689,9 @@ namespace jetHadron {
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        errors[j][i]->SetFillColor( kRed-10 );
+        errors[j][i]->SetFillColorAlpha( kRed-10, 0.35 );
         if ( i == 0 ) {
-          errors[j][i]->SetFillColor( 12 );
+          errors[j][i]->SetFillColorAlpha( 12, 0.35 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -2695,7 +2702,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColor( 46 );
+        errors2[i]->SetFillColorAlpha( 46, 0.35 );
         
       }
       
@@ -2706,6 +2713,7 @@ namespace jetHadron {
       histograms[1][i]->Draw("9SAME");
       
       TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+      
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
@@ -2758,9 +2766,9 @@ namespace jetHadron {
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        errors[j][i]->SetFillColor( kRed-10 );
+        errors[j][i]->SetFillColorAlpha( kRed-10, 0.35 );
         if ( i == 0 ) {
-          errors[j][i]->SetFillColor( 12 );
+          errors[j][i]->SetFillColorAlpha( 12, 0.35 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -2771,7 +2779,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColor( 46 );
+        errors2[i]->SetFillColorAlpha( 46, 0.35 );
         
       }
       
@@ -2782,6 +2790,7 @@ namespace jetHadron {
       histograms[1][i]->Draw("9SAME");
       
       TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+      
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "Sys Uncertainty Au+Au yield", "f" );
@@ -2857,6 +2866,7 @@ namespace jetHadron {
     sys2[0]->Draw("3");
     
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
     leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
@@ -2934,6 +2944,7 @@ namespace jetHadron {
     sys3[1]->Draw("3");
     
     TLegend* leg = new TLegend( 0.7, 0.7, 0.9, 0.9 );
+    
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
     leg->AddEntry( sys1[0], "Sys Uncertainty Au+Au yield", "f" );
