@@ -710,10 +710,10 @@ int main( int argc, const char** argv) {
   // we are changing from extracting the 5% yield error for the yield plots
   // from the integral of the error histograms, to a raw 5% overall yield on the
   // yield value itself
-  dphi_lead_sys_bin_int_err = jetHadron::BuildYieldError( dphi_lead_bin_int );
-  dphi_sub_sys_bin_int_err = jetHadron::BuildYieldError( dphi_sub_bin_int );
-  deta_lead_sys_bin_int_err = jetHadron::BuildYieldError( deta_lead_bin_int );
-  deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int );
+  dphi_lead_sys_bin_int_err = jetHadron::BuildYieldError( dphi_lead_bin_int, selector );
+  dphi_sub_sys_bin_int_err = jetHadron::BuildYieldError( dphi_sub_bin_int, selector );
+  deta_lead_sys_bin_int_err = jetHadron::BuildYieldError( deta_lead_bin_int, selector );
+  deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int, selector );
   
   
   // testing
@@ -739,7 +739,7 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> deta_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_bin_int, zeros, deta_lead_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sys" );
   std::vector<TGraphErrors*> deta_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_bin_int, zeros, deta_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys" );
   
-    TCanvas c1;
+  TCanvas c1;
   dphi_yield_sys_graph[0]->Draw();
   c1.SaveAs("testing.pdf");
   

@@ -1545,7 +1545,7 @@ namespace jetHadron {
   }
   
   // used to make full 5% errors on yields
-  std::vector<std::vector<double> > BuildYieldError ( std::vector<std::vector<double> > &yields ) {
+  std::vector<std::vector<double> > BuildYieldError ( std::vector<std::vector<double> > &yields, binSelector selector ) {
     std::vector<std::vector<double> > errors;
     errors.resize( yields.size() );
     
@@ -1555,7 +1555,7 @@ namespace jetHadron {
       
       for ( int j = 0; j < yields[i].size(); ++j ) {
         
-        errors[i][j] = 0.05 * yields[i][j];
+        errors[i][j] = 0.05 * yields[i][j] / selector.GetPtBinWidth(j);
         
       }
       
