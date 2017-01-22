@@ -614,6 +614,11 @@ int main( int argc, const char** argv) {
     deta_yield_sub_sys_rel.push_back(dEta_sub);
   }
   
+  for ( int i = 0; i < dphi_yield_sys_rel.size(); ++i ) {
+    std::cout<<"err: "<<dphi_yield_sys_rel[i]<<std::endl;
+  }
+  return 0;
+  
   __OUT("resetting the bin contents for errors")
   // reset sys bin errors to be set centered on pp
   jetHadron::ResetSysBinContent( deta_sys[0], corrected_deta_lead[1], selector );
