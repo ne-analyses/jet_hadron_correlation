@@ -615,7 +615,7 @@ int main( int argc, const char** argv) {
     deta_yield_sub_sys_rel[0].push_back(dEta_sub);
   }
   
-  for ( int i = 0; i < dphi_yield_sys_rel.size(); ++i ) {
+  for ( int i = 0; i < dphi_yield_sys_rel[0].size(); ++i ) {
     std::cout<<"err: "<<dphi_yield_sys_rel[0][i]<<std::endl;
   }
   return 0;
