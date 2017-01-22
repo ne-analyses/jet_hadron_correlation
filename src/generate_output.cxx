@@ -621,6 +621,13 @@ int main( int argc, const char** argv) {
   jetHadron::ScaleErrors( deta_yield_sys_rel, selector );
   jetHadron::ScaleErrors( deta_yield_sub_sys_rel, selector );
   
+  for ( int i = 0; i < dphi_yield_sys_rel; ++i ) {
+    std::cout<<"bin: "<<i<<std::endl;
+    std::cout<<"dphi: "<< dphi_yield_sys_rel[i] <<std::endl;
+    std::cout<<"dphi_sub: "<< dphi_yield_sub_sys_rel[i] << std::endl;
+    std::cout<<"deta: "<< deta_yield_sys_rel[i]<<std::endl;
+    std::cout<<"deta_sub: "<<deta_yield_sub_sys_rel[i]<<std::endl;
+  }
   
   __OUT("resetting the bin contents for errors")
   // reset sys bin errors to be set centered on pp
@@ -628,6 +635,7 @@ int main( int argc, const char** argv) {
   jetHadron::ResetSysBinContent( deta_sys_sub[0], corrected_deta_sub[1], selector );
   jetHadron::ResetSysBinContent( dphi_sys[0], corrected_dphi_subtracted[1], selector );
   jetHadron::ResetSysBinContent( dphi_sys_sub[0], corrected_dphi_subtracted_sub[1], selector );
+  
   
   __OUT("print them out")
   // and do printouts
