@@ -2751,25 +2751,25 @@ namespace jetHadron {
       graphs[i]->SetMarkerStyle( i+20 );
       graphs[i]->SetMarkerSize( 2 );
       
-      sys1[i]->SetFillColor( i+1 );
+      sys1[i]->SetFillColorAlpha( i+1, 0.35 );
       sys1[i]->SetFillStyle(1001);
       
       sys1[i]->SetMarkerSize( 0 );
       sys1[i]->SetLineWidth( 0 );
       
       if ( i == 0 ) {
-        sys1[i]->SetFillStyle(3005);
-        sys1[i]->SetFillColor(i+1);
+        sys1[i]->SetFillStyle(1001);
+        sys1[i]->SetFillColorAlpha(i+1, 0.35);
       }
       
       if ( i == 1 ) {
-        sys1[i]->SetFillStyle(3006);
-        sys1[i]->SetFillColor(i+1);
+        sys1[i]->SetFillStyle(1001);
+        sys1[i]->SetFillColorAlpha(i+1, 0.35);
       }
       
       if ( i == 0 ) {
-        sys2[0]->SetFillStyle(3004);
-        sys2[0]->SetFillColor( 16 );
+        sys2[0]->SetFillStyle(1001);
+        sys2[0]->SetFillColorAlpha( 16, 0.35 );
       }
       
     }
