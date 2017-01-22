@@ -616,7 +616,7 @@ int main( int argc, const char** argv) {
   }
   
   for ( int i = 0; i < dphi_yield_sys_rel.size(); ++i ) {
-    std::cout<<"err: "<<dphi_yield_sys_rel[i]<<std::endl;
+    std::cout<<"err: "<<dphi_yield_sys_rel[0][i]<<std::endl;
   }
   return 0;
   
