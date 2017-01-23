@@ -2723,6 +2723,19 @@ namespace jetHadron {
       leg->AddEntry( errors[1][i], "tracking efficiency uncertainty p+p", "f" );
       leg->AddEntry( errors2[i], "rel. jet energy scale uncertainty", "f");
       leg->Draw();
+      
+      // and draw some titles and such
+      TPaveText *t = new TPaveText(0.12, 0.7, 0.49, 0.88, "NB NDC");
+      t->SetFillStyle(0);
+      t->SetBorderSize(0);
+      t->AddText( selector.ptBinString[i].c_str() );
+      for ( int k = 0; k < text.size(); ++k ) {
+        t->AddText( text[i].c_str() );
+      }
+      
+      t->Draw();
+
+      
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.C";
@@ -2800,6 +2813,17 @@ namespace jetHadron {
       leg->AddEntry( errors[1][i], "tracking efficiency uncertainty p+p", "f" );
       leg->AddEntry( errors2[i], "rel. jet energy scale uncertainty", "f");
       leg->Draw();
+      
+      // and draw some titles and such
+      TPaveText *t = new TPaveText(0.12, 0.7, 0.49, 0.88, "NB NDC");
+      t->SetFillStyle(0);
+      t->SetBorderSize(0);
+      t->AddText( selector.ptBinString[i].c_str() );
+      for ( int k = 0; k < text.size(); ++k ) {
+        t->AddText( text[i].c_str() );
+      }
+      
+      t->Draw();
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );

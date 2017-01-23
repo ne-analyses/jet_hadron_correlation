@@ -778,10 +778,9 @@ int main( int argc, const char** argv) {
   
   
   std::vector<std::string> phiText;
-  phiText.push_back("#projection range |#Delta#eta|<");
-  phiText.push_back("test");
+  phiText.push_back("#projection range |#Delta#eta|<0.45");
   std::vector<std::string> etaText;
-  etaText.push_back("Delta#eta");
+  etaText.push_back("projection range |#Delta#phi|<0.71");
   
   // check errors on yields
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_subtracted, dphi_yield_err, selector, outputDirBase+"/dphi_yield_err_lead", -0.8, 0.8  );
