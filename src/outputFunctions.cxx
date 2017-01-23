@@ -2702,10 +2702,10 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         errors[j][i]->GetYaxis()->SetRangeUser( min, max );
         
-        errors2[i]->SetFillStyle(1001);
+        errors2[i]->SetFillStyle(3004);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kCyan, 0.20 );
+        errors2[i]->SetFillColorAlpha( kRed+4, 0.20 );
         
       }
       
@@ -2792,10 +2792,10 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         errors[j][i]->GetYaxis()->SetRangeUser( min, max );
         
-        errors2[i]->SetFillStyle(1001);
+        errors2[i]->SetFillStyle(3004);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kCyan, 0.20 );
+        errors2[i]->SetFillColorAlpha( kRed+4, 0.20 );
         
       }
       
@@ -2882,8 +2882,8 @@ namespace jetHadron {
       }
       
       if ( i == 0 ) {
-        sys2[0]->SetFillStyle(1001);
-        sys2[0]->SetFillColorAlpha( kCyan, 0.20 );
+        sys2[0]->SetFillStyle(3004);
+        sys2[0]->SetFillColorAlpha( kRed+4, 0.20 );
       }
       
     }
