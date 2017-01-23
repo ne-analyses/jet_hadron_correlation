@@ -2706,12 +2706,15 @@ namespace jetHadron {
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
         errors2[i]->SetFillColorAlpha( kRed+4, 0.20 );
+        errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors2[i]->GetYaxis()->SetRangeUser( min, max );
+        
         
       }
       
-      errors[0][i]->Draw("9e2");
+      errors2[i]->Draw("9e2");
+      errors[0][i]->Draw("9e2SAME");
       errors[1][i]->Draw("9e2SAME");
-      errors2[i]->Draw("9e2SAME");
       histograms[0][i]->Draw("9SAME");
       histograms[1][i]->Draw("9SAME");
       
@@ -2796,12 +2799,14 @@ namespace jetHadron {
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
         errors2[i]->SetFillColorAlpha( kRed+4, 0.20 );
+        errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+        errors2[i]->GetYaxis()->SetRangeUser( min, max );
         
       }
       
-      errors[0][i]->Draw("9e2");
+      errors2[i]->Draw("9e2");
+      errors[0][i]->Draw("9e2SAME");
       errors[1][i]->Draw("9e2SAME");
-      errors2[i]->Draw("9e2SAME");
       histograms[0][i]->Draw("9SAME");
       histograms[1][i]->Draw("9SAME");
       
@@ -2889,9 +2894,9 @@ namespace jetHadron {
     }
     graphs[0]->Draw();
     graphs[1]->Draw("P");
+    sys2[0]->Draw("3");
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
-    sys2[0]->Draw("3");
     
     TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
     
