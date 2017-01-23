@@ -2730,7 +2730,7 @@ namespace jetHadron {
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
       for ( int k = 0; k < text.size(); ++k ) {
-        t->AddText( text[i].c_str() );
+        t->AddText( text[k].c_str() );
       }
       
       t->Draw();
@@ -2820,7 +2820,7 @@ namespace jetHadron {
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
       for ( int k = 0; k < text.size(); ++k ) {
-        t->AddText( text[i].c_str() );
+        t->AddText( text[k].c_str() );
       }
       
       t->Draw();
