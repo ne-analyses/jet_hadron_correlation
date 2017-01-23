@@ -778,7 +778,7 @@ int main( int argc, const char** argv) {
   
   
   std::vector<std::string> phiText;
-  phiText.push_back("#projection range |#Delta#eta|<"selector);
+  phiText.push_back("#projection range |#Delta#eta|<");
   phiText.push_back("test");
   std::vector<std::string> etaText;
   etaText.push_back("Delta#eta");
