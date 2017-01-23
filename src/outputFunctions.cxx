@@ -2875,7 +2875,7 @@ namespace jetHadron {
       
       TLegend* leg = new TLegend( 0.6, 0.7, 0.88, 0.88 );
       
-      leg->AddEntry( hist2[i], "|#Delta#eta|<0.71", "lep" );
+      leg->AddEntry( hist1[i], "|#Delta#eta|<0.71", "lep" );
       leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
       leg->Draw();
       
