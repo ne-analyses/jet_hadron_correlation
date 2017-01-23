@@ -91,6 +91,7 @@ int main( int argc, const char** argv) {
   gStyle->SetOptFit(false);
   gStyle->SetOptTitle(0);
   gStyle->SetLegendBorderSize(0);
+  gStyle->SetLegendTextSize(1.5);
 
   
   // First check to make sure we're located properly
