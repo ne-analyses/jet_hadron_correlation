@@ -2951,7 +2951,7 @@ namespace jetHadron {
       graphs[i]->GetXaxis()->SetTitleOffset( 0.5 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
-      graphs[i]->GetYaxis()->SetTitleOffset( 0.5 );
+      graphs[i]->GetYaxis()->SetTitleOffset( 0.6 );
       graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T}" );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
