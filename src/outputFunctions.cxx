@@ -2855,7 +2855,9 @@ namespace jetHadron {
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       hist1[i]->SetMarkerStyle( 20 );
-      hist1[i]->SetMarkerColor( 0 );
+      hist1[i]->SetMarkerColor( 1 );
+      hist1[i]->SetMarkerSize( 2 );
+      hist1[i]->SetLineColor( 1 );
       
       hist2[i]->GetXaxis()->SetTitle("#Delta#phi");
       hist2[i]->GetXaxis()->SetTitleSize( 0.06 );
@@ -2865,18 +2867,20 @@ namespace jetHadron {
       hist2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       hist2[i]->SetMarkerStyle( 21 );
       hist2[i]->SetMarkerColor( 2 );
+      hist2[i]->SetLineColor( 2 );
+      hist2[i]->SetMarkerSize( 2 );
       
       hist1[i]->Draw();
       hist2[i]->Draw("SAME");
       
-      TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
+      TLegend* leg = new TLegend( 0.6, 0.7, 0.88, 0.88 );
       
       leg->AddEntry( hist2[i], "|#Delta#eta|<0.71", "lep" );
       leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.3, 0.8, 0.59, 0.85, "NB NDC");
+      TPaveText *t = new TPaveText(0.12, 0.7, 0.48, 0.88, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       
