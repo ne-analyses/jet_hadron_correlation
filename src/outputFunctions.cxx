@@ -2715,6 +2715,10 @@ namespace jetHadron {
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
         errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
+        errors2[i]->GetXaxis()->SetTitle("#Delta#phi");
+        errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors2[i]->GetYaxis()->SetTitleSize( 0.06 );
         
         
       }
@@ -2813,6 +2817,10 @@ namespace jetHadron {
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
         errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
+        errors2[i]->GetXaxis()->SetTitle("#Delta#eta");
+        errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors2[i]->GetYaxis()->SetTitleSize( 0.06 );
       }
       
       errors2[i]->Draw("9e2");
