@@ -1897,7 +1897,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -1957,7 +1957,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2024,7 +2024,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2127,7 +2127,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2189,7 +2189,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2256,7 +2256,7 @@ namespace jetHadron {
       FindGood1DUserRange( tmpvec, max, min );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       for ( int j = 0; j < histograms.size(); ++j ) {
         
@@ -2340,7 +2340,7 @@ namespace jetHadron {
       histograms2[i]->SetMarkerColor( 2 );
       
       TLegend* leg = new TLegend(0.6, 0.6, .88, .88);
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       leg->AddEntry( histograms[i], analysisName1.c_str(), "lep" );
       leg->AddEntry( histograms2[i], analysisName2.c_str(), "lep" );
@@ -2405,7 +2405,7 @@ namespace jetHadron {
     c1.SetLeftMargin(0.15);
     c1.SetBottomMargin(0.2);
     TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
-    leg->SetTextSize(0.1);
+    leg->SetTextSize(0.02);
     
     for ( int i = 0; i < x.size(); ++i ) {
       
@@ -2722,7 +2722,7 @@ namespace jetHadron {
       histograms[1][i]->Draw("9SAME");
       
       TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
@@ -2815,7 +2815,7 @@ namespace jetHadron {
       histograms[1][i]->Draw("9SAME");
       
       TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
@@ -2880,7 +2880,7 @@ namespace jetHadron {
       hist2[i]->Draw("SAME");
       
       TLegend* leg = new TLegend( 0.6, 0.7, 0.88, 0.88 );
-      leg->SetTextSize(0.1);
+      leg->SetTextSize(0.02);
       
       leg->AddEntry( hist1[i], "|#Delta#eta|<0.71", "lep" );
       leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
@@ -2966,7 +2966,7 @@ namespace jetHadron {
     sys1[1]->Draw("3");
     
     TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
-    leg->SetTextSize(0.1);
+    leg->SetTextSize(0.02);
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
@@ -3052,7 +3052,7 @@ namespace jetHadron {
     sys3[1]->Draw("3");
     
     TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
-    leg->SetTextSize(0.1);
+    leg->SetTextSize(0.02);
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
