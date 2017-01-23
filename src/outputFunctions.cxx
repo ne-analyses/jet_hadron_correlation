@@ -761,7 +761,7 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_low ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_high ) << std::endl;
+        std::cout<<"projection bins ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_low ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_high ) << std::endl;
         std::cout<<"projection range: " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_low )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_eta_bound_high ) ) << std::endl;
         
         //do quick resets
@@ -804,8 +804,8 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins full range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
-        std::cout<<"projection bins inner range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
+        std::cout<<"projection bins full range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
+        std::cout<<"projection bins inner range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
         std::cout<<"projection range (full): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) ) << std::endl;
         std::cout<<"projection range (inner): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
         
@@ -871,8 +871,8 @@ namespace jetHadron {
       for ( int j = 0; j < correlation2d[i].size(); ++j ) {
         
         std::cout<<"projecting dphi near minus far - file: "<< i << " pt bin: "<< j << std::endl;
-        std::cout<<"projection bins full range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
-        std::cout<<"projection bins inner range ( in dphi ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
+        std::cout<<"projection bins full range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) << std::endl;
+        std::cout<<"projection bins inner range ( in deta ): "<<correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] ) << " - " << correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) << std::endl;
         std::cout<<"projection range (full): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[0] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[3] ) ) << std::endl;
         std::cout<<"projection range (inner): " << correlation2d[i][j]->GetXaxis()->GetBinLowEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[1] )) << " - " << correlation2d[i][j]->GetXaxis()->GetBinUpEdge(correlation2d[i][j]->GetXaxis()->FindBin( selector.phi_projection_subtraction_regions[2] ) ) << std::endl;
         
@@ -2655,7 +2655,7 @@ namespace jetHadron {
   }
   
   // and the plotting with full set of errors
-  void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+  void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
@@ -2730,7 +2730,7 @@ namespace jetHadron {
     }
   }
   
-  void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  ) {
+  void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  ) {
     
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );

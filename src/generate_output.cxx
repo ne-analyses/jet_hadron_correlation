@@ -777,6 +777,12 @@ int main( int argc, const char** argv) {
   PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, deta_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_deta_proj", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
   
   
+  std::vector<std::string> phiText;
+  phiText.push_back("#projection range |#Delta#eta|<"selector);
+  phiText.push_back("");
+  std::vector<std::string> etaText;
+  etaText.push_back("Delta#eta");
+  
   // check errors on yields
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_subtracted, dphi_yield_err, selector, outputDirBase+"/dphi_yield_err_lead", -0.8, 0.8  );
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_subtracted_sub, dphi_sub_yield_err, selector, outputDirBase+"/dphi_yield_err_sub", -0.8 , 0.8  );
@@ -785,10 +791,10 @@ int main( int argc, const char** argv) {
   
   
   // and plot the full histograms
-  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted, dphi_yield_err, dphi_sys[0], selector, outputDirBase+"/new_dphi_yield_err_lead", -0.8, 0.8  );
-  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", -0.8 , 0.8  );
-  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", -0.8 , 0.8  );
-  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", -0.8 , 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted, dphi_yield_err, dphi_sys[0], selector, outputDirBase+"/new_dphi_yield_err_lead", phiText, -0.8, 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", phiText, -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", etaText, -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaText, -0.8 , 0.8  );
   
   
   return 0;

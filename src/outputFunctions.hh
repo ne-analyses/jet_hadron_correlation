@@ -385,8 +385,8 @@ namespace jetHadron {
   void Print1DDEtaHistogramsWithSysErr( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  );
   
   // and the plotting with full set of errors
-  void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  );
-  void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, double rangeLow, double rangeHigh  );
+  void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  );
+  void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  );
   
   
   // printing some graphs with some systematic errors as well
