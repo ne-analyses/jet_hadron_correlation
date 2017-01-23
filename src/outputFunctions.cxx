@@ -2798,7 +2798,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kkMagenta+3, 0.20 );
+        errors2[i]->SetFillColorAlpha( kMagenta+3, 0.20 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         errors2[i]->GetYaxis()->SetRangeUser( min, max );
         
