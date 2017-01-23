@@ -2461,7 +2461,7 @@ namespace jetHadron {
  
       errors[i]->GetXaxis()->SetTitle("#Delta#phi");
       errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      errors[i]->SetFillColorAlpha( kRed-10, 0.35 );
+      errors[i]->SetFillColorAlpha( kRed-10, 0.60 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
@@ -2518,7 +2518,7 @@ namespace jetHadron {
       
       errors[i]->GetXaxis()->SetTitle("#Delta#eta");
       errors[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-      errors[i]->SetFillColorAlpha( kRed-10, 0.35 );
+      errors[i]->SetFillColorAlpha( kRed-10, 0.60 );
       errors[i]->SetFillStyle(1001);
       errors[i]->SetLineWidth( 0 );
       errors[i]->SetMarkerColor( 0 );
@@ -2577,7 +2577,7 @@ namespace jetHadron {
       
         errors[i][j]->GetXaxis()->SetTitle("#Delta#phi");
         errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        errors[i][j]->SetFillColorAlpha( kRed-10, 0.35 );
+        errors[i][j]->SetFillColorAlpha( kRed-10, 0.60 );
         errors[i][j]->SetFillStyle(1001);
         errors[i][j]->SetLineWidth( 0 );
         errors[i][j]->SetMarkerColor( 0 );
@@ -2637,7 +2637,7 @@ namespace jetHadron {
       
         errors[i][j]->GetXaxis()->SetTitle("#Delta#eta");
         errors[i][j]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        errors[i][j]->SetFillColorAlpha( kRed-10, 0.35 );
+        errors[i][j]->SetFillColorAlpha( kRed-10, 0.60 );
         errors[i][j]->SetFillStyle(1001);
         errors[i][j]->SetLineWidth( 0 );
         errors[i][j]->SetMarkerColor( 0 );
@@ -2692,7 +2692,7 @@ namespace jetHadron {
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        errors[j][i]->SetFillColorAlpha( kRed-10, 0.35 );
+        errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 12, 0.35 );
         }
@@ -2782,7 +2782,7 @@ namespace jetHadron {
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        errors[j][i]->SetFillColorAlpha( kRed-10, 0.35 );
+        errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 12, 0.35 );
         }
