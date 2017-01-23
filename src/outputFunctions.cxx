@@ -2838,6 +2838,61 @@ namespace jetHadron {
 
   }
   
+  // Used to make some pretty plots of dPhi near/far
+  void PrintNearFarDPhiCorrelations( std::vector<TH1F*> hist1, std::vector<TH1F*> hist2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh ) {
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    TCanvas c1;
+    for ( int i = 0; i < hist1.size(); ++i ) {
+      std::string tmp = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.pdf";
+      
+      hist1[i]->GetXaxis()->SetTitle("#Delta#phi");
+      hist1[i]->GetXaxis()->SetTitleSize( 0.06 );
+      hist1[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      hist1[i]->GetYaxis()->SetTitleSize( 0.04 );
+      //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
+      hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      hist1[i]->SetMarkerStyle( 20 );
+      hist1[i]->SetMarkerColor( 0 );
+      
+      hist2[i]->GetXaxis()->SetTitle("#Delta#phi");
+      hist2[i]->GetXaxis()->SetTitleSize( 0.06 );
+      hist2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      hist2[i]->GetYaxis()->SetTitleSize( 0.04 );
+      //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
+      hist2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      hist2[i]->SetMarkerStyle( 21 );
+      hist2[i]->SetMarkerColor( 2 );
+      
+      hist1[i]->Draw();
+      hist2[i]->Draw("SAME");
+      
+      TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
+      
+      leg->AddEntry( hist2[i], "|#Delta#eta|<0.71", "lep" );
+      leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
+      leg->Draw();
+      
+      // and draw some titles and such
+      TPaveText *t = new TPaveText(0.3, 0.8, 0.59, 0.85, "NB NDC");
+      t->SetFillStyle(0);
+      t->SetBorderSize(0);
+      
+      t->AddText( selector.ptBinString[i].c_str() );
+      
+      for ( int j = 0; j < text.size(); ++j ) {
+        t->AddText( text[j].c_str() );
+      }
+      
+      t->Draw();
+      
+      
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
   
   
   // printing some graphs with some systematic errors as well

@@ -388,6 +388,8 @@ namespace jetHadron {
   void Print1DDPhiHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  );
   void Print1DDEtaHistogramsWithSysErrFull( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<TH1F*> >& errors, std::vector<TH1F*>& errors2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh  );
   
+  // and a function to print out the near/far dphi correlations
+  void PrintNearFarDPhiCorrelations( std::vector<TH1F*> hist1, std::vector<TH1F*> hist2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh );
   
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );

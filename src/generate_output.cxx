@@ -795,6 +795,12 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", etaText, -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaText, -0.8 , 0.8  );
   
+  std::vector<std::string> overlayText;
+  overlayText.push_back("Au+Au 0-20%");
+  overlayText.push_back( "#Delta#phi projections in #Delta#eta ranges" );
+  
+  // finally, some near/far overly
+  jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_near[0], corrected_dphi_subtracted_far[0], selector, outputDirBase+"/dphi_near_far_overlay", overlayText, -0.8,  0.8 );
   
   return 0;
 }
