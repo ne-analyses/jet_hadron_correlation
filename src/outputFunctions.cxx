@@ -2694,7 +2694,9 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
+        errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 12, 0.35 );
@@ -2790,7 +2792,9 @@ namespace jetHadron {
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
+        errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 12, 0.35 );
