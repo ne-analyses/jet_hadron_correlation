@@ -2847,6 +2847,7 @@ namespace jetHadron {
     TCanvas c1;
     for ( int i = 0; i < hist1.size(); ++i ) {
       std::string tmp = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.pdf";
+      std::string tmpC = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.C";
       
       hist1[i]->GetXaxis()->SetTitle("#Delta#phi");
       hist1[i]->GetXaxis()->SetTitleSize( 0.06 );
@@ -2894,6 +2895,7 @@ namespace jetHadron {
       
       
       c1.SaveAs( tmp.c_str() );
+      c1.SaveAs( tmpC.c_str() );
     }
     
   }
