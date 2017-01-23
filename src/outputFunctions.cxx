@@ -2710,7 +2710,9 @@ namespace jetHadron {
         errors2[i]->SetMarkerSize(0);
         errors2[i]->SetFillColorAlpha( kMagenta+3, 0.20 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
-        errors2[i]->GetYaxis()->SetRangeUser( min, max );
+        // changed to set constant range
+        //errors2[i]->GetYaxis()->SetRangeUser( min, max );
+        errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
         
         
       }
@@ -2804,8 +2806,9 @@ namespace jetHadron {
         errors2[i]->SetMarkerSize(0);
         errors2[i]->SetFillColorAlpha( kMagenta+3, 0.20 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
-        errors2[i]->GetYaxis()->SetRangeUser( min, max );
-        
+        // changed to set constant range
+        //errors2[i]->GetYaxis()->SetRangeUser( min, max );
+        errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
       }
       
       errors2[i]->Draw("9e2");
