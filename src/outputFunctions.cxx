@@ -2948,7 +2948,7 @@ namespace jetHadron {
       
       graphs[i]->SetTitle( title.c_str() );
       graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
-      graphs[i]->GetXaxis()->SetTitleOffset( 0.6 );
+      graphs[i]->GetXaxis()->SetTitleOffset( 0.65 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
       graphs[i]->GetYaxis()->SetTitleOffset( 0.5 );
