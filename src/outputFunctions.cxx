@@ -2723,7 +2723,7 @@ namespace jetHadron {
       histograms[0][i]->Draw("9SAME");
       histograms[1][i]->Draw("9SAME");
       
-      TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
+      TLegend* leg = new TLegend( 0.55, 0.6, 0.88, 0.88 );
       leg->SetTextSize(0.04);
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
@@ -2817,7 +2817,7 @@ namespace jetHadron {
       histograms[0][i]->Draw("9SAME");
       histograms[1][i]->Draw("9SAME");
       
-      TLegend* leg = new TLegend( 0.6, 0.6, 0.88, 0.88 );
+      TLegend* leg = new TLegend( 0.55, 0.6, 0.88, 0.88 );
       leg->SetTextSize(0.04);
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
