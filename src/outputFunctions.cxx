@@ -2705,7 +2705,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( 46, 0.35 );
+        errors2[i]->SetFillColorAlpha( 46, 0.20 );
         
       }
       
@@ -2795,7 +2795,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( 46, 0.35 );
+        errors2[i]->SetFillColorAlpha( 46, 0.20 );
         
       }
       
