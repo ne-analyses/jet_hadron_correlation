@@ -2719,7 +2719,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
         errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-        errors2[i]->GetYaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
         
         
@@ -2823,7 +2823,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
         errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
-        errors2[i]->GetYaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
       }
       
