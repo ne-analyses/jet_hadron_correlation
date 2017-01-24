@@ -2719,6 +2719,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
         errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
         
@@ -2823,6 +2824,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
         errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
       }
@@ -2877,6 +2879,7 @@ namespace jetHadron {
       hist1[i]->GetXaxis()->SetTitleSize( 0.06 );
       hist1[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
       hist1[i]->GetYaxis()->SetTitleSize( 0.04 );
+      hist1[i]->GetYaxis()->CenterTitle( true );
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       hist1[i]->SetMarkerStyle( 20 );
@@ -2941,7 +2944,7 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.SetBottomMargin(0.8);
+    c1.SetBottomMargin(0.7);
     //c1.DrawFrame(-2, 20, -2, 20);
     for ( int i = 0; i < 2; ++i ) {
       
@@ -2950,10 +2953,11 @@ namespace jetHadron {
       graphs[i]->SetTitle( title.c_str() );
       graphs[i]->GetXaxis()->SetTitleSize( 0.08 );
       graphs[i]->GetXaxis()->SetTitleOffset( 0.65 );
-      graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
+      graphs[i]->GetXaxis()->SetTitle( "p_{T} (GeV/c)" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.055 );
-      graphs[i]->GetYaxis()->SetTitleOffset( 0.55 );
+      graphs[i]->GetYaxis()->SetTitleOffset( 0.7 );
       graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T}" );
+      graphs[i]->GetYaxis()->CenterTitle( true );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
