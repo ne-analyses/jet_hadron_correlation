@@ -1820,7 +1820,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetXaxis()->CenterTitle( true );
-      histograms[i]->GetXaxis()->SetRangeUser(selector.phi_projection_eta_bound_low, selector.phi_projection_eta_bound_high );
+      histograms[i]->GetXaxis()->SetRange(5, 18 );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetYaxis()->SetTitleSize( 0.06 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
