@@ -2873,16 +2873,18 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     TCanvas c1;
-    c1.SetLeftMargin( 0.2 );
-    c1.SetBottomMargin( 0.2 );
+    c1.SetLeftMargin( 0.12 );
+    c1.SetBottomMargin( 0.15 );
     for ( int i = 0; i < hist1.size(); ++i ) {
       std::string tmp = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.pdf";
       std::string tmpC = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.C";
       
       hist1[i]->GetXaxis()->SetTitle("#Delta#phi");
-      hist1[i]->GetXaxis()->SetTitleSize( 0.06 );
+      hist1[i]->GetXaxis()->SetTitleSize( 0.055 );
+      hist1[i]->GetXaxis()->SetTitleOffset( 0.80 );
       hist1[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
-      hist1[i]->GetYaxis()->SetTitleSize( 0.04 );
+      hist1[i]->GetYaxis()->SetTitleSize( 0.065 );
+      hist1[i]->GetYaxis()->SetTitleOffset( 0.7 );
       hist1[i]->GetYaxis()->CenterTitle( true );
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
@@ -3007,7 +3009,7 @@ namespace jetHadron {
     leg->Draw();
     
     // and draw some titles and such
-    TPaveText *t = new TPaveText(0.5, 0.8, 0.88, 0.98, "NB NDC");
+    TPaveText *t = new TPaveText(0.5, 0.8, 0.88, 0.88, "NB NDC");
     t->SetFillStyle(0);
     t->SetBorderSize(0);
     t->AddText( title.c_str() );
