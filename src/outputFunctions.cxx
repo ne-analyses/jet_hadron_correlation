@@ -2880,7 +2880,7 @@ namespace jetHadron {
       std::string tmpC = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.C";
       
       hist1[i]->GetXaxis()->SetTitle("#Delta#phi");
-      hist1[i]->GetXaxis()->SetTitleSize( 0.065 );
+      hist1[i]->GetXaxis()->SetTitleSize( 0.075 );
       hist1[i]->GetXaxis()->SetTitleOffset( 0.80 );
       hist1[i]->GetXaxis()->CenterTitle( false );
       hist1[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
@@ -2909,7 +2909,7 @@ namespace jetHadron {
       hist2[i]->Draw("SAME");
       
       TLegend* leg = new TLegend( 0.6, 0.7, 0.88, 0.88 );
-      leg->SetTextSize(0.04);
+      leg->SetTextSize(0.05);
       
       leg->AddEntry( hist1[i], "|#Delta#eta|<0.71", "lep" );
       leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
