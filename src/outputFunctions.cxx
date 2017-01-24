@@ -2672,7 +2672,7 @@ namespace jetHadron {
 
       
     TCanvas c1;
-    c1.SetLeftMargin( 0.15 );
+    c1.SetLeftMargin( 0.2 );
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
