@@ -2673,6 +2673,7 @@ namespace jetHadron {
       
     TCanvas c1;
     c1.SetLeftMargin( 0.12 );
+    c1.SetBottomMargin( 0.15 );
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
@@ -2722,7 +2723,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
         errors2[i]->GetYaxis()->CenterTitle( true );
-        errors2[i]->GetYaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
         
         
@@ -2779,6 +2780,7 @@ namespace jetHadron {
       
       TCanvas c1;
     c1.SetLeftMargin( 0.12 );
+    c1.SetBottomMargin( 0.15 );
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
@@ -2829,7 +2831,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
         errors2[i]->GetYaxis()->CenterTitle( true );
-        errors2[i]->GetYaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
       }
       
