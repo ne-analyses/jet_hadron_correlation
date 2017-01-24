@@ -781,7 +781,7 @@ int main( int argc, const char** argv) {
   phiText.push_back("projection range |#Delta#eta|<0.45");
   phiTextSub.push_back("projection range |#Delta#eta|<0.45");
   phiText.push_back("trigger jet");
-  phiTextSub.push_back("tecoil jet");
+  phiTextSub.push_back("recoil jet");
   std::vector<std::string> etaText, etaTextSub;
   etaText.push_back("projection range |#Delta#phi|<0.71");
   etaTextSub.push_back("projection range |#Delta#phi|<0.71");
