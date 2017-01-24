@@ -2997,7 +2997,7 @@ namespace jetHadron {
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
     
-    TLegend* leg = new TLegend( 0.5, 0.6, 0.88, 0.88 );
+    TLegend* leg = new TLegend( 0.5, 0.5, 0.88, 0.78 );
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
@@ -3007,7 +3007,7 @@ namespace jetHadron {
     leg->Draw();
     
     // and draw some titles and such
-    TPaveText *t = new TPaveText(0.2, 0.8, 0.49, 0.85, "NB NDC");
+    TPaveText *t = new TPaveText(0.5, 0.8, 0.88, 0.98, "NB NDC");
     t->SetFillStyle(0);
     t->SetBorderSize(0);
     t->AddText( title.c_str() );
