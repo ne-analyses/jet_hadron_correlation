@@ -2941,7 +2941,7 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.SetBottomMargin(0.2);
+    c1.SetBottomMargin(0.15);
     //c1.DrawFrame(-2, 20, -2, 20);
     for ( int i = 0; i < 2; ++i ) {
       
