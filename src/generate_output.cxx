@@ -89,7 +89,7 @@ int main( int argc, const char** argv) {
   // set drawing preferences for histograms and graphs
   gStyle->SetOptStat(false);
   gStyle->SetOptFit(false);
-  gStyle->SetOptTitle(0);
+  gStyle->SetOptTitle(1);
   gStyle->SetLegendBorderSize(0);
 
   
@@ -294,6 +294,8 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsEtaRestricted( averagedMixedEventCorrectedHard[i], outputDirBase+"/avg_mix_corrected_lead_"+analysisNamesHard[i], analysisNamesHard[i], selector );
     
   }
+  // now turn off the titles
+  gStyle->SetOptTitle(0);
   
   __OUT("Clearing input histograms")
   // clear up the 1D histograms for the sake of my sanity
