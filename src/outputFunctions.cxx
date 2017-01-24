@@ -2941,17 +2941,18 @@ namespace jetHadron {
     
     
     TCanvas c1;
+    c1.SetBottomMargin(0.2);
     //c1.DrawFrame(-2, 20, -2, 20);
     for ( int i = 0; i < 2; ++i ) {
       
       
       
       graphs[i]->SetTitle( title.c_str() );
-      graphs[i]->GetXaxis()->SetTitleSize( 0.06 );
+      graphs[i]->GetXaxis()->SetTitleSize( 0.08 );
       graphs[i]->GetXaxis()->SetTitleOffset( 0.65 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T}" );
-      graphs[i]->GetYaxis()->SetTitleSize( 0.04 );
-      graphs[i]->GetYaxis()->SetTitleOffset( 0.5 );
+      graphs[i]->GetYaxis()->SetTitleSize( 0.055 );
+      graphs[i]->GetYaxis()->SetTitleOffset( 0.55 );
       graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T}" );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
