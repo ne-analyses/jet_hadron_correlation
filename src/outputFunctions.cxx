@@ -2957,7 +2957,7 @@ namespace jetHadron {
       
       graphs[i]->SetTitle( title.c_str() );
       graphs[i]->GetXaxis()->SetTitleSize( 0.055 );
-      graphs[i]->GetXaxis()->SetTitleOffset( 0.65 );
+      graphs[i]->GetXaxis()->SetTitleOffset( 0.80 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T} (GeV/c)" );
       graphs[i]->GetYaxis()->SetTitleSize( 0.065 );
       graphs[i]->GetYaxis()->SetTitleOffset( 0.7 );
