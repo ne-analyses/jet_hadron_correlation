@@ -2717,12 +2717,13 @@ namespace jetHadron {
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
         errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
         errors2[i]->GetXaxis()->SetTitle("#Delta#phi");
-        errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
-        errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
+        errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
         errors2[i]->GetYaxis()->CenterTitle( true );
-        errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
-        errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
         
         
       }
@@ -2823,12 +2824,13 @@ namespace jetHadron {
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
         errors2[i]->GetYaxis()->SetRangeUser( -1, 5 );
         errors2[i]->GetXaxis()->SetTitle("#Delta#eta");
-        errors2[i]->GetXaxis()->SetTitleOffset( 0.5 );
-        errors2[i]->GetXaxis()->SetTitleSize( 0.06 );
+        errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
+        errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
         errors2[i]->GetYaxis()->CenterTitle( true );
-        errors2[i]->GetYaxis()->SetTitleSize( 0.05 );
-        errors2[i]->GetYaxis()->SetTitleOffset( 0.5 );
+        errors2[i]->GetYaxis()->SetTitleSize( 0.075 );
+        errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
       }
       
       errors2[i]->Draw("9e2");
