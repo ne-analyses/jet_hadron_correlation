@@ -2941,7 +2941,7 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.SetBottomMargin(0.15);
+    c1.SetBottomMargin(0.3);
     //c1.DrawFrame(-2, 20, -2, 20);
     for ( int i = 0; i < 2; ++i ) {
       
@@ -2958,6 +2958,7 @@ namespace jetHadron {
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
       graphs[i]->SetMarkerSize( 2 );
+      graphs[i]->GetYaxis()->SetRangeUser( 0, 2 );
       
       sys1[i]->SetFillColorAlpha( i+1, 0.35 );
       sys1[i]->SetFillStyle(1001);
