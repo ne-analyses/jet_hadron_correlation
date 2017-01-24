@@ -777,10 +777,16 @@ int main( int argc, const char** argv) {
   PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, deta_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_deta_proj", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
   
   
-  std::vector<std::string> phiText;
+  std::vector<std::string> phiText, phiTextSub;
   phiText.push_back("projection range |#Delta#eta|<0.45");
-  std::vector<std::string> etaText;
+  phiTextSub.push_back("projection range |#Delta#eta|<0.45");
+  phiText.push_back("trigger jet");
+  phiTextSub.push_back("tecoil jet");
+  std::vector<std::string> etaText, etaTextSub;
   etaText.push_back("projection range |#Delta#phi|<0.71");
+  etaTextSub.push_back("projection range |#Delta#phi|<0.71");
+  etaText.push_back("trigger jet");
+  etaTextSub.push_back("recoil jet");
   
   // check errors on yields
   jetHadron::Print1DDPhiHistogramsWithSysErr( corrected_dphi_subtracted, dphi_yield_err, selector, outputDirBase+"/dphi_yield_err_lead", -0.8, 0.8  );
@@ -791,16 +797,19 @@ int main( int argc, const char** argv) {
   
   // and plot the full histograms
   jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted, dphi_yield_err, dphi_sys[0], selector, outputDirBase+"/new_dphi_yield_err_lead", phiText, -0.8, 0.8  );
-  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", phiText, -0.8 , 0.8  );
+  jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", phiTextSub, -0.8 , 0.8  );
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", etaText, -0.8 , 0.8  );
-  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaText, -0.8 , 0.8  );
+  jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaTextSub, -0.8 , 0.8  );
   
-  std::vector<std::string> overlayText;
+  std::vector<std::string> overlayText, overlayTextSub;
   overlayText.push_back( "#Delta#phi projections - specified ranges" );
+  overlayText.push_back("trigger jet");
+  overlayTextSub.push_back( "#Delta#phi projections - specified ranges" );
+  overlayTextSub.push_back("recoil jet");
   
   // finally, some near/far overly
   jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_near[0], corrected_dphi_subtracted_far[0], selector, outputDirBase+"/dphi_near_far_overlay", overlayText, -0.8,  0.8 );
-  jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_sub_near[0], corrected_dphi_subtracted_sub_far[0], selector, outputDirBase+"/dphi_near_far_overlay_recoil", overlayText, -0.8,  0.8 );
+  jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_sub_near[0], corrected_dphi_subtracted_sub_far[0], selector, outputDirBase+"/dphi_near_far_overlay_recoil", overlayTextSub, -0.8,  0.8 );
   
   return 0;
 }
