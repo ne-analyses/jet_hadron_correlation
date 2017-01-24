@@ -2672,6 +2672,7 @@ namespace jetHadron {
 
       
     TCanvas c1;
+    c1.SetLeftMargin( 0.15 );
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
@@ -2776,6 +2777,7 @@ namespace jetHadron {
       
       
       TCanvas c1;
+    c1.SetLeftMargin( 0.15 );
     for ( int i = 0; i < histograms[0].size(); ++i ) {
       
       double min, max;
@@ -2871,6 +2873,8 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     
     TCanvas c1;
+    c1.SetLeftMargin( 0.15 );
+    c1.SetBottomMargin( 0.2 );
     for ( int i = 0; i < hist1.size(); ++i ) {
       std::string tmp = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.pdf";
       std::string tmpC = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.C";
@@ -2944,7 +2948,8 @@ namespace jetHadron {
     
     
     TCanvas c1;
-    c1.SetBottomMargin(0.15);
+    c1.SetBottomMargin( 0.2 );
+    c1.SetLeftMargin( 0.15 );
     //c1.DrawFrame(-2, 20, -2, 20);
     for ( int i = 0; i < 2; ++i ) {
       
