@@ -2722,12 +2722,12 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
-        errors2[i]->GetXaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetXaxis()->SetLabelSize( 0.04 );
         errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
-        errors2[i]->GetYaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetYaxis()->SetLabelSize( 0.04 );
         
       }
       
@@ -2831,12 +2831,12 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
-        errors2[i]->GetXaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetXaxis()->SetLabelSize( 0.04 );
         errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
-        errors2[i]->GetYaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetYaxis()->SetLabelSize( 0.04 );
       }
       
       errors2[i]->Draw("9e2");
@@ -2891,12 +2891,12 @@ namespace jetHadron {
       hist1[i]->GetXaxis()->SetTitleSize( 0.075 );
       hist1[i]->GetXaxis()->SetTitleOffset( 0.80 );
       hist1[i]->GetXaxis()->CenterTitle( false );
-      hist1[i]->GetXaxis()->SetLabelSize( 0.03 );
+      hist1[i]->GetXaxis()->SetLabelSize( 0.04 );
       hist1[i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
       hist1[i]->GetYaxis()->SetTitleSize( 0.065 );
       hist1[i]->GetYaxis()->SetTitleOffset( 0.7 );
       hist1[i]->GetYaxis()->CenterTitle( true );
-      hist1[i]->GetYaxis()->SetLabelSize( 0.03 );
+      hist1[i]->GetYaxis()->SetLabelSize( 0.04 );
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       hist1[i]->SetMarkerStyle( 20 );
@@ -2972,12 +2972,12 @@ namespace jetHadron {
       graphs[i]->GetXaxis()->SetTitleSize( 0.055 );
       graphs[i]->GetXaxis()->SetTitleOffset( 0.80 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T} (GeV/c)" );
-      graphs[i]->GetXaxis()->SetLabelSize( 0.03 );
+      graphs[i]->GetXaxis()->SetLabelSize( 0.04 );
       graphs[i]->GetYaxis()->SetTitleSize( 0.065 );
       graphs[i]->GetYaxis()->SetTitleOffset( 0.7 );
       graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T} (GeV/x)^{-1}" );
       graphs[i]->GetYaxis()->CenterTitle( true );
-      graphs[i]->GetYaxis()->SetLabelSize( 0.03 );
+      graphs[i]->GetYaxis()->SetLabelSize( 0.04 );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
