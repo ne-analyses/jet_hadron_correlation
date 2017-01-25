@@ -780,13 +780,13 @@ int main( int argc, const char** argv) {
   
   
   std::vector<std::string> phiText, phiTextSub;
-  phiText.push_back("projection range |#Delta#eta|<0.45");
-  phiTextSub.push_back("projection range |#Delta#eta|<0.45");
+  phiText.push_back("|#Delta#eta|<0.45");
+  phiTextSub.push_back("|#Delta#eta|<0.45");
   phiText.push_back("trigger jet");
   phiTextSub.push_back("recoil jet");
   std::vector<std::string> etaText, etaTextSub;
-  etaText.push_back("projection range |#Delta#phi|<0.71");
-  etaTextSub.push_back("projection range |#Delta#phi|<0.71");
+  etaText.push_back("|#Delta#phi|<0.71");
+  etaTextSub.push_back("|#Delta#phi|<0.71");
   etaText.push_back("trigger jet");
   etaTextSub.push_back("recoil jet");
   
@@ -804,9 +804,7 @@ int main( int argc, const char** argv) {
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaTextSub, -0.8 , 0.8  );
   
   std::vector<std::string> overlayText, overlayTextSub;
-  overlayText.push_back( "#Delta#phi projections - specified ranges" );
   overlayText.push_back("trigger jet");
-  overlayTextSub.push_back( "#Delta#phi projections - specified ranges" );
   overlayTextSub.push_back("recoil jet");
   
   // finally, some near/far overly

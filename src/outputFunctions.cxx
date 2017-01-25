@@ -2691,18 +2691,18 @@ namespace jetHadron {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        histograms[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
         histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
-          errors[j][i]->SetFillColorAlpha( 12, 0.35 );
+          errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -2713,7 +2713,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kMagenta+3, 0.20 );
+        errors2[i]->SetFillColorAlpha( 46, 0.20 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
@@ -2722,11 +2722,12 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
-        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+        errors2[i]->GetXaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
-        
+        errors2[i]->GetYaxis()->SetLabelSize( 0.03 );
         
       }
       
@@ -2741,9 +2742,9 @@ namespace jetHadron {
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
-      leg->AddEntry( errors[0][i], "tracking uncertainty Au+Au", "f" );
-      leg->AddEntry( errors[1][i], "tracking uncertainty p+p", "f" );
-      leg->AddEntry( errors2[i], "jet energy scale uncertainty", "f");
+      leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
+      leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
+      leg->AddEntry( errors2[i], "JES unc.", "f");
       leg->Draw();
       
       // and draw some titles and such
@@ -2799,18 +2800,18 @@ namespace jetHadron {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        histograms[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
         histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
         if ( j == 0 ) {
-          errors[j][i]->SetFillColorAlpha( 12, 0.35 );
+          errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -2821,7 +2822,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kMagenta+3, 0.20 );
+        errors2[i]->SetFillColorAlpha( 46, 0.20 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
@@ -2830,10 +2831,12 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleSize( 0.075 );
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
-        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#eta");
+        errors2[i]->GetXaxis()->SetLabelSize( 0.03 );
+        errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
+        errors2[i]->GetYaxis()->SetLabelSize( 0.03 );
       }
       
       errors2[i]->Draw("9e2");
@@ -2847,9 +2850,9 @@ namespace jetHadron {
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
-      leg->AddEntry( errors[0][i], "tracking uncertainty Au+Au", "f" );
-      leg->AddEntry( errors[1][i], "tracking uncertainty p+p", "f" );
-      leg->AddEntry( errors2[i], "jet energy scale uncertainty", "f");
+      leg->AddEntry( errors[0][i], "tracking unc.y Au+Au", "f" );
+      leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
+      leg->AddEntry( errors2[i], "JES unc.", "f");
       leg->Draw();
       
       // and draw some titles and such
@@ -2888,10 +2891,12 @@ namespace jetHadron {
       hist1[i]->GetXaxis()->SetTitleSize( 0.075 );
       hist1[i]->GetXaxis()->SetTitleOffset( 0.80 );
       hist1[i]->GetXaxis()->CenterTitle( false );
-      hist1[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      hist1[i]->GetXaxis()->SetLabelSize( 0.03 );
+      hist1[i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
       hist1[i]->GetYaxis()->SetTitleSize( 0.065 );
       hist1[i]->GetYaxis()->SetTitleOffset( 0.7 );
       hist1[i]->GetYaxis()->CenterTitle( true );
+      hist1[i]->GetYaxis()->SetLabelSize( 0.03 );
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist1[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       hist1[i]->SetMarkerStyle( 20 );
@@ -2901,7 +2906,7 @@ namespace jetHadron {
       
       hist2[i]->GetXaxis()->SetTitle("#Delta#phi");
       hist2[i]->GetXaxis()->SetTitleSize( 0.06 );
-      hist2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#phi");
+      hist2[i]->GetYaxis()->SetTitle( "1/N_{Dijet}dN/d#Delta#phi");
       hist2[i]->GetYaxis()->SetTitleSize( 0.04 );
       //hist1[i]->SetTitle( selector.ptBinString[i].c_str() );
       hist2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
@@ -2967,10 +2972,12 @@ namespace jetHadron {
       graphs[i]->GetXaxis()->SetTitleSize( 0.055 );
       graphs[i]->GetXaxis()->SetTitleOffset( 0.80 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T} (GeV/c)" );
+      graphs[i]->GetXaxis()->SetLabelSize( 0.03 );
       graphs[i]->GetYaxis()->SetTitleSize( 0.065 );
       graphs[i]->GetYaxis()->SetTitleOffset( 0.7 );
-      graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T}" );
+      graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T} (GeV/x)^{-1}" );
       graphs[i]->GetYaxis()->CenterTitle( true );
+      graphs[i]->GetYaxis()->SetLabelSize( 0.03 );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
@@ -3009,9 +3016,9 @@ namespace jetHadron {
     
     leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
-    leg->AddEntry( sys1[0], "tracking uncertainty Au+Au", "f" );
-    leg->AddEntry( sys1[1], "tracking uncertainty p+p", "f" );
-    leg->AddEntry( sys2[0], "jet energy scale uncertainty", "f");
+    leg->AddEntry( sys1[0], "tracking unc. Au+Au", "f" );
+    leg->AddEntry( sys1[1], "tracking unc. p+p", "f" );
+    leg->AddEntry( sys2[0], "JES unc.", "f");
     leg->Draw();
     
     // and draw some titles and such
