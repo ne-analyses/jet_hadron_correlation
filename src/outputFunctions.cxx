@@ -2970,14 +2970,14 @@ namespace jetHadron {
       
       graphs[i]->SetTitle( title.c_str() );
       graphs[i]->GetXaxis()->SetTitleSize( 0.055 );
-      graphs[i]->GetXaxis()->SetTitleOffset( 0.90 );
+      graphs[i]->GetXaxis()->SetTitleOffset( 0.98 );
       graphs[i]->GetXaxis()->SetTitle( "p_{T} (GeV/c)" );
       graphs[i]->GetXaxis()->SetLabelSize( 0.06 );
       graphs[i]->GetYaxis()->SetTitleSize( 0.065 );
       graphs[i]->GetYaxis()->SetTitleOffset( 0.7 );
       graphs[i]->GetYaxis()->SetTitle( "dY/dp_{T} (GeV/x)^{-1}" );
       graphs[i]->GetYaxis()->CenterTitle( true );
-      graphs[i]->GetYaxis()->SetLabelSize( 0.06 );
+      graphs[i]->GetYaxis()->SetLabelSize( 0.055 );
       graphs[i]->SetLineColor( i+1 );
       graphs[i]->SetMarkerColor( i+1 );
       graphs[i]->SetMarkerStyle( i+20 );
