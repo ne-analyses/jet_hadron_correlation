@@ -2700,7 +2700,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
+        errors[j][i]->SetFillColorAlpha( 2, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
@@ -2809,7 +2809,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( kRed-10, 0.60 );
+        errors[j][i]->SetFillColorAlpha( 2, 0.60 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
