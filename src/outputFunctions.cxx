@@ -2765,7 +2765,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.35, 0.44, "STAR Preliminary");
+      latex.DrawLatex( 0.15, 0.64, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2880,7 +2880,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.35, 0.44, "STAR Preliminary");
+      latex.DrawLatex( 0.15, 0.64, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2960,7 +2960,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.35, 0.64, "STAR Preliminary");
+      //latex.DrawLatex( 0.15, 0.64, "STAR Preliminary");
       
       
       c1.SaveAs( tmp.c_str() );
@@ -3052,6 +3052,16 @@ namespace jetHadron {
     t->AddText( title.c_str() );
     
     t->Draw();
+    
+    // and STAR preliminary message
+    TLatex latex;
+    latex.SetNDC();
+    latex.SetTextSize(0.045);
+    // latex.SetTextColor(kGray+3);
+    latex.SetTextColor(kRed+3);
+    latex.DrawLatex( 0.15, 0.64, "STAR Preliminary");
+    
+
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
