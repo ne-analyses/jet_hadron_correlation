@@ -2691,14 +2691,14 @@ namespace jetHadron {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        histograms[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#phi");
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
+        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( 2, 0.60 );
         if ( j == 0 ) {
@@ -2723,7 +2723,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetXaxis()->SetLabelSize( 0.06 );
-        errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#phi");
+        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
@@ -2757,7 +2757,14 @@ namespace jetHadron {
       }
       
       t->Draw();
-
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetNDC();
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.35, 0.44, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2800,14 +2807,14 @@ namespace jetHadron {
         
         histograms[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         histograms[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        histograms[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
+        histograms[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         histograms[j][i]->GetYaxis()->SetTitleSize( 0.04 );
         histograms[j][i]->SetTitle( selector.ptBinString[i].c_str() );
         histograms[j][i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         
         errors[j][i]->GetXaxis()->SetTitle("#Delta#eta");
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
+        errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
         errors[j][i]->SetFillColorAlpha( 2, 0.60 );
         if ( j == 0 ) {
@@ -2832,7 +2839,7 @@ namespace jetHadron {
         errors2[i]->GetXaxis()->SetTitleOffset( 0.80 );
         errors2[i]->GetXaxis()->CenterTitle( false );
         errors2[i]->GetXaxis()->SetLabelSize( 0.06 );
-        errors2[i]->GetYaxis()->SetTitle( "dY/d#Delta#eta");
+        errors2[i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         errors2[i]->GetYaxis()->CenterTitle( true );
         errors2[i]->GetYaxis()->SetTitleSize( 0.065 );
         errors2[i]->GetYaxis()->SetTitleOffset( 0.7 );
@@ -2865,6 +2872,14 @@ namespace jetHadron {
       }
       
       t->Draw();
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetNDC();
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.35, 0.44, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2937,6 +2952,14 @@ namespace jetHadron {
       }
       
       t->Draw();
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetNDC();
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.35, 0.64, "STAR Preliminary");
       
       
       c1.SaveAs( tmp.c_str() );
