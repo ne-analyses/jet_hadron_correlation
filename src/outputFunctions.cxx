@@ -12,6 +12,7 @@
 
 // and some more root stuff
 #include "TPaveText.h"
+#include "TLatex.h"
 
 // the grid does not have std::to_string() for some ungodly reason
 // replacing it here. Simply ostringstream
