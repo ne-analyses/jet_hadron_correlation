@@ -534,6 +534,9 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1D( corrected_deta_lead_hard, nEventsHard );
   jetHadron::Normalize1D( corrected_deta_sub_hard, nEventsHard );
   
+  // oops
+  jetHadron::SubtractBackgroundDeta( corrected_deta_sub_hard, selector );
+  
   // now we can fit for debugging purposes
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_fit_hard = jetHadron::FitDphiRestricted( corrected_dphi_subtracted_hard, selector, "pp_hard_dphi_fit" );
   std::vector<std::vector<TF1*> > corrected_dphi_subtracted_sub_fit_hard = jetHadron::FitDphiRestricted( corrected_dphi_subtracted_sub_hard, selector, "pp_sub_hard_dphi_fit" );
@@ -543,6 +546,7 @@ int main( int argc, const char** argv) {
   // print out
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_lead_hard, corrected_deta_lead_fit_hard, outputDirBase+"/DEBUG_pphard_corrected_deta_lead"+analysisNames[0], analysisNamesHard, selector );
   jetHadron::Print1DHistogramsOverlayedDetaWFitRestricted( corrected_deta_sub_hard, corrected_deta_sub_fit_hard, outputDirBase+"/DEBUG_pphard_corrected_deta_sub"+analysisNames[0], analysisNamesHard, selector );
+  
   
   // aaaaaand we'll get ahead of ourselves and extract the integrals
   std::vector<std::vector<double> > dphi_lead_bin_int_hard, dphi_sub_bin_int_hard, deta_lead_bin_int_hard, deta_sub_bin_int_hard;
