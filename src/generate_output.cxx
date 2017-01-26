@@ -746,8 +746,8 @@ int main( int argc, const char** argv) {
     before_sub_dphi[i]->SetMarkerStyle( 22 );
     
     TCanvas c1;
-    dphi_yield_graph[i]->Draw("9e2");
-    before_sub_dphi[i]->Draw("9e2SAME");
+    dphi_yield_graph[i]->Draw("P");
+    before_sub_dphi[i]->Draw("3");
     c1.SaveAs( outName.c_str() );
     
     std::string outNameSub;
@@ -761,9 +761,10 @@ int main( int argc, const char** argv) {
     before_sub_dphi_sub[i]->SetMarkerSize( 2 );
     before_sub_dphi_sub[i]->SetMarkerStyle( 22 );
    
-    dphi_sub_yield_graph[i]->Draw("9e2");
-    before_sub_dphi_sub[i]->Draw("9e2SAME");
-    c1.SaveAs( outNameSub.c_str() );
+    TCanvas c2;
+    dphi_sub_yield_graph[i]->Draw("P");
+    before_sub_dphi_sub[i]->Draw("3");
+    c2.SaveAs( outNameSub.c_str() );
 
   }
   
