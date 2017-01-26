@@ -458,7 +458,7 @@ int main ( int argc, const char** argv) {
       auto end = std::chrono::high_resolution_clock::now();
       int64_t seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
       // Convert TStarJetVector to PseudoJet
-      jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
+      jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
       jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, seed, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
