@@ -720,6 +720,11 @@ int main( int argc, const char** argv) {
     }
   }
   
+  // before subtraction
+  std::vector<TGraphErrors*> before_dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
+  std::vector<TGraphErrors*> before_dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
+  std::vector<TGraphErrors*> before_deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
+  std::vector<TGraphErrors*> before_deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
@@ -733,6 +738,85 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
+  
+  // TEST
+  // print out
+  TCanvas c1;
+  dphi_yield_graph[0]->SetLineColor(1);
+  dphi_yield_graph[0]->SetMarkerSize(2);
+  dphi_yield_graph[0]->SetMarkerColor(1);
+  dphi_yield_graph[0]->SetMarkerStyle(21);
+  dphi_yield_graph[0]->Draw();
+  before_dphi_yield_graph[0]->SetLineColor(2);
+  before_dphi_yield_graph[0]->SetMarkerStyle(22);
+  before_dphi_yield_graph[0]->SetMarkerSize(2);
+  before_dphi_yield_graph[0]->SetMarkerColor(2);
+  dphi_yield_graph[0]->Draw();
+  before_dphi_yield_graph[0]->Draw("P");
+  TLegend* leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
+  leg->AddEntry( dphi_yield_graph[0], "dphi after subtraction", "lep");
+  leg->AddEntry( before_dphi_yield_graph[0], "dphi before subtraction", "lep");
+  leg->Draw();
+  c1.SaveAs( "dphi_lead.pdf" );
+  
+  dphi_sub_yield_graph[0]->SetLineColor(1);
+  dphi_sub_yield_graph[0]->SetMarkerSize(2);
+  dphi_sub_yield_graph[0]->SetMarkerColor(1);
+  dphi_sub_yield_graph[0]->SetMarkerStyle(21);
+  dphi_sub_yield_graph[0]->Draw();
+  before_dphi_sub_yield_graph[0]->SetLineColor(2);
+  before_dphi_sub_yield_graph[0]->SetMarkerStyle(22);
+  before_dphi_sub_yield_graph[0]->SetMarkerSize(2);
+  before_dphi_sub_yield_graph[0]->SetMarkerColor(2);
+  dphi_sub_yield_graph[0]->Draw();
+  before_dphi_yield_graph[0]->Draw("P");
+  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
+  leg->AddEntry( dphi_sub_yield_graph[0], "recoil dphi after subtraction", "lep");
+  leg->AddEntry( before_dphi_sub_yield_graph[0], "recoil dphi before subtraction", "lep");
+  leg->Draw();
+  c1.SaveAs( "dphi_sub.pdf" );
+
+  
+  deta_yield_graph[0]->SetLineColor(1);
+  deta_yield_graph[0]->SetMarkerSize(2);
+  deta_yield_graph[0]->SetMarkerColor(1);
+  deta_yield_graph[0]->SetMarkerStyle(21);
+  deta_yield_graph[0]->Draw();
+  before_deta_yield_graph[0]->SetLineColor(2);
+  before_deta_yield_graph[0]->SetMarkerStyle(22);
+  before_deta_yield_graph[0]->SetMarkerSize(2);
+  before_deta_yield_graph[0]->SetMarkerColor(2);
+  deta_yield_graph[0]->Draw();
+  before_deta_yield_graph[0]->Draw("P");
+  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
+  leg->AddEntry( deta_yield_graph[0], "dEta after subtraction", "lep");
+  leg->AddEntry( before_deta_yield_graph[0], "dEta before subtraction", "lep");
+  leg->Draw();
+  c1.SaveAs( "dphi_lead.pdf" );
+
+  deta_sub_yield_graph[0]->SetLineColor(1);
+  deta_sub_yield_graph[0]->SetMarkerSize(2);
+  deta_sub_yield_graph[0]->SetMarkerColor(1);
+  deta_sub_yield_graph[0]->SetMarkerStyle(21);
+  deta_sub_yield_graph[0]->Draw();
+  before_deta_sub_yield_graph[0]->SetLineColor(2);
+  before_deta_sub_yield_graph[0]->SetMarkerStyle(22);
+  before_deta_sub_yield_graph[0]->SetMarkerSize(2);
+  before_deta_sub_yield_graph[0]->SetMarkerColor(2);
+  deta_sub_yield_graph[0]->Draw();
+  before_deta_yield_graph[0]->Draw("P");
+  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
+  leg->AddEntry( deta_sub_yield_graph[0], "recoil deta after subtraction", "lep");
+  leg->AddEntry( before_deta_sub_yield_graph[0], "recoil deta before subtraction", "lep");
+  leg->Draw();
+  c1.SaveAs( "dphi_sub.pdf" );
+  
+  
+  // DONE WITH DIAGNOSTIC
+  
+  
+  
+  
   
   
   //// annddddddd make some systematic error graphs from the differences
@@ -761,7 +845,6 @@ int main( int argc, const char** argv) {
   deta_lead_sys_bin_int_err = jetHadron::BuildYieldError( deta_lead_bin_int, selector );
   deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int, selector );
   
-  
   // reset the Au+Au to the subtracted setting
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {
     dphi_lead_sys_bin_int[0][i] = dphi_lead_bin_int[0][i];
@@ -775,7 +858,6 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> dphi_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_sys_bin_int, zeros, dphi_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub_sys" );
   std::vector<TGraphErrors*> deta_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_bin_int, zeros, deta_lead_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sys" );
   std::vector<TGraphErrors*> deta_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_bin_int, zeros, deta_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys" );
-  
   
   PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_dphi", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
   PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
