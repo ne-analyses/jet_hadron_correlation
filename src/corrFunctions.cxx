@@ -5,8 +5,12 @@
 
 #include "corrFunctions.hh"
 #include "corrParameters.hh"
+#include "histograms.hh"
 
-namespace corrAnalysis {
+#include <time.h>
+#include <random>
+
+namespace jetHadron {
 	
 	// -------------------------
 	// IO/OS Manip functionality
@@ -126,7 +130,7 @@ namespace corrAnalysis {
   // Also makes sure to empty the containers if they are full
   //
   // ------------------------------------------------------------------------------
-  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector ) {
+  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector, double towerScale ) {
     // Empty the container
     // if called for
     if ( ClearVector )
@@ -139,11 +143,70 @@ namespace corrAnalysis {
       sv = container->Get(i);
       
       fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      if ( sv->GetCharge() == 0 )
+        tmpPJ *= towerScale;
       tmpPJ.set_user_index( sv->GetCharge() );
       particles.push_back( tmpPJ );
       
       
     }
+  }
+  
+  // applies an effective 90% relative efficiency compared to auau
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, int64_t seed, bool ClearVector, double towerScale ) {
+    // Empty the container
+    // if called for
+    if ( ClearVector )
+      particles.clear();
+    
+    // create a RNG for shuffling events
+    std::random_device rd;
+    std::mt19937 g(rd());
+    g.seed( seed );
+    std::uniform_real_distribution<> dis(0.0, 1.0);
+    
+    // Transform TStarJetVectors into (FastJet) PseudoJets
+    // ---------------------------------------------------
+    TStarJetVector* sv;
+    for ( int i=0; i < container->GetEntries() ; ++i ){
+      sv = container->Get(i);
+      
+      if ( sv->GetCharge() ) {
+        double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
+        double random_ = dis(g);
+        if ( random_ > ratio ) {
+          continue;
+        }
+      }
+      fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      if ( sv->GetCharge() == 0 )
+        tmpPJ *= towerScale;
+      tmpPJ.set_user_index( sv->GetCharge() );
+      particles.push_back( tmpPJ );
+    }
+    
+  }
+  
+  // For AuAu being embedded into PP
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks, double towerScale ) {
+    
+    // Transform TStarJetVectors into (FastJet) PseudoJets
+    // ---------------------------------------------------
+    TStarJetVector* sv;
+    for ( int i=0; i < container->GetEntries() ; ++i ){
+      sv = container->Get(i);
+      
+      fastjet::PseudoJet tmpPJ = fastjet::PseudoJet( *sv );
+      if ( sv->GetCharge() == 0 )
+        tmpPJ *= towerScale;
+      tmpPJ.set_user_index( sv->GetCharge() );
+      double pt = tmpPJ.pt();
+      
+      // only add if allTracks is selected, or if the track has pt > 2.0
+      if ( allTracks || pt > 2.0 )
+        particles.push_back( tmpPJ );
+    }
+    
   }
   
   // finds the triggers and saves them, if requireTrigger == True
@@ -157,7 +220,7 @@ namespace corrAnalysis {
       TIter nextTrigger(triggerObjs);
       TStarJetPicoTriggerInfo* trigger = 0;
       while ( ( trigger = (TStarJetPicoTriggerInfo*) nextTrigger() ) ) {
-        if ( trigger->GetTriggerFlag() == 1 ) {
+        if ( trigger->GetTriggerFlag() == 1 || trigger->GetTriggerFlag() == 118 || trigger->GetTriggerFlag() == 125 ) {
           fastjet::PseudoJet tmpTrig;
           tmpTrig.reset_PtYPhiM(0.1, trigger->GetEta(), trigger->GetPhi(), 0 );
           triggers.push_back( tmpTrig );
@@ -247,7 +310,7 @@ namespace corrAnalysis {
   // Used to initialized the reader - will set the event cuts,
   // Tower cuts, track cuts and hadronic correction
   // ---------------------------------------------------------------------
-  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, int nEvents ) {
+  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, double softwareTrigger, int nEvents ) {
     
     // First tolower() on the analysisType
     // shouldnt be necessary....
@@ -268,6 +331,10 @@ namespace corrAnalysis {
     evCuts->SetVertexZCut ( vertexZCut );
     evCuts->SetMaxEventPtCut( eventPtCut );
     evCuts->SetMaxEventEtCut( eventEtCut );
+    
+    if( softwareTrigger )
+      evCuts->SetMinEventEtCut( softwareTrigger );
+    
     evCuts->SetVertexZDiffCut( vertexZDiffCut );
     if ( collisionType == "auau" ) {
     	evCuts->SetRefMultCut ( y7RefMultCut );
@@ -295,10 +362,8 @@ namespace corrAnalysis {
     // Towers
     TStarJetPicoTowerCuts* towerCuts = reader.GetTowerCuts();
     towerCuts->SetMaxEtCut( towerEtCut );
-    if ( collisionType == "auau" ) {
+    if ( collisionType == "auau" || collisionType == "pp" ) {
     	towerCuts->AddBadTowers( y7AuAuTowerList.c_str() );
-    }
-    else if ( collisionType == "pp" ) {
       towerCuts->AddBadTowers( y6PPTowerList.c_str() );
     }
     else
@@ -411,7 +476,7 @@ namespace corrAnalysis {
         // check to make sure the matched jets are within the
         // accepted eta range
         for ( int i = 0; i < matchedToDijet.size(); ++i )
-          if ( fabs( matchedToDijet[i].eta() ) > corrAnalysis::maxTrackRap - jetRadius )
+          if ( fabs( matchedToDijet[i].eta() ) > jetHadron::maxTrackRap - jetRadius )
             return std::vector<fastjet::PseudoJet>();
         
         // now return in proper order
@@ -490,7 +555,7 @@ namespace corrAnalysis {
     return true;
   }
   
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency ) {
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -507,12 +572,12 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin );
+    histogram->FillCorrelationLead( deltaEta, deltaPhi, assocPt, weight, aj, vzBin, centBin );
     
     return true;
   }
   
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency ) {
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj ) {
     
     // check if track is ok
     if ( !useTrack( assocTrack, efficiency ) )
@@ -528,7 +593,7 @@ namespace corrAnalysis {
     histogram->FillAssocPt( assocPt );
     
     // now fill the histograms
-    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, vzBin, centBin );
+    histogram->FillCorrelationSub( deltaEta, deltaPhi, assocPt, weight, aj, vzBin, centBin );
     
     return true;
   }
@@ -618,7 +683,7 @@ namespace corrAnalysis {
   // This function will check if it can parse the analysis String
   // if its unrecognized it will use defaults
   // if it recognizes the string but can't parse, it returns -2, which will exit the mixing
-  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger ) {
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, double& hardPt, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi ) {
     
     // First, pick out the analysis type from the analysis string
     if ( BeginsWith( analysisString, "dijet" ) )
@@ -648,6 +713,12 @@ namespace corrAnalysis {
         maxPt = atof( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "rad" )
         jetRadius = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "hardpt" )
+        hardPt = atof( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "eta" )
+        binsEta = atoi( varHolder[i+1].c_str() );
+      else if ( varHolder[i] == "phi" )
+        binsPhi = atoi( varHolder[i+1].c_str() );
       else if ( varHolder[i] == "trigger" ) {
         if ( varHolder[i+1] == "true" )
           reqTrigger = true;
@@ -662,7 +733,7 @@ namespace corrAnalysis {
       }
     }
     
-    if ( leadPt == -999 || subPt == -999 || jetRadius == -999 || maxPt == -999 )
+    if ( leadPt == -999 || subPt == -999 || jetRadius == -999 || maxPt == -999 || binsEta == 1000 || binsPhi == 1000 )
       return -2;
     
     return 1;
@@ -708,8 +779,8 @@ namespace corrAnalysis {
       int refCentrality = GetReferenceCentrality( refMult );
       // Check to see if we use those centralities
       if ( refCentrality < 0 )                      								 	{ return false; }
-      if ( refCentrality < corrAnalysis::y7EfficiencyRefCentLower )   { return false; }
-      if ( refCentrality > corrAnalysis::y7EfficiencyRefCentUpper )   { return false; }
+      if ( refCentrality < jetHadron::y7EfficiencyRefCentLower )   { return false; }
+      if ( refCentrality > jetHadron::y7EfficiencyRefCentUpper )   { return false; }
     }
     
     // Make sure Vz bin is accepted
@@ -721,704 +792,7 @@ namespace corrAnalysis {
   }
   
   
-	// ____________________________________________________________________________________
-	// Class implementation
-	// corrAnalysis::histograms
-  
-  // These are used by fill functions
-  // to check for consistency
-  bool histograms::IsPP() {
+} // end namespace
 
-    if ( analysisType.find("pp") != std::string::npos )
-      return true;
 
-    return false;
-  }
-  
-  bool histograms::IsAuAu() {
-   
-    if ( analysisType.find("pp") == std::string::npos )
-      return true;
 
-    return false;
-  }
-  
-  bool histograms::IsDijet() {
-    
-    if ( analysisType.find("dijet") != std::string::npos )
-      return true;
-
-    return false;
-  }
-  
-  bool histograms::IsJet() {
-   
-    if ( analysisType.find("dijet") == std::string::npos && analysisType.find("jet") != std::string::npos )
-      return true;
-
-    return false;
-  }
-  
-  bool histograms::IsMix() {
-    
-    if ( analysisType.find("mix") != std::string::npos )
-      return true;
-
-    return false;
-  }
-	
-	histograms::histograms() {
-		analysisType = "none";
-		initialized = false;
-		
-		hLeadJetPt 	= 0;
-		hLeadEtaPhi = 0;
-		hSubJetPt 	= 0;
-		hSubEtaPhi 	= 0;
-    hAssocPt 		= 0;
-    hAssocEtaPhi= 0;
-		hAjHigh 		= 0;
-		hAjLow 			= 0;
-		hCentVz			= 0;
-		hBinVz			= 0;
-		hGRefMult   = 0;
-		hVz 				= 0;
-		h3DimCorrLead	= 0;
-		h3DimCorrSub 	= 0;
-    leadingArrays = 0;
-    subleadingArrays = 0;
-	}
-	
-	histograms::histograms( std::string anaType ) {
-		analysisType = anaType;
-		initialized = false;
-		hLeadJetPt 	= 0;
-		hLeadEtaPhi = 0;
-		hSubJetPt 	= 0;
-		hSubEtaPhi 	= 0;
-    hAssocPt 		= 0;
-    hAssocEtaPhi= 0;
-		hAjHigh 		= 0;
-		hAjLow 			= 0;
-		hCentVz			= 0;
-		hBinVz			= 0;
-		hGRefMult   = 0;
-		hVz 				= 0;
-		h3DimCorrLead	= 0;
-		h3DimCorrSub 	= 0;
-    leadingArrays = 0;
-    subleadingArrays = 0;
-	}
-	
-	histograms::~histograms() {
-		Clear();
-	}
-	
-	void histograms::Clear() {
-		if ( hLeadJetPt )
-			delete hLeadJetPt;
-		if ( hLeadEtaPhi )
-			delete hLeadEtaPhi;
-		if ( hSubJetPt )
-			delete hSubJetPt;
-		if ( hSubEtaPhi )
-			delete hSubEtaPhi;
-    if ( hAssocPt )
-      delete hAssocPt;
-    if ( hAssocEtaPhi )
-      delete hAssocEtaPhi;
-		if ( hAjLow )
-			delete hAjLow;
-		if ( hAjHigh )
-			delete hAjHigh;
-		if ( hCentVz )
-			delete hCentVz;
-		if ( hBinVz )
-			delete hBinVz;
-		if ( hGRefMult )
-			delete hGRefMult;
-		if ( hVz )
-			delete hVz;
-		if ( h3DimCorrLead )
-			delete h3DimCorrLead;
-		if ( h3DimCorrSub )
-			delete h3DimCorrSub;
-    
-    if ( leadingArrays ) {
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i]->Delete();
-      }
-    }
-    if ( subleadingArrays ) {
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        subleadingArrays[i]->Delete();
-      }
-    }
-	}
-	
-	
-	bool histograms::SetAnalysisType( std::string type ) {
-		if ( type == analysisType )
-			return true;
-		
-    else if ( type == "dijet" || type == "jet" || type == "ppdijet" || type == "ppjet" || type == "dijetmix" || type == "jetmix" || type == "ppdijetmix" || type == "ppjetmix" ) {
-			initialized = false;
-			Clear();
-			analysisType = type;
-			return true;
-		}
-		
-		__ERR("Unknown type")
-		return false;
-		
-	}
-	
-	int histograms::Init() {
-		if ( initialized )
-			return 0;
-		
-		if ( analysisType == "dijet" || analysisType == "dijetmix" ) {
-			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
-			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-			
-			hLeadJetPt 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "leadjetetaphi", "Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-			hSubJetPt 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
-			hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-			
-      if ( analysisType == "dijet" ) {
-        hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-        hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-      }
-			h3DimCorrLead		= new TH3D("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-			h3DimCorrSub		= new TH3D("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-      
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistLead, * tmpHistSub;
-      leadingArrays = new TObjArray*[binsCentrality];
-      subleadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        subleadingArrays[i] = new TObjArray;
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          TString subName = "sub_cent_";
-          if ( analysisType == "dijetmix" ) {
-            leadName = "mix_lead_cent_";
-            subName = "mix_sub_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          subName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistLead );
-          subleadingArrays[i]->AddLast( tmpHistSub );
-
-        }
-      }
-			
-			initialized = true;
-			return 0;
-		}
-		else if ( analysisType == "jet" || analysisType == "jetmix" ) {
-			hCentVz 		= new TH2D( "nevents","Event Count;Centrality;VzBin", binsCentrality, centLowEdge, centHighEdge, binsVz, -0.5, (double) binsVz - 0.5 );
-			hGRefMult 	= new TH1D( "grefmultdist", "grefmultdist", 1000, -0.5, 999.5 );
-			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-			
-			hLeadJetPt 	= new TH1D( "triggerjetpt", "Trigger Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "triggerjetetaphi", "Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-			
-			h3DimCorrLead		= new TH3D("leadjetcorr", "Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-      
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistTrig;
-      leadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          if ( analysisType == "jetmix" ) {
-            leadName = "mix_lead_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistTrig );
-          
-        }
-      }
-			
-			initialized = true;
-			return 0;
-		}
-		else if ( analysisType == "ppdijet" || analysisType == "ppdijetmix" ) {
-			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
-			hVz					= new TH1D( "vzdist", "Vz Distribution", 100, -30, 30);
-			
-			hLeadJetPt 	= new TH1D( "ppleadjetpt", "PP Leading Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "ppleadjetetaphi", "PP Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-			hSubJetPt 	= new TH1D( "ppsubjetpt", "PP Subleading Jet Pt;p_{T}", 80, 0, 80 );
-			hSubEtaPhi 	= new TH2D( "ppsubjetetaphi", "PP Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-			
-      if ( analysisType == "ppdijet" ) {
-			hAjHigh 		= new TH1D( "ppajhigh", "PP A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-			hAjLow 			= new TH1D( "ppajlow", "PP A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-      }
-			
-			h3DimCorrLead		= new TH3D("ppleadjetcorr", "PP Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-			h3DimCorrSub		= new TH3D("ppsubjetcorr", "PP Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-      
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistLead, * tmpHistSub;
-      leadingArrays = new TObjArray*[binsCentrality];
-      subleadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        subleadingArrays[i] = new TObjArray;
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          TString subName = "sub_cent_";
-          if ( analysisType == "ppdijetmix" ) {
-            leadName = "mix_lead_cent_";
-            subName = "mix_sub_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          subName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistLead = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          tmpHistSub = new TH3D(subName, subName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistLead );
-          subleadingArrays[i]->AddLast( tmpHistSub );
-          
-        }
-      }
-
-			
-			initialized = true;
-			return 0;
-		}
-		else if ( analysisType == "ppjet" || analysisType == "ppjetmix" ) {
-			hBinVz			= new TH1D( "binvzdist", "Vz Bin Distribution", binsVz, -0.5, (double) binsVz - 0.5 );
-			hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
-			
-			hLeadJetPt 	= new TH1D( "pptriggerjetpt", "PP Trigger Jet Pt;p_{T}", 80, 0, 80 );
-			hLeadEtaPhi = new TH2D( "pptriggerjetetaphi", "PP Trigger Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
-      
-      hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
-      hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
-			
-			h3DimCorrLead		= new TH3D("leadjetcorr", "PP Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-      
-      // now build the full 3D vz/centrality binned histograms
-      TH3D* tmpHistTrig;
-      leadingArrays = new TObjArray*[binsCentrality];
-      for ( int i = 0; i < binsCentrality; ++i ) {
-        leadingArrays[i] = new TObjArray();
-        for ( int j = 0; j < binsVz; ++j ) {
-          // Unique name for each TH3D
-          std::stringstream s1, s2;
-          s1 << i;
-          s2 << j;
-          TString leadName = "lead_cent_";
-          if ( analysisType == "ppjetmix" ) {
-            leadName = "mix_lead_cent_";
-          }
-          leadName += s1.str() + "_vz_" + s2.str();
-          
-          // make each histogram
-          tmpHistTrig = new TH3D(leadName, leadName+";eta;phi;centrality", binsEta, dEtaLowEdge, dEtaHighEdge, binsPhi, phiLowEdge, phiHighEdge, binsPt, ptLowEdge, ptHighEdge );
-          
-          // add to the correct bin
-          leadingArrays[i]->AddLast( tmpHistTrig );
-          
-        }
-      }
-			
-			initialized = true;
-			return 0;
-		}
-
-		else {
-			__ERR("Unrecognized analysis type")
-			
-			initialized = false;
-			return -1;
-		}
-		
-	}
-	
-	void histograms::Write() {
-		
-		if ( hCentVz )
-			hCentVz->Write();
-		if ( hBinVz )
-			hBinVz->Write();
-		if ( hGRefMult )
-			hGRefMult->Write();
-		if ( hVz )
-			hVz->Write();
-		
-		if ( hLeadJetPt )
-			hLeadJetPt->Write();
-		if ( hLeadEtaPhi )
-			hLeadEtaPhi->Write();
-		if ( hSubJetPt )
-			hSubJetPt->Write();
-		if ( hSubEtaPhi )
-			hSubEtaPhi->Write();
-    
-    if ( hAssocEtaPhi )
-      hAssocEtaPhi->Write();
-    if ( hAssocPt )
-      hAssocPt->Write();
-		
-		if ( hAjHigh )
-			hAjHigh->Write();
-		if ( hAjLow )
-			hAjLow->Write();
-		
-		if ( h3DimCorrLead )
-			h3DimCorrLead->Write();
-		if ( h3DimCorrSub )
-			h3DimCorrSub->Write();
-    
-    for ( int i = 0; i < binsCentrality; ++i ) {
-      if ( leadingArrays )
-        if ( leadingArrays[i] )
-          leadingArrays[i]->Write();
-      if ( subleadingArrays )
-        if ( subleadingArrays[i] )
-          subleadingArrays[i]->Write();
-    }
-	}
-	
-	
-	// --------------------------- Histogram Filling Functions ------------------------------- //
-	bool histograms::CountEvent( int centrality, int vzbin ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsAuAu() ) {
-			hCentVz->Fill( centrality, vzbin );
-			return true;
-		}
-		
-		__ERR("hCentVz not initialized for pp")
-		return false;
-	}
-	
-	bool histograms::CountEvent( int vzbin ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsPP() ) {
-			hBinVz->Fill(  vzbin );
-			return true;
-		}
-		
-		__ERR("hBinVz not initialized for auau")
-		return false;
-	}
-	
-	bool histograms::FillGRefMult( int gRefMult ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsAuAu() ) {
-			hGRefMult->Fill( gRefMult );
-			return true;
-		}
-		
-		__ERR("hGRefMult not initialized for pp")
-		return false;
-	}
-	
-	bool histograms::FillVz( double vz ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		hVz->Fill( vz );
-		return true;
-	}
-	
-	bool histograms::FillAjHigh( double aj ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsDijet() ) {
-			hAjHigh->Fill( aj );
-			return true;
-		}
-		
-		__ERR("hAjHigh not initialized for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillAjLow( double aj ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsDijet() && !IsMix() ) {
-			hAjLow->Fill( aj );
-			return true;
-		}
-		
-		__ERR("hAjLow not initialized for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillJetPt( double pt ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsJet() ) {
-			hLeadJetPt->Fill( pt );
-			return true;
-		}
-		
-		__ERR(" FillJetPt not used for dijet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillJetEtaPhi( double eta, double phi ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsJet() ) {
-			hLeadEtaPhi->Fill( eta, phi );
-			return true;
-		}
-
-		__ERR("FillJetEtaPhi() not used for dijet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillCorrelation( double dEta,  double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
-		
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( dPhi < phiLowEdge )
-			dPhi += 2.0*pi;
-		
-		if ( IsJet() && IsAuAu() ) {
-			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-			return true;
-		}
-    else if ( IsJet() && IsPP() ) {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      return true;
-    }
-
-    
-		__ERR("FillCorrelation() not used for dijet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillLeadJetPt( double pt ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsDijet() ) {
-			hLeadJetPt->Fill( pt );
-			return true;
-		}
-		
-		__ERR("FillLeadJetPt() not used for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillSubJetPt( double pt ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsDijet() ) {
-			hSubJetPt->Fill( pt );
-			return true;
-		}
-		
-		__ERR("FillSubJetPt() not used for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillLeadEtaPhi( double eta, double phi ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( IsDijet() ) {
-			hLeadEtaPhi->Fill( eta, phi );
-			return true;
-		}
-		
-		__ERR("FillLeadJetEtaPhi() not used for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillSubEtaPhi( double eta, double phi ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-    if ( IsDijet() ) {
-			hSubEtaPhi->Fill( eta, phi );
-			return true;
-		}
-		
-		__ERR("FillSubJetEtaPhi() not used for jet-hadron")
-		return false;
-	}
-	
-	bool histograms::FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( dPhi < phiLowEdge )
-			dPhi += 2.0*pi;
-		
-		if ( IsDijet() && IsAuAu() ) {
-			h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-			return true;
-		}
-    else if ( IsDijet() && IsPP() )  {
-      h3DimCorrLead->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) leadingArrays[0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-      return true;
-
-      
-    }
-		
-		__ERR("FillCorrelationLead() not used for jet-hadron")
-		return false;
-
-	}
-	
-	bool histograms::FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin ) {
-		if ( !initialized ) {
-			__ERR("histograms instance not initialized")
-			return false;
-		}
-		
-		if ( dPhi < phiLowEdge )
-			dPhi += 2.0*pi;
-		
-		if ( IsDijet() && IsAuAu() ) {
-			h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[centBin]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-			return true;
-		}
-    else if ( IsDijet() && IsPP() ) {
-      h3DimCorrSub->Fill( dEta, dPhi, assocPt, weight );
-      
-      // now do the bin-divided fill
-      TH3D* tmpHist = (TH3D*) subleadingArrays[0]->At(vzBin);
-      tmpHist->Fill( dEta, dPhi, assocPt, weight );
-      
-      return true;
-    }
-
-    
-		__ERR("FillCorrelationSub() not used for jet-hadron")
-		return false;
-	}
-	
-  bool histograms::FillAssocPt( double pt ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
-    
-    hAssocPt->Fill( pt );
-    return true;
-  }
-  
-  bool histograms::FillAssocEtaPhi( double eta, double phi ) {
-    if ( !initialized ) {
-      __ERR("histograms instance not initialized")
-      return false;
-    }
-    
-    hAssocEtaPhi->Fill( eta, phi );
-    return true;
-  }
-  
-}

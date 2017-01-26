@@ -10,7 +10,7 @@
 #
 #  -----Di_jet selection criteria-----
 #  [3]: whether to require a trigger in your leading jet
-#  [4]: offline trigger energy threshold 
+#  [4]: software trigger E threshold
 #  [5]: subleading jet minimum pt ( for jet hadron, set to zero )
 #  [6]: leading jet minimum pt ( jet min pt for jet-hadron )
 #  [7]: jet pt max ( global maximum, both dijet and jet )
@@ -28,7 +28,7 @@ if ( $1 == '-h') then
 echo 'parameters:'
 echo 'for defaults use "(di)/jet default"'
 echo '1: analysis type [dijet/jet] (default: dijet)'
-echo '2: use tracking efficiency corrections [true/false] (default: true)'
+echo '2: use tracking efficiency corrections [true/false] (default: false)'
 echo '3: require trigger in leading jet [true/false] (default: true)'
 echo '4: require software trigger above this value (default: 6.0)'
 echo '5: subleading jet min pt (default: 10)'
@@ -44,7 +44,7 @@ endif
 set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/auau_correlation'
-set base = /nfs/rhi/STAR/Data/CleanAuAuY7/Clean
+set base = /nfs/rhi/STAR/Data/HaddedAuAu14Mid/AuAu14Pico
 
 if ( $# != "11" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters (-h for help)'
@@ -70,7 +70,7 @@ set binsEta = $10
 set binsPhi = $11
 
 if ( $2 == 'default' ) then
-	set useEfficiency = 'true'
+	set useEfficiency = 'false'
 	set triggerCoincidence = 'true'
   set softTrig = 6.0
 	if ( $analysis == 'dijet' ) then
@@ -79,8 +79,8 @@ if ( $2 == 'default' ) then
 		set jetPtMax = 100.0
 	else if ( $analysis == 'jet' ) then
 		set subLeadPtMin = 0.0
-		set leadPtMin = 20.0
-		set jetPtMax = 100.0
+		set leadPtMin = 15.0
+		set jetPtMax = 20.0
 	endif
 	set jetRadius = 0.4
   set constPtCut = 2.0
@@ -92,16 +92,17 @@ endif
 set outFile = ${analysis}
 set outFile = ${outFile}_trigger_${triggerCoincidence}_softTrig_${softTrig}_eff_${useEfficiency}_lead_${leadPtMin}_sub_${subLeadPtMin}_max_${jetPtMax}_rad_${jetRadius}_hardpt_${constPtCut}_eta_${binsEta}_phi_${binsPhi}
 # Make the directories since they may not exist...
-if ( ! -d out/${analysis}/${outFile} ) then
-mkdir -p out/${analysis}/${outFile}
-mkdir -p out/${analysis}/${outFile}/correlations
-mkdir -p out/${analysis}/${outFile}/tree
-mkdir -p out/${analysis}/${outFile}/mixing
+if ( ! -d out/y14mid/${analysis}/${outFile} ) then
+mkdir -p out/y14mid/${analysis}/${outFile}
+mkdir -p out/y14mid/${analysis}/${outFile}/correlations
+mkdir -p out/y14mid/${analysis}/${outFile}/tree
+mkdir -p out/y14mid/${analysis}/${outFile}/mixing
 endif
 
-if ( ! -d log/auau/${analysis}/${outFile} ) then
-mkdir -p log/auau/${analysis}/${outFile}
+if ( ! -d log/y14mid/${analysis}/${outFile} ) then
+mkdir -p log/y14mid/${analysis}/${outFile}
 endif
+
 
 # Now Submit jobs for each data file
 foreach input ( ${base}* )
@@ -110,7 +111,7 @@ foreach input ( ${base}* )
 set OutBase = `basename $input | sed 's/.root//g'`
 
 # Make the output names and path
-set outLocation = "out/${analysis}/${outFile}/"
+set outLocation = "out/y14mid/${analysis}/${outFile}/"
 set outName = correlations/corr_${OutBase}.root
 set outNameTree = tree/tree_${OutBase}.root
 
@@ -118,14 +119,14 @@ set outNameTree = tree/tree_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/auau/${analysis}/${outFile}/${analysis}_${OutBase}.log
-set ErrFile     = log/auau/${analysis}/${outFile}/${analysis}_${OutBase}.err
+set LogFile     = log/y14mid/${analysis}/${outFile}/${analysis}_${OutBase}.log
+set ErrFile     = log/y14mid/${analysis}/${outFile}/${analysis}_${OutBase}.err
 
 echo "Logging output to " $LogFile
 echo "Logging errors to " $ErrFile
 
 set arg = "$analysis $useEfficiency $triggerCoincidence $softTrig $subLeadPtMin $leadPtMin $jetPtMax $jetRadius $constPtCut $binsEta $binsPhi $outLocation $outName $outNameTree $Files"
 
-qsub -V -q erhiq -l mem=10GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -V -l mem=7GB -o $LogFile -e $ErrFile -N auauCorr -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end

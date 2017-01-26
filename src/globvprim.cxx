@@ -38,7 +38,7 @@ int main() {
   chain = TStarJetPicoUtils::BuildChainFromFileList( "auau_list/grid_AuAuy7HT.list" );
   
   TStarJetPicoReader reader;
-  corrAnalysis::InitReader( reader, chain, "auau", corrAnalysis::triggerAll, corrAnalysis::allEvents );
+  jetHadron::InitReader( reader, chain, "auau", jetHadron::triggerAll, false, jetHadron::allEvents );
   
   TStarJetPicoEventHeader* header;
   

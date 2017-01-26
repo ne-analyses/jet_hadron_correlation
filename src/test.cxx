@@ -1,10 +1,12 @@
-// testing nick's new correlation implementations
+// testing for whatever
 
 #include "corrParameters.hh"
 #include "corrFunctions.hh"
+#include "outputFunctions.hh"
 
 #include <cmath>
 #include <iostream>
+#include <random>
 
 // ROOT
 #include "TH1.h"
@@ -45,11 +47,37 @@
 
 int main() {
   
-  TLorentzVector* a = new TLorentzVector();
-  TVector3* b = new TVector3();
+  TFile in ( "out/added/pythia/pythia.root", "READ" );
   
-  b->SetXYZ(1,2,3);
-  a->SetPtEtaPhiE( 1.0, 1.0, 1.0, 1.0 );
+  TH3D* corrLead = (TH3D*) in.Get("correlationsLead");
+  TH3D* subLead = (TH3D*) in.Get("correlationsSub");
+  TH1D* counts = (TH1D*) in.Get("events");
+  TH1D* ptCount = (TH1D*) in.Get("ptcount");
+  TH1D* ptCountSub = (TH1D*) in.Get("ptcountSub");
+  TH1D* ptCountAll = (TH1D*) in.Get("ptcountAll");
+
+  ptCount->Scale( 1.0 / counts->GetEntries() );
+  ptCountSub->Scale( 1.0 / counts->GetEntries() );
+  ptCountAll->Scale( 1.0 / counts->GetEntries() );
+  
+  std::vector<double> yieldsLead;
+  std::vector<double> yieldsSub;
+  
+  jetHadron::binSelector selector;
+  
+  double area = jetHadron::pi*0.4*0.4 / (4*jetHadron::pi);
+  
+  for ( int i = 0; i < selector.nPtBins; ++i  ) {
+    yieldsLead.push_back( (ptCount->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) )  - area*ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) )/selector.GetPtBinWidth(i)  );
+    yieldsSub.push_back(  ( ptCountSub->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ) - area*ptCountAll->Integral( selector.ptBinLowEdge(i), selector.ptBinHighEdge(i) ))/selector.GetPtBinWidth(i)  );
+  }
+  
+  
+  for ( int i = 0; i < yieldsLead.size(); ++i ) {
+    std::cout<<"bin: "<< i<< std::endl;
+    std::cout<<"lead int: "<< yieldsLead[i]<<std::endl;
+    std::cout<<"sub int: "<< yieldsSub[i]<<std::endl;
+  }
   
 	return 0;
 }

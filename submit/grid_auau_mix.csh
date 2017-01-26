@@ -37,8 +37,8 @@ set eventsPerTrigger = $5
 set logBase = `basename $inputDir`
 
 #made the log directory
-if ( ! -d log/mix/${logBase} ) then
-mkdir -p log/mix/${logBase}
+if ( ! -d log/auau/mix/${logBase} ) then
+mkdir -p log/auau/mix/${logBase}
 endif
 
 if ( $2 == 'default' ) then
@@ -62,8 +62,8 @@ set outName = mixing/mix_${OutBase}.root
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/mix/${logBase}/mix_${OutBase}.log
-set ErrFile     = log/mix/${logBase}/mix_${OutBase}.err
+set LogFile     = log/auau/mix/${logBase}/mix_${OutBase}.log
+set ErrFile     = log/auau/mix/${logBase}/mix_${OutBase}.err
 
 # get relative tree location
 set treeFile = `basename $input`
@@ -74,6 +74,6 @@ echo "Logging errors to " $ErrFile
 
 set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTrigger $mixEvents"
 
-qsub -V -q erhiq -l mem=4GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -q erhiq -V -l mem=10GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end

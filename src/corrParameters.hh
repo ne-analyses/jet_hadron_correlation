@@ -11,7 +11,7 @@
 #define __ERR(message) {std::cerr << "[" << __FILE__ << "::" << __func__ << "()] -- ERR: " << message << std::endl;}
 #define __OUT(message) {std::cout << "[" << __FILE__ << "::" << __func__ << "()] -- OUT: " << message << std::endl;}
 
-namespace corrAnalysis {
+namespace jetHadron {
 	
 	// Math
 	// ----------------------------
@@ -56,7 +56,7 @@ namespace corrAnalysis {
 	// Trying to make everything machine independent
 	// Define a path to bad tower list
 	const std::string y7AuAuTowerList = "src/y7_AuAu_HT_hot_list.txt";
-  const std::string y6PPTowerList = "src/Combined_y7_PP_Nick.txt";
+  const std::string y6PPTowerList = "src/y6_pp_HT_hot_list.txt";
 	
 	// If that doesnt work, here are machine dependent paths
 	// bad tower list location on RHIC121
@@ -79,6 +79,11 @@ namespace corrAnalysis {
 	const double 	dVz = vzRange/binsVz;			// each bin has a range of dVz
 	const double 	vzLowEdge = -vzRange/2.0;	// lower edge for accepted Vz range
 	const double 	vzHighEdge = vzRange/2.0;	// upper edge for accepted Vz range
+  
+  // Aj binning
+  const int     binsAj = 20;              // number of bins correlations are split into in Aj
+  const double  ajLowEdge = 0.0;          // Aj range is [0,1]
+  const double  ajHighEdge = 1.0;         // Aj range is [0,1]
 	
 	// Centrality binning
 	const int 		binsCentrality = 9;				// using the 9 centrality bins definition
@@ -90,17 +95,17 @@ namespace corrAnalysis {
 	const int 		y7RefMultCent[9] = { 10, 21, 39, 69, 114, 178, 269, 399, 485 };
 	
 	// Pt binning
-	const int 	 	binsPt = 120;							// number of pt bins
+	const int 	 	binsPt = 48;							// number of pt bins
 	const double 	ptLowEdge = 0.0;					// lower edge for accepted pt range
-	const double 	ptHighEdge = 30.0;				// upper edge for accepted pt range
+	const double 	ptHighEdge = 12.0;				// upper edge for accepted pt range
 	
 	// Phi binning ( full 2*pi coverage, from -pi/4 to 7*pi/4 )
-	const int 	 	binsPhi = 25;							// number of phi bins
+	const int 	 	binsPhiDefault = 24;			// number of phi bins
 	const double 	phiLowEdge = -pi/2.0;			// lower edge for accepted phi range
 	const double 	phiHighEdge = 3.0*pi/2.0;	// upper edge for accepted phi range
 	
 	// Eta binning
-	const int		 binsEta = 25;							// number of eta bins
+	const int		 binsEtaDefault = 24;				// number of eta bins
 	const double etaLowEdge = -1;						// lower edge for accepted eta range
 	const double etaHighEdge = 1;						// upper edge for accepted phi range
 	const double dEtaLowEdge = 2*etaLowEdge;		// lower edge for accepted dEta range

@@ -37,21 +37,16 @@ set eventsPerTrigger = $5
 set logBase = `basename $inputDir`
 
 #made the log directory
-if ( ! -d log/mix/y14/${logBase} ) then
-mkdir -p log/mix/y14/${logBase}
+if ( ! -d log/mix/${logBase} ) then
+mkdir -p log/mix/${logBase}
 endif
-
 
 if ( $2 == 'default' ) then
-set mixEvents = 'auau_list/grid_AuAuy14MBHigh.list'
-set dataType = 'MB'
-set nEvents = '-1'
-set eventsPerTrigger = '100'
-endif
 
-# make the new output location
-if ( ! -d ${inputDir}/mixing_y14 ) then
-mkdir -p ${inputDir}/mixing_y14
+set mixEvents = 'auau_list/grid_AuAu14MidMix.list'
+set dataType = 'HT'
+set nEvents = '-1'
+set eventsPerTrigger = '2000'
 endif
 
 # Now Submit jobs for each data file
@@ -61,14 +56,14 @@ foreach input ( ${base}*.root )
 set OutBase = `basename $input | sed 's/.root//g'`
 
 # Make the output names and path
-set outName = mixing_y14/mixY14_${OutBase}.root
+set outName = mixing/mix_${OutBase}.root
 
 # Input files
 set Files = ${input}
 
 # Logfiles. Thanks cshell for this "elegant" syntax to split err and out
-set LogFile     = log/mix/y14/${logBase}/mix_${OutBase}.log
-set ErrFile     = log/mix/y14/${logBase}/mix_${OutBase}.err
+set LogFile     = log/mix/${logBase}/mix_${OutBase}.log
+set ErrFile     = log/mix/${logBase}/mix_${OutBase}.err
 
 # get relative tree location
 set treeFile = `basename $input`
@@ -79,6 +74,6 @@ echo "Logging errors to " $ErrFile
 
 set arg = "$inputDir $relativeTreeFile $outName $dataType $nEvents $eventsPerTrigger $mixEvents"
 
-qsub -V -q erhiq -l mem=3GB -o $LogFile -e $ErrFile -N auauMixY14 -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
+qsub -V -l mem=6GB -o $LogFile -e $ErrFile -N auauMix -- ${ExecPath}/submit/qwrap.sh ${ExecPath} $execute $arg
 
 end

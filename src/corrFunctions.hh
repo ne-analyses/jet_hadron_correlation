@@ -62,11 +62,13 @@
 #include "TStarJetPicoTriggerInfo.h"
 #include "TStarJetPicoUtils.h"
 
+#include "ktTrackEff.hh"
+
 #ifndef CORRFUNCTIONS_HH
 #define CORRFUNCTIONS_HH
 
 
-namespace corrAnalysis {
+namespace jetHadron {
   
   // Declare ahead of time
   // For correlation functions
@@ -108,7 +110,13 @@ namespace corrAnalysis {
   int GetVzBin( double Vz );
   
   // Converts TStarJetPicoVectors into PseudoJets
-  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true );
+  void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true, double towerScale = 1.0 );
+  // applies an effective 90% relative efficiency compared to auau
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, int64_t seed, bool ClearVector = true, double towerScale = 1.0 );
+  
+  // Used in pp to convert either all embedding tracks or
+  // only hard embedding tracks ( > 2.0 GeV )
+  void ConvertTStarJetVectorPPEmbedded( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool allTracks = false, double towerScale = 1.0 );
   
   // Finds the triggers and saves them, if requireTrigger == True
   void GetTriggers( bool requireTrigger, TClonesArray* triggerObjs, std::vector<fastjet::PseudoJet> & triggers );
@@ -131,7 +139,7 @@ namespace corrAnalysis {
   // Initializes the TStarJetPicoReader, so we dont have
   // To have all that code hanging around in the analysis
   // Collision Type is 'AuAu' or 'pp'
-  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, int nEvents );
+  void InitReader( TStarJetPicoReader & reader, TChain* chain, std::string collisionType, std::string triggerString, double softwareTrigger, int nEvents );
   
   // Use this to decide if there are 2 dijets for dijet analysis in the proper pt ranges
   // Or for jet analysis if there is a single jet
@@ -159,10 +167,10 @@ namespace corrAnalysis {
   bool useTrack( fastjet::PseudoJet& assocTrack, double efficiency );
   
   // Correlate Leading
-  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency );
+  bool correlateLeading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& leadJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj );
   
   // Correlate Subleading
-  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency );
+  bool correlateSubleading( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& subJet, fastjet::PseudoJet& assocTrack, double efficiency, double aj );
   
   // Correlate for jet-hadron
   bool correlateTrigger( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& triggerJet, fastjet::PseudoJet& assocTrack, double efficiency );
@@ -195,7 +203,7 @@ namespace corrAnalysis {
   // --------------------------
   
   // Pulls analysis variables from the directory name
-  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, bool& useEff, bool& reqTrigger );
+  int GetVarsFromString( std::string& analysisType, std::string analysisString, double& leadPt, double& subPt, double& maxPt, double& jetRadius, double& hardPt, bool& useEff, bool& reqTrigger, unsigned& binsEta, unsigned& binsPhi );
   
   // Used to decide what max pt can be for a jet in
   // HT events to still be used in mixing
@@ -206,114 +214,6 @@ namespace corrAnalysis {
   // In mixing or not - logic depends on analysis type
   bool UseEventInMixing( std::string analysisType, bool isMB, std::vector<fastjet::PseudoJet>& highPtConsJets, int refMult, int vzBin );
   
-	// Histogram holder
-	// ----------------
-  class histograms {
-		
-	private:
-
-		std::string analysisType;			// Used by Init() to create proper histograms
-		bool initialized;							// Used for control flow - must be true before filling
-		
-		// Event statistics
-		TH2D* hCentVz;
-		TH1D* hBinVz;
-		TH1D* hGRefMult;
-		TH1D* hVz;
-		
-		// Jet kinematics
-		TH1D* hLeadJetPt;
-		TH2D* hLeadEtaPhi;
-		TH1D* hSubJetPt;
-		TH2D* hSubEtaPhi;
-    
-    // Associated kinematics
-    TH1D* hAssocPt;
-    TH2D* hAssocEtaPhi;
-		
-		// A_j if doing dijets
-		TH1D* hAjHigh;
-		TH1D* hAjLow;
-		
-		// Correlations that are not differentiated by Vz and Centrality
-		TH3D* h3DimCorrLead;
-		TH3D* h3DimCorrSub;
-    
-    // Holders for the vz/cent binned histograms
-    TObjArray** leadingArrays;
-    TObjArray** subleadingArrays;
-    
-    // Used internally when filling histograms
-    bool IsPP();
-    bool IsAuAu();
-    bool IsDijet();
-    bool IsJet();
-    bool IsMix();
-		
-	public:
-		histograms( );
-		histograms( std::string type ); // In general, this should be used, passing "dijet" or "jet"
-		~histograms();
-		
-		// Deletes all histograms
-		void Clear();
-		
-		// Can set analysisType - careful, if it changes after Init() is called
-		// Reinitialization will be needed
-		bool SetAnalysisType( std::string type );
-		
-		// Must be called before filling
-		// Checks analysisType and creates histograms
-		int	Init();
-		
-		// Writes histograms to current root directory
-		void Write();
-		
-		// Get Histograms
-		TH2D* GetCentVz()				{ return hCentVz; }
-		TH1D* GetBinVz()				{ return hBinVz; }
-		TH1D*	GetGRefMult()			{ return hGRefMult; }
-		TH1D* GetVz()						{ return hVz; }
-		TH1D* GetLeadPt()				{ return hLeadJetPt; }
-		TH2D* GetLeadEtaPhi() 	{ return hLeadEtaPhi; }
-		TH1D* GetSubPt() 				{ return hSubJetPt; }
-		TH2D* GetSubEtaPhi()		{ return hSubEtaPhi; }
-		TH1D* GetAjHigh()				{ return hAjHigh; }
-		TH1D* GetAjLow()				{ return hAjLow; }
-		TH3D* Get3DLeadCorr()		{ return h3DimCorrLead; }
-		TH3D* Get3DSubCorr()		{ return h3DimCorrSub; }
-		
-		
-		// Fill histogram functions
-		bool CountEvent( int centrality, int vzbin ); 	// Used to count AuAu events
-		bool CountEvent( int vzbin );										// Used to count PP events
-		
-		bool FillGRefMult( int gRefMult );							// For AuAu events, records gRefMult
-		bool FillVz( double vz );												// Records Vz distribution
-		
-		bool FillAjHigh( double aj );										// Records Aj for initial hard jets
-		bool FillAjLow( double aj );										// Records Aj for jets with soft constituents
-		
-    // For jet-hadron
-		bool FillJetPt( double pt );										// For Jet-hadron: records accepted trigger jet pt
-		bool FillJetEtaPhi( double eta, double phi );		// Records accepted trigger jet eta-phi
-		// records trigger-associated correlations
-		bool FillCorrelation( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
-		
-    // For dijet-hadron
-		bool FillLeadJetPt( double pt );								// For dijet-hadron: records lead jet pt
-		bool FillSubJetPt( double pt );									// Records sub jet pt
-		bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
-		bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
-		// Records trigger-associated correlations with trigger = leading/subleading
-		bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
-    bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = -1 );
-    
-    // Associated track info
-    bool FillAssocPt( double pt );
-    bool FillAssocEtaPhi( double eta, double phi );
-    
-	};
 }
 
 #endif
