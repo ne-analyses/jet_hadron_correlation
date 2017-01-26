@@ -395,6 +395,8 @@ namespace jetHadron {
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::vector<TGraphErrors*> sys3, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
   
+  void PrintPPHardOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2,  std::string outputDir, binSelector selector  );
+  
 } // end namespace
 
 #endif

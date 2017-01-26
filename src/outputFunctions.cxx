@@ -3149,6 +3149,34 @@ namespace jetHadron {
     c1.SaveAs( tmp.c_str() );
   }
 
-  
+  void PrintPPHardOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2,  std::string outputDir, binSelector selector  ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < hist1.size(); ++i ) {
+      
+      std::string tmp = outputDir + "/" + "overlaid_pt_" + patch::to_string(i) + ".pdf";
+      hist1[i]->SetLineColor( kBlack );
+      hist1[i]->SetMarkerSize( 2 );
+      hist1[i]->SetMarkerColor( kBlack );
+      hist1[i]->SetMarkerStyle( 21 );
+      hist1[i]->GetXaxis()->SetRangeUser( -1, 1 );
+      
+      hist2[i]->SetMarkerColor( kRed );
+      hist2[i]->SetMarkerSize( 2 ) ;
+      hist2[i]->SetLineColor( kBlack );
+      hist2[i]->SetMarkerStyle( 22 );
+      
+      TCanvas c1;
+      hist1[i]->Draw();
+      hist2[i]->Draw("SAME");
+      c1.SaveAs( tmp.c_str() );
+      
+      
+    }
+    
+  }
   
 } // end namespace

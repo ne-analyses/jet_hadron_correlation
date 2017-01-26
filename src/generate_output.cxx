@@ -553,6 +553,11 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( corrected_deta_lead_hard, deta_lead_bin_int_hard, deta_lead_bin_int_hard_err, selector );
   jetHadron::ExtractIntegraldEta( corrected_deta_sub_hard, deta_sub_bin_int_hard, deta_sub_bin_int_hard_err, selector );
   
+  // print for my sanity, the histograms overlayed
+  jetHadron::PrintPPHardOverlay( corrected_deta_lead_hard[0], corrected_deta_lead[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA", selector );
+  jetHadron::PrintPPHardOverlay( corrected_deta_sub_hard[0], corrected_deta_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA_SUB", selector );
+  jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_hard[0], corrected_dphi_subtracted[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI", selector );
+  jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_sub_hard[0], corrected_dphi_subtracted_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI_SUB", selector );
   
   // *******************************
   // get 1D projections for Aj split
