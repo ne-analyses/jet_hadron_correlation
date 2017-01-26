@@ -752,10 +752,10 @@ int main( int argc, const char** argv) {
     
     std::string outNameSub;
      outNameSub = "auau_yield_sub_file_" + patch::to_string(i) + ".pdf";
-    dphi_sub_yield_graph[i]->SetLineColor( kBlack );
-    dphi_sub_yield_graph[i]->SetMarkerColor( kBlack );
+    dphi_sub_yield_graph[i]->SetLineColor( kRed );
+    dphi_sub_yield_graph[i]->SetMarkerColor( kRed );
     dphi_sub_yield_graph[i]->SetMarkerSize( 2 );
-    dphi_sub_yield_graph[i]->SetMarkerStyle( 22 );
+    dphi_sub_yield_graph[i]->SetMarkerStyle( 21 );
     before_sub_dphi_sub[i]->SetLineColor( kBlack );
     before_sub_dphi_sub[i]->SetMarkerColor( kBlack );
     before_sub_dphi_sub[i]->SetMarkerSize( 2 );
