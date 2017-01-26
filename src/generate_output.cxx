@@ -763,7 +763,7 @@ int main( int argc, const char** argv) {
    
     TCanvas c2;
     dphi_sub_yield_graph[i]->Draw();
-    before_sub_dphi_sub[i]->Draw("3");
+    before_sub_dphi_sub[i]->Draw("P");
     c2.SaveAs( outNameSub.c_str() );
 
   }
