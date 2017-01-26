@@ -730,19 +730,19 @@ int main( int argc, const char** argv) {
     std::cout<<"pt bin: "<<i<<std::endl;
     std::cout<<"subleading dphi"<<std::endl;
     std::cout<<"hard bin content: "<< dphi_sub_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< dphi_sub_bin_int[1][i];
+    std::cout<<"reg bin content: "<< dphi_sub_bin_int[1][i]<<std::endl;
     
     std::cout<<"subleading deta"<<std::endl;
     std::cout<<"hard bin content: "<< deta_sub_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< deta_sub_bin_int[1][i];
+    std::cout<<"reg bin content: "<< deta_sub_bin_int[1][i]<<std::endl;
     
     std::cout<<"dphi"<<std::endl;
     std::cout<<"hard bin content: "<< dphi_lead_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< dphi_lead_bin_int[1][i];
+    std::cout<<"reg bin content: "<< dphi_lead_bin_int[1][i]<<std::endl;
     
     std::cout<<"deta"<<std::endl;
     std::cout<<"hard bin content: "<< deta_lead_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< deta_lead_bin_int[1][i];
+    std::cout<<"reg bin content: "<< deta_lead_bin_int[1][i]<<std::endl;
   }
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
