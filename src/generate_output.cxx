@@ -735,7 +735,7 @@ int main( int argc, const char** argv) {
   // TESTING: tmp for testing subtraction
   for ( int i = 0; i < before_sub_dphi.size(); ++i ) {
     std::string outName;
-    if ( i == 0 ) outName = "auau_yield_file_" + patch::to_string(i) + ".pdf";
+    outName = "auau_yield_file_" + patch::to_string(i) + ".pdf";
     dphi_yield_graph[i]->SetLineColor( kRed );
     dphi_yield_graph[i]->SetMarkerColor( kRed );
     dphi_yield_graph[i]->SetMarkerSize( 2 );
@@ -751,7 +751,7 @@ int main( int argc, const char** argv) {
     c1.SaveAs( outName.c_str() );
     
     std::string outNameSub;
-    if ( i == 0 ) outName = "auau_yield_sub_file_" + patch::to_string(i) + ".pdf";
+     outNameSub = "auau_yield_sub_file_" + patch::to_string(i) + ".pdf";
     dphi_sub_yield_graph[i]->SetLineColor( kBlack );
     dphi_sub_yield_graph[i]->SetMarkerColor( kBlack );
     dphi_sub_yield_graph[i]->SetMarkerSize( 2 );
