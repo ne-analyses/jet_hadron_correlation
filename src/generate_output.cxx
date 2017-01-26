@@ -711,13 +711,6 @@ int main( int argc, const char** argv) {
     }
   }
   
-  // TESTING: tmp for testing subtraction
-  std::vector<TGraphErrors*> before_sub_dphi = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
-  std::vector<TGraphErrors*> before_sub_dphi_sub = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
-  std::vector<TGraphErrors*> before_sub_deta = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
-  std::vector<TGraphErrors*> before_sub_deta_sub = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
-  
-  
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
     dphi_lead_bin_int[0][i] -= fabs( dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] );
@@ -726,67 +719,10 @@ int main( int argc, const char** argv) {
     deta_sub_bin_int[0][i] -= fabs( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] );
   }
   
-  for ( int i = 1; i < dphi_sub_bin_int[1].size(); ++i ) {
-    std::cout<<"pt bin: "<<i<<std::endl;
-    std::cout<<"subleading dphi"<<std::endl;
-    std::cout<<"hard bin content: "<< dphi_sub_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< dphi_sub_bin_int[1][i]<<std::endl;
-    
-    std::cout<<"subleading deta"<<std::endl;
-    std::cout<<"hard bin content: "<< deta_sub_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< deta_sub_bin_int[1][i]<<std::endl;
-    
-    std::cout<<"dphi"<<std::endl;
-    std::cout<<"hard bin content: "<< dphi_lead_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< dphi_lead_bin_int[1][i]<<std::endl;
-    
-    std::cout<<"deta"<<std::endl;
-    std::cout<<"hard bin content: "<< deta_lead_bin_int_hard[0][i]<<std::endl;
-    std::cout<<"reg bin content: "<< deta_lead_bin_int[1][i]<<std::endl;
-  }
-  
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
-  
-  // TESTING: tmp for testing subtraction
-  for ( int i = 0; i < before_sub_dphi.size(); ++i ) {
-    std::string outName;
-    outName = "auau_yield_file_" + patch::to_string(i) + ".pdf";
-    dphi_yield_graph[i]->SetLineColor( kRed );
-    dphi_yield_graph[i]->SetMarkerColor( kRed );
-    dphi_yield_graph[i]->SetMarkerSize( 2 );
-    dphi_yield_graph[i]->SetMarkerStyle( 21 );
-    before_sub_dphi[i]->SetLineColor( kBlack );
-    before_sub_dphi[i]->SetMarkerColor( kBlack );
-    before_sub_dphi[i]->SetMarkerSize( 2 );
-    before_sub_dphi[i]->SetMarkerStyle( 22 );
-    
-    TCanvas c1;
-    dphi_yield_graph[i]->Draw();
-    before_sub_dphi[i]->Draw("P");
-    c1.SaveAs( outName.c_str() );
-    
-    std::string outNameSub;
-     outNameSub = "auau_yield_sub_file_" + patch::to_string(i) + ".pdf";
-    dphi_sub_yield_graph[i]->SetLineColor( kRed );
-    dphi_sub_yield_graph[i]->SetMarkerColor( kRed );
-    dphi_sub_yield_graph[i]->SetMarkerSize( 2 );
-    dphi_sub_yield_graph[i]->SetMarkerStyle( 21 );
-    before_sub_dphi_sub[i]->SetLineColor( kBlack );
-    before_sub_dphi_sub[i]->SetMarkerColor( kBlack );
-    before_sub_dphi_sub[i]->SetMarkerSize( 2 );
-    before_sub_dphi_sub[i]->SetMarkerStyle( 22 );
-   
-    TCanvas c2;
-    dphi_sub_yield_graph[i]->Draw();
-    before_sub_dphi_sub[i]->Draw("P");
-    c2.SaveAs( outNameSub.c_str() );
-
-  }
-  
-  return 0;
   
   
   //// annddddddd make some systematic error graphs from the differences
