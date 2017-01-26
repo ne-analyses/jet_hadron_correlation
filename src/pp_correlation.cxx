@@ -458,10 +458,10 @@ int main ( int argc, const char** argv) {
       auto end = std::chrono::high_resolution_clock::now();
       int64_t seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
       // Convert TStarJetVector to PseudoJet
-      jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
+      jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
       jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, seed, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
-      jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
+      jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
