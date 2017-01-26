@@ -723,10 +723,10 @@ int main( int argc, const char** argv) {
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
-    dphi_lead_bin_int[0][i] -= fabs(dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] ) ;
-    dphi_sub_bin_int[0][i] -=  fabs(dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] ) ;
-    deta_lead_bin_int[0][i] -= fabs(deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] ) ;
-    deta_sub_bin_int[0][i] -=  fabs(deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] ) ;
+    dphi_lead_bin_int[0][i] -= dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i]  ;
+    dphi_sub_bin_int[0][i] -=  dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] ;
+    deta_lead_bin_int[0][i] -= deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] ;
+    deta_sub_bin_int[0][i] -=  deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] ;
   }
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
