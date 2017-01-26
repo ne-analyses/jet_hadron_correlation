@@ -711,6 +711,12 @@ int main( int argc, const char** argv) {
     }
   }
   
+  // TESTING: tmp for testing subtraction
+  std::vector<TGraphErrors*> before_sub_dphi = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
+  std::vector<TGraphErrors*> before_sub_dphi_sub = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
+  std::vector<TGraphErrors*> before_sub_deta = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
+  std::vector<TGraphErrors*> before_sub_deta_sub = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
+  
   
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
@@ -725,6 +731,44 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
+  
+  // TESTING: tmp for testing subtraction
+  for ( int i = 0; i < before_sub_dphi.size(); ++i ) {
+    std::string outName;
+    if ( i == 0 ) outName = "auau_yield_file_" + patch::to_string(i) + ".pdf";
+    dphi_yield_graph[i]->SetLineColor( kRed );
+    dphi_yield_graph[i]->SetMarkerColor( kRed );
+    dphi_yield_graph[i]->SetMarkerSize( 2 );
+    dphi_yield_graph[i]->SetMarkerStyle( 21 );
+    before_sub_dphi[i]->SetLineColor( kBlack );
+    before_sub_dphi[i]->SetMarkerColor( kBlack );
+    before_sub_dphi[i]->SetMarkerSize( 2 );
+    before_sub_dphi[i]->SetMarkerStyle( 22 );
+    
+    TCanvas c1;
+    dphi_yield_graph[i]->Draw("9e2");
+    before_sub_dphi[i]->Draw("9e2SAME");
+    c1.SaveAs( outName.c_str() );
+    
+    std::string outNameSub;
+    if ( i == 0 ) outName = "auau_yield_sub_file_" + patch::to_string(i) + ".pdf";
+    dphi_sub_yield_graph[i]->SetLineColor( kBlack );
+    dphi_sub_yield_graph[i]->SetMarkerColor( kBlack );
+    dphi_sub_yield_graph[i]->SetMarkerSize( 2 );
+    dphi_sub_yield_graph[i]->SetMarkerStyle( 22 );
+    before_sub_dphi_sub[i]->SetLineColor( kBlack );
+    before_sub_dphi_sub[i]->SetMarkerColor( kBlack );
+    before_sub_dphi_sub[i]->SetMarkerSize( 2 );
+    before_sub_dphi_sub[i]->SetMarkerStyle( 22 );
+   
+    dphi_sub_yield_graph[i]->Draw("9e2");
+    before_sub_dphi_sub[i]->Draw("9e2SAME");
+    c1.SaveAs( outNameSub.c_str() );
+
+  }
+  
+  return 0;
+  
   
   //// annddddddd make some systematic error graphs from the differences
   std::vector<TGraphErrors*> dphi_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_subtracted_yield_dif, 1, 5, selector, analysisNames, "dphi_proj_sys" );
