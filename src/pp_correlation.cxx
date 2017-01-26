@@ -453,14 +453,12 @@ int main ( int argc, const char** argv) {
 
       // Check to see if Vz is in the accepted range; if not, discard
       if ( VzBin == -1 )																				{ continue; }
-
-      // Convert TStarJetVector to PseudoJet
-      jetHadron::ConvertTStarJetVector( container, particles, true, fTowerScale );
       
       // now for pp - we also need a seed so we use high resolution timing
       auto end = std::chrono::high_resolution_clock::now();
       int64_t seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
-      
+      // Convert TStarJetVector to PseudoJet
+      jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
       jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, seed, true, fTowerScale );
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, fTowerScale );
