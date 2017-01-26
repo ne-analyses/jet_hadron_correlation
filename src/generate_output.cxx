@@ -759,6 +759,7 @@ int main( int argc, const char** argv) {
   leg->Draw();
   c1.SaveAs( "dphi_lead.pdf" );
   
+  TCanvas c2;
   dphi_sub_yield_graph[0]->SetLineColor(1);
   dphi_sub_yield_graph[0]->SetMarkerSize(2);
   dphi_sub_yield_graph[0]->SetMarkerColor(1);
@@ -774,9 +775,9 @@ int main( int argc, const char** argv) {
   leg->AddEntry( dphi_sub_yield_graph[0], "recoil dphi after subtraction", "lep");
   leg->AddEntry( before_dphi_sub_yield_graph[0], "recoil dphi before subtraction", "lep");
   leg->Draw();
-  c1.SaveAs( "dphi_sub.pdf" );
+  c2.SaveAs( "dphi_sub.pdf" );
 
-  
+  TCanvas c3;
   deta_yield_graph[0]->SetLineColor(1);
   deta_yield_graph[0]->SetMarkerSize(2);
   deta_yield_graph[0]->SetMarkerColor(1);
@@ -792,8 +793,9 @@ int main( int argc, const char** argv) {
   leg->AddEntry( deta_yield_graph[0], "dEta after subtraction", "lep");
   leg->AddEntry( before_deta_yield_graph[0], "dEta before subtraction", "lep");
   leg->Draw();
-  c1.SaveAs( "dphi_lead.pdf" );
+  c3.SaveAs( "deta_lead.pdf" );
 
+  TCanvas c4;
   deta_sub_yield_graph[0]->SetLineColor(1);
   deta_sub_yield_graph[0]->SetMarkerSize(2);
   deta_sub_yield_graph[0]->SetMarkerColor(1);
@@ -809,7 +811,7 @@ int main( int argc, const char** argv) {
   leg->AddEntry( deta_sub_yield_graph[0], "recoil deta after subtraction", "lep");
   leg->AddEntry( before_deta_sub_yield_graph[0], "recoil deta before subtraction", "lep");
   leg->Draw();
-  c1.SaveAs( "dphi_sub.pdf" );
+  c4.SaveAs( "deta_sub.pdf" );
   
   
   // DONE WITH DIAGNOSTIC
