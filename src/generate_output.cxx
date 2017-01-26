@@ -824,7 +824,7 @@ int main( int argc, const char** argv) {
   for ( int i = 0; i < corrected_dphi_subtracted[1].size(); ++i ) {
     
     corrected_dphi_subtracted[1][i]->Write();
-    corrected_dphi_subtracted_sub[i]->Write();
+    corrected_dphi_subtracted_sub[1][i]->Write();
     corrected_deta_lead[1][i]->Write();
     corrected_deta_sub[1][i]->Write();
     
