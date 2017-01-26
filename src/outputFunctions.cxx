@@ -2858,7 +2858,7 @@ namespace jetHadron {
       
       leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
-      leg->AddEntry( errors[0][i], "tracking unc.y Au+Au", "f" );
+      leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
       leg->AddEntry( errors2[i], "JES unc.", "f");
       leg->Draw();
