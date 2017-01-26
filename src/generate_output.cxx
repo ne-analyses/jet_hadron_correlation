@@ -775,7 +775,7 @@ int main( int argc, const char** argv) {
   before_dphi_sub_yield_graph[0]->SetMarkerSize(2);
   before_dphi_sub_yield_graph[0]->SetMarkerColor(2);
   dphi_sub_yield_graph[0]->Draw();
-  before_dphi_yield_graph[0]->Draw("P");
+  before_dphi_sub_yield_graph[0]->Draw("P");
   leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
   leg->AddEntry( dphi_sub_yield_graph[0], "recoil dphi after subtraction", "lep");
   leg->AddEntry( before_dphi_sub_yield_graph[0], "recoil dphi before subtraction", "lep");
@@ -811,7 +811,7 @@ int main( int argc, const char** argv) {
   before_deta_sub_yield_graph[0]->SetMarkerSize(2);
   before_deta_sub_yield_graph[0]->SetMarkerColor(2);
   deta_sub_yield_graph[0]->Draw();
-  before_deta_yield_graph[0]->Draw("P");
+  before_deta_sub_yield_graph[0]->Draw("P");
   leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
   leg->AddEntry( deta_sub_yield_graph[0], "recoil deta after subtraction", "lep");
   leg->AddEntry( before_deta_sub_yield_graph[0], "recoil deta before subtraction", "lep");
