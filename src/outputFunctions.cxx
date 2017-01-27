@@ -2776,7 +2776,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.1, 0.6, 0.47, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.13, 0.62, 0.48, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
@@ -2792,7 +2792,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -2891,7 +2891,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.13, 0.6, 0.5, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.13, 0.62, 0.48, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
@@ -2969,7 +2969,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.13, 0.6, 0.5, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.13, 0.62, 0.48, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       
