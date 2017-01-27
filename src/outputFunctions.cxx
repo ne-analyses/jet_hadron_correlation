@@ -2783,7 +2783,7 @@ namespace jetHadron {
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
-      t->AddText("p+p corrected to Au+Au 0-20%" );
+      t->AddText("p+p eff. corrected to Au+Au 0-20%" );
       for ( int k = 0; k < text.size(); ++k ) {
         t->AddText( text[k].c_str() );
       }
@@ -2899,7 +2899,7 @@ namespace jetHadron {
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
-      t->AddText("p+p corrected to Au+Au 0-20%" );
+      t->AddText("p+p eff. corrected to Au+Au 0-20%" );
       for ( int k = 0; k < text.size(); ++k ) {
         t->AddText( text[k].c_str() );
       }
