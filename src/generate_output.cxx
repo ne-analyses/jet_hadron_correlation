@@ -918,33 +918,3 @@ int main( int argc, const char** argv) {
   
   return 0;
 }
-
-
-
-// code for saving histograms to file for my homework assignement
-
-//// save to an output file
-//TFile outFile( "tmp/histograms.root", "RECREATE" );
-//for ( int i = 0; i < leadingMix[0].size(); ++i ) {
-//  leadingMix[0][i]->Write();
-//  subleadingMix[0][i]->Write();
-//  leadingMix[1][i]->Write();
-//  subleadingMix[1][i]->Write();
-//}
-//for ( int i = 0; i < averagedSignal[0].size(); ++i ) {
-//  averagedSignal[0][i]->Write();
-//  averagedSignalSub[0][i]->Write();
-//  averagedSignal[1][i]->Write();
-//  averagedSignalSub[1][i]->Write();
-//}
-//nEvents[0]->Write();
-//nEvents[1]->Write();
-//
-//outFile.Close();
-//return 0;
-
-
-
-
-
-

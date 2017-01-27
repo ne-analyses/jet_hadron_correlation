@@ -2745,7 +2745,7 @@ namespace jetHadron {
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
-      leg->AddEntry( errors2[i], "JES unc.", "f");
+      leg->AddEntry( errors2[i], "relative JES unc.", "f");
       leg->Draw();
       
       // and draw some titles and such
@@ -2860,7 +2860,7 @@ namespace jetHadron {
       leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
-      leg->AddEntry( errors2[i], "JES unc.", "f");
+      leg->AddEntry( errors2[i], "relative JES unc.", "f");
       leg->Draw();
       
       // and draw some titles and such
@@ -2937,16 +2937,17 @@ namespace jetHadron {
       TLegend* leg = new TLegend( 0.6, 0.7, 0.88, 0.88 );
       leg->SetTextSize(0.045);
       
-      leg->AddEntry( hist1[i], "|#Delta#eta|<0.71", "lep" );
-      leg->AddEntry( hist2[i], "0.71<|#Delta#eta|<1.0", "lep" );
+      leg->AddEntry( hist1[i], "|#Delta#eta|<0.45", "lep" );
+      leg->AddEntry( hist2[i], "0.45<|#Delta#eta|<1.0", "lep" );
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.12, 0.7, 0.48, 0.88, "NB NDC");
+      TPaveText *t = new TPaveText(0.1, 0.6, 0.48, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       
       t->AddText( selector.ptBinString[i].c_str() );
+      t->AddText( "stat. err. only");
       
       for ( int j = 0; j < text.size(); ++j ) {
         t->AddText( text[j].c_str() );
@@ -2960,7 +2961,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      //latex.DrawLatex( 0.15, 0.64, "STAR Preliminary");
+      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
       
       
       c1.SaveAs( tmp.c_str() );
@@ -3042,7 +3043,7 @@ namespace jetHadron {
     leg->AddEntry( graphs[1], "p+p HT", "lep" );
     leg->AddEntry( sys1[0], "tracking unc. Au+Au", "f" );
     leg->AddEntry( sys1[1], "tracking unc. p+p", "f" );
-    leg->AddEntry( sys2[0], "JES unc.", "f");
+    leg->AddEntry( sys2[0], "relative JES unc.", "f");
     leg->Draw();
     
     // and draw some titles and such
