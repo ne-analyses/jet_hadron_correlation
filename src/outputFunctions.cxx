@@ -2891,7 +2891,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.1, 0.6, 0.47, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.15, 0.6, 0.53, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
@@ -2969,7 +2969,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.1, 0.6, 0.48, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.15, 0.6, 0.53, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       
