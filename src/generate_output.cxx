@@ -129,18 +129,18 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/added/auau/trg6/hardcorr.root", "READ" );
+      TFile* tmp = new TFile( "out/added/auau/trg6/corr.root", "READ" );
       TFile* tmpMix = new TFile( "out/added/auau/trg6/mix.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6/hardcorr.root", "READ" );
+      tmp = new TFile( "out/added/pp/trg6/corr.root", "READ" );
       tmpMix = new TFile( "out/added/pp/trg6/mix.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/hardcorr.root");
+      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root");
       tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
       
       corrFilesHard.push_back( tmp );
@@ -149,7 +149,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/results/jet_20_10_trig_6_hard";
+      outputDirBase = "/results/jet_20_10_trig_6";
       
       break;
     }
