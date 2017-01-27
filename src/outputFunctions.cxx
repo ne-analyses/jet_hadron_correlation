@@ -1756,7 +1756,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      std::string title = selector.ptBinString[i] + " GeV/c";
+      std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -1800,7 +1800,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      std::string title = selector.ptBinString[i] + " GeV/c";
+      std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -1848,7 +1848,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      std::string title = selector.ptBinString[i] + " GeV/c";
+      std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       TCanvas c1;
