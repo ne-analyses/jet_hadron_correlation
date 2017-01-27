@@ -1758,6 +1758,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->CenterTitle( true );
       std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
+      histograms[i]->SetTitleSize( 0.09 );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1802,6 +1803,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->CenterTitle( true );
       std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
+      histograms[i]->SetTitleSize( 0.09 );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1851,6 +1853,7 @@ namespace jetHadron {
       std::string title = selector.ptBinString[i];
       histograms[i]->SetTitle( title.c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      histograms[i]->SetTitleSize( 0.09 );
       TCanvas c1;
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
@@ -2769,7 +2772,7 @@ namespace jetHadron {
       leg->SetTextSize(0.045);
       
       leg->AddEntry( histograms[0][i], "Au+Au HT 0-20%", "lep" );
-      leg->AddEntry( histograms[1][i], "p+p HT corr. to Au+Au 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
       leg->AddEntry( errors2[i], "relative JES unc.", "f");
@@ -2780,6 +2783,7 @@ namespace jetHadron {
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
+      t->AddText("p+p corrected to Au+Au 0-20%" );
       for ( int k = 0; k < text.size(); ++k ) {
         t->AddText( text[k].c_str() );
       }
@@ -2884,7 +2888,7 @@ namespace jetHadron {
       leg->SetTextSize(0.045);
       
       leg->AddEntry( histograms[0][i], "Au+Au HT 0-20%", "lep" );
-      leg->AddEntry( histograms[1][i], "p+p HT corr. to Au+Au 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
       leg->AddEntry( errors2[i], "relative JES unc.", "f");
@@ -2895,6 +2899,7 @@ namespace jetHadron {
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
+      t->AddText("p+p corrected to Au+Au 0-20%" );
       for ( int k = 0; k < text.size(); ++k ) {
         t->AddText( text[k].c_str() );
       }
