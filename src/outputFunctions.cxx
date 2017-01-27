@@ -1756,7 +1756,8 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      std::string title = selector.ptBinString[i] + " GeV/c";
+      histograms[i]->SetTitle( title.c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1770,7 +1771,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      latex.DrawLatex( -0.4, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
@@ -1799,7 +1800,8 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      histograms[i]->SetTitle( selector.ptBinStringMix[i].c_str() );
+      std::string title = selector.ptBinString[i] + " GeV/c";
+      histograms[i]->SetTitle( title.c_str() );
       
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       
@@ -1813,7 +1815,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      latex.DrawLatex( -0.4, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -1846,7 +1848,8 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      histograms[i]->SetTitle( selector.ptBinString[i].c_str() );
+      std::string title = selector.ptBinString[i] + " GeV/c";
+      histograms[i]->SetTitle( title.c_str() );
       std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       TCanvas c1;
       c1.SetLeftMargin(0.15);
@@ -1859,7 +1862,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      latex.DrawLatex( -0.4, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
