@@ -456,8 +456,12 @@ namespace jetHadron {
       }
       
       std::vector<fastjet::PseudoJet> matchedToDijet;
-      matchedToDijet.push_back( matchedToLead.at(0) );
-      matchedToDijet.push_back( matchedToSub.at(0) );
+      //matchedToDijet.push_back( matchedToLead.at(0) );
+      //matchedToDijet.push_back( matchedToSub.at(0) );
+      
+      // SWITCH TO HARD CORE
+      matchedToDijet.push_back( hardJets.at(0) );
+      matchedToDijet.push_back( hardJets.at(1) );
       
       // if we need a trigger, match jets
       // if the trigger is in the subleading jet,
