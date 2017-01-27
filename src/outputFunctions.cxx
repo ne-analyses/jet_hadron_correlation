@@ -2768,8 +2768,8 @@ namespace jetHadron {
       TLegend* leg = new TLegend( 0.55, 0.6, 0.88, 0.88 );
       leg->SetTextSize(0.045);
       
-      leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
-      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
+      leg->AddEntry( histograms[0][i], "Au+Au HT 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT corr. to Au+Au 0-20%", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
       leg->AddEntry( errors2[i], "relative JES unc.", "f");
@@ -2883,8 +2883,8 @@ namespace jetHadron {
       TLegend* leg = new TLegend( 0.55, 0.6, 0.88, 0.88 );
       leg->SetTextSize(0.045);
       
-      leg->AddEntry( histograms[0][i], "AuAu HT 0-20%", "lep" );
-      leg->AddEntry( histograms[1][i], "p+p HT", "lep" );
+      leg->AddEntry( histograms[0][i], "Au+Au HT 0-20%", "lep" );
+      leg->AddEntry( histograms[1][i], "p+p HT corr. to Au+Au 0-20%", "lep" );
       leg->AddEntry( errors[0][i], "tracking unc. Au+Au", "f" );
       leg->AddEntry( errors[1][i], "tracking unc. p+p", "f" );
       leg->AddEntry( errors2[i], "relative JES unc.", "f");
@@ -3064,10 +3064,10 @@ namespace jetHadron {
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
     
-    TLegend* leg = new TLegend( 0.5, 0.5, 0.88, 0.78 );
+    TLegend* leg = new TLegend( 0.45, 0.5, 0.88, 0.78 );
     
-    leg->AddEntry( graphs[0], "AuAu HT 0-20%", "lep" );
-    leg->AddEntry( graphs[1], "p+p HT", "lep" );
+    leg->AddEntry( graphs[0], "Au+Au HT 0-20%", "lep" );
+    leg->AddEntry( graphs[1], "p+p HT corr. to Au+Au 0-20%", "lep" );
     leg->AddEntry( sys1[0], "tracking unc. Au+Au", "f" );
     leg->AddEntry( sys1[1], "tracking unc. p+p", "f" );
     leg->AddEntry( sys2[0], "relative JES unc.", "f");
