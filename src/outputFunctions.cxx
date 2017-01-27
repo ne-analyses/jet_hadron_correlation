@@ -1764,6 +1764,14 @@ namespace jetHadron {
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw("surf1");
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
@@ -1799,6 +1807,14 @@ namespace jetHadron {
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
       histograms[i]->Draw("surf1");
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
@@ -1837,6 +1853,14 @@ namespace jetHadron {
       c1.SetBottomMargin(0.2);
     
       histograms[i]->Draw("surf1");
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      latex.DrawLatex( 0.16, 0.84, "STAR Preliminary");
+      
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
