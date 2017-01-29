@@ -2788,6 +2788,14 @@ namespace jetHadron {
         t->AddText( text[k].c_str() );
       }
       
+      if ( TText* line = t->GetLineWith("trigger") ) {
+        line->SetTextSize( 0.048 );
+      }
+      else if ( TText* line = t->GetLineWith("recoil" ) ) {
+        line->SetTextSize( 0.048 );
+      }
+
+      
       t->Draw();
       
       // and STAR preliminary message
