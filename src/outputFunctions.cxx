@@ -2895,7 +2895,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.13, 0.64, 0.48, 0.82, "NB NDC");
+      TPaveText *t = new TPaveText(0.13, 0.6, 0.48, 0.82, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       t->AddText( selector.ptBinString[i].c_str() );
@@ -2905,10 +2905,10 @@ namespace jetHadron {
       }
       
       if ( TText* line = t->GetLineWith("trigger") ) {
-        line->SetTextSize( 0.045 );
+        line->SetTextSize( 0.048 );
       }
       else if ( TText* line = t->GetLineWith("recoil" ) ) {
-        line->SetTextSize( 0.045 );
+        line->SetTextSize( 0.048 );
       }
 
       
@@ -2982,7 +2982,7 @@ namespace jetHadron {
       leg->Draw();
       
       // and draw some titles and such
-      TPaveText *t = new TPaveText(0.13, 0.62, 0.48, 0.8, "NB NDC");
+      TPaveText *t = new TPaveText(0.13, 0.6, 0.48, 0.8, "NB NDC");
       t->SetFillStyle(0);
       t->SetBorderSize(0);
       
@@ -2994,10 +2994,10 @@ namespace jetHadron {
       }
       
       if ( TText* line = t->GetLineWith("trigger") ) {
-        line->SetTextSize( 0.045 );
+        line->SetTextSize( 0.048 );
       }
       else if ( TText* line = t->GetLineWith("recoil" ) ) {
-        line->SetTextSize( 0.045 );
+        line->SetTextSize( 0.048 );
       }
       
       t->Draw();
