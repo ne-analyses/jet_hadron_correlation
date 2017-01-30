@@ -1749,7 +1749,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->CenterTitle( true );
       //histograms[i]->GetXaxis()->SetRange(5,18);
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.07 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.09 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
@@ -1794,7 +1794,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetXaxis()->CenterTitle( true );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.07 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.09 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
@@ -1843,7 +1843,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->CenterTitle( true );
       histograms[i]->GetXaxis()->SetRange(5, 18 );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
-      histograms[i]->GetYaxis()->SetTitleSize( 0.07 );
+      histograms[i]->GetYaxis()->SetTitleSize( 0.09 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
