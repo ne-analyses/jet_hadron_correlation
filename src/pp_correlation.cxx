@@ -339,6 +339,7 @@ int main ( int argc, const char** argv) {
   // Particle container
   std::vector<fastjet::PseudoJet> particles;
   std::vector<fastjet::PseudoJet> ppParticles;
+  std::vector<fastjet::PseudoJet> correlationParticles;
   // Trigger container - used to match
   // leading jet with trigger particle
   std::vector<fastjet::PseudoJet> triggers;
@@ -463,14 +464,19 @@ int main ( int argc, const char** argv) {
       // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
+      // and all particles we will correlate with
+      jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
+      
       // Get HT triggers ( using the pp version since the HT data cant be gotten)
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
       jetHadron::GetTriggersPP( requireTrigger, ppParticles, triggers );
       
       // and if its being used, convert all or only hard auau embedding
       // to be used into the pp event as well
-      if ( correlateAll || addAuAuHard )
+      if ( correlateAll || addAuAuHard ) {
         jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, ppParticles, correlateAll );
+        jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, correlationParticles, correlateAll );
+      }
 
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
@@ -575,8 +581,8 @@ int main ( int argc, const char** argv) {
       
       // Now we can perform the correlations
       // Only on the pp particles
-      for ( int i = 0; i < ppParticles.size(); ++i ) {
-        fastjet::PseudoJet assocParticle = ppParticles.at(i);
+      for ( int i = 0; i < correlationParticles.size(); ++i ) {
+        fastjet::PseudoJet assocParticle = correlationParticles.at(i);
         
         // if we're using particle - by - particle efficiencies, get it,
         // else, set to one
