@@ -134,13 +134,13 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6/corr.root", "READ" );
+      tmp = new TFile( "out/added/pp/trg6/corrv2.root", "READ" );
       tmpMix = new TFile( "out/added/pp/trg6/mix.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/corr.root");
+      tmp = new TFile( "out/added/ppembedhard/trg6/corrv2.root");
       tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
       
       corrFilesHard.push_back( tmp );
@@ -149,7 +149,7 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      outputDirBase = "/results/jet_20_10_trig_6";
+      outputDirBase = "/results/jet_20_10_trig_6_v2";
       
       break;
     }
@@ -593,7 +593,7 @@ int main( int argc, const char** argv) {
   //******************************************
   // Now we need to test the systematic errors
   //******************************************
-  TFile sysIn( "out/added/pp/trg6/sys.root", "READ");
+  TFile sysIn( "out/added/pp/trg6/sysv2.root", "READ");
   std::vector<std::vector<TH1F*> > deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
   deta_sys.resize( 1 );
   deta_sys_sub.resize( 1 );
