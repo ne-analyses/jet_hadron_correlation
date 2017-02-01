@@ -381,7 +381,7 @@ int main ( int argc, const char** argv ) {
       int VzBin = jetHadron::GetVzBin( vertexZ );
       
       // Check to see if we use those centralities
-      if ( refCent < 0 )                      								 	{ continue; }
+      if ( refCent < 0 )                      							 { continue; }
       if ( refCent < jetHadron::y7EfficiencyRefCentLower )   { continue; }
       if ( refCent > jetHadron::y7EfficiencyRefCentUpper )   { continue; }
       
