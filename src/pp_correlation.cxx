@@ -163,7 +163,7 @@ int main ( int argc, const char** argv) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "ppcorr.root";						// histograms will be saved here
   std::string		treeOutFile		= "ppjet.root";							// jets will be saved in a TTree here
-  std::string	 	inputFile			= "pp_list/grid/pp1.list";			// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "pp_list/grid/pp*";			// input file: can be .root, .txt, .list
   std::string		mbInputFile		= "auau_list/grid_AuAuy7MB.list";				// min bias background event - .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
@@ -507,12 +507,7 @@ int main ( int argc, const char** argv) {
       
       // make our hard dijet vector
       std::vector<fastjet::PseudoJet> hardJets = jetHadron::BuildHardJets( analysisType, HiResult );
-      
-      leadingJet.SetPtEtaPhiE( hardJets.at(0).pt(), hardJets.at(0).eta(), hardJets.at(0).phi_std(), hardJets.at(0).E() );
-      subleadingJet.SetPtEtaPhiE( hardJets.at(1).pt(), hardJets.at(1).eta(), hardJets.at(1).phi_std(), hardJets.at(1).E() );
-      correlatedDiJets->Fill();
-      
-      continue;
+
       
       // now recluster with all particles if necessary ( only used for dijet analysis )
       // Find corresponding jets with soft constituents
@@ -545,6 +540,12 @@ int main ( int argc, const char** argv) {
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
+      
+      leadingJet.SetPtEtaPhiE( hardJets.at(0).pt(), hardJets.at(0).eta(), hardJets.at(0).phi_std(), hardJets.at(0).E() );
+      subleadingJet.SetPtEtaPhiE( hardJets.at(1).pt(), hardJets.at(1).eta(), hardJets.at(1).phi_std(), hardJets.at(1).E() );
+      correlatedDiJets->Fill();
+      
+      continue;
 
       
       // now we have analysis jets, write the trees
