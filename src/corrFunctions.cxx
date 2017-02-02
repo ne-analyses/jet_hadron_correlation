@@ -332,8 +332,10 @@ namespace jetHadron {
     evCuts->SetMaxEventPtCut( eventPtCut );
     evCuts->SetMaxEventEtCut( eventEtCut );
     
-    if( softwareTrigger )
+    if( softwareTrigger ) {
       evCuts->SetMinEventEtCut( softwareTrigger );
+      evCuts->SetUseRawForMinEventEtCut( true );
+    }
     
     evCuts->SetVertexZDiffCut( vertexZDiffCut );
     if ( collisionType == "auau" ) {
