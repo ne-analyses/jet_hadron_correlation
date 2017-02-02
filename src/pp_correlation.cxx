@@ -473,7 +473,7 @@ int main ( int argc, const char** argv) {
       jetHadron::GetTriggersPP( requireTrigger, correlationParticles, triggers );
       
       // and if its being used, convert all or only hard auau embedding
-      // to be used into the pp event as well
+      // to be used into the correlation holder as well
       if ( correlateAll || addAuAuHard ) {
         jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, correlationParticles, correlateAll );
       }
