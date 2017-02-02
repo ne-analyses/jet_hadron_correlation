@@ -288,9 +288,7 @@ int main ( int argc, const char** argv) {
   else if ( inputIsList)  { chain = TStarJetPicoUtils::BuildChainFromFileList( inputFile.c_str() ); }
   else 										{ __ERR("data file is not recognized type: .root or .txt only.") return -1; }
   
-  std::cout<<"entries"<< chain->GetEntries() <<std::endl;
-  return 0;
-  
+
 //  
   // Intialize the reader and set the chain
   // All analysis parameters are located in
