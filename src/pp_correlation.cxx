@@ -338,7 +338,6 @@ int main ( int argc, const char** argv) {
   
   // Particle container
   std::vector<fastjet::PseudoJet> particles;
-  std::vector<fastjet::PseudoJet> ppParticles;
   std::vector<fastjet::PseudoJet> correlationParticles;
   // Trigger container - used to match
   // leading jet with trigger particle
@@ -458,23 +457,21 @@ int main ( int argc, const char** argv) {
       // now for pp - we also need a seed so we use high resolution timing
       auto end = std::chrono::high_resolution_clock::now();
       int64_t seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
-      // Convert TStarJetVector to PseudoJet
+      
+      // build two data sets
+      //**********************
+      
+      // first, the tracks we will use for hard core jet finding
       jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
-      jetHadron::ConvertTStarJetVectorPP( container, ppParticles, efficiencyCorrection, seed, true, fTowerScale );
-      // and MB data to the full event that will be used for jet finding
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
-      // and all particles we will correlate with
+      // second, the tracks used for full event reconstruction
+      // and correlations, these have all pp tracks/towers
       jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
-      
-      // Get HT triggers ( using the pp version since the HT data cant be gotten)
-      //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
-      jetHadron::GetTriggersPP( requireTrigger, ppParticles, triggers );
       
       // and if its being used, convert all or only hard auau embedding
       // to be used into the pp event as well
       if ( correlateAll || addAuAuHard ) {
-        jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, ppParticles, correlateAll );
         jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, correlationParticles, correlateAll );
       }
 
@@ -526,7 +523,7 @@ int main ( int argc, const char** argv) {
         LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
       }
       else {
-        lowPtCons = selectorLowPtCons ( ppParticles );
+        lowPtCons = selectorLowPtCons ( correlationParticles );
         fastjet::ClusterSequence ClusterSequenceLow ( lowPtCons, analysisDefinition );
         LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets()  );
       }
