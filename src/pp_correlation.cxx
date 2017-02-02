@@ -163,7 +163,7 @@ int main ( int argc, const char** argv) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "ppcorr.root";						// histograms will be saved here
   std::string		treeOutFile		= "ppjet.root";							// jets will be saved in a TTree here
-  std::string	 	inputFile			= "pp_list/grid/pp*";			// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "pp_list/grid/pp1.list";	// input file: can be .root, .txt, .list
   std::string		mbInputFile		= "auau_list/grid_AuAuy7MB.list";				// min bias background event - .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
@@ -288,6 +288,10 @@ int main ( int argc, const char** argv) {
   else if ( inputIsList)  { chain = TStarJetPicoUtils::BuildChainFromFileList( inputFile.c_str() ); }
   else 										{ __ERR("data file is not recognized type: .root or .txt only.") return -1; }
   
+  std::cout<<"entries"<< chain->GetEntries() <<std::endl;
+  return 0;
+  
+//  
   // Intialize the reader and set the chain
   // All analysis parameters are located in
   // corrParameters.hh
