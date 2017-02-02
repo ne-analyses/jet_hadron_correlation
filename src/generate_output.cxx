@@ -140,7 +140,7 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/corrv2.root");
+      tmp = new TFile( "out/added/ppembedhard/trg6/corrv3.root");
       tmpMix = new TFile( "out/added/ppembedhard/trg6/mix.root");
       
       corrFilesHard.push_back( tmp );
