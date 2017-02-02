@@ -544,12 +544,6 @@ int main ( int argc, const char** argv) {
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-      
-      leadingJet.SetPtEtaPhiE( hardJets.at(0).pt(), hardJets.at(0).eta(), hardJets.at(0).phi_std(), hardJets.at(0).E() );
-      subleadingJet.SetPtEtaPhiE( hardJets.at(1).pt(), hardJets.at(1).eta(), hardJets.at(1).phi_std(), hardJets.at(1).E() );
-      correlatedDiJets->Fill();
-      
-      continue;
 
       
       // now we have analysis jets, write the trees
