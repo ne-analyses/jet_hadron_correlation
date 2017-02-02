@@ -238,7 +238,7 @@ namespace jetHadron {
     if ( requireTrigger ) {
       for ( int i = 0; i < ppParticles.size(); ++i ) {
         fastjet::PseudoJet tmpParticle = ppParticles[i];
-        if ( tmpParticle.pt() > triggerThreshold )
+        if ( tmpParticle.user_index() == 0 && tmpParticle.pt() > triggerThreshold )
           triggers.push_back( tmpParticle );
       
       }
