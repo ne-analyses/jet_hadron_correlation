@@ -320,7 +320,7 @@ namespace jetHadron {
     reader.SetInputChain( chain );
     // apply hadronic correction - subtract 100% of charged track energy from towers
     reader.SetApplyFractionHadronicCorrection( hadronicCorrection );
-    reader.SetFractionHadronicCorrection( 0.0 );
+    reader.SetFractionHadronicCorrection( 0.999 );
     reader.SetRejectTowerElectrons( kFALSE );
     
     // Event and track selection
