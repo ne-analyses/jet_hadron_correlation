@@ -326,7 +326,7 @@ int main ( int argc, const char** argv) {
   // corrParameters.hh
   // --------------------------------------
   TStarJetPicoReader mbReader;
-  jetHadron::InitReader( mbReader, mbChain, "auau", jetHadron::triggerAll, false, jetHadron::allEvents );
+  jetHadron::InitReader( mbReader, mbChain, "auau", jetHadron::ppHT, false, jetHadron::allEvents );
   
   // Data classes
   TStarJetVectorContainer<TStarJetVector>* mbContainer;
