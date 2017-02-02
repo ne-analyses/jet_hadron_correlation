@@ -55,8 +55,14 @@ namespace jetHadron {
 	const double  towerEtCut = 9999.0;				// we want this to be nonexistent so that the event is rejected by eventEtCut
 	// Trying to make everything machine independent
 	// Define a path to bad tower list
-	const std::string y7AuAuTowerList = "src/y7_AuAu_HT_hot_list.txt";
-  const std::string y6PPTowerList = "src/y6_pp_HT_hot_list.txt";
+//	const std::string y7AuAuTowerList = "src/y7_AuAu_HT_hot_list.txt";
+//  const std::string y6PPTowerList = "src/y6_pp_HT_hot_list.txt";
+//  
+
+  const std::string y7AuAuTowerList = "/nfs/rhi/STAR/software/eventStructuredAu/Combined_y7_AuAu_Nick.txt";
+  const std::string y6PPTowerList = "/nfs/rhi/STAR/software/eventStructuredAu/Combined_y7_PP_Nick.txt";
+  
+  
 	
 	// If that doesnt work, here are machine dependent paths
 	// bad tower list location on RHIC121
