@@ -410,7 +410,6 @@ int main ( int argc, const char** argv) {
   int nHardDijets = 0;
   int nMatchedHard = 0;
   
-  return 0;
   
   // getting seed for rng
   auto begin = std::chrono::high_resolution_clock::now();
