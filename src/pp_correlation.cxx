@@ -410,6 +410,14 @@ int main ( int argc, const char** argv) {
   int nHardDijets = 0;
   int nMatchedHard = 0;
   
+  
+  // testing
+  std::cout<<"jet definition: "<< analysisDefinition.description() << std::endl;
+  std::cout<<"low pt cons: "<< selectorLowPtCons.description() << std::endl;
+  std::cout<<"high pt cons: "<< selectorHighPtCons.description() << std::endl;
+  std::cout<<"jet candidate: "<< selectorJetCandidate.description() << std::endl;
+  return 0;
+  
   // getting seed for rng
   auto begin = std::chrono::high_resolution_clock::now();
   
