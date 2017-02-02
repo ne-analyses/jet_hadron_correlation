@@ -134,7 +134,7 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6/corrv2.root", "READ" );
+      tmp = new TFile( "out/added/pp/trg6/corrv3.root", "READ" );
       tmpMix = new TFile( "out/added/pp/trg6/mix.root", "READ");
       
       corrFiles.push_back( tmp );
@@ -593,7 +593,7 @@ int main( int argc, const char** argv) {
   //******************************************
   // Now we need to test the systematic errors
   //******************************************
-  TFile sysIn( "out/added/pp/trg6/sysv2.root", "READ");
+  TFile sysIn( "out/added/pp/trg6/sysv3.root", "READ");
   std::vector<std::vector<TH1F*> > deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
   deta_sys.resize( 1 );
   deta_sys_sub.resize( 1 );

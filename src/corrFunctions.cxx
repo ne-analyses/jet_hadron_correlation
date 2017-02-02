@@ -234,7 +234,7 @@ namespace jetHadron {
     // empty the container
     triggers.clear();
     
-    // if we're using triggers, run over all towers and get any with E > triggerThreshold
+    // if we're using triggers, run over all towers and get any with Et > triggerThreshold
     if ( requireTrigger ) {
       for ( int i = 0; i < ppParticles.size(); ++i ) {
         fastjet::PseudoJet tmpParticle = ppParticles[i];
