@@ -469,6 +469,9 @@ int main ( int argc, const char** argv) {
       // and correlations, these have all pp tracks/towers
       jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
       
+      // and pull out all triggers
+      jetHadron::GetTriggersPP( requireTrigger, correlationParticles, triggers );
+      
       // and if its being used, convert all or only hard auau embedding
       // to be used into the pp event as well
       if ( correlateAll || addAuAuHard ) {
