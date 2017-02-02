@@ -491,7 +491,7 @@ int main ( int argc, const char** argv) {
       // get our two sets of particles:
       // low: |eta| < maxTrackRap && pt > 0.2 GeV Used second when we've found viable hard dijets
       // high: |eta| < maxTrackRap && pt > 2.0 GeV Used first to find hard jets
-      std::vector<fastjet::PseudoJet> lowPtCons = selectorLowPtCons( particles );
+      std::vector<fastjet::PseudoJet> lowPtCons = selectorLowPtCons( correlationParticles );
       std::vector<fastjet::PseudoJet> highPtCons = selectorHighPtCons( particles );
       
       // Find high constituent pT jets
