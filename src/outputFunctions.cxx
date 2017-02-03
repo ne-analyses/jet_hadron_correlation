@@ -2731,7 +2731,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 2, 0.60 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.30 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
@@ -2744,7 +2744,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( 46, 0.30 );
+        errors2[i]->SetFillColorAlpha( 2, 0.60 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
@@ -2856,7 +2856,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 2, 0.60 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.30 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.35 );
         }
@@ -2869,7 +2869,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( 46, 0.30 );
+        errors2[i]->SetFillColorAlpha( kRed, 0.60 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
@@ -3077,12 +3077,14 @@ namespace jetHadron {
       
       if ( i == 1 ) {
         sys1[i]->SetFillStyle(1001);
-        sys1[i]->SetFillColorAlpha(i+1, 0.6);
+        //sys1[i]->SetFillColorAlpha(i+1, 0.6);
+        sys1[i]->SetFillColorAlpha( 46, 0.3 );
       }
       
       if ( i == 0 ) {
         sys2[0]->SetFillStyle(1001);
-        sys2[0]->SetFillColorAlpha( 46, 0.30 );
+        //sys2[0]->SetFillColorAlpha( 46, 0.30 );
+        sys2[0]->SetFillColorAlpha( kRed, 0.6 );
       }
       
     }
