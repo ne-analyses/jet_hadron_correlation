@@ -33,8 +33,10 @@ namespace jetHadron {
     
     // Jet kinematics
     TH1D* hLeadJetPt;
+    TH1D* hLeadJetPtHard;
     TH2D* hLeadEtaPhi;
     TH1D* hSubJetPt;
+    TH1D* hSubJetPtHard;
     TH2D* hSubEtaPhi;
     
     // Associated kinematics
@@ -136,7 +138,9 @@ namespace jetHadron {
     
     // For dijet-hadron
     bool FillLeadJetPt( double pt );								// For dijet-hadron: records lead jet pt
+    bool FillLeadJetPtHard( double pt );								// For dijet-hadron: records lead jet pt
     bool FillSubJetPt( double pt );									// Records sub jet pt
+    bool FillSubJetPtHard( double pt );									// Records sub jet pt
     bool FillLeadEtaPhi( double eta, double phi );	// Records lead jet eta-phi
     bool FillSubEtaPhi( double eta, double phi );		// Records sub jet eta-phi
     // Records trigger-associated correlations with trigger = leading/subleading

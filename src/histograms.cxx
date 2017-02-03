@@ -343,8 +343,10 @@ namespace jetHadron {
     hVz					 = new TH1D("vzdist", "vzdist", 100, -30, 30);
     
     hLeadJetPt 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
+    hLeadJetPtHard 	= new TH1D( "leadjetpt", "Leading Jet Pt;p_{T}", 80, 0, 80 );
     hLeadEtaPhi = new TH2D( "leadjetetaphi", "Leading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
     hSubJetPt 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
+    hSubJetPtHard 	= new TH1D( "subjetpt", "Subleading Jet Pt;p_{T}", 80, 0, 80 );
     hSubEtaPhi 	= new TH2D( "subjetetaphi", "Subleading Jet Eta Phi;eta;phi", 40, -1, 1, 40, -pi, pi );
     
     hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
@@ -467,6 +469,13 @@ namespace jetHadron {
     return true;
   }
   
+  bool histograms::FillJetPtHard( double pt ) {
+    if ( !IsInitialized() ) { return false; }
+    
+    hLeadJetPtHard->Fill( pt );
+    return true;
+  }
+  
   bool histograms::FillJetEtaPhi( double eta, double phi ) {
     if ( !IsInitialized() ) { return false; }
     
@@ -499,6 +508,13 @@ namespace jetHadron {
     if ( !IsInitialized() ) { return false; }
     
     hSubJetPt->Fill( pt );
+    return true;
+  }
+  
+  bool histograms::FillSubJetPtHard( double pt ) {
+    if ( !IsInitialized() ) { return false; }
+    
+    hSubJetPtHard->Fill( pt );
     return true;
   }
   
