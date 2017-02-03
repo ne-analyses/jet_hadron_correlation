@@ -405,7 +405,7 @@ namespace jetHadron {
   // Use this to select either one or two jets
   // Depending on the analysis type
   // -----------------------------------------
-  std::vector<fastjet::PseudoJet> BuildHardJets( std::string analysisType, std::vector<fastjet::PseudoJet> & HiResult ) {
+  std::vector<fastjet::PseudoJet> HardJets( std::string analysisType, std::vector<fastjet::PseudoJet> & HiResult ) {
     std::vector<fastjet::PseudoJet> tmpJets;
     if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
       if ( HiResult.size() < 2 ) {
@@ -481,9 +481,9 @@ namespace jetHadron {
         
         // check to make sure the matched jets are within the
         // accepted eta range
-        for ( int i = 0; i < matchedToDijet.size(); ++i )
-          if ( fabs( matchedToDijet[i].eta() ) > jetHadron::maxTrackRap - jetRadius )
-            return std::vector<fastjet::PseudoJet>();
+//        for ( int i = 0; i < matchedToDijet.size(); ++i )
+//          if ( fabs( matchedToDijet[i].eta() ) > jetHadron::maxTrackRap - jetRadius )
+//            return std::vector<fastjet::PseudoJet>();
         
         // now return in proper order
         // if subjet was matched but not the leading jet,
@@ -496,8 +496,10 @@ namespace jetHadron {
         }
         else if ( matchedLeadTrigger )
           return matchedToDijet;
-       else
+        else {
+          __ERR("WTF IS GOING ON MY LIFE IS A LIE")
          return std::vector<fastjet::PseudoJet>();
+        }
       }
       
       return matchedToDijet;
