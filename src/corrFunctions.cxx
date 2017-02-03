@@ -405,7 +405,7 @@ namespace jetHadron {
   // Use this to select either one or two jets
   // Depending on the analysis type
   // -----------------------------------------
-  std::vector<fastjet::PseudoJet> HardJets( std::string analysisType, std::vector<fastjet::PseudoJet> & HiResult ) {
+  std::vector<fastjet::PseudoJet> BuildHardJets( std::string analysisType, std::vector<fastjet::PseudoJet> & HiResult ) {
     std::vector<fastjet::PseudoJet> tmpJets;
     if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
       if ( HiResult.size() < 2 ) {
