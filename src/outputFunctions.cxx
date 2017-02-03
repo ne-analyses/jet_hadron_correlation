@@ -1446,7 +1446,6 @@ namespace jetHadron {
         y_err_[j-ptBinLow] = y_err[i][j];
         if ( y.size() == 1 ) {
           x_[j-ptBinLow] = x[1][j];
-          x_err_[j-ptBinLow] = 0.1;
         }
  
       }
