@@ -45,8 +45,8 @@ set ExecPath = `pwd`
 set analysis = $1
 set execute = './bin/auau_correlation'
 #set base = /nfs/rhi/STAR/Data/CleanAuAuY7/Clean
-#set base = /nfs/rhi/STAR/Data/SmallAuAu/Small
-set base = auau_list/grid/small
+set base = /nfs/rhi/STAR/Data/SmallAuAu/Small
+#set base = auau_list/grid/small
 
 if ( $# != "11" && !( $2 == 'default' ) ) then
 	echo 'Error: illegal number of parameters (-h for help)'
@@ -109,7 +109,7 @@ endif
 foreach input ( ${base}* )
 
 # Create the output file base name
-set OutBase = `basename $input | sed 's/.list//g'`
+set OutBase = `basename $input | sed 's/.root//g'`
 
 # Make the output names and path
 set outLocation = "out/${analysis}/${outFile}/"
