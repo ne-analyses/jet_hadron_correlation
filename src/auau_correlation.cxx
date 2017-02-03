@@ -321,10 +321,10 @@ int main ( int argc, const char** argv ) {
     correlatedDiJets = new TTree("dijets","Correlated Dijets" );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
-    CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
-    CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
-    CDJBranchHiHard = correlatedDiJets->Branch("leadJet", &leadingJetHard );
-    CDJBranchLoHard = correlatedDiJets->Branch("subLeadJet", &subleadingJetHard );
+    CDJBranchHi = correlatedDiJets->Branch("leadJetSoft", &leadingJet );
+    CDJBranchLo = correlatedDiJets->Branch("subLeadJetSoft", &subleadingJet );
+    CDJBranchHiHard = correlatedDiJets->Branch("leadJetHard", &leadingJetHard );
+    CDJBranchLoHard = correlatedDiJets->Branch("subLeadJetHard", &subleadingJetHard );
     CDJBranchAj = correlatedDiJets->Branch("aj", &dijetAj );
   }
   else {
