@@ -377,11 +377,13 @@ int main ( int argc, const char** argv) {
   TTree* correlatedDiJets;
   // To hold the TLorentzVectors for leading, subleading
   TLorentzVector leadingJet, subleadingJet;
+  TLorentzVector leadingJetHard, subleadingJetHard;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
   Double_t dijetAj = 1.0;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
+  TBranch* CDJBranchHiHard, * CDJBranchLoHard;
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
   TBranch* CDJBranchAj;
@@ -390,6 +392,8 @@ int main ( int argc, const char** argv) {
     correlatedDiJets = new TTree("pp_dijets","Correlated PP Dijets" );
     CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
     CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
+    CDJBranchHiHard = correlatedDiJets->Branch("leadJetHard", &leadingJetHard );
+    CDJBranchLoHard = correlatedDiJets->Branch("subLeadJetHard", &subleadingJetHard );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchAj = correlatedDiJets->Branch("aj", &dijetAj );
   }
@@ -533,25 +537,6 @@ int main ( int argc, const char** argv) {
       LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
       
       
-//      if ( requireDijets && correlateAll ) {
-//        fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, backgroundDefinition, areaDef ); // WITH background subtraction
-//        
-//        // Background initialization
-//        // -------------------------
-//        
-//        // Energy density estimate from median ( pt_i / area_i )
-//        fastjet::JetMedianBackgroundEstimator bkgdEstimator ( selectorBkgEstimator, backgroundDefinition, areaDef );
-//        bkgdEstimator.set_particles( lowPtCons );
-//        // Subtract A*rho from the original pT
-//        fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
-//        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-//      }
-//      else {
-//        lowPtCons = selectorLowPtCons ( correlationParticles );
-//        fastjet::ClusterSequence ClusterSequenceLow ( lowPtCons, analysisDefinition );
-//        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets()  );
-//      }
-      
       // Get the jets used for correlations
       // Returns hardJets if doing jet analysis
       // it will match to triggers if necessary - if so, trigger jet is at index 0
@@ -569,6 +554,8 @@ int main ( int argc, const char** argv) {
         // leading jet
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
         subleadingJet.SetPtEtaPhiE( analysisJets.at(1).pt(), analysisJets.at(1).eta(), analysisJets.at(1).phi_std(), analysisJets.at(1).E() );
+        leadingJetHard.SetPtEtaPhiE( hardJets.at(0).pt(), hardJets.at(0).eta(), hardJets.at(0).phi_std(), hardJets.at(0).E() );
+        subleadingJetHard.SetPtEtaPhiE( hardJets.at(1).pt(), hardJets.at(1).eta(), hardJets.at(1).phi_std(), hardJets.at(1).E() );
         dijetAj = jetHadron::CalcAj( hardJets );
         
       }
