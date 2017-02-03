@@ -486,6 +486,8 @@ int main ( int argc, const char** argv) {
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
 
+      
+      continue;
       // Start FastJet analysis
       // ----------------------
       
@@ -514,7 +516,6 @@ int main ( int argc, const char** argv) {
       std::vector<fastjet::PseudoJet> hardJets = jetHadron::BuildHardJets( analysisType, HiResult );
 
       
-      continue;
       
       // now recluster with all particles if necessary ( only used for dijet analysis )
       // Find corresponding jets with soft constituents
@@ -533,24 +534,24 @@ int main ( int argc, const char** argv) {
       LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
       
       
-      if ( requireDijets && correlateAll ) {
-        fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, backgroundDefinition, areaDef ); // WITH background subtraction
-        
-        // Background initialization
-        // -------------------------
-        
-        // Energy density estimate from median ( pt_i / area_i )
-        fastjet::JetMedianBackgroundEstimator bkgdEstimator ( selectorBkgEstimator, backgroundDefinition, areaDef );
-        bkgdEstimator.set_particles( lowPtCons );
-        // Subtract A*rho from the original pT
-        fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
-        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-      }
-      else {
-        lowPtCons = selectorLowPtCons ( correlationParticles );
-        fastjet::ClusterSequence ClusterSequenceLow ( lowPtCons, analysisDefinition );
-        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets()  );
-      }
+//      if ( requireDijets && correlateAll ) {
+//        fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, backgroundDefinition, areaDef ); // WITH background subtraction
+//        
+//        // Background initialization
+//        // -------------------------
+//        
+//        // Energy density estimate from median ( pt_i / area_i )
+//        fastjet::JetMedianBackgroundEstimator bkgdEstimator ( selectorBkgEstimator, backgroundDefinition, areaDef );
+//        bkgdEstimator.set_particles( lowPtCons );
+//        // Subtract A*rho from the original pT
+//        fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
+//        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
+//      }
+//      else {
+//        lowPtCons = selectorLowPtCons ( correlationParticles );
+//        fastjet::ClusterSequence ClusterSequenceLow ( lowPtCons, analysisDefinition );
+//        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets()  );
+//      }
       
       // Get the jets used for correlations
       // Returns hardJets if doing jet analysis
