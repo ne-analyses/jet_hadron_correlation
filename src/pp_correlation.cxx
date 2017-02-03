@@ -468,7 +468,7 @@ int main ( int argc, const char** argv) {
       
       // first, the tracks we will use for hard core jet finding
       jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
-      //jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
+      jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
       // second, the tracks used for full event reconstruction
       // and correlations, these have all pp tracks/towers
@@ -590,9 +590,9 @@ int main ( int argc, const char** argv) {
         histograms->FillAjDif( jetHadron::CalcAj( hardJets ), jetHadron::CalcAj( analysisJets ) );
         histograms->FillAjStruct( jetHadron::CalcAj( analysisJets ), analysisJets[0].pt() );
 
-        histograms->FillLeadJetPt( analysisJets.at(0).pt() );
+        histograms->FillLeadJetPt( hardJets.at(0).pt() );
         histograms->FillLeadEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
-        histograms->FillSubJetPt( analysisJets.at(1).pt() );
+        histograms->FillSubJetPt( hardJets.at(1).pt() );
         histograms->FillSubEtaPhi( analysisJets.at(1).eta(), analysisJets.at(1).phi_std() );
       }
       else {
