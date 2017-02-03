@@ -299,6 +299,24 @@ int main ( int argc, const char** argv ) {
   // selector used to reject hard jets in background estimation
   fastjet::Selector	selectorBkgEstimator	= jetHadron::SelectBkgEstimator( jetHadron::maxTrackRap, jetRadius );
   
+  std::cout<< std::endl;
+  std::cout<< "analysis def: " << analysisDefinition.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "bkg def: " << backgroundDefinition.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "selectorLowPt constituents: " << selectorLowPtCons.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "selectorHighPt constituents: " << selectorHighPtCons.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout << "selector jet candidate: " << selectorJetCandidate.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "area spec: " << areaSpec.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "area def: "<< areaDef.description() << std::endl;
+  std::cout<< std::endl;
+  std::cout<< "bkd estimator: "<< selectorBkgEstimator.description() << std::endl;
+  std::cout<< std::endl;
+  
   
   // When we do event mixing we need the jets, so save them
   // in trees
