@@ -487,6 +487,8 @@ int main ( int argc, const char** argv ) {
           std::cout<<"  pt: "<< LoResult.at(l).pt() << std::endl;
           std::cout<<"  eta: "<< LoResult.at(l).eta() << std::endl;
           std::cout<<"  phi: "<< LoResult.at(l).phi_std() << std::endl;
+          std::cout<<"  lead_dr: "<< hardJets.at(0).delta_R( LoResult.at(l ) );
+          std::cout<<"  sub_dr: "<< hardJets.at(1).delta_R( LoResult.at(l ) );
         }
         return 0;
       }
