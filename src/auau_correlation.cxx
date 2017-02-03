@@ -155,7 +155,7 @@ int main ( int argc, const char** argv ) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
-  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/CleanAuAuY7/Clean809.root";		// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/SmallAuAu/Small_Clean810_1_1.root";		// input file: can be .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
@@ -468,6 +468,28 @@ int main ( int argc, const char** argv ) {
       // Returns hardJets if doing jet analysis
       // it will match to triggers if necessary - if so, trigger jet is at index 0
       std::vector<fastjet::PseudoJet> analysisJets = jetHadron::BuildMatchedJets( analysisType, hardJets, LoResult, requireTrigger, triggers, jetRadius );
+      
+      if ( analysisJets.size() == 0 ) {
+        std::cout<<"lead hard jet: "<< std::endl;
+        std::cout<<"  pt: "<< hardJets.at(0).pt() << std::endl;
+        std::cout<<"  eta: "<< hardJets.at(0).eta() << std::endl;
+        std::cout<<"  phi: "<< hardJets.at(0).phi_std() << std::endl;
+        std::cout<<std::endl;
+        std::cout<<"sub hard jet: "<< std::endl;
+        std::cout<<"  pt: "<< hardJets.at(1).pt() << std::endl;
+        std::cout<<"  eta: "<< hardJets.at(1).eta() << std::endl;
+        std::cout<<"  phi: "<< hardJets.at(1).phi_std() << std::endl;
+        std::cout<<std::endl;
+        std::cout<<"number of low jets: "<< LoResult.size() << std::endl;
+        for ( int l = 0; l < LoResult.size(); ++l ) {
+          std::cout<<std::endl;
+          std::cout<<"soft jet: "<< l << std::endl;
+          std::cout<<"  pt: "<< LoResult.at(l).pt() << std::endl;
+          std::cout<<"  eta: "<< LoResult.at(l).eta() << std::endl;
+          std::cout<<"  phi: "<< LoResult.at(l).phi_std() << std::endl;
+        }
+        
+      }
       
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
