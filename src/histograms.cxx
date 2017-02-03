@@ -381,10 +381,14 @@ namespace jetHadron {
     
     if ( hLeadJetPt )
     hLeadJetPt->Write();
+    if ( hLeadJetPtHard )
+      hLeadJetPtHard->Write();
     if ( hLeadEtaPhi )
     hLeadEtaPhi->Write();
     if ( hSubJetPt )
     hSubJetPt->Write();
+    if ( hSubJetPtHard )
+      hSubJetPtHard->Write();
     if ( hSubEtaPhi )
     hSubEtaPhi->Write();
     
