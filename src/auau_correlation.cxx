@@ -493,7 +493,7 @@ int main ( int argc, const char** argv ) {
 //        return 0;
 //      }
       
-      cout << "matched jet size = " << analysisJets.size() << endl;
+      std::cout << "matched jet size = " << analysisJets.size() << std::endl;
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
