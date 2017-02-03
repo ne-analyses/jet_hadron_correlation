@@ -295,7 +295,7 @@ int main ( int argc, const char** argv) {
   // corrParameters.hh
   // --------------------------------------
   TStarJetPicoReader reader;
-  jetHadron::InitReader( reader, chain, "pp", jetHadron::triggerAll, softwareTrig, jetHadron::allEvents );
+  jetHadron::InitReader( reader, chain, "pp", jetHadron::triggerPPHT, softwareTrig, jetHadron::allEvents );
   
   // Data classes
   TStarJetVectorContainer<TStarJetVector>* container;
@@ -326,7 +326,7 @@ int main ( int argc, const char** argv) {
   // corrParameters.hh
   // --------------------------------------
   TStarJetPicoReader mbReader;
-  jetHadron::InitReader( mbReader, mbChain, "auau", jetHadron::triggerPPHT, false, jetHadron::allEvents );
+  jetHadron::InitReader( mbReader, mbChain, "auau", jetHadron::triggerAll, false, jetHadron::allEvents );
   
   // Data classes
   TStarJetVectorContainer<TStarJetVector>* mbContainer;
@@ -487,7 +487,6 @@ int main ( int argc, const char** argv) {
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
 
       
-      continue;
       // Start FastJet analysis
       // ----------------------
       
