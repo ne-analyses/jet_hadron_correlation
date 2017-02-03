@@ -3083,9 +3083,9 @@ namespace jetHadron {
       
       if ( i == 0 ) {
         //sys2[0]->SetFillStyle(1001);
-        sys2[0]->SetFillStyle(3002);
+        sys2[0]->SetFillStyle(3006);
         //sys2[0]->SetFillColorAlpha( 46, 0.30 );
-        sys2[0]->SetFillColorAlpha( kRed, 0.9 );
+        sys2[0]->SetFillColorAlpha( kRed, 1.0 );
       }
       
     }
