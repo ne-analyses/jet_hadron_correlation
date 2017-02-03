@@ -130,7 +130,7 @@ int main( int argc, const char** argv) {
       
       // default files
       TFile* tmp = new TFile( "out/added/auau/trg6/corrv4.root", "READ" );
-      TFile* tmpMix = new TFile( "out/added/auau/trg6/mix.root", "READ" );
+      TFile* tmpMix = new TFile( "out/added/auau/trg6/mixv4.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
