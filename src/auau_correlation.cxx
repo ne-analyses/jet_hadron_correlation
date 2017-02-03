@@ -452,7 +452,7 @@ int main ( int argc, const char** argv ) {
       std::vector<fastjet::PseudoJet> LoResult;
       if ( requireDijets ) {
         fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, backgroundDefinition, areaDef ); // WITH background subtraction
-        std::cout<<"CLUSTER SEQUENCE: "<< ClusterSequenceLow.description() << std::endl;
+        std::cout<<"CLUSTER SEQUENCE: "<< ClusterSequenceLow.area_def().description() << std::endl;
         // Background initialization
         // -------------------------
         
