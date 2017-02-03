@@ -462,6 +462,11 @@ int main ( int argc, const char** argv ) {
         // Subtract A*rho from the original pT
         fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
 
+        std::vector<fastjet::PseudoJet> tmp = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets() );
+        for ( int i=0; i<tmp.size(); ++i ){
+          fastjet::PseudoJet> subtmp = bkgdSubtractor( tmp.at(i) );
+          cout << tmp.at(i).pt() << "  shifted by " << tmp.at(i).delta_R( subtmp ) << endl;
+        }
         LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
         // LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets() );
      }
