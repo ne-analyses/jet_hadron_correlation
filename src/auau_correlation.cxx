@@ -508,6 +508,10 @@ int main ( int argc, const char** argv ) {
       if ( analysisJets.size() == 0  )		{ continue; }
       nMatchedHard++;
       
+      if ( analysisJets[0].pt() < analysisJets[1].pt() ) {
+        std::cout<<"WE GOT ONE!"<<std::endl;
+      }
+      
       // now we have analysis jets, write the trees
       // for future event mixing
       vertexZBin = VzBin;
