@@ -3093,9 +3093,10 @@ namespace jetHadron {
     }
     graphs[0]->Draw("AP");
     graphs[1]->Draw("P");
+    sys2[0]->Draw("3");
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
-    sys2[0]->Draw("3");
+    
     
     TLegend* leg = new TLegend( 0.45, 0.5, 0.88, 0.78 );
     
