@@ -503,7 +503,7 @@ int main ( int argc, const char** argv ) {
       
       //std::cout << "matched jet size = " << analysisJets.size() << std::endl;
       // if zero jets were returned, exit out
-      if ( analysisJets.size() == 0 )		{ continue; }
+      if ( analysisJets.size() == 0 || analysisJets.at(0).pt() == 0 )		{ continue; }
       nMatchedHard++;
       
       // now we have analysis jets, write the trees
