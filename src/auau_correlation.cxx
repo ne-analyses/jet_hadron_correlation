@@ -143,7 +143,7 @@ int main ( int argc, const char** argv ) {
   std::string 	analysisType  = "dijet";									// choose dijet or jet ( decides value of requireDijets )
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
-  bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
+  bool					requireTrigger= false;											// require leading jet to be within jetRadius of a trigger tower
   double        softwareTrig  = 6.0;                     // require there to be an offline trigger with E > softwareTrig
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
@@ -461,8 +461,7 @@ int main ( int argc, const char** argv ) {
         bkgdEstimator.set_particles( lowPtCons );
         // Subtract A*rho from the original pT
         fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
-        //LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets() );
+        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
       }
       
       // Get the jets used for correlations

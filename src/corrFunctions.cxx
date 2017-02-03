@@ -469,6 +469,8 @@ namespace jetHadron {
       // if the trigger is in the subleading jet,
       // make sub jet the leading jet
       // otherwise, return the dijets without matching
+      
+      // CHECK THIS
       if ( requireTrigger ) {
         bool matchedLeadTrigger = false;
         bool matchedSubTrigger = false;
