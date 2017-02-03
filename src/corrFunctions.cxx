@@ -453,8 +453,43 @@ namespace jetHadron {
       selectMatchedSub.set_reference( hardJets.at(1) );
       std::vector<fastjet::PseudoJet> matchedToSub = sorted_by_pt( selectMatchedSub( LoResult ));
       
-      if ( matchedToLead.size() == 0 || matchedToSub.size() == 0 ) {
-        __OUT("Couldn't match hard and soft jets")
+      if ( matchedToLead.size() == 0 ) {
+        __OUT("Couldn't match leading hard jet")
+        std::cout<<"lead hard jet: "<< std::endl;
+        std::cout<<"  pt: "<< hardJets.at(0).pt() << std::endl;
+        std::cout<<"  eta: "<< hardJets.at(0).eta() << std::endl;
+        std::cout<<"  phi: "<< hardJets.at(0).phi_std() << std::endl;
+        std::cout<<std::endl;
+        std::cout<<"number of low jets: "<< LoResult.size() << std::endl;
+        for ( int l = 0; l < LoResult.size(); ++l ) {
+          std::cout<<std::endl;
+          std::cout<<"soft jet: "<< l << std::endl;
+          std::cout<<"  pt: "<< LoResult.at(l).pt() << std::endl;
+          std::cout<<"  eta: "<< LoResult.at(l).eta() << std::endl;
+          std::cout<<"  phi: "<< LoResult.at(l).phi_std() << std::endl;
+          std::cout<<"  lead_dr: "<< hardJets.at(0).delta_R( LoResult.at(l ) );
+          std::cout<<"  sub_dr: "<< hardJets.at(1).delta_R( LoResult.at(l ) );
+        }
+
+        return std::vector<fastjet::PseudoJet>();
+      }
+      if ( matchedToSub.size() == 0 ) {
+        __OUT("Couldn't match subleading hard jet")
+        std::cout<<"sub hard jet: "<< std::endl;
+        std::cout<<"  pt: "<< hardJets.at(1).pt() << std::endl;
+        std::cout<<"  eta: "<< hardJets.at(1).eta() << std::endl;
+        std::cout<<"  phi: "<< hardJets.at(1).phi_std() << std::endl;
+        std::cout<<std::endl;
+        for ( int l = 0; l < LoResult.size(); ++l ) {
+          std::cout<<std::endl;
+          std::cout<<"soft jet: "<< l << std::endl;
+          std::cout<<"  pt: "<< LoResult.at(l).pt() << std::endl;
+          std::cout<<"  eta: "<< LoResult.at(l).eta() << std::endl;
+          std::cout<<"  phi: "<< LoResult.at(l).phi_std() << std::endl;
+          std::cout<<"  lead_dr: "<< hardJets.at(0).delta_R( LoResult.at(l ) );
+          std::cout<<"  sub_dr: "<< hardJets.at(1).delta_R( LoResult.at(l ) );
+        }
+
         return std::vector<fastjet::PseudoJet>();
       }
       std::cout << 2 << std::endl;
