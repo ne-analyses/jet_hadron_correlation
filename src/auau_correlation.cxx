@@ -488,7 +488,7 @@ int main ( int argc, const char** argv ) {
           std::cout<<"  eta: "<< LoResult.at(l).eta() << std::endl;
           std::cout<<"  phi: "<< LoResult.at(l).phi_std() << std::endl;
         }
-        
+        return 0;
       }
       
       // if zero jets were returned, exit out
