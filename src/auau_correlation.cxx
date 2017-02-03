@@ -466,7 +466,7 @@ int main ( int argc, const char** argv ) {
         for ( int i=0; i<tmp.size(); ++i ){
           fastjet::PseudoJet subtmp = bkgdSubtractor( tmp.at(i) );
           std::cout << tmp.at(i).pt() << "  shifted by " << tmp.at(i).delta_R( subtmp )
-          << " with new pT=" << subtmp.pt() << " with area: " << subtmp.area() << " and rho " << bkgdEstimator.rho() << std::endl;
+          << " with new pT=" << subtmp.pt() << " with area: " << tmp.at(i).area() << " and rho " << bkgdEstimator.rho() << std::endl;
         }
         LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
         // LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets() );
