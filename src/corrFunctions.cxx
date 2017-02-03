@@ -441,6 +441,7 @@ namespace jetHadron {
         throw( -1 );
       }
       
+      std::cout << 1 << std::endl;
       // Match hard jets to full jets
       // match the leading jet
       fastjet::Selector selectMatchedLead = fastjet::SelectorCircle( jetRadius );
@@ -456,11 +457,13 @@ namespace jetHadron {
         __OUT("Couldn't match hard and soft jets")
         return std::vector<fastjet::PseudoJet>();
       }
+      std::cout << 2 << std::endl;
       
       std::vector<fastjet::PseudoJet> matchedToDijet;
       matchedToDijet.push_back( matchedToLead.at(0) );
       matchedToDijet.push_back( matchedToSub.at(0) );
-      
+
+      std::cout << 3 << std::endl;
       // SWITCH TO HARD CORE
       //matchedToDijet.push_back( hardJets.at(0) );
       //matchedToDijet.push_back( hardJets.at(1) );
@@ -504,7 +507,7 @@ namespace jetHadron {
          return std::vector<fastjet::PseudoJet>();
         }
       }
-      
+      std::cout << 4 << std::endl;
       return matchedToDijet;
       
     }
