@@ -599,7 +599,7 @@ int main ( int argc, const char** argv) {
         histograms->FillJetPt( analysisJets.at(0).pt() );
         histograms->FillJetEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
       }
-      /*
+      
       // Now we can perform the correlations
       // Only on the pp particles
       for ( int i = 0; i < correlationParticles.size(); ++i ) {
@@ -619,7 +619,6 @@ int main ( int argc, const char** argv) {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
         }
       }
-       */
       
       
     }
