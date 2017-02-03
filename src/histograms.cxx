@@ -503,6 +503,14 @@ namespace jetHadron {
     hLeadJetPt->Fill( pt );
     return true;
   }
+
+  bool histograms::FillLeadJetPtHard( double pt ) {
+    if ( !IsInitialized() ) { return false; }
+    
+    hLeadJetPtHard->Fill( pt );
+    return true;
+  }
+
   
   bool histograms::FillSubJetPt( double pt ) {
     if ( !IsInitialized() ) { return false; }

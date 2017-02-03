@@ -480,12 +480,15 @@ int main ( int argc, const char** argv ) {
         histograms->FillAjDif( jetHadron::CalcAj( hardJets ), jetHadron::CalcAj( analysisJets ) );
         histograms->FillAjStruct( jetHadron::CalcAj( analysisJets ), analysisJets[0].pt(), refCent );
         histograms->FillLeadJetPt( analysisJets.at(0).pt() );
+        histograms->FillLeadJetPtHard( hardJets.at(0).pt() );
         histograms->FillLeadEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
         histograms->FillSubJetPt( analysisJets.at(1).pt() );
+        histograms->FillSubJetPtHard( hardJets.at(1).pt() );
         histograms->FillSubEtaPhi( analysisJets.at(1).eta(), analysisJets.at(1).phi_std() );
       }
       else {
         histograms->FillJetPt( analysisJets.at(0).pt() );
+        histograms->FillJetPtHard( hardJets.at(0).pt() );
         histograms->FillJetEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
       }
       

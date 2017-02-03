@@ -132,6 +132,7 @@ namespace jetHadron {
     
     // For jet-hadron
     bool FillJetPt( double pt );										// For Jet-hadron: records accepted trigger jet pt
+    bool FillJetPtHard( double pt );										// For Jet-hadron: records accepted trigger jet pt
     bool FillJetEtaPhi( double eta, double phi );		// Records accepted trigger jet eta-phi
     // records trigger-associated correlations
     bool FillCorrelation( double dEta, double dPhi, double assocPt, double weight, int vzBin, int centBin = 0 );
