@@ -143,7 +143,7 @@ int main ( int argc, const char** argv ) {
   std::string 	analysisType  = "dijet";									// choose dijet or jet ( decides value of requireDijets )
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
-  bool					requireTrigger= false;											// require leading jet to be within jetRadius of a trigger tower
+  bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
   double        softwareTrig  = 6.0;                     // require there to be an offline trigger with E > softwareTrig
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
   double 				leadJetPtMin  = 20.0;											// leading jet minimum pt requirement
@@ -155,7 +155,7 @@ int main ( int argc, const char** argv ) {
   std::string		outputDir 		= "tmp/";										// directory where everything will be saved
   std::string 	corrOutFile		= "corr.root";							// histograms will be saved here
   std::string		treeOutFile		= "jet.root";								// jets will be saved in a TTree here
-  std::string	 	inputFile			= "/nfs/rhi/STAR/Data/SmallAuAu/Small_Clean810_1_1.root";		// input file: can be .root, .txt, .list
+  std::string	 	inputFile			= "auau_list/grid/small_1.list";		// input file: can be .root, .txt, .list
   std::string 	chainName     = "JetTree";								// Tree name in input file
   
   // Now check to see if we were given modifying arguments
