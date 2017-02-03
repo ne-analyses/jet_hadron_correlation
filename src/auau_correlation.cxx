@@ -537,7 +537,7 @@ int main ( int argc, const char** argv ) {
   histograms->Write();
   histOut->Close();
 
-  std::cout << nMatchedHard << std::endl;
+  std::cout << "XXX " << nMatchedHard << std::endl;
   return 0;
 }
 
