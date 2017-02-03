@@ -463,6 +463,8 @@ int main ( int argc, const char** argv) {
       
       // build two data sets
       //**********************
+      particles.clear();
+      correlationParticles.clear();
       
       // first, the tracks we will use for hard core jet finding
       jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
