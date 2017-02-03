@@ -520,7 +520,7 @@ int main ( int argc, const char** argv) {
       // Find corresponding jets with soft constituents
       // ----------------------------------------------
       std::vector<fastjet::PseudoJet> LoResult;
-      fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, backgroundDefinition, areaDef ); // WITH background subtraction
+      fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, analysisDefinition, areaDef ); // WITH background subtraction
       
       // Background initialization
       // -------------------------
