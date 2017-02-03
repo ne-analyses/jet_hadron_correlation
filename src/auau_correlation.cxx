@@ -306,11 +306,13 @@ int main ( int argc, const char** argv ) {
   TTree* correlatedDiJets;
   // To hold the TLorentzVectors for leading, subleading
   TLorentzVector leadingJet, subleadingJet;
+  TLorentzVector leadingJetHard, subleadingJetHard;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
   Double_t dijetAj = 1.0;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
+  TBranch* CDJBranchHiHard, * CDJBranchLoHard;
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
   TBranch* CDJBranchAj;
@@ -321,6 +323,8 @@ int main ( int argc, const char** argv ) {
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
     CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
     CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
+    CDJBranchHiHard = correlatedDiJets->Branch("leadJet", &leadingJetHard );
+    CDJBranchLoHard = correlatedDiJets->Branch("subLeadJet", &subleadingJetHard );
     CDJBranchAj = correlatedDiJets->Branch("aj", &dijetAj );
   }
   else {
@@ -459,6 +463,8 @@ int main ( int argc, const char** argv ) {
         // leading jet
         leadingJet.SetPtEtaPhiE( analysisJets.at(0).pt(), analysisJets.at(0).eta(), analysisJets.at(0).phi_std(), analysisJets.at(0).E() );
         subleadingJet.SetPtEtaPhiE( analysisJets.at(1).pt(), analysisJets.at(1).eta(), analysisJets.at(1).phi_std(), analysisJets.at(1).E() );
+        leadingJetHard.SetPtEtaPhiE( hardJets.at(0).pt(), hardJets.at(0).eta(), hardJets.at(0).phi_std(), hardJets.at(0).E() );
+        subleadingJetHard.SetPtEtaPhiE( hardJets.at(1).pt(), hardJets.at(1).eta(), hardJets.at(1).phi_std(), hardJets.at(1).E() );
         dijetAj = jetHadron::CalcAj( hardJets );
       }
       else {
