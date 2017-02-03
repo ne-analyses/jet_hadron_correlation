@@ -83,13 +83,13 @@ int main () {
   TString path = location + trigger;
   
   // event mixing file
-  TString mixFileName = path + "/mix.root";
+  TString mixFileName = path + "/mixv4.root";
   mixFiles.push_back( new TFile( mixFileName, "READ") );
   
-  TString towLow = path + "/sysv3/tow-1trk0.root";
-  TString towHigh = path + "/sysv3/tow1trk0.root";
-  TString trkLow = path + "/sysv3/tow0trk-1.root";
-  TString trkHigh = path + "/sysv3/tow0trk1.root";
+  TString towLow = path + "/sysv4/tow-1trk0.root";
+  TString towHigh = path + "/sysv4/tow1trk0.root";
+  TString trkLow = path + "/sysv4/tow0trk-1.root";
+  TString trkHigh = path + "/sysv4/tow0trk1.root";
   
   towFiles.push_back( new TFile( towLow, "READ" ) );
   towFiles.push_back( new TFile( towHigh, "READ" ) );
@@ -331,7 +331,7 @@ int main () {
   
   
   // output file
-  TString outPath = path + "/sysv3.root";
+  TString outPath = path + "/sysv4.root";
   TFile* out = new TFile( outPath,"RECREATE");
   
   for ( int i = 0; i < deta_err.size(); ++i ) {
