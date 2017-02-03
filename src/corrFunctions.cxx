@@ -480,6 +480,7 @@ namespace jetHadron {
           else if ( matchedToDijet.at(1).delta_R( triggers.at(i) ) < jetRadius )
             matchedSubTrigger = true;
         }
+        __OUT("SHOULDNT BE HERE")
         
         // check to make sure the matched jets are within the
         // accepted eta range
