@@ -351,8 +351,8 @@ namespace jetHadron {
     hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
     
     if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
-      hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
-      hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 30, 0, 0.9 );
+      hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 50, -0.6, 0.9 );
+      hAjLow 			= new TH1D( "ajlow", "A_{J} Low P_{T} Constituents;A_{J};fraction", 50, -0.6, 0.9 );
       hAjDif      = new TH3F( "ajdif", "A_{J} difference by A_{J} hard and soft", 30, 0, 1, 30, 0, 1, 30, 0, 1 );
       hAjStruct = new TH3F("hAjStruct", "Aj Centrality Pt", 25, 0, 1, binsCentrality, centLowEdge, centHighEdge, 30, 0, 60 );
     }
