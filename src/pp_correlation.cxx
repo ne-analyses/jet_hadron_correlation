@@ -468,7 +468,7 @@ int main ( int argc, const char** argv) {
       
       // first, the tracks we will use for hard core jet finding
       jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
-      //jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
+      jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
       // second, the tracks used for full event reconstruction
       // and correlations, these have all pp tracks/towers
