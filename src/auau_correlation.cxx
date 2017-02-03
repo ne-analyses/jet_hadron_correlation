@@ -414,7 +414,9 @@ int main ( int argc, const char** argv ) {
       jetHadron::ConvertTStarJetVector( container, particles, true, 1 );
       
       // Get HT triggers
-      jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
+      //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
+      jetHadron::GetTriggersPP( requireTrigger, particles, triggers );
+      
       
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
