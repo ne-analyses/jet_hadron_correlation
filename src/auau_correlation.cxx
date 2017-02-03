@@ -461,8 +461,9 @@ int main ( int argc, const char** argv ) {
         bkgdEstimator.set_particles( lowPtCons );
         // Subtract A*rho from the original pT
         fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
-        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-      }
+        // LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
+        LoResult = fastjet::sorted_by_pt( ClusterSequenceLow.inclusive_jets() );
+     }
       
       // Get the jets used for correlations
       // Returns hardJets if doing jet analysis
