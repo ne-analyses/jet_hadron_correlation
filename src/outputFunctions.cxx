@@ -3091,11 +3091,11 @@ namespace jetHadron {
       }
       
     }
-    graphs[0]->Draw();
+    graphs[0]->Draw("AP");
     graphs[1]->Draw("P");
-    sys2[0]->Draw("[]");
     sys1[0]->Draw("3");
     sys1[1]->Draw("3");
+    sys2[0]->Draw("3");
     
     TLegend* leg = new TLegend( 0.45, 0.5, 0.88, 0.78 );
     
@@ -3103,7 +3103,7 @@ namespace jetHadron {
     leg->AddEntry( graphs[1], "p+p HT corr. to Au+Au 0-20%", "lep" );
     leg->AddEntry( sys1[0], "tracking unc. Au+Au", "f" );
     leg->AddEntry( sys1[1], "tracking unc. p+p", "f" );
-    leg->AddEntry( sys2[0], "relative JES unc.", "lep");
+    leg->AddEntry( sys2[0], "relative JES unc.", "f");
     leg->Draw();
     
     // and draw some titles and such
