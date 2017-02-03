@@ -332,7 +332,7 @@ namespace jetHadron {
     evCuts->SetMaxEventPtCut( eventPtCut );
     evCuts->SetMaxEventEtCut( eventEtCut );
     
-    if( softwareTrigger ) {
+    if( fabs(softwareTrigger) < 0.0001 ) {
       evCuts->SetMinEventEtCut( softwareTrigger );
       evCuts->SetUseRawForMinEventEtCut( true );
     }
