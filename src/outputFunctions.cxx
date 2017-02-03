@@ -3072,7 +3072,7 @@ namespace jetHadron {
       
       if ( i == 0 ) {
         sys1[i]->SetFillStyle(1001);
-        sys1[i]->SetFillColorAlpha(i+1, 0.6);
+        sys1[i]->SetFillColorAlpha(i+1, 0.3);
       }
       
       if ( i == 1 ) {
