@@ -2731,9 +2731,9 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 46, 0.30 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.45 );
         if ( j == 0 ) {
-          errors[j][i]->SetFillColorAlpha( 1, 0.35 );
+          errors[j][i]->SetFillColorAlpha( 1, 0.45 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -2856,9 +2856,9 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 46, 0.30 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.45 );
         if ( j == 0 ) {
-          errors[j][i]->SetFillColorAlpha( 1, 0.35 );
+          errors[j][i]->SetFillColorAlpha( 1, 0.45 );
         }
         errors[j][i]->SetFillStyle(1001);
         errors[j][i]->SetLineWidth( 0 );
@@ -3072,20 +3072,20 @@ namespace jetHadron {
       
       if ( i == 0 ) {
         sys1[i]->SetFillStyle(1001);
-        sys1[i]->SetFillColorAlpha(i+1, 0.3);
+        sys1[i]->SetFillColorAlpha(i+1, 0.45 );
       }
       
       if ( i == 1 ) {
         sys1[i]->SetFillStyle(1001);
         //sys1[i]->SetFillColorAlpha(i+1, 0.6);
-        sys1[i]->SetFillColorAlpha( 46, 0.3 );
+        sys1[i]->SetFillColorAlpha( 46, 0.45 );
       }
       
       if ( i == 0 ) {
-        sys2[0]->SetFillStyle(1001);
-        sys2[0]->SetFillStyle(3003);
+        //sys2[0]->SetFillStyle(1001);
+        sys2[0]->SetFillStyle(3002);
         //sys2[0]->SetFillColorAlpha( 46, 0.30 );
-        sys2[0]->SetFillColorAlpha( kRed, 0.6 );
+        sys2[0]->SetFillColorAlpha( kRed, 0.9 );
       }
       
     }
