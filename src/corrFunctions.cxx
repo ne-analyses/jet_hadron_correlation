@@ -339,7 +339,8 @@ namespace jetHadron {
     
     evCuts->SetVertexZDiffCut( vertexZDiffCut );
     if ( collisionType == "auau" ) {
-    	evCuts->SetRefMultCut ( y7RefMultCut );
+    	//evCuts->SetRefMultCut ( y7RefMultCut );
+      evCuts->SetRefMultCut( 0 );
     }
     else if ( collisionType == "pp" ) {
       evCuts->SetRefMultCut( 0 );
