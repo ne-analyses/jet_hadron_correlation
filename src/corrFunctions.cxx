@@ -512,12 +512,10 @@ namespace jetHadron {
         }
         
         
-        
         // now return in proper order
         // if subjet was matched but not the leading jet,
         // reverse
         if ( matchedSubTrigger && !matchedLeadTrigger ) {
-          std::cout<<"WE GOT A FLIP"<<std::endl;
           std::vector<fastjet::PseudoJet> reversedJets;
           reversedJets.push_back( matchedToDijet.at(1) );
           reversedJets.push_back( matchedToDijet.at(0) );
