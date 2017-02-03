@@ -332,7 +332,7 @@ namespace jetHadron {
     evCuts->SetMaxEventPtCut( eventPtCut );
     evCuts->SetMaxEventEtCut( eventEtCut );
     
-    if( fabs(softwareTrigger) < 0.0001 ) {
+    if( fabs(softwareTrigger) > 0.0001 ) {
       evCuts->SetMinEventEtCut( softwareTrigger );
       evCuts->SetUseRawForMinEventEtCut( true );
     }
@@ -495,17 +495,12 @@ namespace jetHadron {
       std::vector<fastjet::PseudoJet> matchedToDijet;
       matchedToDijet.push_back( matchedToLead.at(0) );
       matchedToDijet.push_back( matchedToSub.at(0) );
-
-      // SWITCH TO HARD CORE
-      //matchedToDijet.push_back( hardJets.at(0) );
-      //matchedToDijet.push_back( hardJets.at(1) );
       
       // if we need a trigger, match jets
       // if the trigger is in the subleading jet,
       // make sub jet the leading jet
       // otherwise, return the dijets without matching
       
-      // CHECK THIS
       if ( requireTrigger ) {
         bool matchedLeadTrigger = false;
         bool matchedSubTrigger = false;
@@ -515,13 +510,6 @@ namespace jetHadron {
           else if ( matchedToDijet.at(1).delta_R( triggers.at(i) ) < jetRadius )
             matchedSubTrigger = true;
         }
-        __OUT("SHOULDNT BE HERE")
-        
-        // check to make sure the matched jets are within the
-        // accepted eta range
-//        for ( int i = 0; i < matchedToDijet.size(); ++i )
-//          if ( fabs( matchedToDijet[i].eta() ) > jetHadron::maxTrackRap - jetRadius )
-//            return std::vector<fastjet::PseudoJet>();
         
         // now return in proper order
         // if subjet was matched but not the leading jet,
@@ -535,7 +523,7 @@ namespace jetHadron {
         else if ( matchedLeadTrigger )
           return matchedToDijet;
         else {
-          __ERR("WTF IS GOING ON MY LIFE IS A LIE")
+          __OUT("Jets not matched to trigger")
          return std::vector<fastjet::PseudoJet>();
         }
       }
