@@ -1441,12 +1441,13 @@ namespace jetHadron {
       
       for ( int j = ptBinLow; j <= ptBinHigh; ++j ) {
         x_[j-ptBinLow] = x[i][j];
-        if ( y.size() == 1 ) {
-          x_[j-ptBinLow] = x[1][j];
-        }
         y_[j-ptBinLow] = y[i][j] / selector.GetPtBinWidth(j);
         x_err_[j-ptBinLow] = x_err[i][j];
         y_err_[j-ptBinLow] = y_err[i][j];
+        if ( y.size() == 1 ) {
+          x_[j-ptBinLow] = x[1][j];
+          x_err_[j-ptBinLow] = 0.1;
+        }
  
       }
       
