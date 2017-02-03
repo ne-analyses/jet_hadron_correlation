@@ -1441,6 +1441,9 @@ namespace jetHadron {
       
       for ( int j = ptBinLow; j <= ptBinHigh; ++j ) {
         x_[j-ptBinLow] = x[i][j];
+        if ( y.size() == 1 ) {
+          x_[j-ptBinLow] = x[1][j];
+        }
         y_[j-ptBinLow] = y[i][j] / selector.GetPtBinWidth(j);
         x_err_[j-ptBinLow] = x_err[i][j];
         y_err_[j-ptBinLow] = y_err[i][j];
@@ -3100,7 +3103,7 @@ namespace jetHadron {
     leg->AddEntry( graphs[1], "p+p HT corr. to Au+Au 0-20%", "lep" );
     leg->AddEntry( sys1[0], "tracking unc. Au+Au", "f" );
     leg->AddEntry( sys1[1], "tracking unc. p+p", "f" );
-    leg->AddEntry( sys2[0], "relative JES unc.", "f");
+    leg->AddEntry( sys2[0], "relative JES unc.", "lep");
     leg->Draw();
     
     // and draw some titles and such
