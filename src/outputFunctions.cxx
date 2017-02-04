@@ -2734,7 +2734,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#phi");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 46, 0.45 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.65 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.45 );
         }
@@ -2747,7 +2747,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( 2, 0.60 );
+        errors2[i]->SetFillColorAlpha( kRed+3, 1.0 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
@@ -2859,7 +2859,7 @@ namespace jetHadron {
         errors[j][i]->GetXaxis()->SetTitleSize( 0.06 );
         errors[j][i]->GetYaxis()->SetTitle( "1/N_{Dijets}dN/d#Delta#eta");
         errors[j][i]->GetYaxis()->SetTitleSize( 0.06 );
-        errors[j][i]->SetFillColorAlpha( 46, 0.45 );
+        errors[j][i]->SetFillColorAlpha( 46, 0.65 );
         if ( j == 0 ) {
           errors[j][i]->SetFillColorAlpha( 1, 0.45 );
         }
@@ -2872,7 +2872,7 @@ namespace jetHadron {
         errors2[i]->SetFillStyle(1001);
         errors2[i]->SetLineWidth(0);
         errors2[i]->SetMarkerSize(0);
-        errors2[i]->SetFillColorAlpha( kRed, 0.60 );
+        errors2[i]->SetFillColorAlpha( kRed+3, 1.0 );
         errors2[i]->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
         // changed to set constant range
         //errors2[i]->GetYaxis()->SetRangeUser( min, max );
