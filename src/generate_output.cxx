@@ -91,8 +91,8 @@ int main( int argc, const char** argv) {
   gStyle->SetOptFit(false);
   gStyle->SetOptTitle(1);
   gStyle->SetLegendBorderSize(0);
-  gStyle->SetHatchesSpacing( 1 );
-  gStyle->SetHatchesLineWidth( 1 );
+  gStyle->SetHatchesSpacing( 1.5 );
+  gStyle->SetHatchesLineWidth( 1.9 );
 
   
   // First check to make sure we're located properly
