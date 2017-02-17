@@ -380,12 +380,18 @@ int main ( int argc, const char** argv) {
   TLorentzVector leadingJetHard, subleadingJetHard;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
+  Int_t gRefMult;
+  Double_t bkgRho = 0;
+  Double_t bkgSigma = 0;
   Double_t dijetAj = 1.0;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
   TBranch* CDJBranchHiHard, * CDJBranchLoHard;
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
+  TBranch* CDJBranchRefMultBin;
+  TBranch* CDJBranchBkgRho;
+  TBranch* CDJBranchBkgSigma;
   TBranch* CDJBranchAj;
   
   if ( requireDijets ) {
@@ -395,12 +401,18 @@ int main ( int argc, const char** argv) {
     CDJBranchHiHard = correlatedDiJets->Branch("leadJetHard", &leadingJetHard );
     CDJBranchLoHard = correlatedDiJets->Branch("subLeadJetHard", &subleadingJetHard );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
+    CDJBranchRefMultBin = correlatedDiJets->Branch("gRefMult", &gRefMult );
+    CDJBranchBkgRho = correlatedDiJets->Branch("rho", &bkgRho );
+    CDJBranchBkgSigma = correlatedDiJets->Branch("sigma", &bkgSigma );
     CDJBranchAj = correlatedDiJets->Branch("aj", &dijetAj );
   }
   else {
     correlatedDiJets = new TTree("pp_jets","Correlated PP Jets" );
     CDJBranchHi = correlatedDiJets->Branch("triggerJet", &leadingJet );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
+    CDJBranchRefMultBin = correlatedDiJets->Branch("gRefMult", &gRefMult );
+    CDJBranchBkgRho = correlatedDiJets->Branch("rho", &bkgRho );
+    CDJBranchBkgSigma = correlatedDiJets->Branch("sigma", &bkgSigma );
   }
   
   // Finally, make ktEfficiency obj for pt-eta
@@ -454,6 +466,15 @@ int main ( int argc, const char** argv) {
       // so set a dummy
       int refCent = 8;
       
+      // but we're still going to get reference multiplicity
+       gRefMult = 0;
+      if ( header->GetCorrectedGReferenceMultiplicity() ) {
+        gRefMult = header->GetCorrectedGReferenceMultiplicity();
+      }
+      else {
+        gRefMult = header->GetGReferenceMultiplicity();
+      }
+
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
       int VzBin = jetHadron::GetVzBin( vertexZ );
@@ -523,19 +544,24 @@ int main ( int argc, const char** argv) {
       // now recluster with all particles if necessary ( only used for dijet analysis )
       // Find corresponding jets with soft constituents
       // ----------------------------------------------
+      bkgSigma = 0;
+      bkgRho = 0;
       std::vector<fastjet::PseudoJet> LoResult;
-      fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, analysisDefinition, areaDef ); // WITH background subtraction
+      if ( requireDijets ) {
+        fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, analysisDefinition, areaDef ); // WITH background subtraction
       
-      // Background initialization
-      // -------------------------
-      
-      // Energy density estimate from median ( pt_i / area_i )
-      fastjet::JetMedianBackgroundEstimator bkgdEstimator ( selectorBkgEstimator, backgroundDefinition, areaDef );
-      bkgdEstimator.set_particles( lowPtCons );
-      // Subtract A*rho from the original pT
-      fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
-      LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-      
+        // Background initialization
+        // -------------------------
+        
+        // Energy density estimate from median ( pt_i / area_i )
+        fastjet::JetMedianBackgroundEstimator bkgdEstimator ( selectorBkgEstimator, backgroundDefinition, areaDef );
+        bkgdEstimator.set_particles( lowPtCons );
+        // Subtract A*rho from the original pT
+        fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
+        LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
+        bkgRho = bkgdEstimator.rho();
+        bkgSigma = bkgdEstimator.sigma();
+      }
       
       // Get the jets used for correlations
       // Returns hardJets if doing jet analysis

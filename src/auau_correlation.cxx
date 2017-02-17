@@ -327,18 +327,27 @@ int main ( int argc, const char** argv ) {
   TLorentzVector leadingJetHard, subleadingJetHard;
   // Records centrality and vertex information for event mixing
   Int_t centralityBin, vertexZBin;
+  Int_t gRefMult;
+  Double_t bkgRho = 0;
+  Double_t bkgSigma = 0;
   Double_t dijetAj = 1.0;
   // Branchs to be written to file
   TBranch* CDJBranchHi, * CDJBranchLo;
   TBranch* CDJBranchHiHard, * CDJBranchLoHard;
   TBranch* CDJBranchCentralityBin;
   TBranch* CDJBranchVertexZBin;
+  TBranch* CDJBranchRefMultBin;
+  TBranch* CDJBranchBkgRho;
+  TBranch* CDJBranchBkgSigma;
   TBranch* CDJBranchAj;
   
   if ( requireDijets ) {
     correlatedDiJets = new TTree("dijets","Correlated Dijets" );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
+    CDJBranchRefMultBin = correlatedDiJets->Branch("gRefMult", &gRefMult );
+    CDJBranchBkgRho = correlatedDiJets->Branch("rho", &bkgRho );
+    CDJBranchBkgSigma = correlatedDiJets->Branch("sigma", &bkgSigma );
     CDJBranchHi = correlatedDiJets->Branch("leadJetSoft", &leadingJet );
     CDJBranchLo = correlatedDiJets->Branch("subLeadJetSoft", &subleadingJet );
     CDJBranchHiHard = correlatedDiJets->Branch("leadJetHard", &leadingJetHard );
@@ -350,6 +359,9 @@ int main ( int argc, const char** argv ) {
     CDJBranchHi = correlatedDiJets->Branch("triggerJet", &leadingJet );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
     CDJBranchCentralityBin = correlatedDiJets->Branch("centralityBin", &centralityBin );
+    CDJBranchRefMultBin = correlatedDiJets->Branch("gRefMult", &gRefMult );
+    CDJBranchBkgRho = correlatedDiJets->Branch("rho", &bkgRho );
+    CDJBranchBkgSigma = correlatedDiJets->Branch("sigma", &bkgSigma );
   }
   
   // Finally, make ktEfficiency obj for pt-eta
@@ -384,7 +396,7 @@ int main ( int argc, const char** argv ) {
       // Find the reference centrality
       // for y14 it takes the corrected gRefMult and
       // corresponding reference centrality
-      int gRefMult = 0;
+      gRefMult = 0;
       int refCent  = 0;
       if ( header->GetCorrectedGReferenceMultiplicity() ) {
         gRefMult = header->GetCorrectedGReferenceMultiplicity();
@@ -414,6 +426,8 @@ int main ( int argc, const char** argv ) {
       jetHadron::ConvertTStarJetVector( container, particles, true, 1 );
       
       // Get HT triggers
+      // No this is not a typo - we went to using the same method between
+      // AuAU and PP simply to make a closer comparison
       //jetHadron::GetTriggers( requireTrigger, triggerObjs, triggers );
       jetHadron::GetTriggersPP( requireTrigger, particles, triggers );
       
@@ -452,6 +466,8 @@ int main ( int argc, const char** argv ) {
       // Find corresponding jets with soft constituents
       // ----------------------------------------------
       std::vector<fastjet::PseudoJet> LoResult;
+      bkgSigma = 0;
+      bkgRho = 0;
       if ( requireDijets ) {
         fastjet::ClusterSequenceArea ClusterSequenceLow ( lowPtCons, analysisDefinition, areaDef ); // WITH background subtraction
         //std::cout<<"CLUSTER SEQUENCE: "<< ClusterSequenceLow.area_def().description() << std::endl;
@@ -465,7 +481,8 @@ int main ( int argc, const char** argv ) {
         fastjet::Subtractor bkgdSubtractor ( &bkgdEstimator );
 
         LoResult = fastjet::sorted_by_pt( bkgdSubtractor( ClusterSequenceLow.inclusive_jets() ) );
-
+        bkgRho = bkgdEstimator.rho();
+        bkgSigma = bkgdEstimator.sigma();
      }
       
       // Get the jets used for correlations
