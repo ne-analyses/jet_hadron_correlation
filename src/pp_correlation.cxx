@@ -618,7 +618,7 @@ int main ( int argc, const char** argv) {
       // and we'll find the highest energy tower
       double maxE = 0;
       for ( int k = 0; k < correlationParticles.size(); ++k ) {
-        if ( correlationParticles[k].E() > maxE && correlationParticles[k].user_index() == 0 ) {
+        if ( correlationParticles[k].pt() > maxE && correlationParticles[k].user_index() == 0 ) {
           maxE = correlationParticles[k].E();
         }
       }

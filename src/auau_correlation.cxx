@@ -541,7 +541,7 @@ int main ( int argc, const char** argv ) {
       // and we'll find the highest energy tower
       double maxE = 0;
       for ( int k = 0; k < particles.size(); ++k ) {
-        if ( particles[k].E() > maxE && particles[k].user_index() == 0 ) {
+        if ( particles[k].pt() > maxE && particles[k].user_index() == 0 ) {
           maxE = particles[k].E();
         }
       }
