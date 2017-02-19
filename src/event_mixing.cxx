@@ -58,6 +58,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <chrono>
 
 // Data is read in by TStarJetPico
 // Library, we convert to FastJet::PseudoJet
@@ -397,15 +398,14 @@ int main ( int argc, const char** argv) {
       jetTree->SetBranchAddress( "subLeadJetSoft", &subBranch );
       jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
       jetTree->SetBranchAddress( "aj", &ajBranch );
+      jetTree->SetBranchAddress( "centralityBin", &centBranch );
     }
     else if ( analysisType == "ppdijetmix" ) {
-      jetTree->SetBranchAddress( "leadJet", &leadBranch );
-      jetTree->SetBranchAddress( "subLeadJet", &subBranch );
+      jetTree->SetBranchAddress( "leadJetSoft", &leadBranch );
+      jetTree->SetBranchAddress( "subLeadJetSoft", &subBranch );
       jetTree->SetBranchAddress( "vertexZBin", &vzBranch );
       jetTree->SetBranchAddress( "aj", &ajBranch );
     }
-    if ( analysisType == "dijetmix" )
-      jetTree->SetBranchAddress( "centralityBin", &centBranch );
     
   }
   else {
@@ -529,6 +529,9 @@ int main ( int argc, const char** argv) {
   std::mt19937 g(rd());
   g.seed( clock() );
   
+  // getting seed for rng
+  auto begin = std::chrono::high_resolution_clock::now();
+  
   // Now we can run over all tree entries and perform the mixing
   __OUT("Starting to perform event mixing")
   for ( int i = 0; i < treeEntries; ++i ) {
@@ -577,9 +580,11 @@ int main ( int argc, const char** argv) {
       header = event->GetHeader();
       container = reader.GetOutputContainer();
       
+      
       // first convert to pseudojets
       particles.clear();
       jetHadron::ConvertTStarJetVector( container, particles );
+
       
       // now do the correlation
       if ( requireDijets ) {

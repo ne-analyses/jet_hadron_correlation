@@ -396,8 +396,8 @@ int main ( int argc, const char** argv) {
   
   if ( requireDijets ) {
     correlatedDiJets = new TTree("pp_dijets","Correlated PP Dijets" );
-    CDJBranchHi = correlatedDiJets->Branch("leadJet", &leadingJet );
-    CDJBranchLo = correlatedDiJets->Branch("subLeadJet", &subleadingJet );
+    CDJBranchHi = correlatedDiJets->Branch("leadJetSoft", &leadingJet );
+    CDJBranchLo = correlatedDiJets->Branch("subLeadJetSoft", &subleadingJet );
     CDJBranchHiHard = correlatedDiJets->Branch("leadJetHard", &leadingJetHard );
     CDJBranchLoHard = correlatedDiJets->Branch("subLeadJetHard", &subleadingJetHard );
     CDJBranchVertexZBin = correlatedDiJets->Branch("vertexZBin", &vertexZBin );
