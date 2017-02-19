@@ -216,6 +216,7 @@ namespace jetHadron {
     hSubEtaPhi 	= 0;
     hAssocPt 		= 0;
     hAssocEtaPhi= 0;
+    hLeadTower  = 0;
     hAjHigh 		= 0;
     hAjLow 			= 0;
     hAjDif      = 0;
@@ -246,6 +247,7 @@ namespace jetHadron {
     hSubEtaPhi 	= 0;
     hAssocPt 		= 0;
     hAssocEtaPhi= 0;
+    hLeadTower  = 0;
     hAjHigh 		= 0;
     hAjLow 			= 0;
     hAjDif      = 0;
@@ -277,6 +279,8 @@ namespace jetHadron {
     delete hAssocPt;
     if ( hAssocEtaPhi )
     delete hAssocEtaPhi;
+    if ( hLeadTower )
+    delete hLeadTower;
     if ( hAjLow )
     delete hAjLow;
     if ( hAjHigh )
@@ -351,6 +355,7 @@ namespace jetHadron {
     
     hAssocPt 		= new TH1D("assocpt", "Associated Track Pt;p_{T}", 80, 0, 12 );
     hAssocEtaPhi= new TH2D("assocetaphi", "Associated Track Eta Phi;#eta;#phi", 40, -1, 1, 40, -pi, pi );
+    hLeadTower  = new TH1D( "leadTowerEnergy", "Leading Tower Energy;E;Count", 40, 0, 12 );
     
     if ( analysisType == "dijet" || analysisType == "ppdijet" ) {
       hAjHigh 		= new TH1D( "ajhigh", "A_{J} High P_{T} Constituents;A_{J};fraction", 50, -0.6, 0.9 );
@@ -396,6 +401,8 @@ namespace jetHadron {
     hAssocEtaPhi->Write();
     if ( hAssocPt )
     hAssocPt->Write();
+    if ( hLeadTower )
+    hLeadTower->Write();
     
     if ( hAjHigh )
     hAjHigh->Write();
@@ -592,6 +599,13 @@ namespace jetHadron {
     if ( !IsInitialized() ) { return false; }
     
     hAssocEtaPhi->Fill( eta, phi );
+    return true;
+  }
+  
+  bool histograms::FillLeadTower( double e ) {
+    if ( !IsInitialized() ) { return false; }
+    
+    hLeadTower->Fill( e );
     return true;
   }
   

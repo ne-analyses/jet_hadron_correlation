@@ -42,6 +42,7 @@ namespace jetHadron {
     // Associated kinematics
     TH1D* hAssocPt;
     TH2D* hAssocEtaPhi;
+    TH2D* hLeadTower;
     
     // A_j if doing dijets
     TH1D* hAjHigh;
@@ -151,6 +152,7 @@ namespace jetHadron {
     // Associated track info
     bool FillAssocPt( double pt );
     bool FillAssocEtaPhi( double eta, double phi );
+    bool FillAssocLeadTower( double e );
     
     // Looking for correlations between Aj, Cent, and Pt
     bool FillAjStruct( double aj, double pt, int centrality = 0 );
