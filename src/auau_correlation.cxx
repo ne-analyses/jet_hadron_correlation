@@ -538,6 +538,15 @@ int main ( int argc, const char** argv ) {
         histograms->FillJetEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
       }
       
+      // and we'll find the highest energy tower
+      double maxE = 0;
+      for ( int k = 0; k < particles.size(); ++k ) {
+        if ( particles[k].E() > maxE && particles[k].user_index() == 0 ) {
+          maxE = particles[k].E();
+        }
+      }
+      histograms->FillLeadTower( maxE );
+      
       // Now we can perform the correlations
       for ( int i = 0; i < particles.size(); ++i ) {
         fastjet::PseudoJet assocParticle = particles.at(i);

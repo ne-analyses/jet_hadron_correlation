@@ -615,6 +615,15 @@ int main ( int argc, const char** argv) {
         histograms->FillJetEtaPhi( analysisJets.at(0).eta(), analysisJets.at(0).phi_std() );
       }
       
+      // and we'll find the highest energy tower
+      double maxE = 0;
+      for ( int k = 0; k < correlationParticles.size(); ++k ) {
+        if ( correlationParticles[k].E() > maxE && correlationParticles[k].user_index() == 0 ) {
+          maxE = correlationParticles[k].E();
+        }
+      }
+      histograms->FillLeadTower( maxE );
+      
       // Now we can perform the correlations
       // Only on the pp particles
       for ( int i = 0; i < correlationParticles.size(); ++i ) {
