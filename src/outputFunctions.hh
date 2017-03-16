@@ -278,6 +278,7 @@ namespace jetHadron {
   void ProjectDphiNearMinusFar( std::vector<std::vector<TH2F*> >& correlation2d, std::vector<std::vector<TH1F*> >& near, std::vector<std::vector<TH1F*> >& far, binSelector selector, std::string uniqueID = "" );
   
   std::vector<std::vector<TH1F*> > ProjectDeta( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
+  std::vector<std::vector<TH1F*> > ProjectDetaMixing( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );
   
   // extended range for our systematic errors
   std::vector<std::vector<TH1F*> > ProjectDetaExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID = "" );

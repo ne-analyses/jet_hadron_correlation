@@ -959,6 +959,41 @@ namespace jetHadron {
     return projections;
   }
   
+  std::vector<std::vector<TH1F*> > ProjectDetaMixing( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID ) {
+    // build the return vector
+    std::vector<std::vector<TH1F*> > projections;
+    projections.resize( correlation2d.size() );
+    
+    // now loop over every 2d histogram and project
+    for ( int i = 0; i < correlation2d.size(); ++i ) {
+      projections[i].resize( correlation2d[i].size() );
+      for ( int j = 0; j < correlation2d[i].size(); ++j ) {
+        
+        //do quick resets
+        correlation2d[i][j]->GetXaxis()->SetRange();
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        //std::cout<<"projecting dEta - file: "<< i << " pt bin: "<< j << std::endl;
+        //std::cout<<"projection bins ( in dphi ): "<<correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_low ) << " - " << correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_high ) << std::endl;
+        //std::cout<<"projection range: " << correlation2d[i][j]->GetYaxis()->GetBinLowEdge(correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_low )) << " - " << correlation2d[i][j]->GetYaxis()->GetBinUpEdge(correlation2d[i][j]->GetYaxis()->FindBin( selector.eta_projection_phi_bound_high ) ) << std::endl;
+        
+        // new name for the projection
+        std::string tmp = uniqueID + "_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        
+        //correlation2d[i][j]->GetYaxis()->SetRangeUser( selector.eta_projection_phi_bound_low, selector.eta_projection_phi_bound_high );
+        
+        projections[i][j] = (TH1F*) correlation2d[i][j]->ProjectionX();
+        projections[i][j]->SetName( tmp.c_str() );
+        
+        correlation2d[i][j]->GetYaxis()->SetRange();
+        
+        
+      }
+    }
+    
+    return projections;
+  }
+  
   // With more bins for our extended range error
   std::vector<std::vector<TH1F*> > ProjectDphiNearMinusFarExtended( std::vector<std::vector<TH2F*> >& correlation2d, binSelector selector, std::string uniqueID ) {
     

@@ -319,7 +319,7 @@ int main( int argc, const char** argv) {
   // ***************************
 
   // first do the 1D dEta for mixing
-  std::vector<std::vector<TH1F*> > mixingProjection = jetHadron::ProjectDeta( leadingMix, selector, "mixing_deta" );
+  std::vector<std::vector<TH1F*> > mixingProjection = jetHadron::ProjectDetaMixing( leadingMix, selector, "mixing_deta" );
   
   // scale by #bins in phi
   for ( int i = 0; i < mixingProjection.size(); ++i ) {
