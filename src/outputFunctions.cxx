@@ -2120,18 +2120,18 @@ namespace jetHadron {
         if ( j == 0 ) {
           histograms[j][i]->Draw();
         }
-        //else {
-          //histograms[j][i]->Draw("same");
-        //}
+        else {
+          histograms[j][i]->Draw("same");
+        }
         
         // add to legend
-//        if ( histograms.size() <= 2 )
-//          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
-//        else
-//          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
-//        
+        if ( histograms.size() <= 2 )
+          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+        else
+          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+        
       }
-      //leg->Draw();
+      leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
