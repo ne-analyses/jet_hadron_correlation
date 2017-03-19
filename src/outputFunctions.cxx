@@ -2109,7 +2109,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
-        histograms[j][i]->GetXaxis()->SetRangeUser( -1, 1 );
+        histograms[j][i]->GetXaxis()->SetRangeUser( -0.9, 0.9 );
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
@@ -2125,11 +2125,11 @@ namespace jetHadron {
         //}
         
         // add to legend
-        if ( histograms.size() <= 2 )
-          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
-        else
-          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
-        
+//        if ( histograms.size() <= 2 )
+//          leg->AddEntry( histograms[j][i], selector.analysisStrings[j].c_str(), "lep" );
+//        else
+//          leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
+//        
       }
       //leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
