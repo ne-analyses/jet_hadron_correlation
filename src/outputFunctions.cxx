@@ -2131,7 +2131,7 @@ namespace jetHadron {
           leg->AddEntry( histograms[j][i], analysisName[j].c_str(), "lep" );
         
       }
-      leg->Draw();
+      //leg->Draw();
       std::string tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName[0] + "_" + patch::to_string(i) + ".C";
