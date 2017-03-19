@@ -2109,7 +2109,7 @@ namespace jetHadron {
         histograms[j][i]->SetMarkerColor( j+1 );
         histograms[j][i]->SetMarkerSize( 2 );
         histograms[j][i]->GetYaxis()->SetRangeUser( min, max);
-        histograms[j][i]->GetXaxis()->SetRangeUser( -pi/2.0, pi/2.0 );
+        histograms[j][i]->GetXaxis()->SetRangeUser( -1, 1 );
         
         // try to set a fit function if it exists
         if ( histograms[j][i]->FindObject( fits[j][i]->GetName() ) ) {
@@ -2120,9 +2120,9 @@ namespace jetHadron {
         if ( j == 0 ) {
           histograms[j][i]->Draw();
         }
-        else {
-          histograms[j][i]->Draw("same");
-        }
+        //else {
+          //histograms[j][i]->Draw("same");
+        //}
         
         // add to legend
         if ( histograms.size() <= 2 )
