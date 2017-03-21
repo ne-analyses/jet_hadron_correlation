@@ -731,13 +731,13 @@ int main( int argc, const char** argv) {
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
     std::cout<<"pt bin: "<<i << std::endl;
-    dphi_lead_bin_int[0][i] -= fabs(dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] )  ;
+    dphi_lead_bin_int[0][i] -= (dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] )  ;
     std::cout<<"dphi: "<< dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] << std::endl;
-    dphi_sub_bin_int[0][i] -=  fabs( dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] ) ;
+    dphi_sub_bin_int[0][i] -=  ( dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] ) ;
     std::cout<<"dphi sub: "<< dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] << std::endl;
-    deta_lead_bin_int[0][i] -= fabs( deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] ) ;
+    deta_lead_bin_int[0][i] -= ( deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] ) ;
     std::cout<<"deta: "<< deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i]<<std::endl;
-    deta_sub_bin_int[0][i] -=  fabs( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] ) ;
+    deta_sub_bin_int[0][i] -=  ( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] ) ;
     std::cout<<"deta sub: "<< deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] << std::endl;
   }
   
