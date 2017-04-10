@@ -519,6 +519,12 @@ namespace jetHadron {
           std::vector<fastjet::PseudoJet> reversedJets;
           reversedJets.push_back( matchedToDijet.at(1) );
           reversedJets.push_back( matchedToDijet.at(0) );
+          
+          // we will also switch the hard jets
+          fastjet::PseudoJet tmp = hardJets.at(0);
+          hardJets[0] = hardJets.at(1);
+          hardJets[1] = tmp;
+          
           return reversedJets;
         }
         else if ( matchedLeadTrigger )
