@@ -126,6 +126,12 @@ if ( ! -d log/pp/${analysis}/${outFile}/${subfolder} ) then
 mkdir -p log/pp/${analysis}/${outFile}/${subfolder}
 endif
 
+if ($tow == 0 && $track == 0 ) then
+mkdir -p out/${analysis}/${outFile}/${subfolder}/correlations
+mkdir -p out/${analysis}/${outFile}/${subfolder}/tree
+mkdir -p out/${analysis}/${outFile}/${subfolder}/mixing
+endif
+
 # Now Submit jobs for each data file
 foreach input ( ${base}* )
 
