@@ -3067,10 +3067,9 @@ namespace jetHadron {
       latex.SetTextColor(kRed+3);
       latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
       
-      
+      c1.SaveAs( tmpEps.c_str() );
       c1.SaveAs( tmp.c_str() );
       c1.SaveAs( tmpC.c_str() );
-      c1.SaveAs( tmpEps.c_str() );
     }
     
   }
@@ -3174,9 +3173,9 @@ namespace jetHadron {
     
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
-    tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
-    c1.SaveAs( tmp.c_str() );
     tmp = outputDir + "/" + analysisNames[0] + "_graph.eps";
+    c1.SaveAs( tmp.c_str() );
+    tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
     c1.SaveAs( tmp.c_str() );
   }
   
