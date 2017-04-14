@@ -1862,6 +1862,8 @@ namespace jetHadron {
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".eps";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -1910,7 +1912,7 @@ namespace jetHadron {
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
-      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".eps";
       c1.SaveAs( tmp.c_str() );
     }
     
