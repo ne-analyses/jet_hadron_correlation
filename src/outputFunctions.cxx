@@ -1815,6 +1815,8 @@ namespace jetHadron {
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".eps";
+      c1.SaveAs( tmp.c_str() );
     }
     
   }
@@ -1905,6 +1907,8 @@ namespace jetHadron {
       latex.SetTextColor(kRed+3);
       latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
       
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
       c1.SaveAs( tmp.c_str() );
@@ -2848,6 +2852,8 @@ namespace jetHadron {
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.C";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.eps";
+      c1.SaveAs( tmp.c_str() );
     }
   }
   
@@ -2972,6 +2978,8 @@ namespace jetHadron {
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.C";
       c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.eps";
+      c1.SaveAs( tmp.c_str() );
     }
 
   }
@@ -2988,6 +2996,7 @@ namespace jetHadron {
     for ( int i = 0; i < hist1.size(); ++i ) {
       std::string tmp = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.pdf";
       std::string tmpC = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.C";
+      std::string tmpEps = outputDir + "/" + "dphi_nearfar_pt_" + patch::to_string(i) +"_full.eps";
       
       hist1[i]->GetXaxis()->SetTitle("#Delta#phi");
       hist1[i]->GetXaxis()->SetTitleSize( 0.075 );
@@ -3059,6 +3068,7 @@ namespace jetHadron {
       
       c1.SaveAs( tmp.c_str() );
       c1.SaveAs( tmpC.c_str() );
+      c1.SaveAs( tmpEps.c_str() );
     }
     
   }
@@ -3163,6 +3173,8 @@ namespace jetHadron {
     std::string tmp = outputDir + "/" + analysisNames[0] + "_graph.pdf";
     c1.SaveAs( tmp.c_str() );
     tmp = outputDir + "/" + analysisNames[0] + "_graph.C";
+    c1.SaveAs( tmp.c_str() );
+    tmp = outputDir + "/" + analysisNames[0] + "_graph.eps";
     c1.SaveAs( tmp.c_str() );
   }
   
