@@ -159,6 +159,7 @@ namespace jetHadron {
     if ( ClearVector )
       particles.clear();
     
+    std::cout<<"NEW EVENT" << std::endl;
     std::uniform_real_distribution<> dis(0.0,1.0);
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
@@ -170,7 +171,7 @@ namespace jetHadron {
       if ( sv->GetCharge() ) {
         double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
         double random_ = dis(gen);
-        std::cout<< random_ << std::endl;
+        if ( i == 0 ) std::cout<< random_ << std::endl;
         if ( random_ > ratio ) {
           continue;
         }
