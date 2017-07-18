@@ -299,19 +299,6 @@ int main( int argc, const char** argv) {
   // now turn off the titles
   gStyle->SetOptTitle(0);
   
-  __OUT("Clearing input histograms")
-  // clear up the 1D histograms for the sake of my sanity
-//  ClearHistograms( leadingCorrelationIn );
-//  ClearHistograms( subleadingCorrelationIn );
-//  ClearHistograms( leadingCorrelation );
-//  ClearHistograms( subleadingCorrelation );
-//  ClearHistograms( leadingCorrelationInHard );
-//  ClearHistograms( subleadingCorrelationInHard );
-//  ClearHistograms( leadingCorrelationHard );
-//  ClearHistograms( subleadingCorrelationHard );
-//  
-  __OUT("Finished clearing input histograms")
-  
   
   // ***************************
   // print out the 1d dEta for
