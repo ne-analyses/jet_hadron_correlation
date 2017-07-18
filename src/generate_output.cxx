@@ -595,7 +595,7 @@ int main( int argc, const char** argv) {
   //******************************************
   // Now we need to test the systematic errors
   //******************************************
-  TFile sysIn( "out/added/pp/trg6/sysv3.root", "READ");
+  TFile sysIn( "out/added/pp/trg6/sysv4.root", "READ");
   std::vector<std::vector<TH1F*> > deta_sys, deta_sys_sub, dphi_sys, dphi_sys_sub;
   deta_sys.resize( 1 );
   deta_sys_sub.resize( 1 );
@@ -745,95 +745,7 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
-  
-//  // TEST for fluctuation subtraction
-//  // print out
-//  TCanvas c1;
-//  dphi_yield_graph[0]->SetLineColor(1);
-//  dphi_yield_graph[0]->SetMarkerSize(2);
-//  dphi_yield_graph[0]->SetMarkerColor(1);
-//  dphi_yield_graph[0]->SetMarkerStyle(21);
-//  dphi_yield_graph[0]->Draw();
-//  before_dphi_yield_graph[0]->SetLineColor(2);
-//  before_dphi_yield_graph[0]->SetMarkerStyle(22);
-//  before_dphi_yield_graph[0]->SetMarkerSize(2);
-//  before_dphi_yield_graph[0]->SetMarkerColor(2);
-//  dphi_yield_graph[0]->Draw();
-//  before_dphi_yield_graph[0]->Draw("P");
-//  TLegend* leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
-//  leg->AddEntry( dphi_yield_graph[0], "dphi after subtraction", "lep");
-//  leg->AddEntry( before_dphi_yield_graph[0], "dphi before subtraction", "lep");
-//  leg->Draw();
-//  c1.SaveAs( "dphi_lead.pdf" );
-//  
-//  TCanvas c2;
-//  dphi_sub_yield_graph[0]->SetLineColor(1);
-//  dphi_sub_yield_graph[0]->SetMarkerSize(2);
-//  dphi_sub_yield_graph[0]->SetMarkerColor(1);
-//  dphi_sub_yield_graph[0]->SetMarkerStyle(21);
-//  dphi_sub_yield_graph[0]->Draw();
-//  before_dphi_sub_yield_graph[0]->SetLineColor(2);
-//  before_dphi_sub_yield_graph[0]->SetMarkerStyle(22);
-//  before_dphi_sub_yield_graph[0]->SetMarkerSize(2);
-//  before_dphi_sub_yield_graph[0]->SetMarkerColor(2);
-//  dphi_sub_yield_graph[0]->Draw();
-//  before_dphi_sub_yield_graph[0]->Draw("P");
-//  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
-//  leg->AddEntry( dphi_sub_yield_graph[0], "recoil dphi after subtraction", "lep");
-//  leg->AddEntry( before_dphi_sub_yield_graph[0], "recoil dphi before subtraction", "lep");
-//  leg->Draw();
-//  c2.SaveAs( "dphi_sub.pdf" );
-//
-//  TCanvas c3;
-//  deta_yield_graph[0]->SetLineColor(1);
-//  deta_yield_graph[0]->SetMarkerSize(2);
-//  deta_yield_graph[0]->SetMarkerColor(1);
-//  deta_yield_graph[0]->SetMarkerStyle(21);
-//  deta_yield_graph[0]->Draw();
-//  before_deta_yield_graph[0]->SetLineColor(2);
-//  before_deta_yield_graph[0]->SetMarkerStyle(22);
-//  before_deta_yield_graph[0]->SetMarkerSize(2);
-//  before_deta_yield_graph[0]->SetMarkerColor(2);
-//  deta_yield_graph[0]->Draw();
-//  before_deta_yield_graph[0]->Draw("P");
-//  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
-//  leg->AddEntry( deta_yield_graph[0], "dEta after subtraction", "lep");
-//  leg->AddEntry( before_deta_yield_graph[0], "dEta before subtraction", "lep");
-//  leg->Draw();
-//  c3.SaveAs( "deta_lead.pdf" );
-//
-//  TCanvas c4;
-//  deta_sub_yield_graph[0]->SetLineColor(1);
-//  deta_sub_yield_graph[0]->SetMarkerSize(2);
-//  deta_sub_yield_graph[0]->SetMarkerColor(1);
-//  deta_sub_yield_graph[0]->SetMarkerStyle(21);
-//  deta_sub_yield_graph[0]->Draw();
-//  before_deta_sub_yield_graph[0]->SetLineColor(2);
-//  before_deta_sub_yield_graph[0]->SetMarkerStyle(22);
-//  before_deta_sub_yield_graph[0]->SetMarkerSize(2);
-//  before_deta_sub_yield_graph[0]->SetMarkerColor(2);
-//  deta_sub_yield_graph[0]->Draw();
-//  before_deta_sub_yield_graph[0]->Draw("P");
-//  leg = new TLegend( 0.6, 0.6, 0.9, 0.9 );
-//  leg->AddEntry( deta_sub_yield_graph[0], "recoil deta after subtraction", "lep");
-//  leg->AddEntry( before_deta_sub_yield_graph[0], "recoil deta before subtraction", "lep");
-//  leg->Draw();
-//  c4.SaveAs( "deta_sub.pdf" );
-//  
-//  
-//  // DONE WITH DIAGNOSTIC
-//  TFile out("testfile.root", "RECREATE");
-//  for ( int i = 0; i < corrected_dphi_subtracted[1].size(); ++i ) {
-//    
-//    corrected_dphi_subtracted[1][i]->Write();
-//    corrected_dphi_subtracted_sub[1][i]->Write();
-//    corrected_deta_lead[1][i]->Write();
-//    corrected_deta_sub[1][i]->Write();
-//    
-//  }
-  
-  
-  
+
   
   //// annddddddd make some systematic error graphs from the differences
   std::vector<TGraphErrors*> dphi_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_subtracted_yield_dif, 1, 5, selector, analysisNames, "dphi_proj_sys" );
