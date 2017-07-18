@@ -13,7 +13,9 @@ CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unuse
 endif
 
 ifeq ($(os),Linux)
-LDFLAGS       = -g
+## this is needed on the grid because I use a nonstandard python, which gives a new version of libstdc++
+## from Anaconda... my fastjet is compiled vs the new one
+LDFLAGS       = -g -L/wsu/apps/gnu-4.8.2/python/Anaconda/Anaconda2-4.1.1/lib -lstdc++
 LDFLAGSS      = -g --shared 
 else
 LDFLAGS       = -O -Xlinker -bind_at_load -flat_namespace
