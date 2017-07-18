@@ -14,6 +14,7 @@
 #include <string>
 #include <limits.h>
 #include <unistd.h>
+#include <random>
 
 // fastjet 3
 #include "fastjet/PseudoJet.hh"
@@ -112,7 +113,7 @@ namespace jetHadron {
   // Converts TStarJetPicoVectors into PseudoJets
   void ConvertTStarJetVector( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, bool ClearVector = true, double towerScale = 1.0 );
   // applies an effective 90% relative efficiency compared to auau
-  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, int64_t seed, bool ClearVector = true, double towerScale = 1.0 );
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, std::mt19937& gen, bool ClearVector = true, double towerScale = 1.0 );
   
   // Used in pp to convert either all embedding tracks or
   // only hard embedding tracks ( > 2.0 GeV )

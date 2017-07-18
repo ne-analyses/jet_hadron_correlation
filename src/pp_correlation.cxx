@@ -427,8 +427,10 @@ int main ( int argc, const char** argv) {
   int nMatchedHard = 0;
   
   
-  // getting seed for rng
-  auto begin = std::chrono::high_resolution_clock::now();
+  // create a RNG for random track selection
+  std::random_device rd;
+  std::mt19937 generator(rd());
+  generator.seed( 420 );
   
   try{
     while ( reader.NextEvent() ) {
@@ -482,17 +484,13 @@ int main ( int argc, const char** argv) {
       // Check to see if Vz is in the accepted range; if not, discard
       if ( VzBin == -1 )																				{ continue; }
       
-      // now for pp - we also need a seed so we use high resolution timing
-      auto end = std::chrono::high_resolution_clock::now();
-      int64_t seed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin).count();
-      
       // build two data sets
       //**********************
       particles.clear();
       correlationParticles.clear();
       
       // first, the tracks we will use for hard core jet finding
-      jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, seed, true, fTowerScale );
+      jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, generator, true, fTowerScale );
       jetHadron::ConvertTStarJetVector( mbContainer, particles, false, 1.0 );
       
       // second, the tracks used for full event reconstruction

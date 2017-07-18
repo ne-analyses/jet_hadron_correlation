@@ -153,17 +153,13 @@ namespace jetHadron {
   }
   
   // applies an effective 90% relative efficiency compared to auau
-  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, int64_t seed, bool ClearVector, double towerScale ) {
+  void ConvertTStarJetVectorPP( TStarJetVectorContainer<TStarJetVector>* container, std::vector<fastjet::PseudoJet> & particles, ktTrackEff& eff, std::mt19937& gen, bool ClearVector, double towerScale ) {
     // Empty the container
     // if called for
     if ( ClearVector )
       particles.clear();
     
-    // create a RNG for shuffling events
-    std::random_device rd;
-    std::mt19937 g(rd());
-    g.seed( seed );
-    std::uniform_real_distribution<> dis(0.0, 1.0);
+    std::uniform_real_distribution<> dis(0.0,1.0);
     
     // Transform TStarJetVectors into (FastJet) PseudoJets
     // ---------------------------------------------------
@@ -173,7 +169,7 @@ namespace jetHadron {
       
       if ( sv->GetCharge() ) {
         double ratio = eff.EffRatio_20(sv->Eta(),sv->Pt());
-        double random_ = dis(g);
+        double random_ = dis(gen);
         if ( random_ > ratio ) {
           continue;
         }
