@@ -43,6 +43,7 @@
 #include "TStopwatch.h"
 #include "TSystem.h"
 #include "TStyle.h"
+#include "TError.h"
 
 // Make use of std::vector,
 // std::string, IO and algorithm
@@ -93,6 +94,7 @@ int main( int argc, const char** argv) {
   gStyle->SetLegendBorderSize(0);
   gStyle->SetHatchesSpacing( 1.0 );
   gStyle->SetHatchesLineWidth( 2 );
+  gErrorIgnoreLevel = kNote;
 
   
   // First check to make sure we're located properly
