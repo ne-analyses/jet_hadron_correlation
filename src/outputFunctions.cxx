@@ -1430,7 +1430,8 @@ namespace jetHadron {
 
   
   // testing function to fix histogram
-  // bins not being drawn if the content is small
+  // bins not being drawn if the content is zero, set to some small-ish
+  // value to get the marker drawn correctly.
   void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
