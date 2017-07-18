@@ -314,7 +314,8 @@ namespace jetHadron {
   void ExtractIntegraldEta( std::vector<std::vector<TH1F*> >& histograms, std::vector<std::vector<double> >& integrals, std::vector<std::vector<double> >& errors, binSelector selector );
   
   // testing function to fix histogram
-  // bins not being drawn if the content is small
+  // bins not being drawn if the content is zero, set to some small-ish
+  // value to get the marker drawn correctly.
   void FixTheDamnBins( std::vector<std::vector<TH1F*> >& histograms );
   void FixTheDamnBins( std::vector<TH1F*>& histograms );
   
