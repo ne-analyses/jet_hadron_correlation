@@ -13,7 +13,7 @@ CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unuse
 endif
 
 ifeq ($(os),Linux)
-## this is needed on the grid because I use a nonstandard python, which gives a new version of libstdc++
+## this is needed on the WSU grid because I use a nonstandard python, which gives a new version of libstdc++
 ## from Anaconda... my fastjet is compiled vs the new one
 LDFLAGS       = -g -L/wsu/apps/gnu-4.8.2/python/Anaconda/Anaconda2-4.1.1/lib -lstdc++
 LDFLAGSS      = -g --shared 
@@ -66,7 +66,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty $(BDIR)/pythia_background
+all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -85,7 +85,6 @@ $(ODIR)/pp_correlation.o		: $(SDIR)/pp_correlation.cxx
 $(ODIR)/event_mixing.o       : $(SDIR)/event_mixing.cxx
 $(ODIR)/generate_output.o   : $(SDIR)/generate_output.cxx
 $(ODIR)/extract_sys_uncertainty.o : $(SDIR)/extract_sys_uncertainty.cxx
-$(ODIR)/pythia_background.o     : $(SDIR)/pythia_background.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
@@ -96,7 +95,6 @@ $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(OD
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/extract_sys_uncertainty: $(ODIR)/extract_sys_uncertainty.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
-$(BDIR)/pythia_background   : $(ODIR)/pythia_background.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 ###############################################################################
 ##################################### MISC ####################################
 ###############################################################################
