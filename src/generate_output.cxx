@@ -744,7 +744,7 @@ int main( int argc, const char** argv) {
   
   
   
-  // and to do that we need some errors as well! We already have relative systematics, but need the yields for the 5% tracking
+  // and to do that we need some errors as well! We already have relative systematics, but need the yields for the 5% tracking uncertainty
   std::vector<std::vector<double> > dphi_lead_sys_bin_int, dphi_sub_sys_bin_int, deta_lead_sys_bin_int, deta_sub_sys_bin_int;
   std::vector<std::vector<double> > dphi_lead_sys_bin_int_err, dphi_sub_sys_bin_int_err, deta_lead_sys_bin_int_err, deta_sub_sys_bin_int_err;
   
@@ -762,7 +762,7 @@ int main( int argc, const char** argv) {
   deta_lead_sys_bin_int_err = jetHadron::BuildYieldError( deta_lead_bin_int, selector );
   deta_sub_sys_bin_int_err = jetHadron::BuildYieldError( deta_sub_bin_int, selector );
   
-  // reset the Au+Au to the subtracted setting
+  // reset the Au+Au bin centers to the subtracted Au+Au values
   for ( int i = 0; i < dphi_lead_sys_bin_int[0].size(); ++i ) {
     dphi_lead_sys_bin_int[0][i] = dphi_lead_bin_int[0][i];
     dphi_sub_sys_bin_int[0][i] = dphi_sub_bin_int[0][i];
