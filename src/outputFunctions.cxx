@@ -3322,7 +3322,7 @@ namespace jetHadron {
     for ( int i = 0; i < hist1.size(); ++i ) {
       
       std::string tmp_name = "errors_" + patch::to_string(i) + ".pdf";
-      
+      std::string out_name = ( outputDir + tmp_name ).c_str();
       TGraph* graph1 = nullptr, *graph2 = nullptr;
       
       graph1 = GetErrorsFromHistogram( hist1[i], rangeLow, rangeHigh );
