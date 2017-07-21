@@ -806,16 +806,29 @@ int main( int argc, const char** argv) {
   
   
   // and plot the full histograms
+  std::vector<TH1F*> tmp_vec;
+  
   jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted, dphi_yield_err, dphi_sys[0], selector, outputDirBase+"/new_dphi_yield_err_lead", phiText, -0.8, 0.8  );
+  jetHadron::PrintSystematicsOverlay( dphi_yield_err[0], tmp_vec, outputDirBase+"/new_dphi_yield_err_lead", selector, "#Delta#phi", "Error", "5% Yield Error", "", 0.8, 0.8 );
+  jetHadron::PrintSystematicsOverlay( dphi_yield_err[1], dphi_sys[0], outputDirBase+"/new_dphi_yield_err_lead", selector, "#Delta#phi", "Error", "5% Yield Error", "Relative Tracking Uncertainty", 0.8, 0.8 );
+  
   jetHadron::Print1DDPhiHistogramsWithSysErrFull( corrected_dphi_subtracted_sub, dphi_sub_yield_err, dphi_sys_sub[0], selector, outputDirBase+"/new_dphi_yield_err_sub", phiTextSub, -0.8 , 0.8  );
+  jetHadron::PrintSystematicsOverlay( dphi_sub_yield_err[0], tmp_vec, outputDirBase+"/new_dphi_yield_err_sub", selector, "#Delta#phi", "Error", "5% Yield Error", "", 0.8, 0.8 );
+  jetHadron::PrintSystematicsOverlay( dphi_sub_yield_err[1], dphi_sys_sub[0], outputDirBase+"/new_dphi_yield_err_sub", selector, "#Delta#phi", "Error", "5% Yield Error", "Relative Tracking Uncertainty", 0.8, 0.8 );
+  
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_lead, deta_yield_err, deta_sys[0], selector, outputDirBase+"/new_deta_yield_err_lead", etaText, -0.8 , 0.8  );
+  jetHadron::PrintSystematicsOverlay( deta_yield_err[0], tmp_vec, outputDirBase+"/new_deta_yield_err_lead", selector, "#Delta#eta", "Error", "5% Yield Error", "", 0.8, 0.8 );
+  jetHadron::PrintSystematicsOverlay( deta_yield_err[1], deta_sys[0], outputDirBase+"/new_deta_yield_err_lead", selector, "#Delta#eta", "Error", "5% Yield Error", "Relative Tracking Uncertainty", 0.8, 0.8 );
+  
   jetHadron::Print1DDEtaHistogramsWithSysErrFull( corrected_deta_sub, deta_sub_yield_err, deta_sys_sub[0], selector, outputDirBase+"/new_deta_yield_err_sub", etaTextSub, -0.8 , 0.8  );
+  jetHadron::PrintSystematicsOverlay( deta_sub_yield_err[0], tmp_vec, outputDirBase+"/new_deta_yield_err_sub", selector, "#Delta#eta", "Error", "5% Yield Error", "", 0.8, 0.8 );
+  jetHadron::PrintSystematicsOverlay( deta_sub_yield_err[1], deta_sys_sub[0], outputDirBase+"/new_deta_yield_err_sub", selector, "#Delta#eta", "Error", "5% Yield Error", "Relative Tracking Uncertainty", 0.8, 0.8 );
   
   std::vector<std::string> overlayText, overlayTextSub;
   overlayText.push_back("trigger jet");
   overlayTextSub.push_back("recoil jet");
   
-  // finally, some near/far overly
+  // some near/far overlay for debugging
   jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_near[0], corrected_dphi_subtracted_far[0], selector, outputDirBase+"/dphi_near_far_overlay", overlayText, -0.8,  0.8 );
   jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_sub_near[0], corrected_dphi_subtracted_sub_far[0], selector, outputDirBase+"/dphi_near_far_overlay_recoil", overlayTextSub, -0.8,  0.8 );
   

@@ -3290,4 +3290,71 @@ namespace jetHadron {
     
   }
   
+  // these functions create graphs with the systematic errors
+  TGraph* GetErrorsFromHistogram( TH1F* hist, double rangeLow, double rangeHigh ) {
+    // first get the bin range we're interested in
+    int bin_low = hist->GetXaxis()->FindBin( rangeLow );
+    int bin_high = hist->GetXaxis()->FindBin( rangeHigh );
+    int n_bins = bin_high - bin_low + 1;
+    float* errors = new float[ n_bins ];
+    float* centers = new float[ n_bins ];
+    for ( int i = bin_low; i <= bin_high; ++i ) {
+      errors[i-bin_low] = hist->GetBinError( i );
+      centers[i-bin_low] = hist->GetXaxis()->GetBinCenter( i );
+    }
+    
+    TGraph* tmp = new TGraph( n_bins, centers, errors );
+    
+    return tmp;
+    
+  }
+  
+  
+  void PrintSystematicsOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2, std::string outputDir, binSelector selector, std::string xAxis_label, std::string yAxis_label, std::string hist1_name, std::string hist2_name, double rangeLow, double rangeHigh ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    // now produce errors for all histograms... if hist2.size() != hist1.size(), ignore hist2
+    bool use_hist2 = hist1.size() == hist2.size();
+    
+    for ( int i = 0; i < hist1.size(); ++i ) {
+      
+      std::string tmp_name = "errors_" + patch::to_string(i) + ".pdf";
+      
+      TGraph* graph1 = nullptr, *graph2 = nullptr;
+      
+      graph1 = GetErrorsFromHistogram( hist1[i], rangeLow, rangeHigh );
+      if ( use_hist2 ) graph2 = GetErrorsFromHistogram( hist2[i], rangeLow, rangeHigh );
+      
+      TCanvas c1;
+      
+      graph1->GetXaxis()->SetTitle( xAxis_label.c_str() );
+      graph1->GetYaxis()->SetTitle( yAxis_label.c_str() );
+      graph1->SetLineColor( 1 );
+      graph1->SetLineWidth( 2 );
+      graph1->Draw("AB");
+      if ( graph2 ) {
+        graph2->SetLineColor( 2 );
+        graph2->SetLineWidth( 2 );
+        graph2->Draw("B");
+      }
+      
+      TLegend* leg = new TLegend(  0.5, 0.6, 0.88, 0.88 );
+      leg->SetHeader( selector.ptBinString[i].c_str(), "C" );
+      leg->AddEntry( graph1, hist1_name.c_str(), "lp"  );
+      if ( graph2 ) leg->AddEntry( graph2, hist2_name.c_str(), "lp" );
+      
+      leg->Draw();
+      
+      c1.SaveAs( tmp_name.c_str() );
+      
+    }
+    
+  }
+  
+  
+  
+  
 } // end namespace

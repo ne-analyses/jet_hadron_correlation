@@ -49,6 +49,7 @@
 #include "TStopwatch.h"
 #include "TSystem.h"
 #include "TLegend.h"
+#include "TGraph.h"
 #include "TGraphErrors.h"
 
 #ifndef OUTPUTFUNCTIONS_HH
@@ -398,6 +399,13 @@ namespace jetHadron {
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::vector<TGraphErrors*> sys3, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );
   
   void PrintPPHardOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2,  std::string outputDir, binSelector selector  );
+  
+  // these functions create graphs with the systematic errors
+  TGraph* GetErrorsFromHistogram( TH1F* hist, double rangeLow, double rangeHigh );
+  void PrintSystematicsOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2, std::string outputDir, binSelector selector, std::string xAxis_label, std::string yAxis_label, std::string hist1_name, std::string hist2_name, double rangeLow, double rangeHigh );
+  
+  // this function is used to overlay errors that are passed in as vectors
+  void PrintSystematicsOverlayRaw ( std::vector<std::vector<double> > errors1, std::vector<std::vector<double> > errors2, std::string outputDir, std::vector<std::string> axis_labels, std::string hist_labels );
   
 } // end namespace
 
