@@ -3334,11 +3334,11 @@ namespace jetHadron {
       graph1->GetYaxis()->SetTitle( yAxis_label.c_str() );
       graph1->SetLineColor( 1 );
       graph1->SetLineWidth( 2 );
-      graph1->Draw("AB");
+      graph1->Draw("A");
       if ( graph2 ) {
         graph2->SetLineColor( 2 );
         graph2->SetLineWidth( 2 );
-        graph2->Draw("B");
+        graph2->Draw("same");
       }
       
       TLegend* leg = new TLegend(  0.5, 0.6, 0.88, 0.88 );
