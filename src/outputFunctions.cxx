@@ -3348,7 +3348,7 @@ namespace jetHadron {
       
       leg->Draw();
       
-      c1.SaveAs( tmp_name.c_str() );
+      c1.SaveAs( out_name.c_str() );
       
     }
     
