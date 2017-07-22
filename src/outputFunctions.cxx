@@ -3343,7 +3343,7 @@ namespace jetHadron {
         graph2->SetLineWidth( 2 );
         graph2->SetMarkerStyle( 22 );
         graph2->SetMarkerSize( 2 );
-        graph2->SetMarkerColor( 2 )
+        graph2->SetMarkerColor( 2 );
         graph2->Draw("P");
       }
       
