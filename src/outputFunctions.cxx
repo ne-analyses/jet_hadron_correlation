@@ -3358,7 +3358,7 @@ namespace jetHadron {
       }
 
       
-      graph1->GetYaxis()->SetRangeUser( ymin, ymax );
+      graph1->GetYaxis()->SetRangeUser( ymin-0.05, ymax+0.05 );
       graph1->Draw("AP");
       if ( graph2 ) graph2->Draw("P");
       
