@@ -3300,9 +3300,8 @@ namespace jetHadron {
     float* centers = new float[ n_bins ];
     for ( int i = bin_low; i <= bin_high; ++i ) {
       errors[i-bin_low] = hist->GetBinError( i );
-      std::cout<<" bin content: " << errors[i-bin_low];
       centers[i-bin_low] = hist->GetXaxis()->GetBinCenter( i );
-      std::cout<<"  bin center: "<< centers[i-bin_low]<<std::endl;
+      std::cout<<" i: "<< i << " bin center: "<< hist->GetXaxis()->GetBinCenter( i ) << std::endl;
     }
     
     TGraph* tmp = new TGraph( n_bins, centers, errors );
