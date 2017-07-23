@@ -3347,7 +3347,7 @@ namespace jetHadron {
         graph2->Draw("P");
       }
       
-      TLegend* leg = new TLegend(  0.65, 0.5, 0.88, 0.88 );
+      TLegend* leg = new TLegend(  0.65, 0.75, 0.88, 0.88 );
       leg->SetHeader( selector.ptBinString[i].c_str() );
       leg->AddEntry( graph1, hist1_name.c_str(), "lp"  );
       if ( graph2 ) leg->AddEntry( graph2, hist2_name.c_str(), "lp" );
