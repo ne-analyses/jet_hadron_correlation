@@ -3337,16 +3337,25 @@ namespace jetHadron {
       graph1->SetMarkerStyle( 21 );
       graph1->SetMarkerSize( 2 );
       graph1->SetMarkerColor( 1 );
-      graph1->Draw("AP");
       if ( graph2 ) {
         graph2->SetLineColor( 2 );
         graph2->SetLineWidth( 2 );
         graph2->SetMarkerStyle( 22 );
         graph2->SetMarkerSize( 2 );
         graph2->SetMarkerColor( 2 );
-        graph2->Draw("P");
       }
       
+      if ( graph2 ) {
+        if ( graph1->GetMaximum() > graph2->GetMaximum() ) {
+          graph1->Draw("AP");
+          graph2->Draw("P");
+        }
+        else {
+          graph2->Draw("AP");
+          graph1->Draw("P");
+        }
+      }
+      else { graph1->Draw("AP"); }
       TLegend* leg = new TLegend(  0.65, 0.75, 0.88, 0.88 );
       leg->SetHeader( selector.ptBinString[i].c_str() );
       leg->AddEntry( graph1, hist1_name.c_str(), "lp"  );
