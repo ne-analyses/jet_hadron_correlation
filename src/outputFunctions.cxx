@@ -3294,7 +3294,9 @@ namespace jetHadron {
   TGraph* GetErrorsFromHistogram( TH1F* hist, double rangeLow, double rangeHigh ) {
     // first get the bin range we're interested in
     int bin_low = hist->GetXaxis()->FindBin( rangeLow );
+    std::cout<<"bin low: "<<bin_low<<" range low: "<<rangeLow<<std::endl;
     int bin_high = hist->GetXaxis()->FindBin( rangeHigh );
+    std::cout<<"bin high: "<<bin_high<<" range high: "<<rangeHigh<<std::endl;
     int n_bins = bin_high - bin_low + 1;
     float* errors = new float[ n_bins ];
     float* centers = new float[ n_bins ];
