@@ -94,7 +94,7 @@ int main( int argc, const char** argv) {
   gStyle->SetLegendBorderSize(0);
   gStyle->SetHatchesSpacing( 1.0 );
   gStyle->SetHatchesLineWidth( 2 );
-  gErrorIgnoreLevel = kInfo;
+  gErrorIgnoreLevel = kError;
 
   
   // First check to make sure we're located properly
