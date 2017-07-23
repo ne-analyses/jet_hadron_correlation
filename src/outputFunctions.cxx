@@ -3329,8 +3329,13 @@ namespace jetHadron {
       if ( use_hist2 ) graph2 = GetErrorsFromHistogram( hist2[i], rangeLow, rangeHigh );
       
       TCanvas c1;
-      double ymin, ymax;
-      
+      double ymin = 100, ymax = -100;
+      // find the low & high bins
+      double* x = graph1->GetY();
+      for ( int i = 0; i < graph1->GetN(); ++i ) {
+        if ( ymin > x[i] ) ymin = x[i];
+        if ( ymax < x[i] ) ymax = x[i];
+      }
       graph1->GetXaxis()->SetTitle( xAxis_label.c_str() );
       graph1->GetYaxis()->SetTitle( yAxis_label.c_str() );
       graph1->SetLineColor( 1 );
@@ -3338,21 +3343,21 @@ namespace jetHadron {
       graph1->SetMarkerStyle( 21 );
       graph1->SetMarkerSize( 2 );
       graph1->SetMarkerColor( 1 );
-      ymin = graph1->GetMinimum() - 0.05;
-      ymax = graph1->GetMaximum() + 0.05;
+      
       if ( graph2 ) {
         graph2->SetLineColor( 2 );
         graph2->SetLineWidth( 2 );
         graph2->SetMarkerStyle( 22 );
         graph2->SetMarkerSize( 2 );
         graph2->SetMarkerColor( 2 );
-        if ( graph2->GetMinimum() < graph1->GetMinimum() ) {
-          ymin = graph2->GetMinimum() - 0.05;
-        }
-        if ( graph2->GetMaximum() > graph1->GetMaximum() ) {
-          ymax = graph2->GetMaximum() + 0.05;
+        double* x = graph2->GetY();
+        for ( int i = 0; i < graph2->GetN(); ++i ) {
+          if ( ymin > x[i] ) ymin = x[i];
+          if ( ymax < x[i] ) ymax = x[i];
         }
       }
+
+      
       graph1->GetYaxis()->SetRangeUser( ymin, ymax );
       graph1->Draw("AP");
       if ( graph2 ) graph2->Draw("P");
