@@ -404,6 +404,10 @@ namespace jetHadron {
   TGraph* GetErrorsFromHistogram( TH1F* hist, double rangeLow, double rangeHigh );
   void PrintSystematicsOverlay( std::vector<TH1F*>& hist1, std::vector<TH1F*>& hist2, std::string outputDir, binSelector selector, std::string xAxis_label, std::string yAxis_label, std::string hist1_name, std::string hist2_name, double rangeLow, double rangeHigh );
   
+  TGraph* GetErrorsFromGraph( TGraphErrors* graph );
+  void PrintSystematicsOverlayGraph(  TGraphErrors* graph1_in, TGraphErrors* graph2_in, std::string outputDir, std::string graph_name, std::string xAxis_label, std::string yAxis_label, std::string graph1_name, std::string graph2_name );
+  
+  
   // this function is used to overlay errors that are passed in as vectors
   void PrintSystematicsOverlayRaw ( std::vector<std::vector<double> > errors1, std::vector<std::vector<double> > errors2, std::string outputDir, std::vector<std::string> axis_labels, std::string hist_labels );
   

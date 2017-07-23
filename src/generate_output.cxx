@@ -776,15 +776,26 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> deta_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_sys_bin_int, zeros, deta_lead_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sys" );
   std::vector<TGraphErrors*> deta_sub_yield_sys_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_sys_bin_int, zeros, deta_sub_sys_bin_int_err, 1, 5, selector, analysisNames, "deta_sub_sys" );
   
-  PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_dphi", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
-  PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
-  PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_deta", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
-  PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_deta", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
+  //PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, dphi_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_dphi_proj", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
+  //PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, dphi_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_dphi_proj", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
+  //PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, deta_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_deta_proj", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
+  //PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, deta_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_deta_proj", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
   
-  PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, dphi_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_dphi_proj", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
-  PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, dphi_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_dphi_proj", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
-  PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, deta_yield_graph_projection_sys, outputDirBase+"/new_trig_yield_deta_proj", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
-  PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, deta_sub_yield_graph_projection_sys, outputDirBase+"/new_recoil_yield_deta_proj", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
+  jetHadron::PrintGraphsWithSystematics( dphi_yield_graph, dphi_yield_sys_graph, dphi_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_dphi", analysisNames, "Trigger Jet Yield #Delta#phi", selector );
+  jetHadron::PrintSystematicsOverlayGraph(  dphi_yield_sys_graph[0], nullptr,  outputDirBase+"/new_trig_yield_dphi", "dphi_trigger_auau_err", "p_{T}", "Error", "5% Yield Uncertainty", "" );
+  jetHadron::PrintSystematicsOverlayGraph(  dphi_yield_sys_graph[1], dphi_yield_graph_sys_rel[0],  outputDirBase+"/new_trig_yield_dphi", "dphi_trigger_pp_err", "p_{T}", "Error", "5% Yield Uncertainty", "JES uncertainty" );
+  
+  jetHadron::PrintGraphsWithSystematics( dphi_sub_yield_graph, dphi_sub_yield_sys_graph, dphi_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_dphi", analysisNames, "Recoil Jet Yield #Delta#phi", selector );
+  jetHadron::PrintSystematicsOverlayGraph(  dphi_sub_yield_sys_graph[0], nullptr,  outputDirBase+"/new_recoil_yield_dphi", "dphi_recoil_auau_err", "p_{T}", "Error", "5% Yield Uncertainty", "" );
+  jetHadron::PrintSystematicsOverlayGraph(  dphi_sub_yield_sys_graph[1], dphi_sub_yield_graph_sys_rel[0],  outputDirBase+"/new_recoil_yield_dphi", "dphi_recoil_pp_err", "p_{T}", "Error", "5% Yield Uncertainty", "JES uncertainty" );
+  
+  jetHadron::PrintGraphsWithSystematics( deta_yield_graph, deta_yield_sys_graph, deta_yield_graph_sys_rel, outputDirBase+"/new_trig_yield_deta", analysisNames, "Trigger Jet Yield #Delta#eta", selector );
+  jetHadron::PrintSystematicsOverlayGraph(  deta_yield_sys_graph[0], nullptr,  outputDirBase+"/new_trig_yield_deta", "deta_trigger_auau_err", "p_{T}", "Error", "5% Yield Uncertainty", "" );
+  jetHadron::PrintSystematicsOverlayGraph(  deta_yield_sys_graph[1], deta_yield_graph_sys_rel[0],  outputDirBase+"/new_trig_yield_deta", "deta_trigger_pp_err", "p_{T}", "Error", "5% Yield Uncertainty", "JES uncertainty" );
+  
+  jetHadron::PrintGraphsWithSystematics( deta_sub_yield_graph, deta_sub_yield_sys_graph, deta_sub_yield_graph_sys_rel, outputDirBase+"/new_recoil_yield_deta", analysisNames, "Recoil Jet Yield #Delta#eta", selector );
+  jetHadron::PrintSystematicsOverlayGraph(  deta_sub_yield_sys_graph[0], nullptr,  outputDirBase+"/new_recoil_yield_deta", "deta_recoil_auau_err", "p_{T}", "Error", "5% Yield Uncertainty", "" );
+  jetHadron::PrintSystematicsOverlayGraph(  deta_sub_yield_sys_graph[1], deta_sub_yield_graph_sys_rel[0],  outputDirBase+"/new_recoil_yield_deta", "deta_recoil_pp_err", "p_{T}", "Error", "5% Yield Uncertainty", "JES uncertainty" );
   
   
   std::vector<std::string> phiText, phiTextSub;

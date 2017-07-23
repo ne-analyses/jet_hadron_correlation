@@ -3375,6 +3375,83 @@ namespace jetHadron {
     
   }
   
+  TGraph* GetErrorsFromGraph( TGraphErrors* graph ) {
+    
+    int n_bins = graph->GetN();
+    double* errors = graph->GetEY();
+    double* centers = graph->GetX();
+    
+    TGraph* tmp = new TGraph( n_bins, centers, errors );
+    
+    return tmp;
+
+    
+  }
+  
+  
+  void PrintSystematicsOverlayGraph( TGraphErrors* graph1_in, TGraphErrors* graph2_in, std::string outputDir, std::string graph_name, std::string xAxis_label, std::string yAxis_label, std::string graph1_name, std::string graph2_name ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    // now produce errors for all histograms... if hist2.size() != hist1.size(), ignore hist2
+    bool use_graph2 = graph2_in != nullptr;
+    
+      
+    std::string tmp_name = "errors_" + graph_name + ".pdf";
+    std::string out_name = outputDir + "/" + tmp_name ;
+    TGraph* graph1 = nullptr, *graph2 = nullptr;
+      
+    graph1 = GetErrorsFromGraph( graph1_in );
+    if ( use_graph2 ) graph2 = GetErrorsFromGraph( graph2_in );
+      
+    TCanvas c1;
+    double ymin = 100, ymax = -100;
+    // find the low & high bins
+    double* x = graph1->GetY();
+    for ( int i = 0; i < graph1->GetN(); ++i ) {
+      if ( ymin > x[i] ) ymin = x[i];
+      if ( ymax < x[i] ) ymax = x[i];
+    }
+    graph1->GetXaxis()->SetTitle( xAxis_label.c_str() );
+    graph1->GetYaxis()->SetTitle( yAxis_label.c_str() );
+    graph1->SetLineColor( 1 );
+    graph1->SetLineWidth( 2 );
+    graph1->SetMarkerStyle( 21 );
+    graph1->SetMarkerSize( 2 );
+    graph1->SetMarkerColor( 1 );
+    
+    if ( graph2 ) {
+      graph2->SetLineColor( 2 );
+      graph2->SetLineWidth( 2 );
+      graph2->SetMarkerStyle( 22 );
+      graph2->SetMarkerSize( 2 );
+      graph2->SetMarkerColor( 2 );
+      double* x = graph2->GetY();
+      for ( int i = 0; i < graph2->GetN(); ++i ) {
+        if ( ymin > x[i] ) ymin = x[i];
+        if ( ymax < x[i] ) ymax = x[i];
+      }
+    }
+      
+      
+    graph1->GetYaxis()->SetRangeUser( ymin-0.05, ymax+0.05 );
+    graph1->Draw("AP");
+    if ( graph2 ) graph2->Draw("P");
+      
+    TLegend* leg = new TLegend(  0.65, 0.75, 0.88, 0.88 );
+    leg->SetHeader( graph_name.c_str() );
+    leg->AddEntry( graph1, graph1_name.c_str(), "lp"  );
+    if ( graph2 ) leg->AddEntry( graph2, graph2_name.c_str(), "lp" );
+      
+    leg->Draw();
+      
+    c1.SaveAs( out_name.c_str() );
+    
+
+    
+  }
   
   
   
