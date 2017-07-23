@@ -3336,7 +3336,7 @@ namespace jetHadron {
       graph1->SetLineWidth( 2 );
       graph1->SetMarkerStyle( 21 );
       graph1->SetMarkerSize( 2 );
-      graph1->SetMarkerColor( 2 );
+      graph1->SetMarkerColor( 1 );
       graph1->Draw("AP");
       if ( graph2 ) {
         graph2->SetLineColor( 2 );
@@ -3347,7 +3347,7 @@ namespace jetHadron {
         graph2->Draw("P");
       }
       
-      TLegend* leg = new TLegend(  0.5, 0.6, 0.88, 0.88 );
+      TLegend* leg = new TLegend(  0.65, 0.5, 0.88, 0.88 );
       leg->SetHeader( selector.ptBinString[i].c_str() );
       leg->AddEntry( graph1, hist1_name.c_str(), "lp"  );
       if ( graph2 ) leg->AddEntry( graph2, hist2_name.c_str(), "lp" );
