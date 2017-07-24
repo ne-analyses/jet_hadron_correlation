@@ -1842,7 +1842,7 @@ namespace jetHadron {
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetZaxis()->CenterTitle( true );
-      std::string title = selector.ptBinString[i];
+      std::string title = selector.ptBinStringMix[i];
       histograms[i]->SetTitle( title.c_str() );
       histograms[i]->SetTitleSize( 0.09 );
       
