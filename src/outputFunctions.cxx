@@ -3459,6 +3459,72 @@ namespace jetHadron {
     
   }
   
+  // these functions print the yield errors as separate data points ( +-5% )
+  std::vector<TH1F*> seperateErrors( TH1F* histogram ) {
+    
+    std::vector<TH1F*> tmp;
+    
+    // generate the lower & upper histograms
+    std::string low_name = histogram->GetName(); low_name += "_low";
+    std::string high_name = histogram->GetName(); high_name += "_high";
+    tmp.push_back(  new TH1F( low_name.c_str(), low_name.c_str(), histogram->GetXaxis()->GetNbins(), histogram->GetXaxis()->GetBinLowEdge(1), histogram->GetXaxis()->GetBinUpEdge(histogram->GetXaxis()->GetNbins() ) ) );
+    tmp.push_back(  new TH1F( high_name.c_str(), high_name.c_str(), histogram->GetXaxis()->GetNbins(), histogram->GetXaxis()->GetBinLowEdge(1), histogram->GetXaxis()->GetBinUpEdge(histogram->GetXaxis()->GetNbins() ) ) );
+    
+    for ( int i = 1; i <= histogram->GetXaxis()->GetNbins(); ++i ) {
+      
+      tmp[0]->SetBinContent( i, histogram->GetBinContent( i ) * 0.95 );
+      tmp[1]->SetBinContent( i, histogram->GetBinContent( i ) * 1.05 );
+      
+    }
+    
+    return tmp;
+  }
+  
+  
+  void PrintYieldErr( std::vector<TH1F*>& histograms, std::string outputDir, binSelector selector, std::string hist_name, bool dphi, double rangeLow, double rangeHigh ) {
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      std::vector<TH1F*> split_hist = seperateErrors( histograms[i] );
+      
+      TH1F* low_hist = split_hist[0];
+      TH1F* high_hist = split_hist[1];
+      
+      low_hist->SetLineColor( 1 );
+      low_hist->SetMarkerColor( 1 );
+      low_hist->SetMarkerSize( 2 );
+      low_hist->SetMarkerStyle( 21 );
+      
+      high_hist->SetLineColor( 2 );
+      high_hist->SetMarkerColor( 2 );
+      high_hist->SetMarkerSize( 2 );
+      high_hist->SetMarkerStyle( 22 );
+      
+      if ( dphi ) {
+        high_hist->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#phi");
+        high_hist->GetYaxis()->SetTitle("#Delta#phi");
+      }
+      else  {
+        high_hist->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#eta");
+        high_hist->GetYaxis()->SetTitle("#Delta#eta");
+      }
+      
+      TCanvas c1;
+      high_hist->Draw();
+      low_hist->Draw();
+      
+      TLegend* leg = new TLegend( 0.65, 0.75, 0.88, 0.88 );
+      std::string high_name = hist_name + " + 5%";
+      std::string low_name = hist_name + " - 5%";
+      leg->SetHeader( selector.ptBinString[i].c_str() );
+      leg->AddEntry( high_hist, high_name.c_str(), "lep" );
+      leg->AddEntry( low_hist, low_name.c_str(), "lep" );
+    }
+    
+  }
   
   
 } // end namespace
