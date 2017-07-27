@@ -67,7 +67,7 @@ int main () {
   // scale and tracking efficiency
   
   // turning off info printing
-  gErrorIgnoreLevel = kWarning;
+  gErrorIgnoreLevel = kError;
   
   // first, get systematic files
   
@@ -362,6 +362,7 @@ int main () {
   
   for ( int i = 0; i < corrected_deta_tow.size(); ++i ) {
     for ( int j = 0; j < corrected_deta_tow[i].size(); ++i ) {
+      std::cout<<"i: "<< i << "  j: " << j << std::endl;
       corrected_deta_tow[i][j]->Write();
       corrected_deta_trk[i][j]->Write();
       corrected_deta_tow_sub[i][j]->Write();
