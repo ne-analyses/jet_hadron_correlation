@@ -67,7 +67,7 @@ int main () {
   // scale and tracking efficiency
   
   // turning off info printing
-  gErrorIgnoreLevel = kInfo;
+  gErrorIgnoreLevel = kWarning;
   
   // first, get systematic files
   
