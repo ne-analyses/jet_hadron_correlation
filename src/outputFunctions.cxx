@@ -3485,7 +3485,7 @@ namespace jetHadron {
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
-    TCanvas* c1;
+    TCanvas* c1 = new TCanvas();
     for ( int i = 0; i < histograms.size(); ++i ) {
       std::cout<<"here"<<std::endl;
       std::string tmpName = outputDir + "/" + hist_name + "_pt_" + patch::to_string(i) + ".pdf";
