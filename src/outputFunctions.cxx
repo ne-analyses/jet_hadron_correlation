@@ -3467,8 +3467,8 @@ namespace jetHadron {
     // generate the lower & upper histograms
     std::string low_name = histogram->GetName(); low_name += "_low";
     std::string high_name = histogram->GetName(); high_name += "_high";
-    tmp.push_back(  new TH1F( low_name.c_str(), low_name.c_str(), histogram->GetXaxis()->GetNbins(), histogram->GetXaxis()->GetBinLowEdge(1), histogram->GetXaxis()->GetBinUpEdge(histogram->GetXaxis()->GetNbins() ) ) );
-    tmp.push_back(  new TH1F( high_name.c_str(), high_name.c_str(), histogram->GetXaxis()->GetNbins(), histogram->GetXaxis()->GetBinLowEdge(1), histogram->GetXaxis()->GetBinUpEdge(histogram->GetXaxis()->GetNbins() ) ) );
+    tmp.push_back( histogram->Clone( low_name.c_str() ) );
+    tmp.push_back( histogram->Clone( high_name.c_str() ) );
     
     for ( int i = 1; i <= histogram->GetXaxis()->GetNbins(); ++i ) {
       
