@@ -634,8 +634,8 @@ int main( int argc, const char** argv) {
       std::string deta_trk_sub_name = "corTrkDEtaSub_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
       std::string dphi_tow_name = "corTowDPhi_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
       std::string dphi_trk_name = "corTrkDPhi_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
-      std::string dphi_tow_sub_name = "corTowDphiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
-      std::string dphi_trk_sub_name = "corTrkDphiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_tow_sub_name = "corTowDPhiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_trk_sub_name = "corTrkDPhiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
       
       deta_sys_tow[i].push_back( (TH1D*) sysIn.Get( deta_tow_name.c_str() ) );
       deta_sys_trk[i].push_back( (TH1D*) sysIn.Get( deta_trk_name.c_str() ) );
@@ -653,7 +653,7 @@ int main( int argc, const char** argv) {
       std::cout<< dphi_sys_tow[i][j] << std::endl;
       std::cout<< dphi_sys_trk[i][j] << std::endl;
       std::cout<< dphi_sys_tow_sub[i][j] << std::endl;
-      std::cout<< dphi_sys_tow_sub[i][j] << std::endl;
+      std::cout<< dphi_sys_trk_sub[i][j] << std::endl;
       
     }
   }
