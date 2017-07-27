@@ -3487,11 +3487,11 @@ namespace jetHadron {
     boost::filesystem::create_directories( dir );
     TCanvas* c1 = new TCanvas();
     for ( int i = 0; i < histograms.size(); ++i ) {
-      std::cout<<"here"<<std::endl;
+     
       std::string tmpName = outputDir + "/" + hist_name + "_pt_" + patch::to_string(i) + ".pdf";
       
       std::vector<TH1F*> split_hist = seperateErrors( histograms[i] );
-      std::cout<<"got histograms"<<std::endl;
+      
       TH1F* low_hist = split_hist[0];
       TH1F* high_hist = split_hist[1];
       
@@ -3505,7 +3505,7 @@ namespace jetHadron {
       high_hist->SetMarkerSize( 2 );
       high_hist->SetMarkerStyle( 22 );
       high_hist->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
-      std::cout<<"settings complete"<<std::endl;
+      
       if ( dphi ) {
         high_hist->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#phi");
         high_hist->GetYaxis()->SetTitle("#Delta#phi");
@@ -3514,7 +3514,7 @@ namespace jetHadron {
         high_hist->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#eta");
         high_hist->GetYaxis()->SetTitle("#Delta#eta");
       }
-      std::cout<<"drawing"<<std::endl;
+     
       high_hist->Draw();
       low_hist->Draw("SAME");
       
@@ -3525,9 +3525,9 @@ namespace jetHadron {
       leg->AddEntry( high_hist, high_name.c_str(), "lep" );
       leg->AddEntry( low_hist, low_name.c_str(), "lep" );
       leg->Draw();
-      std::cout<<"legend"<<std::endl;
+      
       c1->SaveAs( tmpName.c_str() );
-      std::cout<<"done"<<std::endl;
+      
     }
     delete c1;
   }
