@@ -3485,7 +3485,7 @@ namespace jetHadron {
     // First, make the output directory if it doesnt exist
     boost::filesystem::path dir( outputDir.c_str() );
     boost::filesystem::create_directories( dir );
-    
+    TCanvas* c1;
     for ( int i = 0; i < histograms.size(); ++i ) {
       
       std::string tmpName = outputDir + "/" + hist_name + "_pt_" + patch::to_string(i) + ".pdf";
@@ -3504,6 +3504,7 @@ namespace jetHadron {
       high_hist->SetMarkerColor( 2 );
       high_hist->SetMarkerSize( 2 );
       high_hist->SetMarkerStyle( 22 );
+      high_hist->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
       
       if ( dphi ) {
         high_hist->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#phi");
@@ -3514,9 +3515,8 @@ namespace jetHadron {
         high_hist->GetYaxis()->SetTitle("#Delta#eta");
       }
       
-      TCanvas c1;
       high_hist->Draw();
-      low_hist->Draw();
+      low_hist->Draw("SAME");
       
       TLegend* leg = new TLegend( 0.65, 0.75, 0.88, 0.88 );
       std::string high_name = hist_name + " + 5%";
@@ -3525,9 +3525,9 @@ namespace jetHadron {
       leg->AddEntry( high_hist, high_name.c_str(), "lep" );
       leg->AddEntry( low_hist, low_name.c_str(), "lep" );
       
-      c1.SaveAs( tmpName.c_str() );
+      c1->SaveAs( tmpName.c_str() );
     }
-    
+    delete c1;
   }
   
   
