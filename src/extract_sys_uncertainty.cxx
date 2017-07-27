@@ -352,6 +352,13 @@ int main () {
   
   std::cout<<"HERE: "<<corrected_deta_tow.size() << " " << corrected_deta_tow[0].size() << std::endl;
   std::cout<<"HERE: "<<corrected_dphi_tow.size() << " " << corrected_dphi_tow[0].size() << std::endl;
+  std::cout<<"HERE: "<<corrected_deta_trk.size() << " " << corrected_deta_trk[0].size() << std::endl;
+  std::cout<<"HERE: "<<corrected_dphi_trk.size() << " " << corrected_dphi_trk[0].size() << std::endl;
+  
+  std::cout<<"HERE: "<<corrected_deta_tow_sub.size() << " " << corrected_deta_tow_sub[0].size() << std::endl;
+  std::cout<<"HERE: "<<corrected_dphi_tow_sub.size() << " " << corrected_dphi_tow_sub[0].size() << std::endl;
+  std::cout<<"HERE: "<<corrected_deta_trk_sub.size() << " " << corrected_deta_trk_sub[0].size() << std::endl;
+  std::cout<<"HERE: "<<corrected_dphi_trk_sub.size() << " " << corrected_dphi_trk_sub[0].size() << std::endl;
   
   for ( int i = 0; i < corrected_deta_tow.size(); ++i ) {
     for ( int j = 0; j < corrected_deta_tow[i].size(); ++i ) {
