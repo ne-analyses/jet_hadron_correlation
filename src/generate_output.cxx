@@ -620,6 +620,45 @@ int main( int argc, const char** argv) {
     deta_yield_sub_sys_rel[0].push_back(dEta_sub);
   }
   
+  // and finally read in the raw correlations from the systematic file,
+  // its not used for the analysis, just for diagnostic output &
+  // for analysis note
+  std::vector<std::vector<TH1D*> > dphi_sys_tow(2), dphi_sys_tow_sub(2), dphi_sys_trk(2), dphi_sys_trk_sub(2);
+  std::vector<std::vector<TH1D*> > deta_sys_tow(2), deta_sys_tow_sub(2), deta_sys_trk(2), deta_sys_trk_sub(2);
+  
+  for ( int i = 0; i < 2; ++i ) {
+    for ( int j = 0; j < selector.nPtBins; ++j ) {
+      std::string deta_tow_name = "corTowDEta_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string deta_trk_name = "corTrkDEta_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string deta_tow_sub_name = "corTowDEtaSub_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string deta_trk_sub_name = "corTrkDEtaSub_deta_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_tow_name = "corTowDPhi_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_trk_name = "corTrkDPhi_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_tow_sub_name = "corTowDphiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      std::string dphi_trk_sub_name = "corTrkDphiSub_dphi_file_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+      
+      deta_sys_tow[i].push_back( (TH1D*) sysIn.Get( deta_tow_name.c_str() ) );
+      deta_sys_trk[i].push_back( (TH1D*) sysIn.Get( deta_trk_name.c_str() ) );
+      deta_sys_tow_sub[i].push_back( (TH1D*) sysIn.Get( deta_tow_sub_name.c_str() ) );
+      deta_sys_trk_sub[i].push_back( (TH1D*) sysIn.Get( deta_trk_sub_name.c_str() ) );
+      dphi_sys_tow[i].push_back( (TH1D*) sysIn.Get( dphi_tow_name.c_str() ) );
+      dphi_sys_trk[i].push_back( (TH1D*) sysIn.Get( dphi_trk_name.c_str() ) );
+      dphi_sys_tow_sub[i].push_back( (TH1D*) sysIn.Get( dphi_tow_sub_name.c_str() ) );
+      dphi_sys_trk_sub[i].push_back( (TH1D*) sysIn.Get( dphi_trk_sub_name.c_str() ) );
+      
+      std::cout<< deta_sys_tow[i][j] << std::endl;
+      std::cout<< deta_sys_trk[i][j] << std::endl;
+      std::cout<< deta_sys_tow_sub[i][j] << std::endl;
+      std::cout<< deta_sys_trk_sub[i][j] << std::endl;
+      std::cout<< dphi_sys_tow[i][j] << std::endl;
+      std::cout<< dphi_sys_trk[i][j] << std::endl;
+      std::cout<< dphi_sys_tow_sub[i][j] << std::endl;
+      std::cout<< dphi_sys_tow_sub[i][j] << std::endl;
+      
+    }
+  }
+  
+  
   // scale the errors by bin width!
   jetHadron::ScaleErrors( dphi_yield_sys_rel, selector );
   jetHadron::ScaleErrors( dphi_yield_sub_sys_rel, selector );
