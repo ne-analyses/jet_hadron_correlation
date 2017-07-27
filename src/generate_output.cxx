@@ -843,14 +843,14 @@ int main( int argc, const char** argv) {
   overlayText.push_back("trigger jet");
   overlayTextSub.push_back("recoil jet");
   
-  jetHadron::PrintYieldErr( corrected_deta_sub[0], "yield_uncert_deta_sub_auau", selector, "Au+Au Recoil", false, -0.8, 0.8  );
-  jetHadron::PrintYieldErr( corrected_deta_lead[0], "yield_uncert_deta_lead_auau", selector, "Au+Au Trigger", false, -0.8, 0.8 );
-  jetHadron::PrintYieldErr( corrected_dphi_subtracted[0], "yield_uncert_dphi_lead_auau", selector, "Au+Au Trigger", true, -0.8, 0.8 );
-  jetHadron::PrintYieldErr( corrected_dphi_subtracted_sub[0], "yield_uncert_dphi_sub_auau", selector, "Au+Au Recoil", true, -0.8, 0.8 );
-  jetHadron::PrintYieldErr( corrected_deta_sub[1], "yield_uncert_deta_sub_pp", selector, "p+p Recoil", false, -0.8, 0.8  );
-  jetHadron::PrintYieldErr( corrected_deta_lead[1], "yield_uncert_deta_lead_pp", selector, "p+p Trigger", false, -0.8, 0.8 );
-  jetHadron::PrintYieldErr( corrected_dphi_subtracted[1], "yield_uncert_dphi_lead_pp", selector, "p+p Trigger",  true, -0.8, 0.8 );
-  jetHadron::PrintYieldErr( corrected_dphi_subtracted_sub[1], "yield_uncert_dphi_sub_pp", selector, "p+p Recoil",  true, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_deta_sub[0], outputDirBase+"yield_uncert_deta_sub_auau", selector, "Au+Au Recoil", false, -0.8, 0.8  );
+  jetHadron::PrintYieldErr( corrected_deta_lead[0], outputDirBase+"yield_uncert_deta_lead_auau", selector, "Au+Au Trigger", false, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_dphi_subtracted[0], outputDirBase+"yield_uncert_dphi_lead_auau", selector, "Au+Au Trigger", true, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_dphi_subtracted_sub[0], outputDirBase+"yield_uncert_dphi_sub_auau", selector, "Au+Au Recoil", true, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_deta_sub[1], outputDirBase+"yield_uncert_deta_sub_pp", selector, "p+p Recoil", false, -0.8, 0.8  );
+  jetHadron::PrintYieldErr( corrected_deta_lead[1], outputDirBase+"yield_uncert_deta_lead_pp", selector, "p+p Trigger", false, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_dphi_subtracted[1], outputDirBase+"yield_uncert_dphi_lead_pp", selector, "p+p Trigger",  true, -0.8, 0.8 );
+  jetHadron::PrintYieldErr( corrected_dphi_subtracted_sub[1], outputDirBase+"yield_uncert_dphi_sub_pp", selector, "p+p Recoil",  true, -0.8, 0.8 );
   
   // some near/far overlay for debugging
   jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_near[0], corrected_dphi_subtracted_far[0], selector, outputDirBase+"/dphi_near_far_overlay", overlayText, -0.8,  0.8 );

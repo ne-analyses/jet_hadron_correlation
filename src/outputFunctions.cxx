@@ -3488,6 +3488,8 @@ namespace jetHadron {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
       
+      std::string tmpName = outputDir + "/" + hist_name + "_pt_" + patch::to_string(i) + ".pdf";
+      
       std::vector<TH1F*> split_hist = seperateErrors( histograms[i] );
       
       TH1F* low_hist = split_hist[0];
@@ -3522,6 +3524,8 @@ namespace jetHadron {
       leg->SetHeader( selector.ptBinString[i].c_str() );
       leg->AddEntry( high_hist, high_name.c_str(), "lep" );
       leg->AddEntry( low_hist, low_name.c_str(), "lep" );
+      
+      c1.SaveAs( tmpName.c_str() );
     }
     
   }
