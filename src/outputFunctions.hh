@@ -411,6 +411,10 @@ namespace jetHadron {
   std::vector<TH1F*> seperateErrors( TH1F* histogram );
   void PrintYieldErr( std::vector<TH1F*>& histograms, std::string outputDir, binSelector selector, std::string histname, bool dphi, double rangeLow, double rangeHigh );
   
+  // print JES errors
+  void PrintJESErr( std::vector<TH1D*>& low_hist_vec, std::vector<TH1D*>& high_hist_vec, std::string outputDir, binSelector selector, std::string histname, std::string variance, bool dphi, double rangeLow, double rangeHigh );
+  
+  
   // this function is used to overlay errors that are passed in as vectors
   void PrintSystematicsOverlayRaw ( std::vector<std::vector<double> > errors1, std::vector<std::vector<double> > errors2, std::string outputDir, std::vector<std::string> axis_labels, std::string hist_labels );
   

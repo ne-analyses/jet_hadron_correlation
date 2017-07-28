@@ -646,15 +646,6 @@ int main( int argc, const char** argv) {
       dphi_sys_tow_sub[i].push_back( (TH1D*) sysIn.Get( dphi_tow_sub_name.c_str() ) );
       dphi_sys_trk_sub[i].push_back( (TH1D*) sysIn.Get( dphi_trk_sub_name.c_str() ) );
       
-      std::cout<< deta_sys_tow[i][j] << std::endl;
-      std::cout<< deta_sys_trk[i][j] << std::endl;
-      std::cout<< deta_sys_tow_sub[i][j] << std::endl;
-      std::cout<< deta_sys_trk_sub[i][j] << std::endl;
-      std::cout<< dphi_sys_tow[i][j] << std::endl;
-      std::cout<< dphi_sys_trk[i][j] << std::endl;
-      std::cout<< dphi_sys_tow_sub[i][j] << std::endl;
-      std::cout<< dphi_sys_trk_sub[i][j] << std::endl;
-      
     }
   }
   
@@ -890,6 +881,17 @@ int main( int argc, const char** argv) {
   jetHadron::PrintYieldErr( corrected_deta_lead[1], outputDirBase+"/yield_uncert_deta_lead_pp", selector, "p+p Trigger", false, -0.8, 0.8 );
   jetHadron::PrintYieldErr( corrected_dphi_subtracted[1], outputDirBase+"/yield_uncert_dphi_lead_pp", selector, "p+p Trigger",  true, -0.8, 0.8 );
   jetHadron::PrintYieldErr( corrected_dphi_subtracted_sub[1], outputDirBase+"/yield_uncert_dphi_sub_pp", selector, "p+p Recoil",  true, -0.8, 0.8 );
+  
+  jetHadron::PrintJESErr( deta_sys_tow[0], deta_sys_tow[1], outputDirBase+"/jes_uncert_deta_trig_tow", selector, "Trigger JES tow", "2%", false, -0.8, 0.8 );
+  jetHadron::PrintJESErr( deta_sys_tow_sub[0], deta_sys_tow_sub[1], outputDirBase+"/jes_uncert_deta_sub_tow", selector, "Recoil JES tow", "2%", false, -0.8, 0.8 );
+  jetHadron::PrintJESErr( deta_sys_trk[0], deta_sys_trk[1], outputDirBase+"/jes_uncert_deta_trig_trk", selector, "Trigger JES trk", "7%", false, -0.8, 0.8 );
+  jetHadron::PrintJESErr( deta_sys_trk_sub[0], deta_sys_trk_sub[1], outputDirBase+"/jes_uncert_deta_sub_trk", selector, "Recoil JES trk", "7%", false, -0.8, 0.8 );
+  
+  jetHadron::PrintJESErr( dphi_sys_tow[0], dphi_sys_tow[1], outputDirBase+"/jet_uncert_dphi_trig_tow", selector, "Trigger JES tow", "2%", true, -0.8, 0.8 );
+  jetHadron::PrintJESErr( dphi_sys_tow_sub[0], dphi_sys_tow_sub[1], outputDirBase+"/jet_uncert_dphi_sub_tow", selector, "Recoil JES tow", "2%", true, -0.8, 0.8 );
+  jetHadron::PrintJESErr( dphi_sys_trk[0], dphi_sys_trk[1], outputDirBase+"/jet_uncert_dphi_trig_trk", selector, "Trigger JES trk", "7%", true, -0.8, 0.8 );
+  jetHadron::PrintJESErr( dphi_sys_trk_sub[0], dphi_sys_trk_sub[1], outputDirBase+"/jet_uncert_dphi_sub_trk", selector, "Recoil JES trk", "7%", true, -0.8, 0.8 );
+
   
   // some near/far overlay for debugging
   jetHadron::PrintNearFarDPhiCorrelations(corrected_dphi_subtracted_near[0], corrected_dphi_subtracted_far[0], selector, outputDirBase+"/dphi_near_far_overlay", overlayText, -0.8,  0.8 );

@@ -3532,5 +3532,57 @@ namespace jetHadron {
     delete c1;
   }
   
+  // print JES errors
+  void PrintJESErr( std::vector<TH1D*>& low_hist_vec, std::vector<TH1D*>& high_hist_vec, std::string outputDir, binSelector selector, std::string histname, std::string variance, bool dphi, double rangeLow, double rangeHigh ) {
+    // check size
+    assert( low_hist_vec.size() == high_hist_vec.size() );
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    TCanvas* c1 = new TCanvas();
+    
+    for ( int i = 0; i < low_hist_vec.size(); ++i ) {
+      TH1D* low = low_hist_vec[i];
+      TH1D* high = high_hist_vec[i];
+      
+      std::string out_name = outputDir + "/" + histname + "_pt_" + patch::to_string(i);
+      
+      low->SetLineColor( 1 );
+      low->SetMarkerColor( 1 );
+      low->SetMarkerSize( 2 );
+      low->SetMarkerStyle( 21 );
+      
+      high->SetLineColor( 2 );
+      high->SetMarkerColor( 2 );
+      high->SetMarkerSize( 2 );
+      high->SetMarkerStyle( 22 );
+      high->GetXaxis()->SetRangeUser( rangeLow, rangeHigh );
+      
+      if ( dphi ) {
+        high->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#phi");
+        high->GetYaxis()->SetTitle("#Delta#phi");
+      }
+      else  {
+        high->GetYaxis()->SetTitle("1/N_{Dijet}dN/d#Delta#eta");
+        high->GetYaxis()->SetTitle("#Delta#eta");
+      }
+      
+      std::string tmp1_name = histname + " -" + variance;
+      std::string tmp2_name = histname + " +" + variance;
+      
+      high->Draw();
+      high->Draw("same");
+      
+      TLegend* leg = new TLegend( 0.65, 0.75, 0.88, 0.88 );
+      leg->SetHeader( selector.ptBinString[i].c_str() );
+      leg->AddEntry( low, tmp1_name.c_str(), "lep" );
+      leg->AddEntry( high, tmp2_name.c_str(), "lep" );
+      leg->Draw();
+      
+      c1->SaveAs( out_name.c_str() );
+    }
+    
+  }
+  
   
 } // end namespace
