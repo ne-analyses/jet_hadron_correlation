@@ -3571,7 +3571,7 @@ namespace jetHadron {
       std::string tmp2_name = histname + " +" + variance;
       
       high->Draw();
-      high->Draw("same");
+      low->Draw("same");
       
       TLegend* leg = new TLegend( 0.65, 0.75, 0.88, 0.88 );
       leg->SetHeader( selector.ptBinString[i].c_str() );
