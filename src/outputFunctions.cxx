@@ -3545,7 +3545,7 @@ namespace jetHadron {
       TH1D* low = low_hist_vec[i];
       TH1D* high = high_hist_vec[i];
       
-      std::string out_name = outputDir + "/" + histname + "_pt_" + patch::to_string(i);
+      std::string out_name = outputDir + "/" + histname + "_pt_" + patch::to_string(i) + ".pdf";
       
       low->SetLineColor( 1 );
       low->SetMarkerColor( 1 );
