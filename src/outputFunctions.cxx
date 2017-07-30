@@ -1450,7 +1450,24 @@ namespace jetHadron {
     }
     
   }
-  
+  void FixTheDamnBins( std::vector<std::vector<TH1D*> >& histograms ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        for ( int k = 1; k < histograms[i][j]->GetXaxis()->GetNbins(); ++k ) {
+          
+          if ( fabs( histograms[i][j]->GetBinContent(k) ) < 0.0001 ) {
+            histograms[i][j]->SetBinContent(k, 0.0001 );
+          }
+          if ( fabs( histograms[i][j]->GetBinError(k) ) < 0.0001 ) {
+            histograms[i][j]->SetBinError(k, 0.0001 );
+          }
+          
+        }
+      }
+    }
+    
+  }
   void FixTheDamnBins( std::vector<TH1F*>& histograms ) {
     
     for ( int i = 0; i < histograms.size(); ++i ) {
@@ -1466,7 +1483,22 @@ namespace jetHadron {
       }
     }
   }
-  
+  void FixTheDamnBins( std::vector<TH1D*>& histograms ) {
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      for ( int k = 1; k < histograms[i]->GetXaxis()->GetNbins(); ++k ) {
+        
+        if ( fabs( histograms[i]->GetBinContent(k) ) < 0.0001 ) {
+          histograms[i]->SetBinContent(k, 0.0001 );
+        }
+        if ( fabs( histograms[i]->GetBinError(k) ) < 0.0001 ) {
+          histograms[i]->SetBinError(k, 0.0001 );
+        }
+        
+      }
+    }
+  }
+
   std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID ) {
     
     // making some tgraphs to plot and/or save
