@@ -57,6 +57,9 @@ namespace jetHadron {
     TObjArray*** leadingArrays;
     TObjArray*** subleadingArrays;
     
+    // histogram for the random cone stuff
+    TH3F* hRndCone;
+    
     // a histogram to see if there is some event or jet structure
     // relating to Aj
     TH3F* hAjStruct;
@@ -119,6 +122,7 @@ namespace jetHadron {
     TH1D* GetAjLow()				{ return hAjLow; }
     TH3F* Get3DLeadCorr()		{ return h3DimCorrLead; }
     TH3F* Get3DSubCorr()		{ return h3DimCorrSub; }
+    TH3F* GetRndCone()      { return hRndCone; }
     
     
     // Fill histogram functions
@@ -148,6 +152,8 @@ namespace jetHadron {
     // Records trigger-associated correlations with trigger = leading/subleading
     bool FillCorrelationLead( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = 0 );
     bool FillCorrelationSub( double dEta, double dPhi, double assocPt, double weight, double aj, int vzBin, int centBin = 0 );
+    
+    bool FillRandomCone( double dEta, double dPhi, double assocPt, double weight );
     
     // Associated track info
     bool FillAssocPt( double pt );

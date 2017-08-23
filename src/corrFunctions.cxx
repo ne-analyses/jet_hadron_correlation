@@ -577,6 +577,58 @@ namespace jetHadron {
     throw( -1 );
   }
   
+  fastjet::PseudoJet FindRandomJetAxis( const fastjet::PseudoJet& trigger, const fastjet::PseudoJet& recoil, std::mt19937 gen, double R ) {
+    
+    double etaMax = 1.0 - R;
+    double etaMin = -etaMax;
+    double phiMax = pi;
+    double phiMin = -phiMax;
+    
+    std::uniform_real_distribution<> phiDist( phiMin, phiMax );
+    std::uniform_real_distribution<> etaDist( etaMin, etaMax );
+    
+    double randphi = phiDist(gen);
+    double randeta = etaDist(gen);
+    
+    fastjet::PseudoJet randomJet;
+    randomJet.reset_PtYPhiM( 0.0, randeta, randphi, 0.0 );
+    int nTries = 0;
+    while ( randomJet.delta_R( trigger ) < 2.2*R || randomJet.delta_R( recoil ) < 2.2*R ) {
+      randphi = phiDist(gen);
+      double randeta = etaDist(gen);
+      randomJet.reset_PtYPhiM( 0.0, randeta, randphi, 0.0 );
+      nTries++;
+    }
+    std::cout<<"Took " << nTries << " to find random cone away from dijet axes " << std::endl;
+    return randomJet;
+  }
+  
+  fastjet::PseudoJet FindRandomJetAxis( const fastjet::PseudoJet& trigger, std::mt19937 gen, double R ) {
+    
+    double etaMax = 1.0 - R;
+    double etaMin = -etaMax;
+    double phiMax = pi;
+    double phiMin = -phiMax;
+    
+    std::uniform_real_distribution<> phiDist( phiMin, phiMax );
+    std::uniform_real_distribution<> etaDist( etaMin, etaMax );
+    
+    double randphi = phiDist(gen);
+    double randeta = etaDist(gen);
+    
+    fastjet::PseudoJet randomJet;
+    randomJet.reset_PtYPhiM( 0.0, randeta, randphi, 0.0 );
+    int nTries = 0;
+    while ( randomJet.delta_R( trigger ) < 2.2*R ) {
+      randphi = phiDist(gen);
+      double randeta = etaDist(gen);
+      randomJet.reset_PtYPhiM( 0.0, randeta, randphi, 0.0 );
+      nTries++;
+    }
+    std::cout<<"Took " << nTries << " to find random cone away from dijet axes " << std::endl;
+    return randomJet;
+  }
+  
   // Used to correlate jets and their charged associated particles
   // Checks to make sure the efficiency is sane
   // First, to check that the track makes all cuts
@@ -656,9 +708,23 @@ namespace jetHadron {
     
     return true;
   }
-
   
-	
+  // used for background estimation
+  bool correlateRandomCone( histograms* histograms, fastjet::PseudoJet& randomJet, fastjet::PseudoJet& assocTrack, double efficiency ) {
+    
+    // check if track is ok
+    if ( !useTrack( assocTrack, efficiency ) )
+      return false;
+    
+    double deltaEta = randomJet.eta() - assocTrack.eta();
+    double deltaPhi = randomJet.delta_phi_to( assocTrack );
+    double assocPt =  assocTrack.pt();
+    double weight = 1.0/efficiency;
+    
+    histograms->FillRandomCone( deltaEta, deltaPhi, assocPt, weight );
+    return true;
+  }
+
 	// JetFinding and Selector functionality
 	
   // Build the analysis jet definition using anti-kt

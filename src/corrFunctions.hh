@@ -158,6 +158,11 @@ namespace jetHadron {
   // jetRadius: radius used for clustering
   std::vector<fastjet::PseudoJet> BuildMatchedJets( std::string analysisType, std::vector<fastjet::PseudoJet> & hardJets, std::vector<fastjet::PseudoJet> & LoResult, bool requireTrigger, std::vector<fastjet::PseudoJet> & triggers, double jetRadius = 0.4 );
   
+  // use to find an axis that is sufficiently far away from the leading (and possibly subleading )
+  // jet axes so that we can do a random cone estimation of bkg
+  fastjet::PseudoJet FindRandomJetAxis( const fastjet::PseudoJet& trigger, const fastjet::PseudoJet& recoil, std::mt19937 gen, double R = 0.4 );
+  fastjet::PseudoJet FindRandomJetAxis( const fastjet::PseudoJet& trigger, std::mt19937 gen, double R = 0.4 );
+  
   // Finally, correlation function -
   // It correlates leading and subleading jets
   // With the associated particle given the associated weight
@@ -176,6 +181,8 @@ namespace jetHadron {
   // Correlate for jet-hadron
   bool correlateTrigger( std::string analysisType, int vzBin, int centBin, histograms* histogram, fastjet::PseudoJet& triggerJet, fastjet::PseudoJet& assocTrack, double efficiency );
 	
+  // correlate for the random cone
+  bool correlateRandomCone( histograms* histograms, fastjet::PseudoJet& randomJet, fastjet::PseudoJet& assocTrack, double efficiency );
 	// FastJet functionality
 	
   // Build default jet definitions, using kt and anti-kt for background and analysis, respectively

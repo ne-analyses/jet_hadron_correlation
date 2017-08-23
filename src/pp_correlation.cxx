@@ -341,6 +341,7 @@ int main ( int argc, const char** argv) {
   // Particle container
   std::vector<fastjet::PseudoJet> particles;
   std::vector<fastjet::PseudoJet> correlationParticles;
+  std::vector<fastjet::PseudoJet> embeddingParticles;
   // Trigger container - used to match
   // leading jet with trigger particle
   std::vector<fastjet::PseudoJet> triggers;
@@ -427,7 +428,7 @@ int main ( int argc, const char** argv) {
   int nMatchedHard = 0;
   
   
-  // create a RNG for random track selection
+  // create a RNG for random track & random cone selection
   std::random_device rd;
   std::mt19937 generator(rd());
   generator.seed( 420 );
@@ -469,13 +470,29 @@ int main ( int argc, const char** argv) {
       int refCent = 8;
       
       // but we're still going to get reference multiplicity
-       gRefMult = 0;
+      gRefMult = 0;
       if ( header->GetCorrectedGReferenceMultiplicity() ) {
         gRefMult = header->GetCorrectedGReferenceMultiplicity();
       }
       else {
         gRefMult = header->GetGReferenceMultiplicity();
       }
+      
+      // we also need the MB event info for the random cone estimation
+      int MBGRefMult = 0;
+      int MBRefCent;
+      int MBRefCentAlt;
+      
+      // but we're still going to get reference multiplicity
+      if ( mbHeader->GetCorrectedGReferenceMultiplicity() ) {
+        MBGRefMult = mbHeader->GetCorrectedGReferenceMultiplicity();
+        MBRefCent = mbHeader->GetGReferenceCentrality();
+      }
+      else {
+        MBGRefMult = mbHeader->GetGReferenceMultiplicity();
+        MBRefCent = jetHadron::GetReferenceCentrality( gRefMult );
+      }
+      MBRefCentAlt = jetHadron::GetReferenceCentralityAlt( MBRefCent );
 
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
@@ -488,6 +505,7 @@ int main ( int argc, const char** argv) {
       //**********************
       particles.clear();
       correlationParticles.clear();
+      embeddingParticles.clear();
       
       // first, the tracks we will use for hard core jet finding
       jetHadron::ConvertTStarJetVectorPP( container, particles, efficiencyCorrection, generator, true, fTowerScale );
@@ -496,6 +514,9 @@ int main ( int argc, const char** argv) {
       // second, the tracks used for full event reconstruction
       // and correlations, these have all pp tracks/towers
       jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
+      
+      // third, for random cone estimation we need the MB event
+      jetHadron::ConvertTStarJetVector( mbContainer, embeddingParticles, true, 1.0 );
       
       // and pull out all triggers
       jetHadron::GetTriggersPP( requireTrigger, correlationParticles, triggers );
@@ -569,7 +590,11 @@ int main ( int argc, const char** argv) {
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0 )		{ continue; }
       nMatchedHard++;
-
+      
+      // find a random cone away from jet axes for testing average bkg contribution
+      fastjet::PseudoJet randomConeJet;
+      if ( requireDijets ) randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), analysisJets.at(1), generator, jetRadius );
+      else randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), generator, jetRadius );
       
       // now we have analysis jets, write the trees
       // for future event mixing
@@ -641,8 +666,16 @@ int main ( int argc, const char** argv) {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
         }
       }
-      
-      
+      // now correlate with the mb event for random cone embedding
+      for ( int i = 0; i < embeddingParticles.size(); ++i ) {
+        fastjet::PseudoJet assocParticle = embeddingParticles.at(i);
+        
+        // if we're using particle - by - particle efficiencies, get it,
+        // else, set to one
+        double assocEfficiency = 1.0;
+        if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), MBRefCentAlt );
+        jetHadron::correlateRandomCone( histograms, randomConeJet, assocParticle, assocEfficiency );
+      }
     }
   }catch ( std::exception& e) {
     std::cerr << "Caught " << e.what() << std::endl;

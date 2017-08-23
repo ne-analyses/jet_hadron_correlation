@@ -228,6 +228,7 @@ namespace jetHadron {
     h3DimCorrSub 	= 0;
     leadingArrays = 0;
     subleadingArrays = 0;
+    hRndCone = 0;
     hAjStruct    = 0;
   }
   
@@ -259,6 +260,7 @@ namespace jetHadron {
     h3DimCorrSub 	= 0;
     leadingArrays = 0;
     subleadingArrays = 0;
+    hRndCone = 0;
     hAjStruct = 0;
   }
   
@@ -299,6 +301,8 @@ namespace jetHadron {
     delete h3DimCorrLead;
     if ( h3DimCorrSub )
     delete h3DimCorrSub;
+    if ( hRndCone )
+    delete hRndCone;
     if ( hAjStruct )
     delete hAjStruct;
     
@@ -366,6 +370,8 @@ namespace jetHadron {
     h3DimCorrLead		= new TH3F("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     h3DimCorrSub		= new TH3F("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     
+    hRndCone        = new TH3F("rndconecorr", "Random cone correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    
     BuildArrays();
     
     initialized = true;
@@ -415,6 +421,8 @@ namespace jetHadron {
     h3DimCorrLead->Write();
     if ( h3DimCorrSub )
     h3DimCorrSub->Write();
+    if ( hRndCone )
+    hRndCone->Write();
     if ( hAjStruct )
     hAjStruct->Write();
     
@@ -585,6 +593,17 @@ namespace jetHadron {
     TH3F* tmpHist = (TH3F*) subleadingArrays[binAj][centBin]->At(vzBin);
     tmpHist->Fill( dEta, dPhi, assocPt, weight );
       
+    return true;
+  }
+  
+  bool histograms::FillRandomCone( double dEta, double dPhi, double assocPt, double weight ) {
+    if ( !IsInitialized() ) { return false; }
+    
+    if ( dPhi < phiLowEdge+phiBinShift )
+      dPhi += 2.0*pi;
+    
+    hRndCone->Fill( dEta, dPhi, assocPt, weight );
+    
     return true;
   }
   

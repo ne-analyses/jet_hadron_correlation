@@ -368,6 +368,11 @@ int main ( int argc, const char** argv ) {
   // Efficiency corrections
   ktTrackEff efficiencyCorrection( jetHadron::y7EfficiencyFile );
   
+  // create a RNG for random bkg sub selection
+  std::random_device rd;
+  std::mt19937 generator(rd());
+  generator.seed( 69 );
+  
   // Now everything is set up
   // We can start the event loop
   // First, our counters
@@ -490,10 +495,14 @@ int main ( int argc, const char** argv ) {
       // it will match to triggers if necessary - if so, trigger jet is at index 0
       std::vector<fastjet::PseudoJet> analysisJets = jetHadron::BuildMatchedJets( analysisType, hardJets, LoResult, requireTrigger, triggers, jetRadius );
       
-      
       // if zero jets were returned, exit out
       if ( analysisJets.size() == 0  )		{ continue; }
       nMatchedHard++;
+      
+      // find a random cone away from jet axes for testing average bkg contribution
+      fastjet::PseudoJet randomConeJet;
+      if ( requireDijets ) randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), analysisJets.at(1), generator, jetRadius );
+      else randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), generator, jetRadius );
       
       // now we have analysis jets, write the trees
       // for future event mixing
@@ -565,10 +574,8 @@ int main ( int argc, const char** argv ) {
         else {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
         }
-        
+        jetHadron::correlateRandomCone( histograms, randomConeJet, assocParticle, assocEfficiency );
       }
-      
-      
     }
   }catch ( std::exception& e) {
     std::cerr << "Caught " << e.what() << std::endl;
