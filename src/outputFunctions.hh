@@ -324,7 +324,7 @@ namespace jetHadron {
   void FixTheDamnBins( std::vector<TH1D*>& histograms );
   
   std::vector<TGraphErrors*> MakeGraphs( std::vector<std::vector<double> >& x, std::vector<std::vector<double> >& y, std::vector<std::vector<double> >& x_err, std::vector<std::vector<double> >& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::vector<std::string> analysisName, std::string uniqueID = "" );
-  
+  TGraphErrors* MakeGraph( std::vector<double>& x, std::vector<double>& y, std::vector<double>& x_err, std::vector<double>& y_err, int ptBinLow, int ptBinHigh, binSelector selector, std::string analysisName, std::string uniqueID = "" );
   // ***************************************
   // these are used for building uncertainty
   // bands for the pp data
@@ -396,6 +396,9 @@ namespace jetHadron {
   
   // and a function to print out the near/far dphi correlations
   void PrintNearFarDPhiCorrelations( std::vector<TH1F*> hist1, std::vector<TH1F*> hist2, binSelector selector, std::string outputDir, std::vector<std::string> text, double rangeLow, double rangeHigh );
+  
+  // printing a list of graphs overlayed on top of each other
+  void PrintSimpleGraphOverLay( std::vector<TGraphErrors*>, std::string outputDir, std::vector<std::string> graph_names, std::string analysisName );
   
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );

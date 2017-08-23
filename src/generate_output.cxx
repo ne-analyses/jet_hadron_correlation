@@ -549,10 +549,10 @@ int main( int argc, const char** argv) {
   jetHadron::ExtractIntegraldEta( corrected_deta_sub_hard, deta_sub_bin_int_hard, deta_sub_bin_int_hard_err, selector );
   
   // print for my sanity, the histograms overlayed
-  //jetHadron::PrintPPHardOverlay( corrected_deta_lead_hard[0], corrected_deta_lead[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA", selector );
-  //jetHadron::PrintPPHardOverlay( corrected_deta_sub_hard[0], corrected_deta_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA_SUB", selector );
-  //jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_hard[0], corrected_dphi_subtracted[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI", selector );
-  //jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_sub_hard[0], corrected_dphi_subtracted_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI_SUB", selector );
+  jetHadron::PrintPPHardOverlay( corrected_deta_lead_hard[0], corrected_deta_lead[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA", selector );
+  jetHadron::PrintPPHardOverlay( corrected_deta_sub_hard[0], corrected_deta_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DETA_SUB", selector );
+  jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_hard[0], corrected_dphi_subtracted[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI", selector );
+  jetHadron::PrintPPHardOverlay( corrected_dphi_subtracted_sub_hard[0], corrected_dphi_subtracted_sub[1], outputDirBase + "/DEBUG_PP_OVERLAY_DPHI_SUB", selector );
   
   // *******************************
   // get 1D projections for Aj split
@@ -747,24 +747,46 @@ int main( int argc, const char** argv) {
   std::vector<TGraphErrors*> before_deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> before_deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
   
+  // just debug for the yield difference between pp with & without hard bkg included
+  std::vector<double> dphi_trig_pp_yield_diff{0,0}, dphi_recoil_pp_yield_diff{0,0}, deta_trig_pp_yield_diff{0,0}, deta_recoil_pp_yield_diff{0,0};
+  
   __OUT("TESTING THE SUBTRACTION FOR AUAU YIELDS BEING CORRECTED")
   for ( int i = 2; i < dphi_lead_bin_int[0].size(); ++i ) {
     std::cout<<"pt bin: "<<i << std::endl;
     dphi_lead_bin_int[0][i] -= (dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] )  ;
+    dphi_trig_pp_yield_diff.push_back( dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] );
     std::cout<<"dphi: "<< dphi_lead_bin_int_hard[0][i] - dphi_lead_bin_int[1][i] << std::endl;
     dphi_sub_bin_int[0][i] -=  ( dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] ) ;
+    dphi_recoil_pp_yield_diff.push_back( dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] );
     std::cout<<"dphi sub: "<< dphi_sub_bin_int_hard[0][i] - dphi_sub_bin_int[1][i] << std::endl;
     deta_lead_bin_int[0][i] -= ( deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] ) ;
+    deta_trig_pp_yield_diff.push_back( deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i] );
     std::cout<<"deta: "<< deta_lead_bin_int_hard[0][i] - deta_lead_bin_int[1][i]<<std::endl;
     deta_sub_bin_int[0][i] -=  ( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] ) ;
+    deta_recoil_pp_yield_diff.push_back( deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] );
     std::cout<<"deta sub: "<< deta_sub_bin_int_hard[0][i] - deta_sub_bin_int[1][i] << std::endl;
   }
+  
+  // build the subtracted background graphs first
+  // ********************************************
+  std::vector<TGraphErrors*> pp_hard_diff_graphs;
+  std::vector<std::string> pp_hard_diff_graph_names { "dphi trig", "dphi recoil", "deta trig", "deta recoil" };
+  pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], dphi_trig_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "dphi_pp_diff" ));
+  pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], dphi_recoil_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "dphi_sub_pp_diff" ));
+  pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], deta_trig_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "deta_pp_diff" ));
+  pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], deta_recoil_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "deta_sub_pp_diff" ));
+  
+  jetHadron::PrintSimpleGraphOverLay( pp_hard_diff_graphs, outputDirBase+"/DEBUG_PP_HARD_DIFF_YIELD", pp_hard_diff_graph_names, "PP_HARD_DIFF" );
+  
+  
+  // ********************************************
+
   
   std::vector<TGraphErrors*> dphi_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_lead_bin_int_err, 1, 5, selector, analysisNames, "dphi" );
   std::vector<TGraphErrors*> dphi_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, dphi_sub_bin_int, zeros, dphi_sub_bin_int_err, 1, 5, selector, analysisNames, "dphi_sub" );
   std::vector<TGraphErrors*> deta_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_lead_bin_int, zeros, deta_lead_bin_int_err, 1, 5, selector, analysisNames, "deta" );
   std::vector<TGraphErrors*> deta_sub_yield_graph = jetHadron::MakeGraphs( ptBinCenters, deta_sub_bin_int, zeros, deta_sub_bin_int_err, 1, 5, selector, analysisNames, "deta_sub" );
-
+  
   
   //// annddddddd make some systematic error graphs from the differences
   std::vector<TGraphErrors*> dphi_yield_graph_projection_sys = jetHadron::MakeGraphs( ptBinCenters, dphi_lead_bin_int, zeros, dphi_subtracted_yield_dif, 1, 5, selector, analysisNames, "dphi_proj_sys" );
