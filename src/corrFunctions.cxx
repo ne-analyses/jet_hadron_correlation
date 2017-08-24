@@ -716,12 +716,10 @@ namespace jetHadron {
     if ( !useTrack( assocTrack, efficiency ) )
       return false;
     
-    double deltaEta = randomJet.eta() - assocTrack.eta();
-    double deltaPhi = randomJet.delta_phi_to( assocTrack );
     double assocPt =  assocTrack.pt();
     double weight = 1.0/efficiency;
     
-    histograms->FillRandomCone( deltaEta, deltaPhi, assocPt, weight );
+    histograms->FillRandomCone( assocPt, weight );
     return true;
   }
 

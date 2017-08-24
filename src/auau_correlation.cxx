@@ -503,6 +503,12 @@ int main ( int argc, const char** argv ) {
       fastjet::PseudoJet randomConeJet;
       if ( requireDijets ) randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), analysisJets.at(1), generator, jetRadius );
       else randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), generator, jetRadius );
+      fastjet::Selector randomConeSelector = fastjet::SelectorCircle( jetRadius );
+      randomConeSelector.set_reference( randomConeJet );
+      std::vector<fastjet::PseudoJet> coneConstituents = randomConeSelector ( particles );
+      for ( int i = 0; i < coneConstituents.size(); ++i ) {
+        jetHadron::correlateRandomCone( histograms, randomConeJet, coneConstituents[i], 1.0 );
+      }
       
       // now we have analysis jets, write the trees
       // for future event mixing
@@ -574,7 +580,6 @@ int main ( int argc, const char** argv ) {
         else {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
         }
-        jetHadron::correlateRandomCone( histograms, randomConeJet, assocParticle, assocEfficiency );
       }
     }
   }catch ( std::exception& e) {

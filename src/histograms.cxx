@@ -370,7 +370,7 @@ namespace jetHadron {
     h3DimCorrLead		= new TH3F("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     h3DimCorrSub		= new TH3F("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     
-    hRndCone        = new TH3F("rndconecorr", "Random cone correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
+    hRndCone        = new TH1F("rndconecorr", "Random cone p_{T};p_{T}", binsPt, ptLowEdge, ptHighEdge );
     
     BuildArrays();
     
@@ -596,13 +596,10 @@ namespace jetHadron {
     return true;
   }
   
-  bool histograms::FillRandomCone( double dEta, double dPhi, double assocPt, double weight ) {
+  bool histograms::FillRandomCone( double assocPt, double weight ) {
     if ( !IsInitialized() ) { return false; }
     
-    if ( dPhi < phiLowEdge+phiBinShift )
-      dPhi += 2.0*pi;
-    
-    hRndCone->Fill( dEta, dPhi, assocPt, weight );
+    hRndCone->Fill( assocPt, weight );
     
     return true;
   }

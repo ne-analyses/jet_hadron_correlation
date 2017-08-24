@@ -477,22 +477,6 @@ int main ( int argc, const char** argv) {
       else {
         gRefMult = header->GetGReferenceMultiplicity();
       }
-      
-      // we also need the MB event info for the random cone estimation
-      int MBGRefMult = 0;
-      int MBRefCent;
-      int MBRefCentAlt;
-      
-      // but we're still going to get reference multiplicity
-      if ( mbHeader->GetCorrectedGReferenceMultiplicity() ) {
-        MBGRefMult = mbHeader->GetCorrectedGReferenceMultiplicity();
-        MBRefCent = mbHeader->GetGReferenceCentrality();
-      }
-      else {
-        MBGRefMult = mbHeader->GetGReferenceMultiplicity();
-        MBRefCent = jetHadron::GetReferenceCentrality( gRefMult );
-      }
-      MBRefCentAlt = jetHadron::GetReferenceCentralityAlt( MBRefCent );
 
       // Find vertex Z bin
       double vertexZ = header->GetPrimaryVertexZ();
@@ -558,7 +542,7 @@ int main ( int argc, const char** argv) {
       // make our hard dijet vector
       std::vector<fastjet::PseudoJet> hardJets = jetHadron::BuildHardJets( analysisType, HiResult );
 
-      
+
       
       // now recluster with all particles if necessary ( only used for dijet analysis )
       // Find corresponding jets with soft constituents
@@ -595,7 +579,13 @@ int main ( int argc, const char** argv) {
       fastjet::PseudoJet randomConeJet;
       if ( requireDijets ) randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), analysisJets.at(1), generator, jetRadius );
       else randomConeJet = jetHadron::FindRandomJetAxis( analysisJets.at(0), generator, jetRadius );
-      
+      fastjet::Selector randomConeSelector = fastjet::SelectorCircle( jetRadius );
+      randomConeSelector.set_reference( randomConeJet );
+      std::vector<fastjet::PseudoJet> coneConstituents = randomConeSelector ( embeddingParticles );
+      for ( int i = 0; i < coneConstituents.size(); ++i ) {
+        jetHadron::correlateRandomCone( histograms, randomConeJet, coneConstituents[i], 1.0 );
+      }
+
       // now we have analysis jets, write the trees
       // for future event mixing
       vertexZBin = VzBin;
@@ -665,16 +655,6 @@ int main ( int argc, const char** argv) {
         else {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
         }
-      }
-      // now correlate with the mb event for random cone embedding
-      for ( int i = 0; i < embeddingParticles.size(); ++i ) {
-        fastjet::PseudoJet assocParticle = embeddingParticles.at(i);
-        
-        // if we're using particle - by - particle efficiencies, get it,
-        // else, set to one
-        double assocEfficiency = 1.0;
-        if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), MBRefCentAlt );
-        jetHadron::correlateRandomCone( histograms, randomConeJet, assocParticle, assocEfficiency );
       }
     }
   }catch ( std::exception& e) {
