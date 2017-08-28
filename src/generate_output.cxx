@@ -194,6 +194,9 @@ int main( int argc, const char** argv) {
   // Build our bin selector with default settings
   jetHadron::binSelector selector;
   selector.ChangeRadius( R );
+  for ( int i = 0; i < 6; ++i ) {
+    std::cout<<"pt bin: " << i << " low pt: " << selector.ptBinEdgeLo[i] << " high pt: " << selector.ptBinEdgeHi[i] << std::endl;
+  }
   
   // and choose whether to plot the full range or remove the lowest bin
   int graphPtBinLow = 1;
