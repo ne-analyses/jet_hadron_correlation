@@ -399,6 +399,7 @@ namespace jetHadron {
   
   // printing a list of graphs overlayed on top of each other
   void PrintSimpleGraphOverLay( std::vector<TGraphErrors*>, std::string outputDir, std::vector<std::string> graph_names, std::string analysisName );
+  void PrintSimpleGraphOverLayWithHistogram( std::vector<TGraphErrors*>, TH1F* hist, std::string outputDir, std::vector<std::string> graph_names, std::string analysisName );
   
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisName, std::string title, binSelector selector );

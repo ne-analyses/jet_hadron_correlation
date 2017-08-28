@@ -3174,6 +3174,59 @@ namespace jetHadron {
     
   }
   
+  void PrintSimpleGraphOverLayWithHistogram( std::vector<TGraphErrors*> graphs, TH1F* hist, std::string outputDir, std::vector<std::string> graph_names, std::string analysisName ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    if ( graphs.size() < graph_names.size() ) {
+      __ERR("WARNING: not enough graph names, exiting")
+      return;
+    }
+    
+    TCanvas c1;
+    c1.SetBottomMargin( 0.15 );
+    c1.SetLeftMargin( 0.12 );
+    TLegend* leg = new TLegend( 0.45, 0.5, 0.88, 0.78 );
+    
+    hist->SetLineColor(7);
+    hist->SetLineWidth(2);
+    hist->SetMarkerColor(7);
+    hist->SetMarkerSize(2);
+    hist->SetMarkerStyle(25);
+    
+    graphs[0]->GetYaxis()->SetRangeUser(0, hist->GetMaximum()*1.05 );
+    
+    for ( int i = 0; i < graphs.size(); ++i ) {
+      
+      graphs[i]->SetLineColor(i+1);
+      graphs[i]->SetMarkerColor(i+1);
+      graphs[i]->SetMarkerSize(2);
+      graphs[i]->SetLineWidth(2);
+      graphs[i]->SetMarkerStyle(20+i);
+      
+      if ( i == 0 ) {
+        graphs[i]->Draw("AP");
+      } else {
+        graphs[i]->Draw("P");
+      }
+      
+      leg->AddEntry( graphs[i], graph_names[i].c_str(), "lep" );
+      
+    }
+    
+    hist->Draw("SAME");
+    leg->AddEntry(hist, "random cone", "lep");
+    
+    leg->Draw();
+    std::string tmp = outputDir + "/" + analysisName + "_graph.pdf";
+    c1.SaveAs( tmp.c_str() );
+    
+    
+  }
+
+  
   // printing some graphs with some systematic errors as well
   void PrintGraphsWithSystematics( std::vector<TGraphErrors*>& graphs, std::vector<TGraphErrors*>& sys1, std::vector<TGraphErrors*> sys2, std::string outputDir, std::vector<std::string> analysisNames, std::string title, binSelector selector ) {
     

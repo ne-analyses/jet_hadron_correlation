@@ -133,8 +133,8 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/added/auau/trg6/corrv4.root", "READ" );
-      TFile* tmpMix = new TFile( "out/added/auau/trg6/mix.root", "READ" );
+      TFile* tmp = new TFile( "out/added/auau/newtrg6/corr.root", "READ" );
+      TFile* tmpMix = new TFile( "out/added/auau/newtrg6/mix.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
@@ -769,6 +769,12 @@ int main( int argc, const char** argv) {
   
   // build the subtracted background graphs first
   // ********************************************
+  
+  // first step is to get the histogram for random cones
+  TH1F* randomConePt = (TH1F*) corrFiles[0]->Get("randomcone");
+  randomConePt->Scale( 1.0 / nEvents[0]->GetEntries() );
+  randomConePt->RebinX(4);
+  
   std::vector<TGraphErrors*> pp_hard_diff_graphs;
   std::vector<std::string> pp_hard_diff_graph_names { "dphi trig", "dphi recoil", "deta trig", "deta recoil" };
   pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], dphi_trig_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "dphi_pp_diff" ));
@@ -776,7 +782,7 @@ int main( int argc, const char** argv) {
   pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], deta_trig_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "deta_pp_diff" ));
   pp_hard_diff_graphs.push_back(jetHadron::MakeGraph( ptBinCenters[1], deta_recoil_pp_yield_diff, zeros[0], zeros[0], 2, 5, selector, "pp_diff", "deta_sub_pp_diff" ));
   
-  jetHadron::PrintSimpleGraphOverLay( pp_hard_diff_graphs, outputDirBase+"/DEBUG_PP_HARD_DIFF_YIELD", pp_hard_diff_graph_names, "PP_HARD_DIFF" );
+  jetHadron::PrintSimpleGraphOverLayWithHistogram( pp_hard_diff_graphs, randomConePt, outputDirBase+"/DEBUG_PP_HARD_DIFF_YIELD", pp_hard_diff_graph_names, "PP_HARD_DIFF" );
   
   
   // ********************************************
