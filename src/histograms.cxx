@@ -370,7 +370,7 @@ namespace jetHadron {
     h3DimCorrLead		= new TH3F("leadjetcorr", "Lead Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     h3DimCorrSub		= new TH3F("subjetcorr", "Sub Jet - Hadron Correlation;#eta;#phi;p_{T}", binsEta, dEtaLowEdge+etaBinShift, dEtaHighEdge+etaBinShift, binsPhi, phiLowEdge+phiBinShift, phiHighEdge+phiBinShift, binsPt, ptLowEdge, ptHighEdge );
     
-    hRndCone        = new TH1F("rndconecorr", "Random cone p_{T};p_{T}", binsPt, ptLowEdge, ptHighEdge );
+    hRndCone        = new TH1F("randomcone", "Random cone p_{T};p_{T}", binsPt, ptLowEdge, ptHighEdge );
     
     BuildArrays();
     
