@@ -3196,7 +3196,7 @@ namespace jetHadron {
     hist->SetMarkerSize(2);
     hist->SetMarkerStyle(25);
     
-    graphs[0]->GetYaxis()->SetRangeUser(0, hist->GetMaximum()*1.05 );
+    graphs[0]->GetYaxis()->SetRangeUser(0, graphs[0]->GetMaximum()*2.0 );
     
     for ( int i = 0; i < graphs.size(); ++i ) {
       
