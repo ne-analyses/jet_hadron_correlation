@@ -5,7 +5,7 @@ INCFLAGS      =  -I$(shell root-config --incdir) -I$(FASTJETDIR)/include -I$(STA
 
 
 ifeq ($(os),Linux)
-CXXFLAGS      = -std=c++11 -DBOOST_SYSTEM_NO_DEPRECATED
+CXXFLAGS      = -std=c++11 -DBOOST_SYSTEM_NO_DEPRECATED -O2
 else
 CXXFLAGS      = -O -fPIC -pipe -Wall -Wno-deprecated-writable-strings -Wno-unused-variable -Wno-unused-private-field -Wno-gnu-static-float-init -std=c++11
 ## for debugging:
