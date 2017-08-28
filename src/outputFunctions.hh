@@ -132,23 +132,17 @@ namespace jetHadron {
     //double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
     //std::string ptBinString[6] = { "0.5 < p_{T}^{assoc} < 1.0 GeV/c", "1.0 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 < p_{T}^{assoc} < 3.0 GeV/c", "3.0 < p_{T}^{assoc} < 4.0 GeV/c", "4.0 < p_{T}^{assoc} < 6.0 GeV/c", "6.0 < p_{T}^{assoc} < 10.0 GeV/c" };
     //std::string ptBinStringMix[3] = { "0.5 < p_{T}^{assoc} < 1.0 GeV/c", "1.0 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 GeV/c < p_{T}^{assoc}" };
-    
+    //****************************************
     // testing new bin widths
     double ptBinEdgeLo[6] = { 0.75, 1.5, 2.0, 3.0, 4.0, 6.0 };
     double ptBinEdgeHi[6] = { 1.5, 2.0, 3.0, 4.0, 6.0, 10.0 };
     double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
-    std::string ptBinString[6] = { "0.5 < p_{T}^{assoc} < 1.0 GeV/c", "1.0 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 < p_{T}^{assoc} < 3.0 GeV/c", "3.0 < p_{T}^{assoc} < 4.0 GeV/c", "4.0 < p_{T}^{assoc} < 6.0 GeV/c", "6.0 < p_{T}^{assoc} < 10.0 GeV/c" };
-    std::string ptBinStringMix[3] = { "0.5 < p_{T}^{assoc} < 1.0 GeV/c", "1.0 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 GeV/c < p_{T}^{assoc}" };
+    std::string ptBinString[6] = { "0.75 < p_{T}^{assoc} < 1.5 GeV/c", "1.5 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 < p_{T}^{assoc} < 3.0 GeV/c", "3.0 < p_{T}^{assoc} < 4.0 GeV/c", "4.0 < p_{T}^{assoc} < 6.0 GeV/c", "6.0 < p_{T}^{assoc} < 10.0 GeV/c" };
+    std::string ptBinStringMix[3] = { "0.75 < p_{T}^{assoc} < 1..5 GeV/c", "1.5 < p_{T}^{assoc} < 2.0 GeV/c", "2.0 GeV/c < p_{T}^{assoc}" };
     
     
     const int nPtBins = 6;
     
-    // without low bin
-    //double ptBinEdgeLo[4] = { 1.0, 2.0, 3.0, 4.0 };
-    //double ptBinEdgeHi[4] = { 2.0, 3.0, 4.0, 6.0 };
-    //double ptBinWidth = ( ptHighEdge - ptLowEdge ) / binsPt;
-    //std::string ptBinString[4] = { "1.0 < p_{T} < 2.0", "2.0 < p_{T} < 3.0", "3.0 < p_{T} < 4.0", "4.0 < p_{T} < 6.0" };
-    //const int nPtBins = 4;
     
     double GetPtBinWidth( int i ) { return ptBinEdgeHi[i] - ptBinEdgeLo[i]; }
     
