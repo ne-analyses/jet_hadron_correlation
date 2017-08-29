@@ -133,12 +133,12 @@ int main( int argc, const char** argv) {
       __OUT( "Using Default Settings" )
       
       // default files
-      TFile* tmp = new TFile( "out/added/auau/newtrg6/corr.root", "READ" );
+      TFile* tmp = new TFile( "out/added/auau/newtrg6/corrChargedRandomCone.root", "READ" );
       TFile* tmpMix = new TFile( "out/added/auau/newtrg6/mix.root", "READ" );
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6.00/corrv4.root", "READ" );
+      tmp = new TFile( "out/added/pp/trg6.00/corrChargedRandomCone.root", "READ" );
       tmpMix = new TFile( "out/added/pp/trg6.00/mixv4.root", "READ");
       
       corrFiles.push_back( tmp );
