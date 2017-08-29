@@ -138,8 +138,8 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/pp/trg6/corrv4.root", "READ" );
-      tmpMix = new TFile( "out/added/pp/trg6/mixv4.root", "READ");
+      tmp = new TFile( "out/added/pp/trg6.00/corrv4.root", "READ" );
+      tmpMix = new TFile( "out/added/pp/trg6.00/mixv4.root", "READ");
       
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
@@ -774,7 +774,7 @@ int main( int argc, const char** argv) {
   // ********************************************
   
   // first step is to get the histogram for random cones
-  TH1F* randomConePt = (TH1F*) corrFiles[0]->Get("randomcone");
+  TH1F* randomConePt = (TH1F*) corrFiles[1]->Get("randomcone");
   randomConePt->Scale( 1.0 / nEvents[0]->GetEntries() );
   randomConePt->RebinX(4);
   
