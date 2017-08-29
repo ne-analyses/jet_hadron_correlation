@@ -148,9 +148,9 @@ int main ( int argc, const char** argv) {
   bool					requireDijets	= true;											// this switches between dijet-hadron and jet-hadron
   bool					useEfficiency = true;										// choose to use particle-by-particle efficiency
   bool					requireTrigger= true;											// require leading jet to be within jetRadius of a trigger tower
-  double        softwareTrig  = true;                     // require there to be a trigger with E > this value in the event
-  bool          addAuAuHard   = true;                     // add all pt > 2 GeV tracks from AuAu to correlations
-  bool          correlateAll  = true;                     // correlates all pp & auau tracks
+  double        softwareTrig  = 6.0;                     // require there to be a trigger with E > this value in the event
+  bool          addAuAuHard   = false;                     // add all pt > 2 GeV tracks from AuAu to correlations
+  bool          correlateAll  = false;                     // correlates all pp & auau tracks
   int           iTowerScale   = 0;                        // energy scale shift for systematic efficiency
   int           iTrackingEff  = 0;                        // tracking efficiency shift for systematic efficiencies
   double 				subJetPtMin   = 10.0;											// subleading jet minimum pt requirement
@@ -583,6 +583,7 @@ int main ( int argc, const char** argv) {
       randomConeSelector.set_reference( randomConeJet );
       std::vector<fastjet::PseudoJet> coneConstituents = randomConeSelector ( embeddingParticles );
       for ( int i = 0; i < coneConstituents.size(); ++i ) {
+        std::cout<<"user index: "<<coneConstituents[i].user_index() << std::endl;
         if ( coneConstituents[i].user_index() != 0 )
           jetHadron::correlateRandomCone( histograms, randomConeJet, coneConstituents[i], 1.0 );
       }
