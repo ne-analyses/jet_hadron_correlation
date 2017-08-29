@@ -774,8 +774,8 @@ int main( int argc, const char** argv) {
   // ********************************************
   
   // first step is to get the histogram for random cones
-  TH1F* randomConePt = (TH1F*) corrFiles[0]->Get("randomcone");
-  randomConePt->Scale( 1.0 / nEvents[0]->GetEntries() );
+  TH1F* randomConePt = (TH1F*) corrFiles[1]->Get("randomcone");
+  randomConePt->Scale( 1.0 / nEvents[1]->GetEntries() );
   randomConePt->RebinX(4);
   
   std::vector<TGraphErrors*> pp_hard_diff_graphs;
