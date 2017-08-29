@@ -144,8 +144,8 @@ int main( int argc, const char** argv) {
       corrFiles.push_back( tmp );
       mixFiles.push_back( tmpMix );
       
-      tmp = new TFile( "out/added/ppembedhard/trg6/corrv4.root");
-      tmpMix = new TFile( "out/added/ppembedhard/trg6/mixv4.root");
+      tmp = new TFile( "out/added/ppembedhard/trg6.00/corrv5.root");
+      tmpMix = new TFile( "out/added/ppembedhard/trg6.00/mixv4.root");
       
       corrFilesHard.push_back( tmp );
       mixFilesHard.push_back( tmpMix );
