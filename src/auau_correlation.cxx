@@ -507,9 +507,9 @@ int main ( int argc, const char** argv ) {
       randomConeSelector.set_reference( randomConeJet );
       std::vector<fastjet::PseudoJet> coneConstituents = randomConeSelector ( particles );
       for ( int i = 0; i < coneConstituents.size(); ++i ) {
-        if ( coneConstituents[i].user_index() != 0 ) {
+        //if ( coneConstituents[i].user_index() != 0 ) {
           jetHadron::correlateRandomCone( histograms, randomConeJet, coneConstituents[i], 1.0 );
-        }
+        //}
       }
       
       // now we have analysis jets, write the trees
