@@ -584,7 +584,6 @@ int main ( int argc, const char** argv) {
       std::vector<fastjet::PseudoJet> coneConstituents = randomConeSelector ( embeddingParticles );
       for ( int i = 0; i < coneConstituents.size(); ++i ) {
         if ( coneConstituents[i].user_index() != 0 ) {
-          std::cout<<"user index: "<<coneConstituents[i].user_index() << std::endl;
           jetHadron::correlateRandomCone( histograms, randomConeJet, coneConstituents[i], 1.0 );
         }
       }
