@@ -371,7 +371,7 @@ int main ( int argc, const char** argv ) {
   // create a RNG for random bkg sub selection
   std::random_device rd;
   std::mt19937 generator(rd());
-  generator.seed( 69 );
+  generator.seed( 420 );
   
   // Now everything is set up
   // We can start the event loop
