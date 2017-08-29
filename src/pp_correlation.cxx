@@ -485,6 +485,22 @@ int main ( int argc, const char** argv) {
       // Check to see if Vz is in the accepted range; if not, discard
       if ( VzBin == -1 )																				{ continue; }
       
+      // now get the MB data variables for efficiency corrections
+      // but we're still going to get reference multiplicity
+      double MBgRefMult = 0;
+      int MBRefCent = 0;
+      if ( mbHeader->GetCorrectedGReferenceMultiplicity() ) {
+        MBgRefMult = mbHeader->GetCorrectedGReferenceMultiplicity();
+        MBRefCent = mbHeader->GetGReferenceCentrality();
+      }
+      else {
+        MBgRefMult = mbHeader->GetGReferenceMultiplicity();
+        MBRefCent  = jetHadron::GetReferenceCentrality( gRefMult );
+      }
+      // Define the opposite centrality index: 0->8, 1->7, 2->6...
+      // Used for the histogram arrays, etc
+      int MBRefCentAlt = jetHadron::GetReferenceCentralityAlt( MBRefCent );
+      
       // build two data sets
       //**********************
       particles.clear();
@@ -499,7 +515,7 @@ int main ( int argc, const char** argv) {
       // and correlations, these have all pp tracks/towers
       jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
       
-      // third, for random cone estimation we need the MB event
+      // third, for random cone estimation & when correlating all particles we need the MB event
       jetHadron::ConvertTStarJetVector( mbContainer, embeddingParticles, true, 1.0 );
       
       // and pull out all triggers
@@ -507,9 +523,9 @@ int main ( int argc, const char** argv) {
       
       // and if its being used, convert all or only hard auau embedding
       // to be used into the correlation holder as well
-      if ( correlateAll || addAuAuHard ) {
-        jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, correlationParticles, correlateAll );
-      }
+      //if ( correlateAll || addAuAuHard ) {
+      //  jetHadron::ConvertTStarJetVectorPPEmbedded( mbContainer, correlationParticles, correlateAll );
+      //}
 
       // If we require a trigger and we didnt find one, then discard the event
       if ( requireTrigger && triggers.size() == 0 ) 						{ continue; }
@@ -656,6 +672,29 @@ int main ( int argc, const char** argv) {
         }
         else {
           jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
+        }
+      }
+      // now if we are correlating with the embedding event(partially or fully)
+      if ( correlateAll || addAuAuHard ) {
+        for ( int i = 0; i < embeddingParticles.size(); ++i ) {
+          fastjet::PseudoJet assocParticle = embeddingParticles.at(i);
+          
+          // if only correlating hard particles, discard any below 2.0 GeV
+          if ( !correlateAll && assocParticle.pt() < 2.0 ) continue;
+          
+          // if we're using particle - by - particle efficiencies, get it,
+          // else, set to one
+          double assocEfficiency = 1.0;
+          if ( useEfficiency ) assocEfficiency = efficiencyCorrection.EffAAY07( assocParticle.eta(), assocParticle.pt(), MBRefCentAlt );
+          
+          // now correlate it with jets
+          if ( requireDijets ) {
+            jetHadron::correlateLeading( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency, dijetAj );
+            jetHadron::correlateSubleading( analysisType, VzBin, refCent, histograms, analysisJets.at(1), assocParticle, assocEfficiency, dijetAj );
+          }
+          else {
+            jetHadron::correlateTrigger( analysisType, VzBin, refCent, histograms, analysisJets.at(0), assocParticle, assocEfficiency );
+          }
         }
       }
     }
