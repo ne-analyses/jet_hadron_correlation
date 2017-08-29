@@ -495,7 +495,7 @@ int main ( int argc, const char** argv) {
       }
       else {
         MBgRefMult = mbHeader->GetGReferenceMultiplicity();
-        MBRefCent  = jetHadron::GetReferenceCentrality( gRefMult );
+        MBRefCent  = jetHadron::GetReferenceCentrality( MBgRefMult );
       }
       // Define the opposite centrality index: 0->8, 1->7, 2->6...
       // Used for the histogram arrays, etc
