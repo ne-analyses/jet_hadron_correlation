@@ -513,7 +513,7 @@ int main ( int argc, const char** argv) {
       
       // second, the tracks used for full event reconstruction
       // and correlations, these have all pp tracks/towers
-      jetHadron::ConvertTStarJetVector( container, correlationParticles, true, fTowerScale );
+      jetHadron::ConvertTStarJetVector( container, correlationParticles, true, 1.0 );
       
       // third, for random cone estimation & when correlating all particles we need the MB event
       jetHadron::ConvertTStarJetVector( mbContainer, embeddingParticles, true, 1.0 );
