@@ -1169,7 +1169,7 @@ namespace jetHadron {
         tmpFit->SetParameter( 0, histograms[i][j]->GetBinContent( histograms[i][j]->GetMinimumBin() ) );
         tmpFit->SetParameter( 1, 1 );
         tmpFit->FixParameter( 2, 0 );
-        tmpFit->SetParameter( 3, 0.45 );
+        tmpFit->SetParameter( 3, 0.47 );
         
         histograms[i][j]->Fit( tmp.c_str(), "RMI" );
         std::string tmpSubName = "sub_" + tmp;
