@@ -66,7 +66,7 @@ $(BDIR)/%  : $(ODIR)/%.o
 ###############################################################################
 ############################# Main Targets ####################################
 ###############################################################################
-all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty
+all : $(BDIR)/test $(BDIR)/globvprim $(BDIR)/auau_correlation $(BDIR)/pp_correlation $(BDIR)/event_mixing $(BDIR)/generate_output $(BDIR)/extract_sys_uncertainty $(BDIR)/slim_output
 
 $(SDIR)/dict.cxx                : $(SDIR)/ktTrackEff.hh
 	cd ${SDIR}; rootcint -f dict.cxx -c -I. ./ktTrackEff.hh
@@ -85,6 +85,7 @@ $(ODIR)/pp_correlation.o		: $(SDIR)/pp_correlation.cxx
 $(ODIR)/event_mixing.o       : $(SDIR)/event_mixing.cxx
 $(ODIR)/generate_output.o   : $(SDIR)/generate_output.cxx
 $(ODIR)/extract_sys_uncertainty.o : $(SDIR)/extract_sys_uncertainty.cxx
+$(ODIR)/slim_output.o       : $(SDIR)/slim_output.cxx
 
 #data analysis
 #$(BDIR)/qa_v1		: $(ODIR)/qa_v1.o
@@ -95,6 +96,7 @@ $(BDIR)/pp_correlation			: $(ODIR)/pp_correlation.o	$(ODIR)/corrFunctions.o $(OD
 $(BDIR)/event_mixing        : $(ODIR)/event_mixing.o  $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/ktTrackEff.o  $(ODIR)/dict.o
 $(BDIR)/generate_output     : $(ODIR)/generate_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 $(BDIR)/extract_sys_uncertainty: $(ODIR)/extract_sys_uncertainty.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
+$(BDIR)/slim_output     : $(ODIR)/slim_output.o $(ODIR)/corrFunctions.o $(ODIR)/histograms.o $(ODIR)/outputFunctions.o $(ODIR)/ktTrackEff.o $(ODIR)/dict.o
 ###############################################################################
 ##################################### MISC ####################################
 ###############################################################################
