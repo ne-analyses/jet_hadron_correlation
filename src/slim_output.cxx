@@ -435,10 +435,6 @@ int main( int argc, const char** argv) {
   jetHadron::Normalize1D( corrected_deta_lead_hard, nEventsHard );
   jetHadron::Normalize1D( corrected_deta_sub_hard, nEventsHard );
   
-  //**********
-  //jetHadron::SubtractBackgroundDeta( corrected_deta_sub_hard, selector );
-  //**********
-  
   // aaaaaand we'll get ahead of ourselves and extract the integrals
   std::vector<std::vector<double> > dphi_lead_bin_int_hard, dphi_sub_bin_int_hard, deta_lead_bin_int_hard, deta_sub_bin_int_hard;
   std::vector<std::vector<double> > dphi_lead_bin_int_hard_err, dphi_sub_bin_int_hard_err, deta_lead_bin_int_hard_err, deta_sub_bin_int_hard_err;
