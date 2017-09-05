@@ -1231,7 +1231,51 @@ namespace jetHadron {
     
   }
 
+  // Used to subtract background from each histogram
+  void SubtractBackgroundDetaSlim( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
+    
+    //std::string etaForm = "[0]+[1]*exp(-0.5*((x-[2])/[3])**2)";
+    std::string etaForm = "[0] + gausn(1)";
+    std::string subForm = "[0]";
+    
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      for ( int j = 0; j < histograms[i].size(); ++j ) {
+        
+        if ( j >= 4 ) {
+          continue;
+        }
+        
+        std::cout<<"subtracting background: dEta"<<std::endl;
+        std::cout<<"file: "<< i <<" pt bin: "<<j << std::endl;
+        std::cout<<"function: "<< etaForm << std::endl;
+        std::cout<<"over range: "<< selector.eta_fit_low_edge  << " to " << selector.eta_fit_high_edge << std::endl;
+        
+        std::string tmp = "fit_tmp_" + patch::to_string(i) + "_pt_" + patch::to_string(j);
+        TF1* tmpFit = new TF1( tmp.c_str(), etaForm.c_str(), selector.eta_fit_low_edge, selector.eta_fit_high_edge );
+        tmpFit->SetParameter( 0, histograms[i][j]->GetBinContent( histograms[i][j]->GetMinimumBin() ) );
+        tmpFit->SetParameter( 1, 1 );
+        tmpFit->FixParameter( 2, 0 );
+        tmpFit->SetParameter( 3, 0.4 );
+        
+        histograms[i][j]->Fit( tmp.c_str(), "RMI" );
+        std::string tmpSubName = "sub_" + tmp;
+        double eta_min = histograms[i][j]->GetXaxis()->GetBinLowEdge(1);
+        double eta_max = histograms[i][j]->GetXaxis()->GetBinUpEdge( selector.bindEta );
+        TF1* tmpSub = new TF1( tmpSubName.c_str(), subForm.c_str(), eta_min, eta_max );
+        tmpSub->SetParameter( 0, tmpFit->GetParameter(0) );;
+        histograms[i][j]->Add( tmpSub, -1.0 );
+        delete tmpSub;
+        
+        if ( histograms[i][j]->GetFunction(tmp.c_str() ) )
+          histograms[i][j]->GetFunction(tmp.c_str())->SetBit(TF1::kNotDraw);
+      }
+    }
+    
+  }
 
+  
   // same thing but with a different fit function for dphi
   void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector ) {
     

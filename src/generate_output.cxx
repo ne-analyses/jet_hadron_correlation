@@ -460,7 +460,7 @@ int main( int argc, const char** argv) {
   jetHadron::SubtractBackgroundDphi( corrected_dphi_lead, selector );
   jetHadron::SubtractBackgroundDphi( corrected_dphi_sub, selector );
   jetHadron::SubtractBackgroundDetaWide( corrected_deta_lead, selector );
-  jetHadron::SubtractBackgroundDeta( corrected_deta_sub, selector );
+  jetHadron::SubtractBackgroundDetaSlim( corrected_deta_sub, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_lead_extended, selector );
   jetHadron::SubtractBackgroundDeta( corrected_deta_sub_extended, selector );
   

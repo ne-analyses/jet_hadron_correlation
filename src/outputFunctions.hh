@@ -301,6 +301,7 @@ namespace jetHadron {
   // Used to subtract background from each histogram
   void SubtractBackgroundDeta( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
   void SubtractBackgroundDetaWide( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
+  void SubtractBackgroundDetaSlim( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
   void SubtractBackgroundDphi( std::vector<std::vector<TH1F*> >& histograms, binSelector selector );
   
   // Used to fit each histogram
