@@ -126,7 +126,7 @@ int main( int argc, const char** argv) {
   // and the output location
   std::string outputDirBase;
   // include low pt bin or no?
-  bool includeLowPt = false;
+  bool includeLowPt = true;
   
   switch ( argc ) {
     case 1: { // Default case
