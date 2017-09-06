@@ -1958,7 +1958,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
@@ -2005,7 +2005,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
@@ -2055,7 +2055,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmp.c_str() );
       tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
@@ -2996,7 +2996,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "dphi_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -3122,7 +3122,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
       
       std::string tmp = outputDir + "/" + "deta_pt_" + patch::to_string(i) +"_full.pdf";
       c1.SaveAs( tmp.c_str() );
@@ -3213,7 +3213,7 @@ namespace jetHadron {
       latex.SetTextSize(0.045);
       // latex.SetTextColor(kGray+3);
       latex.SetTextColor(kRed+3);
-      latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
+      //latex.DrawLatex( 0.19, 0.84, "STAR Preliminary");
       
       c1.SaveAs( tmpEps.c_str() );
       c1.SaveAs( tmp.c_str() );
@@ -3408,7 +3408,7 @@ namespace jetHadron {
     latex.SetTextSize(0.045);
     // latex.SetTextColor(kGray+3);
     latex.SetTextColor(kRed+3);
-    latex.DrawLatex( 0.2, 0.84, "STAR Preliminary");
+    //latex.DrawLatex( 0.2, 0.84, "STAR Preliminary");
     
 
     

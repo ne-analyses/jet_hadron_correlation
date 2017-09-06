@@ -126,7 +126,7 @@ int main( int argc, const char** argv) {
   // and the output location
   std::string outputDirBase;
   // include low pt bin or no?
-  bool includeLowPt = true;
+  bool includeLowPt = false;
   
   switch ( argc ) {
     case 1: { // Default case
@@ -153,8 +153,8 @@ int main( int argc, const char** argv) {
 
       ajSplitBin = 5;
       analysisNames = defaultCorrNames;
-      //outputDirBase = "/results/jet_20_10_trig_6_v4.2_random_cone";
-      outputDirBase = "/results/test";
+      outputDirBase = "/results/jet_20_10_trig_6_v4.2_random_cone";
+      //outputDirBase = "/results/test";
       break;
     }
     default: {
