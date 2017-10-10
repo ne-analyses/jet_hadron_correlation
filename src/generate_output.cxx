@@ -293,6 +293,7 @@ int main( int argc, const char** argv) {
     jetHadron::Print2DHistogramsMixing( leadingMix[i], outputDirBase+"/mixing_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistograms( averagedSignal[i], outputDirBase+"/uncorr_lead_"+analysisNames[i], analysisNames[i], selector );
     jetHadron::Print2DHistogramsEtaRestricted( averagedMixedEventCorrected[i], outputDirBase+"/avg_mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
+    jetHadron::Print2DHistogramsEtaRestrictedColz( averagedMixedEventCorrected[i], outputDirBase+"/avg_mix_corrected_lead_colz_"+analysisNames[i], analysisNames[i], selector );
     //jetHadron::Print2DHistogramsEtaRestricted( notAveragedMixedEventCorrected[i], outputDirBase+"/mix_corrected_lead_"+analysisNames[i], analysisNames[i], selector );
   }
   

@@ -373,6 +373,7 @@ namespace jetHadron {
   void Print2DHistograms( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   void Print2DHistogramsMixing( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   void Print2DHistogramsEtaRestricted( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
+  void Print2DHistogramsEtaRestrictedColz( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   
   void Print1DHistogramsDphi( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector );
   void Print1DHistogramsOverlayedDphi( std::vector<std::vector<TH1F*> >& histograms, std::string outputDir, std::vector<std::string> analysisName, binSelector selector );

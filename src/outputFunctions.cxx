@@ -2066,6 +2066,56 @@ namespace jetHadron {
     
   }
   
+  // Used to print out 2D plots ( correlations, mixed events )
+  // However, this one restricts the eta range shown to what
+  // is set in selector
+  void Print2DHistogramsEtaRestrictedColz( std::vector<TH2F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
+    
+    // First, make the output directory if it doesnt exist
+    boost::filesystem::path dir( outputDir.c_str() );
+    boost::filesystem::create_directories( dir );
+    
+    for ( int i = 0; i < histograms.size(); ++i ) {
+      
+      histograms[i]->GetXaxis()->SetTitle("#Delta#eta");
+      histograms[i]->GetXaxis()->SetTitleSize( 0.06 );
+      histograms[i]->GetXaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetXaxis()->CenterTitle( true );
+      histograms[i]->GetXaxis()->SetRange(5, 18 );
+      histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetYaxis()->SetTitleSize( 0.093 );
+      histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetYaxis()->CenterTitle( true );
+      histograms[i]->GetZaxis()->SetTitle("counts");
+      histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
+      //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetZaxis()->CenterTitle( true );
+      std::string title = selector.ptBinString[i];
+      histograms[i]->SetTitle( title.c_str() );
+      std::string tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".pdf";
+      histograms[i]->SetTitleSize( 0.09 );
+      TCanvas c1;
+      c1.SetLeftMargin(0.15);
+      c1.SetBottomMargin(0.2);
+      
+      histograms[i]->Draw("colz");
+      
+      // and STAR preliminary message
+      TLatex latex;
+      latex.SetTextSize(0.045);
+      // latex.SetTextColor(kGray+3);
+      latex.SetTextColor(kRed+3);
+      //latex.DrawLatex( -0.7, 0.84, "STAR Preliminary");
+      
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".C";
+      c1.SaveAs( tmp.c_str() );
+      tmp = outputDir + "/" + analysisName + "_" + patch::to_string(i) + ".eps";
+      c1.SaveAs( tmp.c_str() );
+    }
+    
+  }
+  
   // Print out individual dPhi histograms
   void Print1DHistogramsDphi( std::vector<TH1F*>& histograms, std::string outputDir, std::string analysisName, binSelector selector ) {
   
