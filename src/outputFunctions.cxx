@@ -2097,6 +2097,7 @@ namespace jetHadron {
       TCanvas c1;
       c1.SetLeftMargin(0.15);
       c1.SetBottomMargin(0.2);
+      c1.SetLogz();
       
       histograms[i]->Draw("colz");
       
