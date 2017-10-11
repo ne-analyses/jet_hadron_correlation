@@ -2083,6 +2083,7 @@ namespace jetHadron {
       histograms[i]->GetXaxis()->CenterTitle( true );
       histograms[i]->GetXaxis()->SetRange(5, 17 );
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
+      histograms[i]->GetYaxis()->SetRange(1, 11 );
       //histograms[i]->GetYaxis()->SetTitleSize( 0.093 );
       //histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
