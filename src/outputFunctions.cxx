@@ -1939,6 +1939,7 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetTitleSize( 0.093 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
       histograms[i]->GetYaxis()->CenterTitle( true );
+      histograms[i]->GetYaxis()->SetRangeUser(-TMath::Pi()/2.0, TMath::Pi()*3.0/2.0 );
       histograms[i]->GetZaxis()->SetTitle("counts");
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
       //histograms[i]->GetZaxis()->SetTitleOffset( 1.35 );
