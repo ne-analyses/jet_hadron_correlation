@@ -1985,6 +1985,7 @@ namespace jetHadron {
       histograms[i]->GetYaxis()->SetTitle("#Delta#phi");
       histograms[i]->GetYaxis()->SetTitleSize( 0.093 );
       histograms[i]->GetYaxis()->SetTitleOffset( 1.35 );
+      histograms[i]->GetYaxis()->SetRangeUser(-TMath::Pi()/2.0, TMath::Pi()*3.0/2.0 );
       histograms[i]->GetYaxis()->CenterTitle( true );
       histograms[i]->GetZaxis()->SetTitle("counts");
       histograms[i]->GetZaxis()->SetTitleSize( 0.05 );
